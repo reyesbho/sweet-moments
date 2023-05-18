@@ -1,11 +1,14 @@
 import './App.css'
+import { Sidebar } from './components/sidebar/Sidebar'
+import { Header } from './components/header/header'
 
 function App() {
-
+  
   return (
-    <>
-    <h1>Sweet Moments</h1>
-    </>
+    <div className='principal'>
+     <Sidebar title={'Dulces Momentos'}></Sidebar> 
+     <Header></Header>
+    </div>
   )
 }
 
