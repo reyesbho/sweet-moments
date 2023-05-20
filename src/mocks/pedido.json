@@ -1,0 +1,27 @@
+{
+    "id":"P20230501001",
+    "products":[
+        {
+            "id":"1",
+            "nameProduct":"Pastel",
+            "text":"Feliz cumpleaños señora lupe",
+            "properties":[
+                "Sabor vainilla",
+                "Relleno de fresas"
+            ],
+            "size":140,
+            "thumbnail":"https://algodulce.com.mx/cdn/shop/products/PINATEROCONFETTI_992x.jpg?v=1600198545"
+        },
+        {
+            "id":"2",
+            "nameProduct":"Gelatina",
+            "text":"",
+            "properties":[
+                "Sabor Fresas",
+                "Estilo mosaicos"
+            ],
+            "size":140,
+            "thumbnail":"https://www.recetasnestle.com.mx/sites/default/files/srh_recipes/59f8032795e08989f8e327029f544065.jpg"
+        }
+    ]
+}
