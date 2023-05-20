@@ -1,13 +1,14 @@
 :root{
   --primary-bg : #0B1320;
   --secondary-bg: #49D5C5;
+  --tertiary-bg: #1C3F60;
   --primary-font: white;
   --secondary-font: #66480B;
   --tertiary-font : #DAA614;
   --quaternary-font: #6BEDCE;
   --success-status: #72DD76;
   --wrong-status: #FF6262;
-  --waiting-status: #E2E539;
+  --backlog-status: #E2E539;
 }
 
 body{
@@ -16,4 +17,16 @@ body{
   font-family: 'Roboto', sans-serif;
   margin: 0px;
   padding: 0px;
+}
+
+.color-success{
+  color: var(--success-status);
+}
+
+.color-wrong{
+  color: var(--wrong-status);
+}
+
+.color-backlog{
+  color: var(--backlog-status);
 }
