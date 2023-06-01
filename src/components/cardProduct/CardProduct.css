@@ -22,7 +22,7 @@
     width: 100px;
     height: 90px;
     border-radius: 25px;
-    object-fit: cover;
+    object-fit: fill;
     justify-self: start;
 }
 .product-info{

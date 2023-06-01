@@ -1,10 +1,9 @@
 import { classStatusEnum, iconStatusEnum } from '../../general/Status';
 import './Order.css'
 import { IoIosArrowForward } from "react-icons/io";
-import { products } from './../../mocks/pedido.json';
 import { useState } from 'react';
 import { CardProduct } from '../cardProduct/CardProduct';
-import { MdLockClock, MdOutlineLockClock, MdPlace } from 'react-icons/md';
+import { MdPlace } from 'react-icons/md';
 
 export function Order({ order }) {
     const [open, setOpen] = useState(false)
@@ -36,8 +35,8 @@ export function Order({ order }) {
             </div>
             <div className={`detail-order ${(open ? 'active' : 'inactive')}`}>
             <hr></hr>
-                {products.map(product => (
-                   <CardProduct key={product.id} product={product}></CardProduct>
+                {order.products.map(product => (
+                   <CardProduct key={product.id} productItem={product}></CardProduct>
                 ))}
             </div>
         </div>

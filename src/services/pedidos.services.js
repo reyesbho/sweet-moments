@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore/lite";
+import { collection, getDoc, getDocs } from "firebase/firestore/lite";
 import { db } from "../config/firebase.config";
 import { formatDate } from "../utils/formatDate";
 
@@ -7,8 +7,6 @@ export const  getPedidos = async() => {
         const pedidosColl = collection(db, 'pedidos');
         const pedidosSnapshot = await getDocs(pedidosColl);
         const pedidosList = pedidosSnapshot.docs.map(doc => ({id:doc.id, ...doc.data()}));
-        console.log(pedidosList)
-
         return pedidosList?.map(pedido => ({
             id:pedido.id,
             cliente:pedido.cliente,
@@ -18,7 +16,19 @@ export const  getPedidos = async() => {
             comentarios:"Con tia ana",
             status:pedido.estatus,
             numProducts: pedido.productos.length,
-            total: pedido.total
+            total: pedido.total,
+            products: pedido.productos.map((productoPedido, index) =>
+                ({
+                    id:index,
+                    text:productoPedido.texto,
+                    size:productoPedido.porciones,
+                    properties:productoPedido.caracteristicas,
+                    product: {
+                        nameProduct: productoPedido.productoref.nombre,
+                        thumbnail: productoPedido.productoref.image
+                    }
+                })
+            )
         }));
     } catch (error) {
         throw new Error("Error al buscar los pedidos")

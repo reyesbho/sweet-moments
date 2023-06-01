@@ -1,19 +1,20 @@
 import './CardProduct.css'
-export function CardProduct({product}) {
+export function CardProduct({productItem}) {
     return (
-        <div key={product.id} className='product'>
-            <img className='product-img' src={product.thumbnail} alt={product.nameProduct}></img>
+        <div key={productItem.id} className='product'>
+            <img className='product-img' src={productItem.product?.thumbnail} 
+                alt={productItem.product?.nameProduct}></img>
             <div className='product-info'>
-                <h6>{product.nameProduct}</h6>
-                {product.text ? <p><strong>Texto: </strong>{product.text}</p> : ''}
+                <h6>{productItem.product?.nameProduct}</h6>
+                {productItem.text ? <p><strong>Texto: </strong>{productItem.text}</p> : ''}
             </div>
             <ul className='product-properties'>
                 Caracteristicas:
-                {product.properties.map(property => (
+                {productItem.properties.map(property => (
                     <li key={property}>{property}</li>
                 ))}
             </ul>
-            <span className='product-size'>{product.size} personas</span>
+            <span className='product-size'>{productItem.size} personas</span>
         </div>
     )
 
