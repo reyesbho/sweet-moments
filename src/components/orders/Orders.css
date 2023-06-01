@@ -1,0 +1,28 @@
+.orders{
+    display: flex;
+    flex-direction: column;
+}
+
+.orders > h2 {
+    text-align: center;
+    font-size: 2rem;
+    padding: 20px;
+    margin: 0px;
+    font-weight: bold;
+}
+
+.orders > button {
+    position: absolute;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    align-self: flex-end;
+    cursor: pointer;
+    margin: 0px;
+    padding: 0px;
+}
+
+.orders > button:hover {
+    transform: scale(1.1);
+    transition: 300ms ease;
+}

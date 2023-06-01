@@ -1,10 +1,18 @@
 import { useEffect, useMemo, useState } from 'react';
-import {pedidos as ordersInit} from './../mocks/pedidos.json'
 import { formatDate } from '../utils/formatDate';
+import { getPedidos } from '../services/pedidos.services';
 
 export function useOrders(){
-    const [orders, setOrders] = useState(ordersInit)
+    const [orders, setOrders] = useState([])
     const [today, setToday] = useState(formatDate(new Date()))
+
+    const getOrders = () =>{
+        getPedidos().then(newPedidos => setOrders(newPedidos));
+    }
+
+    useEffect(() => {
+        getOrders()
+    }, [])
 
     useEffect(() => {
         setToday(formatDate(new Date()))
@@ -14,7 +22,7 @@ export function useOrders(){
         return orders.slice()
         .filter(order => formatDate(order.fechaEntrega).localeCompare((today)) == 1)
         .sort((a, b) =>  a.fechaEntrega.localeCompare(b.fechaEntrega));
-    },[orders])
+    },[orders, today])
 
     return {orders: sortOrders};
 }

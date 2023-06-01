@@ -2,8 +2,9 @@ import { classStatusEnum, iconStatusEnum } from '../../general/Status';
 import './Order.css'
 import { IoIosArrowForward } from "react-icons/io";
 import { products } from './../../mocks/pedido.json';
-import './CardOrder.css';
 import { useState } from 'react';
+import { CardProduct } from '../cardProduct/CardProduct';
+import { MdLockClock, MdOutlineLockClock, MdPlace } from 'react-icons/md';
 
 export function Order({ order }) {
     const [open, setOpen] = useState(false)
@@ -19,34 +20,24 @@ export function Order({ order }) {
                 </span>
                 <div className='order-information'>
                     <span>{order.cliente}</span>
-                    <p>{order.lugarEntrega}</p>
-                    <p>Num. products: {order.numProducts}</p>
+                    <p><MdPlace></MdPlace> {order.lugarEntrega}</p>
                 </div>
-                <div className='order-metadata'>
+                <div className='order-total'>
+                    <p>Productos: {order.numProducts}</p>
+                    <span>Total: ${order.total}.00</span>
+                </div>
+                <div className='order-data'>
                     <span>{order.fechaEntrega}</span>
                     <p>Registrado por: {order.register}</p>
                 </div>
-                <button className='order-detail'>
+                <button className='order-button-detail'>
                     <IoIosArrowForward size="2.5rem" />
                 </button>
             </div>
             <div className={`detail-order ${(open ? 'active' : 'inactive')}`}>
             <hr></hr>
                 {products.map(product => (
-                    <div key={product.id} className='product'>
-                        <img className='product-img' src={product.thumbnail} alt={product.nameProduct}></img>
-                        <div className='product-info'>
-                            <h6>{product.nameProduct}</h6>
-                            {product.text ? <p><strong>Texto: </strong>{product.text}</p> : ''}
-                        </div>
-                        <ul className='product-properties'>
-                            Caracteristicas:
-                            {product.properties.map(property => (
-                                <li key={property}>{property}</li>
-                            ))}
-                        </ul>
-                        <span className='product-size'>{product.size} personas</span>
-                    </div>
+                   <CardProduct key={product.id} product={product}></CardProduct>
                 ))}
             </div>
         </div>

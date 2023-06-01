@@ -5,7 +5,7 @@ import { Orders} from './components/orders/Orders'
 import { useOrders } from './hooks/useOrders'
 function App() {
   const {orders} =useOrders()
-
+  
   return (
     <div className='principal'>
      <Sidebar title={'Dulces Momentos'}></Sidebar> 

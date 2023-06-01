@@ -7,11 +7,12 @@
 
 .order{
     display: grid;
-    grid-template-columns: 10% 40% 40% 10%;
+    grid-template-columns: 10% 30% 25% 30% 5%;
     width: 100%;
     border-radius: 25px;
     justify-items: stretch;
     align-items: center;
+    padding-bottom: 10px;
 }
 
 .order:hover{
@@ -32,30 +33,45 @@
 
 
 .order-information > span {
-    font-size: 1.7rem;
+    font-size: 1.3rem;
     font-weight: bold;
 }
 
 .order-information > p {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: 1px;
-    opacity: 90%;
+    color: rgba(--primary-font, 0.8);
 }
 
-.order-metadata{
-    justify-self: end;
+.order-total{
+    justify-self: start;
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.order-total > p{
+    margin: 0px;
+    padding: 0px;
+    bottom: 0px;
+}
+
+.order-data{
+    justify-self: center;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: end;
 }
-.order-metadata > span{
-    font-size: 1.5rem;
+.order-data > span{
+    font-size: 1rem;
     font-weight: bold;
-    opacity: 0.9;
 }
-.order-metadata > p{
+.order-data > p{
+    font-size: 1rem;
+    font-weight: bold;
     margin: 0px;
     padding: 0px;
     bottom: 0px;
@@ -65,10 +81,12 @@
     justify-self: center;
 }
 
-.order-detail {
+.order-button-detail {
     justify-self: center;
     background: none;
     border: none;
     color: var(--primary-font);
     justify-self: end;
+    cursor: pointer;
+    z-index: 10;
 }
