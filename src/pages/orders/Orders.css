@@ -11,7 +11,7 @@
     font-weight: bold;
 }
 
-.orders > button {
+.orders > a {
     position: absolute;
     background: none;
     border: none;
@@ -22,7 +22,7 @@
     padding: 0px;
 }
 
-.orders > button:hover {
+.orders > a:hover {
     transform: scale(1.1);
     transition: 300ms ease;
 }

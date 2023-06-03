@@ -1,0 +1,30 @@
+.product-cat{
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    height: 120px;
+    align-items: center;
+    color: var(--quinary-font);
+    z-index: 100;
+    background-color: var(--quinary-bg);
+    border-radius: 15px;
+    padding: 5px;
+    transition: background-color 500ms;
+}
+
+.product-cat:hover{
+    background-color: var(--secondary-bg);
+}
+
+.product-cat > img{
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    object-fit: cover;
+}
+
+.product-cat > span{
+    color: currentColor;
+    font-size: 1rem;
+    font-weight: 900;
+}

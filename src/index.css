@@ -3,13 +3,17 @@
   --secondary-bg: #49D5C5;
   --tertiary-bg: #1C3F60;
   --forty-bg : #333333;
-  --primary-font: white;
+  --quinary-bg: #ffffff;
+  --primary-font: #ffffff;
   --secondary-font: #66480B;
   --tertiary-font : #DAA614;
   --quaternary-font: #6BEDCE;
+  --quinary-font: #0B1320;
   --success-status: #72DD76;
   --wrong-status: #FF6262;
   --backlog-status: #E2E539;
+  --primary-btn:#3164F4;
+  --secondary-btn: #FF6262;
 }
 
 body{
@@ -30,4 +34,60 @@ body{
 
 .color-backlog{
   color: var(--backlog-status);
+}
+
+.form-input{
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  max-width: 350px;
+  font-weight: bolder;
+  font-size: 1rem;
+  min-width: 300px;
+}
+
+.form-input > input{
+  border-radius: 10px;
+  line-height: 25px;
+  font-size: 0.8rem;
+  padding-left: 10px;
+}
+
+.form-input > svg{
+  position: absolute;
+  display: flex;
+  align-self: flex-end;
+  padding-top: 25px;
+  padding-right: 10px;
+  color: var(--primary-bg);
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  padding-right: 10px;
+  color: var(--primary-bg);
+  opacity: 1;
+  font-size: 1rem;
+}
+
+.btn-next{
+  background-color: var(--primary-btn);
+  color: var(--primary-font);
+  border-style: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  
+}
+
+.btn-cancel{
+  background-color: var(--secondary-btn);
+  color: var(--primary-font);
+  border-style: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  
+}
+button:hover{
+  opacity: 0.9;
 }

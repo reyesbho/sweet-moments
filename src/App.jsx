@@ -1,10 +1,9 @@
 import './App.css'
 import { Sidebar } from './components/sidebar/Sidebar'
 import { Header } from './components/header/header'
-import { Orders} from './components/orders/Orders'
-import { useOrders } from './hooks/useOrders'
+import {RouterProvider} from 'react-router-dom'
+import { router } from './config/routes.config'
 function App() {
-  const {orders} =useOrders()
   
   return (
     <div className='principal'>
@@ -12,7 +11,7 @@ function App() {
      <div className='container-principal'>
         <Header></Header>
         <main className='main'>
-          <Orders orders={orders}></Orders>
+          <RouterProvider router={router}></RouterProvider>
         </main>
      </div>
     </div>
