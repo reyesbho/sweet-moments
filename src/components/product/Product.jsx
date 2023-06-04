@@ -1,9 +1,16 @@
+import { useId, useState } from 'react';
 import './Product.css';
-export function Product({product}){
+export function Product({product,isCheck,  onClickProduct}){
+  
+    const productInputId = useId();
     return (
-        <div className="product-cat">
-            <img src={product.thumbnail}></img>
-            <span>{product.name}</span>
-        </div>
+        <>
+            <label htmlFor={productInputId} className={`product-cat ${isCheck ? 'product-cat-selected':''}`}>
+               <img src={product.thumbnail}></img>
+               <span>{product.name}</span>
+            </label>
+            <input id={productInputId} onChange={(e) => onClickProduct(e, product)}  type="checkbox"  hidden/>
+        </>
+        
     )    
 }

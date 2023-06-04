@@ -2,7 +2,6 @@ import { doc, getDoc } from "firebase/firestore/lite"
 import { db } from "../config/firebase.config"
 
 export const getProducto = async ({id}) => {
-    console.log(id)
     try {
         const pedidoRef = doc(db, 'productos', id);
         const pedidoSnapshot = await getDoc(pedidoRef);

@@ -10,6 +10,8 @@
     border-radius: 15px;
     padding: 5px;
     transition: background-color 500ms;
+    max-width: 200px;
+    scroll-snap-align: center;
 }
 
 .product-cat:hover{
@@ -27,4 +29,8 @@
     color: currentColor;
     font-size: 1rem;
     font-weight: 900;
+}
+
+.product-cat-selected{
+    background-color: var(--secondary-bg);
 }

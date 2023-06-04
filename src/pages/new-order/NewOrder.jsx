@@ -2,9 +2,10 @@ import { useId, useState } from 'react';
 import './NewOrder.css';
 import {  FaUser } from 'react-icons/fa';
 import { MdLocationOn } from 'react-icons/md';
-import { Product } from '../../components/product/Product';
 import { useProducts } from '../../hooks/useProducts';
 import { Carousel } from '../../components/carousel/Carousel';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 
 export function NewOrder(){
     const [toggleState, setToggleState] = useState(1)
@@ -12,18 +13,30 @@ export function NewOrder(){
     const idCliente = useId();
     const idLugarEntrega = useId();
     const idFechaHora = useId();
+    const selectCaracteristicasId = useId();
+    const [productSelected, setProductSelected] = useState(null);
+
 
     const handleTab = (event,tabNumber) => {
         event.preventDefault();
         setToggleState(tabNumber)
-        console.log(tabNumber);
     }
 
+    const handleClickSelect = (product) => {
+        setProductSelected(product);
+    };
+
+    const animatedComponents = makeAnimated();
+
+    const options = [
+        { value: 'chocolate', label: 'Chocolate' },
+        { value: 'strawberry', label: 'Strawberry' },
+        { value: 'vanilla', label: 'Vanilla' }
+      ]
 
     return (
         <div className="new-order">
             <h2>Mis pedidos</h2>
-            <div className="container-newOrder">
                 <nav className='bloc-tabs'>
                     <div onClick={(e) => handleTab(e,1)} 
                         className={`tabs ${(toggleState === 1 ? 'tabs-active':'')}`}>Informacion</div>
@@ -55,12 +68,37 @@ export function NewOrder(){
                             </div>
                         </div>
                         <div className={`content ${(toggleState === 2 ? ' content-active' : '')}`}>
-                            <Carousel products={products}></Carousel>
+                            <div className='content-products'>
+                                {products && 
+                                    <Carousel products={products} onClickSelected={handleClickSelect}></Carousel>
+                                }
+                            </div>
+                            <div className='content-products-info'>
+                                <div className='form-select'>
+                                    <label htmlFor={selectCaracteristicasId}>Caracteristicas</label>
+                                    <Select
+                                        id={selectCaracteristicasId}
+                                        closeMenuOnSelect={false}
+                                        components={animatedComponents}
+                                        isMulti
+                                        options={options}
+                                    />
+                                </div>
+                                <div className='content-products-inputs'>
+                                    <div className='form-input'>
+                                        <label>Texto</label>
+                                        <input type='text' placeholder='Feliz compleaños'></input>
+                                    </div>
+                                    <div className='form-input'>
+                                        <label>Tamaño</label>
+                                        <input type='number' placeholder='140'></input>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div className={`content ${(toggleState === 3 ? ' content-active' : '')}`}></div>
                     </form>
                 </div>
-            </div>
         </div>
     )
 }

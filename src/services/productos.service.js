@@ -6,7 +6,7 @@ export const getProductos = async() => {
         const productosColl = collection(db, 'productos');
         const productosSnapshot = await getDocs(productosColl);
         const productosList = productosSnapshot.docs.map(doc => ({id:doc.id, ...doc.data()}));
-        
+
         return productosList?.map(producto => ({
             id:producto.id,
             name:producto.nombre,
@@ -14,7 +14,6 @@ export const getProductos = async() => {
             status: producto.estatus
         }));
     } catch (error) {
-        console.log(error)
         throw new Error("Error al buscar los productos")
     }
 }

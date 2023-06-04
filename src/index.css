@@ -45,6 +45,9 @@ body{
   font-size: 1rem;
   min-width: 300px;
 }
+.form-input > label{
+  padding-bottom: 5px;
+}
 
 .form-input > input{
   border-radius: 10px;
@@ -57,7 +60,7 @@ body{
   position: absolute;
   display: flex;
   align-self: flex-end;
-  padding-top: 25px;
+  padding-top: 30px;
   padding-right: 10px;
   color: var(--primary-bg);
 }
@@ -90,4 +93,20 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 }
 button:hover{
   opacity: 0.9;
+}
+
+.form-select {
+  max-width: 350px;
+  font-weight: bolder;
+  font-size: 1rem;
+  min-width: 300px;
+  color: var(--quinary-font);
+}
+
+.form-select > label {
+  color: var(--primary-font);
+  
+}
+.form-select > div{
+  padding-top: 5px ;
 }

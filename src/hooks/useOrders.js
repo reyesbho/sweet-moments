@@ -5,18 +5,22 @@ import { getPedidos } from '../services/pedidos.services';
 export function useOrders(){
     const [orders, setOrders] = useState([])
     const [today, setToday] = useState(formatDate(new Date()))
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null)
 
     const getOrders = () =>{
-        getPedidos().then(newPedidos => setOrders(newPedidos));
+        setLoading(true);
+        getPedidos()
+        .then(newPedidos => setOrders(newPedidos))
+        .catch(error => setError(error))
+        .finally(() => setLoading(false));
     }
 
     useEffect(() => {
-        getOrders()
+        setToday(formatDate(new Date()));
+        getOrders();
     }, [])
 
-    useEffect(() => {
-        setToday(formatDate(new Date()))
-    },[orders])
   
    const sortOrders = useMemo(() => {
         return orders.slice()
@@ -24,5 +28,5 @@ export function useOrders(){
         .sort((a, b) =>  a.fechaEntrega.localeCompare(b.fechaEntrega));
     },[orders, today])
 
-    return {orders: sortOrders};
+    return {orders: sortOrders, loading, error};
 }
