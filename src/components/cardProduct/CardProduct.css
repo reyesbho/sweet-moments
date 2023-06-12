@@ -15,7 +15,6 @@
     border-radius: 25px;
     align-items: center;
     justify-items: center;
-    height: 90px;
 }
 
 .product-img{
@@ -36,7 +35,8 @@
     color: var(--quaternary-font);
 }
 .product-info > p{
-    font-size: 1rem;
+    font-size: 0.9rem;
+    margin: 0px 0px 5px 0px;
 }
 
 .product-info > p > strong{
@@ -49,10 +49,18 @@
     list-style: none;
     font-weight: bold;
     padding-left: 15px;
+    margin: 0px;
 }
-.product-properties > li{
+.product-properties > p{
     font-weight: normal;
     font-size: 0.9rem;
+    margin: 0px 0px 5px 0px;
+}
+
+.product-properties > p > strong{
+    opacity: 1;
+    font-size: 1.1rem;
+    font-weight: bold;
 }
 
 .product-size{

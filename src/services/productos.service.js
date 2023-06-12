@@ -9,7 +9,7 @@ export const getProductos = async() => {
 
         return productosList?.map(producto => ({
             id:producto.id,
-            name:producto.nombre,
+            nameProduct:producto.nombre,
             thumbnail: producto.image,
             status: producto.estatus
         }));

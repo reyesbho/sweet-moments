@@ -2,11 +2,8 @@ import { useEffect, useState } from "react";
 import { Product } from "../product/Product";
 import './Carousel.css'
 export function Carousel({products, onClickSelected}){
-    const [productsList, setProductsList] = useState([]);
+    const [productsList, setProductsList] = useState(structuredClone(products));
 
-    useEffect(() => {
-        setProductsList(structuredClone(products))
-    },[])
 
     const handleOnChange = (event, productSelected) => { 
         event.preventDefault();

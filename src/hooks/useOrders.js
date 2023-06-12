@@ -8,9 +8,9 @@ export function useOrders(){
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null)
 
-    const getOrders = () =>{
+    const getOrders = async () =>{
         setLoading(true);
-        getPedidos()
+        await getPedidos()
         .then(newPedidos => setOrders(newPedidos))
         .catch(error => setError(error))
         .finally(() => setLoading(false));
@@ -19,6 +19,9 @@ export function useOrders(){
     useEffect(() => {
         setToday(formatDate(new Date()));
         getOrders();
+
+        //clean effect
+        return () => {}
     }, [])
 
   

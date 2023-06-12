@@ -1,4 +1,4 @@
-import { collection, getDoc, getDocs } from "firebase/firestore/lite";
+import { collection,  getDocs } from "firebase/firestore/lite";
 import { db } from "../config/firebase.config";
 import { formatDate } from "../utils/formatDate";
 
@@ -13,7 +13,6 @@ export const  getPedidos = async() => {
             lugarEntrega:pedido.lugar_entrega,
             fechaEntrega : formatDate(pedido.fecha_entrega),
             register: pedido.registrado_por,
-            comentarios:"Con tia ana",
             status:pedido.estatus,
             numProducts: pedido.productos.length,
             total: pedido.total,
@@ -22,10 +21,12 @@ export const  getPedidos = async() => {
                     id:index,
                     text:productoPedido.texto,
                     size:productoPedido.porciones,
-                    properties:productoPedido.caracteristicas,
+                    comments: productoPedido.comentarios,
                     product: {
                         nameProduct: productoPedido.productoref.nombre,
-                        thumbnail: productoPedido.productoref.image
+                        thumbnail: productoPedido.productoref.image,    
+                        type: productoPedido.productoref.tipo,
+                        flavor:productoPedido.productoref.sabor,
                     }
                 })
             )

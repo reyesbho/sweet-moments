@@ -7,12 +7,13 @@ export function CardProduct({productItem}) {
             <div className='product-info'>
                 <h6>{productItem.product?.nameProduct}</h6>
                 {productItem.text ? <p><strong>Texto: </strong>{productItem.text}</p> : ''}
+                {productItem.product?.type ? <p><strong>Tipo: </strong>{productItem.product?.type}</p> : ''}
+                
             </div>
             <ul className='product-properties'>
-                Caracteristicas:
-                {productItem.properties.map(property => (
-                    <li key={property}>{property}</li>
-                ))}
+            {productItem.product?.flavor ? <p><strong>Sabor: </strong>{productItem.product?.flavor}</p> : ''}
+                Comentarios: 
+                {productItem.comments ? <p>{productItem.comments}</p> : ''}
             </ul>
             <span className='product-size'>{productItem.size} personas</span>
         </div>

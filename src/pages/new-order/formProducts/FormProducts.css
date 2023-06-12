@@ -1,0 +1,18 @@
+.content-products{
+    display: flex;
+    width: 100%;
+    justify-items: center;
+}
+.content-products-info{
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+}
+.content-products-inputs{
+    display: flex;
+    flex-direction: row;
+}
+.add-product{
+    margin-top: 10px;
+    align-self: flex-end;
+}
