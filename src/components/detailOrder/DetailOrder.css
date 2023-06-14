@@ -1,0 +1,12 @@
+.detailOrder-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.detailOrder-products{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
