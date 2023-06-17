@@ -11,7 +11,7 @@ export function Order({ order }) {
 
     return (
         <div className={`pricipal-order ${cssClassName}`} onClick={() => setOpen(!open)}>
-            <CardOrderInfo order={order}></CardOrderInfo>
+            <CardOrderInfo order={order} enableIcon={true}></CardOrderInfo>
             <div className={`detail-order ${(open ? 'active' : 'inactive')}`}>
                 <hr></hr>
                 {order.products.map(product => (

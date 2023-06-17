@@ -9,9 +9,9 @@ export const classStatusEnum = {
 }
 
 export const iconStatusEnum = {
-    DONE: <FaCheckSquare size="1.5rem" className='color-success'></FaCheckSquare>,
-    BACKLOG: <FaHourglassStart size="1.5rem" className='color-backlog'></FaHourglassStart> ,
-    CANCELED: <MdOutlineCancel size="1.5rem" className='color-wrong'></MdOutlineCancel>
+    DONE: <FaCheckSquare size="2rem" className='color-success'></FaCheckSquare>,
+    BACKLOG: <FaHourglassStart size="2rem" className='color-backlog'></FaHourglassStart> ,
+    CANCELED: <MdOutlineCancel size="2rem" className='color-wrong'></MdOutlineCancel>
 }
 
 export const STATUS = {

@@ -14,6 +14,7 @@
   --backlog-status: #E2E539;
   --primary-btn:#3164F4;
   --secondary-btn: #FF6262;
+  --tertiary-btn: #72DD76;
 }
 
 body{
@@ -94,6 +95,18 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   padding: 5px 10px;
   cursor: pointer;
   
+}
+
+.btn-finally{
+  background-color: var(--tertiary-btn);
+  color: var(--quinary-font);
+  border-style: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  align-self: flex-end;
+  margin: 5px 0px;
 }
 
 .btn-cancel{

@@ -7,7 +7,7 @@ import './FormProducts.css'
 import { Carousel } from "../../../components/carousel/Carousel";
 
 export function FormProducts({ handleSetNewProducts }) {
-    const { products } = useProducts();
+    const { products,setProducts } = useProducts();
     const { register, handleSubmit, reset, formState: { isSubmitSuccessful } } = useForm({
         defaultValues: {
             text: '',
@@ -31,14 +31,13 @@ export function FormProducts({ handleSetNewProducts }) {
         handleSetNewProducts(newProducItem);
     }
 
-    useEffect(() => {
-        reset();
-    }, [isSubmitSuccessful, reset])
 
 
     const handleClickSelect = (product) => {
-        console.log('handle')
-        if (product.id === 'pizza') {
+        if(!product){
+            return
+        }
+        if ( product.id === 'pizza') {
             setTypes(typesPizza)
         }
         if (product.id === 'gelatina') {
@@ -68,7 +67,7 @@ export function FormProducts({ handleSetNewProducts }) {
                         <div className='form-select'>
                             <label >Tipo</label>
                             <select {...register("tipo")}>
-                                <option value='default'>Seleccionar</option>
+                                <option value='default' defaultValue>Seleccionar</option>
                                 {types.map(optionSelect => (
                                     <option key={optionSelect.value} value={optionSelect.value}>
                                         {optionSelect.label}
@@ -81,7 +80,7 @@ export function FormProducts({ handleSetNewProducts }) {
                         <div className='form-select'>
                             <label >Sabor</label>
                             <select {...register("flavor")}>
-                                <option value='default' >Seleccionar</option>
+                                <option value='default' defaultValue>Seleccionar</option>
                                 {typesFlavor.map(optionSelect => (
                                     <option key={optionSelect.value} value={optionSelect.value}>
                                         {optionSelect.label}

@@ -17,9 +17,7 @@ export function useOrders(){
     }
 
     useEffect(() => {
-        setToday(formatDate(new Date()));
         getOrders();
-
         //clean effect
         return () => {}
     }, [])

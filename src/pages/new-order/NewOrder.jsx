@@ -1,19 +1,17 @@
 import { useEffect, useId, useState } from 'react';
-import { FaUser } from 'react-icons/fa';
-import { MdLocationOn } from 'react-icons/md';
 import { CardProduct } from '../../components/cardProduct/CardProduct';
 import './NewOrder.css';
 import { FormProducts } from './formProducts/FormProducts';
 import { DetailOrder } from '../../components/detailOrder/DetailOrder';
 import { FormInfo } from './formInfo/FormInfo';
-import { or } from 'firebase/firestore/lite';
 import { formatDate } from '../../utils/formatDate';
+import { addPedido } from '../../services/pedidos.services';
 
 export function NewOrder() {
     const [toggleState, setToggleState] = useState(1)
     const [newProducts, setNewProducts] = useState([])
     const [orderInfo, setOrderInfo] = useState(null)
-    const [order, setOrder] = useState()
+    const [order, setOrder] = useState(null)
 
 
     const handleSetNewProducts = (productInfo) => {
@@ -22,6 +20,12 @@ export function NewOrder() {
 
     const handleTab = (event, tabNumber) => {
         event.preventDefault();
+        if(tabNumber === 3 && order.products.length <=0){
+            return;
+        }
+        if(tabNumber === 2 && !orderInfo ){
+            return;
+        }
         setToggleState(tabNumber)
     }
 
@@ -36,13 +40,21 @@ export function NewOrder() {
             ...orderInfo,
             id: new Date().getUTCMilliseconds(),
             register: 'Reyes Bustamante',
-            status: '',
+            status: 'BACKLOG',
             numProducts: newProducts.length,
             products: newProducts
         }
         setOrder(neworder)
-        console.log(neworder)
     }, [orderInfo, newProducts])
+
+    const registerOrder = async() => {
+        await addPedido({order})
+            .then((id) => {
+                setToggleState(1);
+                setOrderInfo(null);
+                setOrder(null);
+            });
+    }
 
     return (
         <div className="new-order">
@@ -77,6 +89,7 @@ export function NewOrder() {
                 </div>
                 <div className={`content ${(toggleState === 3 ? ' content-active' : '')}`}>
                     <DetailOrder order={order}></DetailOrder>
+                    <button className='btn-finally' onClick={() => registerOrder()}>Finalizar</button>
                 </div>
 
             </div>

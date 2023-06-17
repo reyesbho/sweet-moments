@@ -21,5 +21,5 @@ export function useProducts(){
         return () => {}
     },[])
 
-    return {products, loading, error};
+    return {products, setProducts, loading, error};
 }
