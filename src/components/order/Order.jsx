@@ -10,9 +10,13 @@ export function Order({ order }) {
    
 
     return (
-        <div className={`pricipal-order ${cssClassName}`} onClick={() => setOpen(!open)}>
+        <div className={`principal-order ${cssClassName}`} onClick={() => setOpen(!open)}>
             <CardOrderInfo order={order} enableIcon={true}></CardOrderInfo>
             <div className={`detail-order ${(open ? 'active' : 'inactive')}`}>
+                <div className='order-actions'>
+                    <button type='button' className='btn-cancel'>Cancelar</button>
+                    <button type='button' className='btn-add'>Entregado</button>
+                </div>
                 <hr></hr>
                 {order.products.map(product => (
                     <CardProduct key={product.id} productItem={product}></CardProduct>

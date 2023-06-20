@@ -25,7 +25,7 @@ export const productModelInit = {
     product: {
         nameProduct: '',
         thumbnail: '',    
-        type: 'default',
-        flavor:'default',
+        type: '',
+        flavor:'',
     }
 }

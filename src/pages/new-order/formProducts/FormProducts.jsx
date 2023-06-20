@@ -12,8 +12,8 @@ export function FormProducts({ handleSetNewProducts }) {
         defaultValues: {
             text: '',
             size: '',
-            tipo: 'default',
-            flavor: 'default',
+            tipo: '',
+            flavor: '',
             comments: ''
         }
     });
@@ -25,10 +25,13 @@ export function FormProducts({ handleSetNewProducts }) {
 
 
     const handleAddProduct = (productInfo) => {
-        const { type, flavor } = productInfo;
-        const productRef = { ...productSelected, type, flavor };
+        console.log(productInfo);
+        const { tipo, flavor } = productInfo;
+        const productRef = { ...productSelected, type:tipo, flavor };
         const newProducItem = { ...productInfo, product: productRef, id: new Date().getMilliseconds() };
         handleSetNewProducts(newProducItem);
+        reset();
+        setProducts([...products]);
     }
 
 
@@ -67,7 +70,7 @@ export function FormProducts({ handleSetNewProducts }) {
                         <div className='form-select'>
                             <label >Tipo</label>
                             <select {...register("tipo")}>
-                                <option value='default' defaultValue>Seleccionar</option>
+                                <option value='' defaultValue>Seleccionar</option>
                                 {types.map(optionSelect => (
                                     <option key={optionSelect.value} value={optionSelect.value}>
                                         {optionSelect.label}
@@ -80,7 +83,7 @@ export function FormProducts({ handleSetNewProducts }) {
                         <div className='form-select'>
                             <label >Sabor</label>
                             <select {...register("flavor")}>
-                                <option value='default' defaultValue>Seleccionar</option>
+                                <option value='' defaultValue>Seleccionar</option>
                                 {typesFlavor.map(optionSelect => (
                                     <option key={optionSelect.value} value={optionSelect.value}>
                                         {optionSelect.label}

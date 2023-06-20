@@ -6,12 +6,14 @@ import { DetailOrder } from '../../components/detailOrder/DetailOrder';
 import { FormInfo } from './formInfo/FormInfo';
 import { formatDate } from '../../utils/formatDate';
 import { addPedido } from '../../services/pedidos.services';
+import { useNavigate } from 'react-router-dom';
 
 export function NewOrder() {
     const [toggleState, setToggleState] = useState(1)
     const [newProducts, setNewProducts] = useState([])
     const [orderInfo, setOrderInfo] = useState(null)
     const [order, setOrder] = useState(null)
+    const navigate = useNavigate();
 
 
     const handleSetNewProducts = (productInfo) => {
@@ -21,9 +23,6 @@ export function NewOrder() {
     const handleTab = (event, tabNumber) => {
         event.preventDefault();
         if(tabNumber === 3 && order.products.length <=0){
-            return;
-        }
-        if(tabNumber === 2 && !orderInfo ){
             return;
         }
         setToggleState(tabNumber)
@@ -53,6 +52,8 @@ export function NewOrder() {
                 setToggleState(1);
                 setOrderInfo(null);
                 setOrder(null);
+                setNewProducts([]);
+                navigate('/');
             });
     }
 
