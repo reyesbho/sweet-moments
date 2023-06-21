@@ -25,7 +25,6 @@ export function FormProducts({ handleSetNewProducts }) {
 
 
     const handleAddProduct = (productInfo) => {
-        console.log(productInfo);
         const { tipo, flavor } = productInfo;
         const productRef = { ...productSelected, type:tipo, flavor };
         const newProducItem = { ...productInfo, product: productRef, id: new Date().getMilliseconds() };

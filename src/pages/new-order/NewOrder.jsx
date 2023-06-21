@@ -41,6 +41,8 @@ export function NewOrder() {
             register: 'Reyes Bustamante',
             status: 'BACKLOG',
             numProducts: newProducts.length,
+            registerDate: formatDate(new Date()),
+            updateDate: formatDate(new Date()),
             products: newProducts
         }
         setOrder(neworder)

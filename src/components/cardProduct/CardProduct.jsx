@@ -1,6 +1,5 @@
 import './CardProduct.css'
 export function CardProduct({productItem}) {
-    console.log(productItem)
     return (
         <div key={productItem.id} className='product'>
             <img className='product-img' src={productItem.product?.thumbnail} 

@@ -5,13 +5,13 @@ import { useOrders } from '../../hooks/useOrders'
 import {Link} from 'react-router-dom'
 
 export function Orders(){
-    const {orders} = useOrders()
+    const {orders, getOrders} = useOrders()
 
      return (
         <div className="orders">
             <Link to={"/new-order"}><FaPlusCircle size="3rem" className='color-success'></FaPlusCircle></Link>
             <h2>Mis pedidos</h2>
-            <OrderList  orders={orders}></OrderList>
+            <OrderList  orders={orders} getOrders={getOrders} ></OrderList>
         </div>
     )
 }

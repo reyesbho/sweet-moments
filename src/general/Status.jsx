@@ -19,3 +19,14 @@ export const STATUS = {
     BACKLOG: 'BACKLOG',
     CANCELED:'CANCELED'
 }
+
+
+export const getValueStatus = (status) => {
+    return STATUS_VALUE[status];
+}
+
+const STATUS_VALUE = {
+    BACKLOG: 3,
+    DONE:2,
+    CANCELED:1
+}
