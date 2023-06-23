@@ -92,7 +92,7 @@ export function NewOrder() {
                 </div>
                 <div className={`content ${(toggleState === 3 ? ' content-active' : '')}`}>
                     <DetailOrder order={order}></DetailOrder>
-                    <button className='btn-finally' onClick={() => registerOrder()}>Finalizar</button>
+                    <button className='btn-success' onClick={() => registerOrder()}>Finalizar</button>
                 </div>
 
             </div>

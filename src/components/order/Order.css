@@ -2,6 +2,7 @@
     border-radius: 25px;
     background-color: var(--tertiary-bg);
     padding: 10px;
+    margin: 10px;
 }
 
 .order-status-success{
@@ -21,4 +22,10 @@
     gap: 10px;
     justify-content: end;
     padding-right: 5%;
+}
+
+.orders-options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
