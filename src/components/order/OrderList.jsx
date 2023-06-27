@@ -3,7 +3,6 @@ import { Order } from './Order';
 import './OrderList.css'
 import InfiniteScroll from 'react-infinite-scroll-component';
 export function OrderList({ orders, getOrders, getOrdersPage, isLoading, totalItems }) {
-    console.log(orders.length)
     return (
         <div id='order-list' className="order-list">
             <InfiniteScroll

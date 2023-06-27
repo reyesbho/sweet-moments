@@ -15,7 +15,6 @@ export const  getPedidos = async(status, pagination, lastItem) => {
 
         const queryCount = query(pedidosColl, where('estatus', '==', status));
         const snapshot = await getCountFromServer(queryCount);
-        console.log(snapshot.data().count)
 
         return {pedidos:pedidosList?.map(pedido => mapToOrder({pedido})), lastItem:lastVisible, totalItems:snapshot.data().count};
     } catch (error) {

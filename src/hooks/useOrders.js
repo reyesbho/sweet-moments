@@ -21,7 +21,6 @@ export function useOrders(pagination){
     }
 
     const getOrdersPage = async () =>{
-        console.log("CALLING")
         setLoading(true);
         await getPedidos(statusFilter, pagination, lastItem)
         .then(({pedidos, lastItem, totalItems}) => {setOrders([...orders,...pedidos]); setLastItem(lastItem); setTotalItems(totalItems)})
