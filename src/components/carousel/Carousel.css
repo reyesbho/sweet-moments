@@ -1,17 +1,4 @@
 .carousel-container{
-    background-color: var(--quinary-bg);
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    padding: 10px;
-    border-radius: 20px;
-    scroll-snap-type: x mandatory;
-    overflow-x: auto;
-    color: black;    width: 100%;
-    justify-content: center;
+    position: relative;
+    width: 400px;
 }
-.carousel-container::-webkit-scrollbar {
-    display: none;
-  }
-
- 

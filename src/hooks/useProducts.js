@@ -10,9 +10,7 @@ export function useProducts(){
     const getProducts = () => {
         setLoading(true);
         getProductos()
-        .then(productsList => {
-            console.log(productsList);
-            setProducts(productsList);})
+        .then(productsList =>setProducts(productsList))
         .catch(error => setError(error))
         .finally(() => setLoading(false))
         

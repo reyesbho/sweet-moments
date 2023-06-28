@@ -1,7 +1,8 @@
 .content-products{
     display: flex;
-    width: 100%;
     justify-items: center;
+    align-items: center;
+    border-radius: 25px;
 }
 .content-products-info{
     display: flex;
@@ -11,6 +12,13 @@
 .content-products-inputs{
     display: flex;
     flex-direction: row;
+}
+
+.content-products-inputs >  div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .add-product{
     margin-top: 10px;

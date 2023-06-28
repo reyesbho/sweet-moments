@@ -38,6 +38,13 @@
     flex-direction: column;
 }
 
+.content > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .content-tabs{
     background: var(--tertiary-bg);
     padding: 10px;

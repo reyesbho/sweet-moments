@@ -6,12 +6,10 @@ export function Product({product,isCheck,  onClickProduct}){
         onClickProduct(e, product, !isCheck);
     }
     return (
-        <>
-            <label htmlFor={productInputId} className={`product-cat ${isCheck ? 'product-cat-selected':''}`} onClick={(e) => handleClickCheck(e)}>
+        <div  className={`product-cat ${isCheck ? 'product-cat-selected':''}`} onClick={(e) => handleClickCheck(e)}>
                <img src={product.thumbnail}></img>
                <span>{product.nameProduct}</span>
-            </label>
-        </> 
+        </div> 
         
     )    
 }

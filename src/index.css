@@ -235,7 +235,7 @@ hr{
     display: grid;
     grid-template: "status information information information information information" 
                   "total  data data data data data";
-    gap: 5px;
+    padding: 10px;
     row-gap: 10px;
     justify-items: center;
     justify-content: stretch;
@@ -285,7 +285,7 @@ hr{
     justify-self: end;
     align-self: center;
     margin-right: 0px;
-    padding-right: 0px;
+    padding-right: 10px;
   }
 
   .order-button-detail > svg {
@@ -305,6 +305,8 @@ hr{
     position: relative;
     display: flex;
     padding-top: 29px;
+    padding-right: 10px ;
+    padding-bottom: 10px;
   }
 
   .product-img{
@@ -312,6 +314,8 @@ hr{
     z-index: 0;
     opacity: 0.8;
     top: 0px;
+    object-fit: cover;
+    height: -webkit-fill-available;
   }
   .product-info{
     z-index: 2;
@@ -345,5 +349,9 @@ hr{
   /*Form products component*/
   .content-products-inputs{
     flex-direction: column;
+  }
+
+  .carousel-container  {
+    width: 250px;
   }
 }

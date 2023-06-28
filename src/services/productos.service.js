@@ -6,7 +6,6 @@ export const getProductos = async() => {
         const productosColl = collection(db, 'productos');
         const productosSnapshot = await getDocs(productosColl);
         const productosList = productosSnapshot.docs.map(doc => ({id:doc.id, ...doc.data()}));
-        console.log(productosList);
         return productosList?.map(producto => ({
             id:producto.id,
             nameProduct:producto.nombre,
