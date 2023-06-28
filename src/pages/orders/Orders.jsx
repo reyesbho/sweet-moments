@@ -18,12 +18,6 @@ export function Orders() {
 
     const handleFilterStatus = (status) => {
         setStatusFilter(status);
-        setDataPagination({
-            pageSize: 10,
-            totalItems: 0,
-            itemOffset: 0,
-            endOffset:15
-        })
     }
 
     return (

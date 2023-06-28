@@ -341,4 +341,9 @@ hr{
     height: -webkit-fill-available;
     padding-right: 10px;
   }
+
+  /*Form products component*/
+  .content-products-inputs{
+    flex-direction: column;
+  }
 }

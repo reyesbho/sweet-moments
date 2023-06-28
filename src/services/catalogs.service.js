@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore/lite";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase.config";
 
 export const  getCatalog = async({catalogo}) => {

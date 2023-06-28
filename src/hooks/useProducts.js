@@ -7,12 +7,15 @@ export function useProducts(){
     const [error, setError] = useState(null)
 
 
-    const getProducts = async() => {
+    const getProducts = () => {
         setLoading(true);
-        await getProductos()
-        .then(productsList => setProducts(productsList))
+        getProductos()
+        .then(productsList => {
+            console.log(productsList);
+            setProducts(productsList);})
         .catch(error => setError(error))
         .finally(() => setLoading(false))
+        
     }
     useEffect(() => {
         getProducts();
