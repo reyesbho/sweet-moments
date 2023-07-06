@@ -354,4 +354,10 @@ hr{
   .carousel-container  {
     width: 250px;
   }
+
+  /*Buttons*/
+  .btn-sm{
+    font-size: 0.7rem;
+    padding: 8px;
+  }
 }

@@ -13,7 +13,6 @@ export const getProductos = async() => {
             status: producto.estatus
         }));
     } catch (error) {
-        console.log(error)
         throw new Error("Error al buscar los productos")
     }
 }

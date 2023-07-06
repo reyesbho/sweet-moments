@@ -4,11 +4,10 @@ import { FaPlusCircle } from 'react-icons/fa'
 import { useOrders } from '../../hooks/useOrders'
 import { Link } from 'react-router-dom'
 import { STATUS } from '../../general/Status'
-import ReactPaginate from 'react-paginate'
 import { useState } from 'react'
 
 export function Orders() {
-    const [dataPagination, setDataPagination] = useState({
+    const [dataPagination] = useState({
         pageSize: 10,
         totalItems: 0,
         itemOffset: 0,
@@ -33,7 +32,7 @@ export function Orders() {
                 </div>
             </div>
             <OrderList orders={orders} getOrders={getOrders} getOrdersPage={getOrdersPage} isLoading={loading} totalItems={totalItems} ></OrderList>
-            <p>{`Total de pedidos ${totalItems}`}</p>
+            <p>{`Número de pedidos ${totalItems}`}</p>
         </div>
     )
 }

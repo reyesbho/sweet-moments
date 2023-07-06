@@ -2,9 +2,16 @@ import { MdPlace } from 'react-icons/md';
 import { IoIosArrowForward } from "react-icons/io";
 import { iconStatusEnum } from '../../general/Status';
 import './CardOrderInfo.css'
+import { useNavigate } from 'react-router-dom';
 
 export function CardOrderInfo({ order, enableIcon,styleStatus }) {
     const iconStatus = iconStatusEnum[order.status];
+    const navigate = useNavigate();
+    const handleClicDetail = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        navigate(`/order/${order.id}`);
+    }
     return (
         <div className={`order-info ${styleStatus}`}>
                 <span className='order-icon-status'>
@@ -23,8 +30,8 @@ export function CardOrderInfo({ order, enableIcon,styleStatus }) {
                     <p>Registrado por: {order.register}</p>
                 </div>
             {enableIcon &&
-                <button className='order-button-detail'>
-                    <IoIosArrowForward size="2.5rem" />
+                <button className='order-button-detail' onClick={(e) => handleClicDetail(e)}>
+                        <IoIosArrowForward size="2.5rem" />
                 </button>
             }
 

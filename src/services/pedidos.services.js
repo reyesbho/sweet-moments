@@ -2,7 +2,7 @@ import { db } from "../config/firebase.config";
 import { mapToOrder } from "../utils/mapToOrder";
 import { mapToPedido } from "../utils/mapToPedido";
 import { formatDate } from "../utils/formatDate";
-import { addDoc, collection, doc, getCountFromServer, getDocs, limit, query, startAfter, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, doc, getCountFromServer, getDoc, getDocs, limit, query, startAfter, updateDoc, where } from "firebase/firestore";
 
 export const  getPedidos = async(status, pagination, lastItem) => {
     try {    
@@ -22,6 +22,17 @@ export const  getPedidos = async(status, pagination, lastItem) => {
     }
 }
 
+export const  getPedido = async(orderId) => {
+    try {    
+        const pedidoColl = collection(db, 'pedidos');
+        const pedidoRef = doc(pedidoColl, orderId);
+        const pedidoSnapshot = await getDoc(pedidoRef);
+        const pedido = {id:orderId,...pedidoSnapshot.data()}; 
+        return mapToOrder({pedido});
+    } catch (error) {
+        throw new Error("Error al buscar los pedidos")
+    }
+}
 
 export const addPedido = async({order}) => {
     try {    

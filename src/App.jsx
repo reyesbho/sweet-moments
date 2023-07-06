@@ -1,10 +1,9 @@
 import './App.css'
-import { Sidebar } from './components/sidebar/Sidebar'
 import { Header } from './components/header/header'
-import { Order } from './components/order/Order'
 import { NewOrder } from './pages/new-order/NewOrder'
 import { Route, Routes } from 'react-router-dom'
 import { Orders } from './pages/orders/Orders'
+import { DetailOrder } from './components/detailOrder/DetailOrder'
 function App() {
   const title = 'Dulces Momentos';
   return (
@@ -15,6 +14,7 @@ function App() {
             <Routes>
               <Route path='/' element={<Orders/>} errorElement={<h1>Error</h1>}></Route>
               <Route path='/new-order' element={<NewOrder/>} errorElement={<h1>Error</h1>}></Route>
+              <Route path='/order/:id' element={<DetailOrder/>} errorElement={<h1>Error</h1>}></Route>
             </Routes>
           </main>
         </div>

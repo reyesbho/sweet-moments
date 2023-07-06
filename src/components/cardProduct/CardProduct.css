@@ -21,7 +21,7 @@
     width: 100px;
     height: 90px;
     border-radius: 25px;
-    object-fit: fill;
+    object-fit: cover;
     justify-self: start;
 }
 .product-info{
