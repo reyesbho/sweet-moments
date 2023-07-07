@@ -13,6 +13,7 @@ export const catalogs = {
     sabores:'sabores',
     gelatinas:'tipo_gelatina',
     pizzas: 'tipo_pizza',
+    pastel: 'tipo_pastel',
     panes:'panes'
 }
 

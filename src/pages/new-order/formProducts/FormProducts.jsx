@@ -21,10 +21,24 @@ export function FormProducts({ handleSetNewProducts }) {
     const { catalog: typesPizza } = useCatalogs({ tipo: catalogs.pizzas })
     const { catalog: typesFlavor } = useCatalogs({ tipo: catalogs.sabores })
     const { catalog: typesJelly } = useCatalogs({ tipo: catalogs.gelatinas })
+    const { catalog: typesCake } = useCatalogs({ tipo: catalogs.pastel })
     const [types, setTypes] = useState([])
 
+    const isValidForm = (productInfo) => {
+        if (!productInfo || !productSelected || ( 
+            productInfo.text === '' && 
+            productInfo.size === '' && 
+            productInfo.flavor === '' && 
+            productInfo.comments === '' )){
+                return false;
+            }
+        return true;
+    }
 
     const handleAddProduct = (productInfo) => {
+        if(!isValidForm(productInfo)){
+            return
+        }
         const { tipo, flavor } = productInfo;
         const productRef = { ...productSelected, type:tipo, flavor };
         const newProducItem = { ...productInfo, product: productRef, id: new Date().getMilliseconds() };
@@ -44,6 +58,9 @@ export function FormProducts({ handleSetNewProducts }) {
         }
         if (product.id === 'gelatina') {
             setTypes(typesJelly)
+        }
+        if (product.id === 'pastel') {
+            setTypes(typesCake)
         }
         setProductSelected(product);
     };
