@@ -1,28 +1,16 @@
+import { formatDate } from "./formatDate";
+
 export function mapToOrder({pedido}){
     return {
         id:pedido.id,
-        cliente:pedido.cliente,
-        lugarEntrega:pedido.lugar_entrega,
-        fechaEntrega : pedido.fecha_entrega,
-        register: pedido.registrado_por,
+        cliente:`${pedido.cliente.nombre} ${pedido.cliente.apellidoPaterno}`,
+        lugarEntrega: pedido.lugarEntrega,
+        fechaEntrega : formatDate(pedido.fechaEntrega),
+        register: "Reyes Bustamante",
         status:pedido.estatus,
-        numProducts: pedido.productos.length,
+        numProducts: 10,
         total: pedido.total,
-        registerDate:pedido.fecha_registro,
-        updateDate: pedido.fecha_actualizacion,
-        products: pedido.productos.map((productoPedido, index) =>
-            ({
-                id:index,
-                text:productoPedido.texto,
-                size:productoPedido.porciones,
-                comments: productoPedido.comentarios,
-                product: {
-                    nameProduct: productoPedido.productoref.nombre,
-                    thumbnail: productoPedido.productoref.image,    
-                    type: productoPedido.productoref.tipo,
-                    flavor:productoPedido.productoref.sabor,
-                }
-            })
-        )
+        registerDate:formatDate(pedido.fechaRegistro),
+        updateDate: formatDate(pedido.fechaActualizacion)
     };
 }

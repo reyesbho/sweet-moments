@@ -6,14 +6,14 @@ import { CardOrderInfo } from '../cardOrderInfo/CardOrderInfo';
 import { updateStatePedido } from '../../services/pedidos.services';
 import { ModalConfirm } from '../modal/Modal';
 
-export function Order({ order, getOrders}) {
+export function Order({ order, handleRefreshOrders}) {
     const [open, setOpen] = useState(false)
     const cssClassName = classStatusEnum[order.status];
     const [openModal, setOpenModal] = useState(false);
     const [statusComplete, setStatusComplete] = useState();
 
     const handleStateOrderCancel = () => {
-        updateStatePedido({id: order.id, status:statusComplete}).then(() => getOrders());
+        updateStatePedido({id: order.id, status:statusComplete}).then(() => handleRefreshOrders());
     }
 
     const handleOpenModal = (event, open, action) => {
@@ -35,7 +35,7 @@ export function Order({ order, getOrders}) {
                     </div>
                 }
                 <hr></hr>
-                {order.products.map(product => (
+                {order.products?.map(product => (
                     <CardProduct key={product.id} productItem={product}></CardProduct>
                 ))}
             </div>

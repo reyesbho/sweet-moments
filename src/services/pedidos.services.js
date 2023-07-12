@@ -1,38 +1,24 @@
 import { db } from "../config/firebase.config";
 import { mapToOrder } from "../utils/mapToOrder";
 import { mapToPedido } from "../utils/mapToPedido";
-import { formatDate } from "../utils/formatDate";
 import { addDoc, collection, doc, getCountFromServer, getDoc, getDocs, limit, query, startAfter, updateDoc, where } from "firebase/firestore";
+import { API_PEDIDOS } from "../general/url";
 
-export const  getPedidos = async(status, pagination, lastItem) => {
-    try {    
-        const pedidosColl = collection(db, 'pedidos');
-        const queryPedidos = (lastItem ? query(pedidosColl, where('estatus', '==', status), limit(pagination.pageSize), startAfter(lastItem)):
-                            query(pedidosColl, where('estatus', '==', status), limit(pagination.pageSize)))
-        const pedidosSnapshot = await getDocs(queryPedidos);
-        const lastVisible = pedidosSnapshot.docs[pedidosSnapshot.docs.length-1];
-        const pedidosList = pedidosSnapshot.docs.map(doc => ({id:doc.id, ...doc.data()}));
 
-        const queryCount = query(pedidosColl, where('estatus', '==', status));
-        const snapshot = await getCountFromServer(queryCount);
-
-        return {pedidos:pedidosList?.map(pedido => mapToOrder({pedido})), lastItem:lastVisible, totalItems:snapshot.data().count};
-    } catch (error) {
-        throw new Error("Error al buscar los pedidos")
-    }
+export const getPedidos = async(status, pagination) => {
+    const res = await fetch(API_PEDIDOS+`?estatus=${status}&page=${pagination.page}&size=${pagination.pageSize}`);
+    const data = await res.json();
+    const {content, totalElements} = data;
+    return {pedidos:content?.map(pedido => mapToOrder({pedido})), totalItems:totalElements};
 }
 
-export const  getPedido = async(orderId) => {
-    try {    
-        const pedidoColl = collection(db, 'pedidos');
-        const pedidoRef = doc(pedidoColl, orderId);
-        const pedidoSnapshot = await getDoc(pedidoRef);
-        const pedido = {id:orderId,...pedidoSnapshot.data()}; 
-        return mapToOrder({pedido});
-    } catch (error) {
-        throw new Error("Error al buscar los pedidos")
-    }
+
+export const getPedido = async(orderId) => {
+    const res = await fetch(API_PEDIDOS+`/${orderId}`);
+    const data = await res.json();
+    return mapToOrder({data});
 }
+
 
 export const addPedido = async({order}) => {
     try {    
@@ -43,11 +29,13 @@ export const addPedido = async({order}) => {
     }
 }
 
+
 export const updateStatePedido = async({id, status}) => {
-    try {    
-        const docRef = await updateDoc(doc(db, 'pedidos', id), {estatus: status, fecha_actualizacion: formatDate(new Date())});
-        return docRef
-    } catch (error) {
-        throw new Error("Error al actualizar el pedido")
-    }
+    const res = await fetch(API_PEDIDOS+`/${id}/${status}`,{
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+          }
+    });
+    return res;
 }

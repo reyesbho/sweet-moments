@@ -1,0 +1,9 @@
+.empty-list{
+    background-color: var(--tertiary-bg);
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    border-radius: 10px;
+}

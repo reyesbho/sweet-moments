@@ -4,21 +4,11 @@ import { FaPlusCircle } from 'react-icons/fa'
 import { useOrders } from '../../hooks/useOrders'
 import { Link } from 'react-router-dom'
 import { STATUS } from '../../general/Status'
-import { useState } from 'react'
 
 export function Orders() {
-    const [dataPagination] = useState({
-        pageSize: 10,
-        totalItems: 0,
-        itemOffset: 0,
-        endOffset:0,
-    })
-    const { orders, getOrders, getOrdersPage,setStatusFilter, totalItems, loading } = useOrders(dataPagination)
+    const { orders, handleRefreshOrders, incrementPagination,changeStatusFilter,totalItems} = useOrders()
 
-    const handleFilterStatus = (status) => {
-        setStatusFilter(status);
-    }
-
+ 
     return (
         <div className="orders">
             <Link to={"/new-order"}><FaPlusCircle size="3rem" className='color-success'></FaPlusCircle></Link>
@@ -26,12 +16,12 @@ export function Orders() {
             <div className='orders-options'>
                 
                 <div className='orders-filters'>
-                    <button onClick={() => handleFilterStatus(STATUS.BACKLOG)}>Por hacer</button>
-                    <button onClick={() => handleFilterStatus(STATUS.DONE)}>Entregados</button>
-                    <button onClick={() => handleFilterStatus(STATUS.CANCELED)}>Cancelados</button>
+                    <button onClick={() => changeStatusFilter(STATUS.BACKLOG)}>Por hacer</button>
+                    <button onClick={() => changeStatusFilter(STATUS.DONE)}>Entregados</button>
+                    <button onClick={() => changeStatusFilter(STATUS.CANCELED)}>Cancelados</button>
                 </div>
             </div>
-            <OrderList orders={orders} getOrders={getOrders} getOrdersPage={getOrdersPage} isLoading={loading} totalItems={totalItems} ></OrderList>
+            <OrderList orders={orders} incrementPagination={incrementPagination} totalItems={totalItems} handleRefreshOrders={handleRefreshOrders} ></OrderList>
             <p>{`Número de pedidos ${totalItems}`}</p>
         </div>
     )

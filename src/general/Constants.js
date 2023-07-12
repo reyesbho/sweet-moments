@@ -30,3 +30,9 @@ export const productModelInit = {
         flavor:'',
     }
 }
+
+export const paginationInit = {
+    pageSize: 10,
+    page : 0,
+    totalItems: 0
+}
