@@ -1,8 +1,6 @@
-import { db } from "../config/firebase.config";
-import { mapToOrder } from "../utils/mapToOrder";
-import { mapToPedido } from "../utils/mapToPedido";
-import { addDoc, collection, doc, getCountFromServer, getDoc, getDocs, limit, query, startAfter, updateDoc, where } from "firebase/firestore";
+import { mapToOrder, mapToProduct } from "../utils/map";
 import { API_PEDIDOS } from "../general/url";
+import { Order } from "../components/order/Order";
 
 
 export const getPedidos = async(status, pagination) => {
@@ -12,6 +10,11 @@ export const getPedidos = async(status, pagination) => {
     return {pedidos:content?.map(pedido => mapToOrder({pedido})), totalItems:totalElements};
 }
 
+export const getProductsByPedidoId = async(orderId) => {
+    const res = await fetch(API_PEDIDOS+`/${orderId}/producto`);
+    const data = await res.json();
+    return data.map(producto => mapToProduct(producto));
+}
 
 export const getPedido = async(orderId) => {
     const res = await fetch(API_PEDIDOS+`/${orderId}`);
@@ -20,13 +23,15 @@ export const getPedido = async(orderId) => {
 }
 
 
-export const addPedido = async({order}) => {
-    try {    
-        const docRef = await addDoc(collection(db, 'pedidos'),mapToPedido(order));
-        return docRef.id;
-    } catch (error) {
-        throw new Error("Error al registrar el pedido")
-    }
+export const addPedido = async(order) => {
+    const res = await fetch(API_PEDIDOS,{
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+          },
+          body: Order
+    });
+    res;
 }
 
 

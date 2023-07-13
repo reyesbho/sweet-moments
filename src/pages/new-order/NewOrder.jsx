@@ -49,7 +49,7 @@ export function NewOrder() {
     }, [orderInfo, newProducts])
 
     const registerOrder = async() => {
-        await addPedido({order})
+        await addPedido(order)
             .then((id) => {
                 setToggleState(1);
                 setOrderInfo(null);

@@ -14,3 +14,19 @@ export function mapToOrder({pedido}){
         updateDate: formatDate(pedido.fechaActualizacion)
     };
 }
+
+export function mapToProduct(productoPedido){
+    return {
+        id:productoPedido.id,
+        text:productoPedido.texto,
+        size:productoPedido.porciones,
+        comments: productoPedido.comentarios,
+        product: {
+            id: productoPedido.producto.id,
+            nameProduct: productoPedido.producto.descripcion,
+            thumbnail: productoPedido.producto.imagen,    
+            type: productoPedido.tipoProducto.descripcion,
+            flavor:productoPedido.sabor.sabor,
+        }
+    }
+}

@@ -3,7 +3,7 @@ import './Order.css'
 import { useState } from 'react';
 import { CardProduct } from '../cardProduct/CardProduct';
 import { CardOrderInfo } from '../cardOrderInfo/CardOrderInfo';
-import { updateStatePedido } from '../../services/pedidos.services';
+import { getProductsByPedidoId, updateStatePedido } from '../../services/pedidos.services';
 import { ModalConfirm } from '../modal/Modal';
 
 export function Order({ order, handleRefreshOrders}) {
@@ -11,6 +11,7 @@ export function Order({ order, handleRefreshOrders}) {
     const cssClassName = classStatusEnum[order.status];
     const [openModal, setOpenModal] = useState(false);
     const [statusComplete, setStatusComplete] = useState();
+    const [products, setProducts] = useState([])
 
     const handleStateOrderCancel = () => {
         updateStatePedido({id: order.id, status:statusComplete}).then(() => handleRefreshOrders());
@@ -23,9 +24,14 @@ export function Order({ order, handleRefreshOrders}) {
         setOpenModal(open);
     }
 
+    const handleShowProducts = async() => {
+        setOpen(!open);
+        const products = await getProductsByPedidoId(order.id);
+        setProducts(products)
+    }
     
     return (
-        <div className={`principal-order ${cssClassName}`} onClick={() => setOpen(!open)}> 
+        <div className={`principal-order ${cssClassName}`} onClick={handleShowProducts}> 
             <CardOrderInfo order={order} enableIcon={true}></CardOrderInfo>
             <div className={`detail-order ${(open ? 'active' : 'inactive')}`}>
                 { order?.status === STATUS.BACKLOG &&
@@ -35,7 +41,7 @@ export function Order({ order, handleRefreshOrders}) {
                     </div>
                 }
                 <hr></hr>
-                {order.products?.map(product => (
+                {products?.map(product => (
                     <CardProduct key={product.id} productItem={product}></CardProduct>
                 ))}
             </div>
