@@ -1,63 +1,18 @@
-import { useEffect, useId, useState } from 'react';
 import { CardProduct } from '../../components/cardProduct/CardProduct';
 import './NewOrder.css';
 import { FormProducts } from './formProducts/FormProducts';
 import { DetailOrder } from '../../components/detailOrder/DetailOrder';
 import { FormInfo } from './formInfo/FormInfo';
-import { addPedido } from '../../services/pedidos.services';
-import { useNavigate } from 'react-router-dom';
+import { useNewOrder } from '../../hooks/useNewOrder';
 
 export function NewOrder() {
-    const [toggleState, setToggleState] = useState(1)
-    const [newProducts, setNewProducts] = useState([])
-    const [orderInfo, setOrderInfo] = useState(null)
-    const [order, setOrder] = useState(null)
-    const navigate = useNavigate();
-
+    
+    const {newProducts, setNewProducts, handleOrderInfo, order, registerOrder, toggleState, handleTab} = useNewOrder();
 
     const handleSetNewProducts = (productInfo) => {
         setNewProducts([...structuredClone(newProducts), productInfo]);
     }
-
-    const handleTab = (event, tabNumber) => {
-        event.preventDefault();
-        if(tabNumber === 3 && order.products.length <=0){
-            return;
-        }
-        setToggleState(tabNumber)
-    }
-
-    const handleOrderInfo = (orderInfo) => {
-        const newOrderInfo = { ...orderInfo,
-             cliente: orderInfo.clienteObj.label,
-             fechaEntrega: orderInfo.fechaEntrega};
-        setOrderInfo(newOrderInfo)
-        setToggleState(2)
-    }
-
-    useEffect(() => {
-        const neworder = {
-            ...orderInfo,
-            id: new Date().getUTCMilliseconds(),
-            register: 'Reyes Bustamante',
-            status: 'BACKLOG',
-            numProducts: newProducts.length,
-            products: newProducts
-        }
-        setOrder(neworder)
-    }, [orderInfo, newProducts])
-
-    const registerOrder = async() => {
-        await addPedido(order)
-            .then(() => {
-                setToggleState(1);
-                setOrderInfo(null);
-                setOrder(null);
-                setNewProducts([]);
-                navigate('/');
-            }).catch(() => {});
-    }
-
+   
     return (
         <div className="new-order">
             <h2>Mis pedidos</h2>

@@ -1,6 +1,5 @@
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaUser } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 import { useSearch } from "../../../hooks/userSearch";
 import { useCallback } from "react";

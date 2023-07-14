@@ -1,11 +1,9 @@
-import { classStatusEnum } from "../../general/Status";
 import { CardProduct } from "../cardProduct/CardProduct";
 import { CardOrderInfo } from "../cardOrderInfo/CardOrderInfo";
-import './DetailOrder.css'
+import './DetailOrder.css';
 import { useNavigate, useParams } from "react-router-dom";
 import { useOrder } from "../../hooks/useOrder";
 import { IoIosArrowBack } from "react-icons/io";
-import { useState } from "react";
 
 export function DetailOrder({ order }) {
     console.log(order)

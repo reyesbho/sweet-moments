@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form"
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useProducts } from "../../../hooks/useProducts";
-import { catalogs } from "../../../general/Constants";
 import { useCatalogs } from "../../../hooks/useCatalogs";
-import './FormProducts.css'
+import './FormProducts.css';
 import { Carousel } from "../../../components/carousel/Carousel";
 
 export function FormProducts({ handleSetNewProducts }) {
@@ -44,8 +43,6 @@ export function FormProducts({ handleSetNewProducts }) {
         setProductSelected(null);
         setProducts([...products]);
     }
-
-
 
     const handleClickSelect = (product) => {
         if(!product){

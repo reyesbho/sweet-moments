@@ -10,17 +10,17 @@ export function Order({ order, handleRefreshOrders}) {
     const [open, setOpen] = useState(false)
     const cssClassName = classStatusEnum[order.status];
     const [openModal, setOpenModal] = useState(false);
-    const [statusComplete, setStatusComplete] = useState();
+    const [statusConfirm, setStatusConfirm] = useState();
     const [products, setProducts] = useState([])
 
-    const handleStateOrderCancel = () => {
-        updateStatePedido({id: order.id, status:statusComplete}).then(() => handleRefreshOrders());
+    const handleUpdateState = () => {
+        updateStatePedido({id: order.id, status:statusConfirm}).then(() => handleRefreshOrders());
     }
 
     const handleOpenModal = (event, open, action) => {
         event.preventDefault();
         event.stopPropagation(); 
-        setStatusComplete(action);
+        setStatusConfirm(action);
         setOpenModal(open);
     }
 
@@ -45,7 +45,7 @@ export function Order({ order, handleRefreshOrders}) {
                     <CardProduct key={product.id} productItem={product}></CardProduct>
                 ))}
             </div>
-            <ModalConfirm openModal={openModal} setOpenModal={setOpenModal} accept={handleStateOrderCancel} ></ModalConfirm>
+            <ModalConfirm openModal={openModal} setOpenModal={setOpenModal} accept={handleUpdateState} ></ModalConfirm>
         </div>
     )
 }
