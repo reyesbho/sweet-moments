@@ -4,7 +4,6 @@ import './NewOrder.css';
 import { FormProducts } from './formProducts/FormProducts';
 import { DetailOrder } from '../../components/detailOrder/DetailOrder';
 import { FormInfo } from './formInfo/FormInfo';
-import { formatDate } from '../../utils/formatDate';
 import { addPedido } from '../../services/pedidos.services';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,7 +28,9 @@ export function NewOrder() {
     }
 
     const handleOrderInfo = (orderInfo) => {
-        const newOrderInfo = { ...orderInfo, fechaEntrega: formatDate(orderInfo.fechaEntrega) };
+        const newOrderInfo = { ...orderInfo,
+             cliente: orderInfo.clienteObj.label,
+             fechaEntrega: orderInfo.fechaEntrega};
         setOrderInfo(newOrderInfo)
         setToggleState(2)
     }
@@ -41,8 +42,6 @@ export function NewOrder() {
             register: 'Reyes Bustamante',
             status: 'BACKLOG',
             numProducts: newProducts.length,
-            registerDate: formatDate(new Date()),
-            updateDate: formatDate(new Date()),
             products: newProducts
         }
         setOrder(neworder)
@@ -50,13 +49,13 @@ export function NewOrder() {
 
     const registerOrder = async() => {
         await addPedido(order)
-            .then((id) => {
+            .then(() => {
                 setToggleState(1);
                 setOrderInfo(null);
                 setOrder(null);
                 setNewProducts([]);
                 navigate('/');
-            });
+            }).catch(() => {});
     }
 
     return (
@@ -91,7 +90,10 @@ export function NewOrder() {
                     </div>
                 </div>
                 <div className={`content ${(toggleState === 3 ? ' content-active' : '')}`}>
-                    <DetailOrder order={order}></DetailOrder>
+                    {
+                        order?.products?.length >0 && 
+                        <DetailOrder order={order}></DetailOrder>
+                    }
                     <button className='btn-success' onClick={() => registerOrder()}>Finalizar</button>
                 </div>
 

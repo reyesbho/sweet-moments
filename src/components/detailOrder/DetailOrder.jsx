@@ -8,6 +8,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useState } from "react";
 
 export function DetailOrder({ order }) {
+    console.log(order)
       const {id} = useParams();
       const {orderItem,cssClassName, hasReturn, loading, error} = useOrder({order, orderId:id});
       const navigate = useNavigate();

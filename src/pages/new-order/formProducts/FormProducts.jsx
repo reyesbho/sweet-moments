@@ -7,22 +7,18 @@ import './FormProducts.css'
 import { Carousel } from "../../../components/carousel/Carousel";
 
 export function FormProducts({ handleSetNewProducts }) {
-    const { products,setProducts } = useProducts();
+    const { products, setProducts} = useProducts();
     const { register, handleSubmit, reset, formState: { isSubmitSuccessful } } = useForm({
         defaultValues: {
             text: '',
             size: '',
-            tipo: '',
-            flavor: '',
+            tipoId: '',
+            flavorId: '',
             comments: ''
         }
     });
     const [productSelected, setProductSelected] = useState(null);
-    const { catalog: typesPizza } = useCatalogs({ tipo: catalogs.pizzas })
-    const { catalog: typesFlavor } = useCatalogs({ tipo: catalogs.sabores })
-    const { catalog: typesJelly } = useCatalogs({ tipo: catalogs.gelatinas })
-    const { catalog: typesCake } = useCatalogs({ tipo: catalogs.pastel })
-    const [types, setTypes] = useState([])
+    const { catalog,flavors, getCatalogsType } = useCatalogs()
 
     const isValidForm = (productInfo) => {
         if (!productInfo || !productSelected || ( 
@@ -40,10 +36,12 @@ export function FormProducts({ handleSetNewProducts }) {
             return
         }
         const { tipo, flavor } = productInfo;
-        const productRef = { ...productSelected, type:tipo, flavor };
+        
+        const productRef = { ...productSelected, type:catalog.find(cat => cat.id == tipo).label, flavor: flavors.find(cat => cat.id === flavor).label };
         const newProducItem = { ...productInfo, product: productRef, id: new Date().getMilliseconds() };
         handleSetNewProducts(newProducItem);
         reset();
+        setProductSelected(null);
         setProducts([...products]);
     }
 
@@ -53,15 +51,7 @@ export function FormProducts({ handleSetNewProducts }) {
         if(!product){
             return
         }
-        if ( product.id === 'pizza') {
-            setTypes(typesPizza)
-        }
-        if (product.id === 'gelatina') {
-            setTypes(typesJelly)
-        }
-        if (product.id === 'pastel') {
-            setTypes(typesCake)
-        }
+        getCatalogsType(product.id);
         setProductSelected(product);
     };
 
@@ -85,9 +75,9 @@ export function FormProducts({ handleSetNewProducts }) {
                         </div>
                         <div className='form-select'>
                             <label >Tipo</label>
-                            <select {...register("tipo")}>
+                            <select {...register("tipoId")}>
                                 <option value='' defaultValue>Seleccionar</option>
-                                {types.map(optionSelect => (
+                                {catalog.map(optionSelect => (
                                     <option key={optionSelect.value} value={optionSelect.value}>
                                         {optionSelect.label}
                                     </option>
@@ -98,9 +88,9 @@ export function FormProducts({ handleSetNewProducts }) {
                     <div>
                         <div className='form-select'>
                             <label >Sabor</label>
-                            <select {...register("flavor")}>
+                            <select {...register("flavorId")}>
                                 <option value='' defaultValue>Seleccionar</option>
-                                {typesFlavor.map(optionSelect => (
+                                {flavors?.map(optionSelect => (
                                     <option key={optionSelect.value} value={optionSelect.value}>
                                         {optionSelect.label}
                                     </option>

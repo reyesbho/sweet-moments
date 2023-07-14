@@ -55,17 +55,7 @@ export function useOrders(){
     }
 
    const sortOrders = useMemo(() => {
-        return orders.slice()
-        .sort((a,b) => a.fechaEntrega.localeCompare(b.fechaEntrega))
-        .sort((a, b) =>   {
-            if(getValueStatus(b.status) > getValueStatus(a.status)){
-                return 1;
-            }
-            if(getValueStatus(b.status) < getValueStatus(a.status)){
-                return -1;
-            }
-            return 0;
-        });
+        return orders.slice().sort();
     },[orders])
 
     return {orders: sortOrders,handleRefreshOrders,incrementPagination, changeStatusFilter,totalItems};

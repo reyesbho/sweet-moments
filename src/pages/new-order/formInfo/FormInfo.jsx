@@ -2,18 +2,48 @@ import { useEffect, useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaUser } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
+import { useSearch } from "../../../hooks/userSearch";
+import { useCallback } from "react";
+import debounce from "just-debounce";
+import { useClients } from "../../../hooks/useClients";
+import './FormInfo.css';
+import Select from 'react-select';
 
 export function FormInfo({ onSubmit }) {
     const idCliente = useId();
     const idLugarEntrega = useId();
     const idFechaHora = useId();
-    const { register, handleSubmit, formState: { isDirty, isValid  } } = useForm({
+    const  {search, setSearch, error} = useSearch()
+    const {clients, getClients, loanding, errorClient} = useClients({search})
+    const { register, handleSubmit, formState: { isDirty, isValid  }, setValue } = useForm({
         defaultValues: {
-            cliente: '',
+            clienteObj: '',
             lugarEntrega: '',
             fechaEntrega: ''
         }
     });
+
+    const [selectedOption, setSelectedOption] = useState(null);
+
+    const handleSelectOption = (option) =>{
+        if(!option){    
+            setSelectedOption(option)
+            setValue('clienteObj', null)
+        } else {    
+            setSelectedOption(option)
+            setValue('clienteObj', option)
+            setValue('lugarEntrega', option.client.direccion)
+        }
+    }
+    
+    const debounceGetClients = useCallback(debounce(search => {
+        getClients({search})
+    },300), [])
+
+    const handleChange = (event) => {
+        setSearch(event);
+        debounceGetClients(event);
+      }
 
     return (
         <><form onSubmit={handleSubmit(onSubmit)}>
@@ -21,11 +51,18 @@ export function FormInfo({ onSubmit }) {
                 <button className='btn-cancel' >Cancelar</button>
                 <button type="submit" className='btn-next' disabled={isDirty && !isValid} >Siguiente</button>
             </div>
-            
-                <div className='form-input'>
-                    <label htmlFor={idCliente}>Cliente</label>
-                    <input id={idCliente} type='text' {...register("cliente", {required:true})} placeholder='Juan Garcia' />
-                    <FaUser></FaUser>
+                <div className="form-input">
+                <label htmlFor={idCliente}>Cliente</label>
+                    <Select 
+                        id={idCliente}
+                        options={clients} 
+                        value={selectedOption} 
+                        onInputChange={handleChange}
+                        onChange={handleSelectOption}
+                        isClearable = {true}
+                        isSearchable = {true}
+                        isLoading = {loanding}
+                        />
                 </div>
                 <div className='form-input'>
                     <label htmlFor={idLugarEntrega}>Lugar de entrega</label>
@@ -38,6 +75,5 @@ export function FormInfo({ onSubmit }) {
                 </div>
             </form>
         </>
-
     )
 }

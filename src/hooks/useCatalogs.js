@@ -1,27 +1,32 @@
 import { useEffect, useState } from "react";
-import { getCatalog } from "../services/catalogs.service";
+import { getCatalogType, getSabores } from "../services/catalogs.service";
 
-export function useCatalogs({tipo}){
+export function useCatalogs(){
     const [catalog, setCatalog] = useState([]);
+    const [flavors, setFlavors] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
 
-    const getCatalogs = async () => {
+    const getCatalogsType = async (idProduct) => {
         setLoading(true);
-        await getCatalog({catalogo:tipo})
+        await getCatalogType({idProduct})
         .then(resultCatalog => {
             setCatalog(resultCatalog);})
         .catch(error => setError(error))
         .finally(() => setLoading(false));
     }
 
-    useEffect(() => {
-        getCatalogs();
-        //clean efect
-        return () => {}
-    }, [])
+    const getFlavors = async () => {
+        await getSabores()
+        .then(resultCatalog => {
+            setFlavors(resultCatalog);})
+        .catch(error => setError(error));
+    }
 
+    useEffect(()=>{
+        getFlavors()
+    }, [])
     
-    return {catalog, loading, error};
+    return {catalog,flavors, getCatalogsType, loading, error};
 }

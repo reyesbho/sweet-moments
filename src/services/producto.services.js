@@ -1,23 +1,38 @@
-import { doc, getDoc } from "firebase/firestore"
-import { db } from "../config/firebase.config"
+import { API_PRODUCTOS } from "../general/url";
+
+export const getProductos = async () => {
+    try {
+        const response = await fetch(API_PRODUCTOS);
+        const data = await response.json();
+        const {content} = data;
+        return content?.map(producto => (
+            {
+                id: producto.id, 
+                key:producto.clave,
+                nameProduct: producto.descripcion,
+                thumbnail: producto.imagen,
+                status: producto.estatus
+           }
+        ))  
+
+    } catch (error) {
+        throw new Error("Error al buscar los productos");
+    }
+}
 
 export const getProducto = async ({id}) => {
     try {
-        const pedidoRef = doc(db, 'productos', id);
-        const pedidoSnapshot = await getDoc(pedidoRef);
-        if(pedidoSnapshot.exists()){
-            const pedidoData = pedidoSnapshot.data();
-            return {
-                        id: pedidoSnapshot.id, 
-                        nameProduct: pedidoData.nombre,
-                        thumbnail: pedidoData.image,
-                        status: pedidoData.estatus
-                   }
-        }else{
-            throw new Error("El producto no existe")
-        }
+        const response = await fetch(API_PRODUCTOS+ `/${id}`);
+        const producto = await response.json();
+        return {
+            id: producto.id, 
+            key:producto.clave,
+            nameProduct: producto.descripcion,
+            thumbnail: producto.imagen,
+            status: producto.estatus
+       }
 
     } catch (error) {
-        throw new Error("Error al buscar el producto")
+        throw new Error("Error al buscar el producto");
     }
 }

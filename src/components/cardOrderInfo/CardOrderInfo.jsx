@@ -3,6 +3,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { iconStatusEnum } from '../../general/Status';
 import './CardOrderInfo.css'
 import { useNavigate } from 'react-router-dom';
+import { formatDate } from '../../utils/formatDate';
 
 export function CardOrderInfo({ order, enableIcon,styleStatus }) {
     const iconStatus = iconStatusEnum[order.status];
@@ -26,7 +27,7 @@ export function CardOrderInfo({ order, enableIcon,styleStatus }) {
                     <span>Total: ${order.total}.00</span>
                 </div>
                 <div className='order-data'>
-                    <span>{order.fechaEntrega}</span>
+                    <span>{formatDate(order.fechaEntrega)}</span>
                     <p>Registrado por: {order.register}</p>
                 </div>
             {enableIcon &&

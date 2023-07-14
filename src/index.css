@@ -4,14 +4,17 @@
   --tertiary-bg: #1C3F60;
   --forty-bg : #333333;
   --quinary-bg: #ffffff;
+
   --primary-font: #ffffff;
   --secondary-font: #66480B;
   --tertiary-font : #DAA614;
   --quaternary-font: #6BEDCE;
   --quinary-font: #0B1320;
+
   --success-status: #72DD76;
   --wrong-status: #FF6262;
   --backlog-status: #E2E539;
+  
   --primary-btn:#3164F4;
   --secondary-btn: #FF6262;
   --tertiary-btn: #72DD76;
@@ -42,10 +45,10 @@ body{
   flex-direction: column;
   padding: 5px;
   max-width: 350px;
-  font-weight: bolder;
   font-size: 1rem;
   min-width: 300px;
   color: var(--quinary-font);
+  font-weight: 500;
 }
 
 
@@ -56,8 +59,8 @@ body{
 
 .form-input > input{
   border-radius: 10px;
-  line-height: 25px;
-  font-size: 0.8rem;
+  line-height: 35px;
+  font-size: 0.9rem;
   padding-left: 10px;
 }
 
@@ -65,7 +68,7 @@ body{
   position: absolute;
   display: flex;
   align-self: flex-end;
-  padding-top: 30px;
+  padding-top: 35px;
   padding-right: 10px;
   color: var(--primary-bg);
 }
@@ -156,7 +159,7 @@ button:hover{
 
 .form-select > select {
   border-radius: 10px;
-  height: 30px;
+  height: 35px;
   font-size: 0.8rem;
   padding-left: 10px;
 }
@@ -235,7 +238,7 @@ hr{
     display: grid;
     grid-template: "status information information information information information" 
                   "total  data data data data data";
-    padding: 10px;
+    padding: 5px;
     row-gap: 10px;
     justify-items: center;
     justify-content: stretch;
