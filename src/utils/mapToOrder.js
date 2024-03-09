@@ -6,7 +6,7 @@ export function mapToOrder({pedido}){
         fechaEntrega : pedido.fechaEntrega,
         register: "Reyes Bustamante",
         status:pedido.estatus,
-        numProducts: 10,
+        numProducts: 0,
         total: pedido.total,
         registerDate:pedido.fechaRegistro,
         updateDate: pedido.fechaActualizacion

@@ -9,6 +9,10 @@
     border: 2px solid var(--success-status);
 }
 
+.order-status-incomplete{
+    border: 2px solid var(--incomplete-status);
+}
+
 .order-status-wrong{
     border: 2px solid var(--wrong-status);
 }

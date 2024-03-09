@@ -5,7 +5,7 @@ import { useCatalogs } from "../../../hooks/useCatalogs";
 import './FormProducts.css';
 import { Carousel } from "../../../components/carousel/Carousel";
 
-export function FormProducts({ handleSetNewProducts }) {
+export function FormProducts({ handleSetNewProducts, handleIsOpen }) {
     const { products, setProducts} = useProducts();
     const { register, handleSubmit, reset, formState: { isSubmitSuccessful } } = useForm({
         defaultValues: {
@@ -42,6 +42,7 @@ export function FormProducts({ handleSetNewProducts }) {
         reset();
         setProductSelected(null);
         setProducts([...products]);
+        handleIsOpen();
     }
 
     const handleClickSelect = (product) => {
@@ -53,6 +54,7 @@ export function FormProducts({ handleSetNewProducts }) {
     };
 
     return (
+        <div className="modal"> 
         <form onSubmit={handleSubmit(handleAddProduct)}>
             <div className='content-products'>
                 {products &&
@@ -81,8 +83,6 @@ export function FormProducts({ handleSetNewProducts }) {
                                 ))}
                             </select>
                         </div>
-                    </div>
-                    <div>
                         <div className='form-select'>
                             <label >Sabor</label>
                             <select {...register("flavorId")}>
@@ -100,9 +100,12 @@ export function FormProducts({ handleSetNewProducts }) {
                         </div>
                     </div>
                 </div>
-                <button className='btn-add add-product' type='submit' >Agregar</button>
-                <hr></hr>
+                <div className="form-product-buttons">
+                    <button className='btn-cancel' type='none'  onClick={() => handleIsOpen()}>Cancelar</button>
+                    <button className='btn-add' type='submit'  >Agregar</button>
+                </div>
             </div>
         </form>
+        </div>
     )
 }

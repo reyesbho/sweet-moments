@@ -4,22 +4,37 @@ import './DetailOrder.css';
 import { useNavigate, useParams } from "react-router-dom";
 import { useOrder } from "../../hooks/useOrder";
 import { IoIosArrowBack } from "react-icons/io";
+import { FormProducts } from "../../pages/new-order/formProducts/FormProducts";
+import { STATUS } from "../../general/Status";
+import { ModalConfirm } from "../modal/Modal";
+import { updateStatePedido } from "../../services/pedidos.services";
+import { useModalConfirm } from "../../hooks/useModalConfirm";
+import { useModal } from "../../hooks/UseModal";
 
 export function DetailOrder({ order }) {
-    console.log(order)
       const {id} = useParams();
-      const {orderItem,cssClassName, hasReturn, loading, error} = useOrder({order, orderId:id});
+      const {orderItem,cssClassName, hasReturn, loading, error, handleSetNewProducts, productos} = useOrder({order, orderId:id});
       const navigate = useNavigate();
+      const {openModal, statusConfirm, handleOpenModal, setOpenModal} = useModalConfirm();
+      const {isOpen, handleModal} = useModal()
 
       const handleClicHome = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
+        event?.preventDefault();
+        event?.stopPropagation();
         navigate("/");
       }
+
+    const handleUpdateState = () => {
+        updateStatePedido({id: id, status:statusConfirm}).then(() => {
+            handleClicHome();
+        });
+    }
+
+     
     return (
     <div className="detailOrder">
         <div className="detail-title">
-            {hasReturn &&
+            {{hasReturn} &&
                 <button className='button-back' onClick={(e) => handleClicHome(e)}>
                         <IoIosArrowBack size="2.5rem" />
                 </button>
@@ -30,11 +45,21 @@ export function DetailOrder({ order }) {
             <div className={`detailOrder-container ${(id ? cssClassName : '' )}`}>
                 <CardOrderInfo order={orderItem} styleStatus={(id ? '' : cssClassName)}></CardOrderInfo>
                 <hr></hr>
+                <button className='btn-add' onClick={() => handleModal()} >Agregar producto</button>
+                <div className='content-product'>
+                    {isOpen && <FormProducts handleSetNewProducts={handleSetNewProducts} handleIsOpen={handleModal}></FormProducts>}
+                </div>
                 <div className="detailOrder-products">
-                    {orderItem.products.map(product => (
+                    {productos && productos.map(product => (
                         <CardProduct key={product.id} productItem={product}></CardProduct>
                     ))}
                 </div>
+                {
+                    productos && productos.length > 1 && 
+                    <button className='btn-success'onClick={(event) => handleOpenModal(event,true, STATUS.BACKLOG)} disabled={!productos || productos?.length<0} >Finalizar registro</button>
+                }
+                
+                <ModalConfirm openModal={openModal} setOpenModal={setOpenModal} accept={handleUpdateState} ></ModalConfirm>
             </div>}
     </div>
 

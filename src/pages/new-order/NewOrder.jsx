@@ -1,58 +1,55 @@
-import { CardProduct } from '../../components/cardProduct/CardProduct';
 import './NewOrder.css';
-import { FormProducts } from './formProducts/FormProducts';
-import { DetailOrder } from '../../components/detailOrder/DetailOrder';
-import { FormInfo } from './formInfo/FormInfo';
 import { useNewOrder } from '../../hooks/useNewOrder';
-
+import { MdLocationOn } from 'react-icons/md';
+import { useId} from 'react';
+import { useForm } from 'react-hook-form';
+import { FaUser } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 export function NewOrder() {
     
-    const {newProducts, setNewProducts, handleOrderInfo, order, registerOrder, toggleState, handleTab} = useNewOrder();
+    const { registerOrder} = useNewOrder();
+    const idCliente = useId();
+    const idLugarEntrega = useId();
+    const idFechaHora = useId();
+    
+    const { register,handleSubmit, formState: { isDirty, isValid  }, setValue } = useForm({
+        defaultValues: {
+            cliente: '',
+            lugarEntrega: '',
+            fechaEntrega: ''
+        }
+    });
 
-    const handleSetNewProducts = (productInfo) => {
-        setNewProducts([...structuredClone(newProducts), productInfo]);
-    }
-   
     return (
         <div className="new-order">
-            <h2>Mis pedidos</h2>
-            <nav className='bloc-tabs'>
-                <div onClick={(e) => handleTab(e, 1)}
-                    className={`tabs ${(toggleState === 1 ? 'tabs-active' : '')}`}>Informacion</div>
-                <div onClick={(e) => handleTab(e, 2)}
-                    className={`tabs ${(toggleState === 2 ? 'tabs-active' : '')}`}>Productos</div>
-                <div onClick={(e) => handleTab(e, 3)}
-                    className={`tabs ${(toggleState === 3 ? 'tabs-active' : '')}`}>Confirmación</div>
-            </nav>
-            <div className='content-tabs'>
-                <div className={`content ${(toggleState === 1 ? ' content-active' : '')}`}>
-                    <FormInfo onSubmit={handleOrderInfo}></FormInfo>
-                </div>
-                <div className={`content ${(toggleState === 2 ? ' content-active' : '')}`}>
+            <h2>Nueva Orden</h2>
+            <div className='content-order'>
+                <div className='content-active'>
+                    <form onSubmit={handleSubmit(registerOrder)}>
+                
+                    <div className='form-input'>
+                        <label htmlFor={idCliente}>Cliente</label>
+                        <input id={idCliente} {...register("cliente",{required:false})} placeholder='Juan Perez' type='text' />
+                        <FaUser></FaUser  >
+                    </div>
+                    <div className='form-input'>
+                        <label htmlFor={idLugarEntrega}>Lugar de entrega</label>
+                        <input id={idLugarEntrega} {...register("lugarEntrega",{required:false})} placeholder='Cerro prieto' type='text' />
+                        <MdLocationOn ></MdLocationOn>
+                    </div>
+                    <div className='form-input'>
+                        <label htmlFor={idFechaHora} >Fecha y hora</label>
+                        <input id={idFechaHora} {...register("fechaEntrega",{required:false})} type='datetime-local' placeholder='2023-06-04 13:30' />
+                    </div>
+                    
                     <div className='btn-next-container'>
-                        <button type="button" className='btn-cancel' >Cancelar</button>
-                        <button type="button" onClick={(e) => handleTab(e, 3)} className='btn-next' >Siguiente</button>
+                        <Link className='btn-cancel' to={'/'} >Cancelar</Link>
+                        <button type="submit" className='btn-next' disabled={isDirty && !isValid} >Registrar</button>
                     </div>
-                    <FormProducts handleSetNewProducts={handleSetNewProducts} ></FormProducts>
-                    <div className='list-products-selected'>
-                        <ul>
-                            {newProducts && newProducts?.map(producItem => (
-                                <li key={producItem.id} >
-                                    <CardProduct productItem={producItem}></CardProduct>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                </form>
                 </div>
-                <div className={`content ${(toggleState === 3 ? ' content-active' : '')}`}>
-                    {
-                        order?.products?.length >0 && 
-                        <DetailOrder order={order}></DetailOrder>
-                    }
-                    <button className='btn-success' onClick={() => registerOrder()}>Finalizar</button>
-                </div>
-
             </div>
+           
         </div>
     )
 }

@@ -1,6 +1,9 @@
 .new-order{
     display: flex;
     flex-direction: column;
+    background: var(--tertiary-bg);
+    border-radius: 25px 25px 25px 25px;
+    padding: 10px;
 }
 
 .new-order> h2 {
@@ -45,10 +48,8 @@
     align-items: center;
 }
 
-.content-tabs{
-    background: var(--tertiary-bg);
+.content-order{
     padding: 10px;
-    border-radius: 0px 25px 25px 25px;
     display: flex;
     justify-content: center;
 }
@@ -80,4 +81,10 @@
     margin: 0px;
     padding: 0px;
     width: 100%;
+}
+
+.add-product{
+    display: flex;
+    justify-content: end;
+    justify-self: end;
 }

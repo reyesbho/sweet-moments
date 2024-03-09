@@ -1,6 +1,7 @@
 import { mapToOrder, mapToProduct } from "../utils/mapToOrder";
 import { API_PEDIDOS } from "../general/url";
 import { mapToPedido } from "../utils/mapToPedido";
+import { mapToProducto } from "../utils/mapToProduct";
 
 
 export const getPedidos = async(status, pagination) => {
@@ -25,11 +26,11 @@ export const getProductsByPedidoId = async(orderId) => {
     
 }
 
-export const getPedido = async(orderId) => {    console.trace();
+export const getPedido = async(orderId) => {    
     try{
         const res = await fetch(API_PEDIDOS+`/${orderId}`);
         const data = await res.json();
-        return mapToOrder({data});
+        return mapToOrder({pedido:data});
     } catch (error) {
         throw new Error("Error al buscar el pedido")
     }
@@ -38,7 +39,6 @@ export const getPedido = async(orderId) => {    console.trace();
 
 
 export const addPedido = async(order) => {
-
     const productEntity = mapToPedido(order);
     try{
         const res = await fetch(API_PEDIDOS,{
@@ -48,7 +48,8 @@ export const addPedido = async(order) => {
               },
               body: JSON.stringify(productEntity)
         });
-        return res;
+        const data = await res.json();
+        return data;
     } catch (error) {
         throw new Error("Error al agregar el pedido")
     }
@@ -66,6 +67,21 @@ export const updateStatePedido = async({id, status}) => {
         return res;
     } catch (error) {
         throw new Error("Error al actualizar el estado del pedido")
+    }   
+}
+
+export const addProductoToPedido = async({id, producto}) => {
+    const product = mapToProducto(producto);
+    try{
+        const res = await fetch(API_PEDIDOS+`/${id}/producto`,{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(product)
+        })
+        return res;
+    }catch (error){
+        throw new Error("Error al registrar el producto")
     }
-    
 }

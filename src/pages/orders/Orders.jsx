@@ -16,6 +16,7 @@ export function Orders() {
             <div className='orders-options'>
                 
                 <div className='orders-filters'>
+                    <button onClick={() => changeStatusFilter(STATUS.INCOMPLETE)}>Incompleto</button>
                     <button onClick={() => changeStatusFilter(STATUS.BACKLOG)}>Por hacer</button>
                     <button onClick={() => changeStatusFilter(STATUS.DONE)}>Entregados</button>
                     <button onClick={() => changeStatusFilter(STATUS.CANCELED)}>Cancelados</button>

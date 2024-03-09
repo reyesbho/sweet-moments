@@ -11,7 +11,7 @@
     display: grid;
     grid-template-columns: 15% 30% 30% 20%;
     background-color: var(--forty-bg);
-    margin-bottom: 5px;
+    margin: 5px 0px;
     border-radius: 25px;
     align-items: center;
     justify-items: center;

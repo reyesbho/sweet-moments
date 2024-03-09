@@ -5,7 +5,7 @@ import { paginationInit } from '../general/Constants';
 
 export function useOrders(){
     const [orders, setOrders] = useState([])
-    const [statusFilter, setStatusFilter] = useState(STATUS.BACKLOG) 
+    const [statusFilter, setStatusFilter] = useState(STATUS.INCOMPLETE) 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null)
     const [totalItems, setTotalItems] = useState(0)
