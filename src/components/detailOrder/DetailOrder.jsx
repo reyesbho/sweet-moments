@@ -4,12 +4,12 @@ import './DetailOrder.css';
 import { useNavigate, useParams } from "react-router-dom";
 import { useOrder } from "../../hooks/useOrder";
 import { IoIosArrowBack } from "react-icons/io";
-import { FormProducts } from "../../pages/new-order/formProducts/FormProducts";
 import { STATUS } from "../../general/Status";
 import { ModalConfirm } from "../modal/Modal";
 import { updateStatePedido } from "../../services/pedidos.services";
 import { useModalConfirm } from "../../hooks/useModalConfirm";
 import { useModal } from "../../hooks/UseModal";
+import { FormProducts } from "../formProducts/FormProducts";
 
 export function DetailOrder({ order }) {
       const {id} = useParams();

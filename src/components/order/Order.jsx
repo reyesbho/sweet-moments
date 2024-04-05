@@ -23,7 +23,7 @@ export function Order({ order, handleRefreshOrders}) {
         setOpen(!open);
         const products = await getProductsByPedidoId(order.id);
         setProducts(products)
-        order.numProducts = products.length;
+        console.log(products)
     }
     
     return (

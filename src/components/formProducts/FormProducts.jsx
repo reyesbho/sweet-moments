@@ -36,7 +36,7 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }) {
         }
         const { tipo, flavor } = productInfo;
         
-        const productRef = { ...productSelected, type:catalog.find(cat => cat.id == tipo).label, flavor: flavors.find(cat => cat.id === flavor).label };
+        const productRef = { ...productSelected, type:catalog.find(cat => cat.id == tipo)?.label, flavor: flavors.find(cat => cat.id === flavor).label };
         const newProducItem = { ...productInfo, product: productRef, id: new Date().getMilliseconds() };
         handleSetNewProducts(newProducItem);
         reset();
@@ -49,6 +49,7 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }) {
         if(!product){
             return
         }
+        console.log(product)
         getCatalogsType(product.id);
         setProductSelected(product);
     };
@@ -64,14 +65,18 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }) {
             <div className='content-products-info'>
                 <div className='content-products-inputs'>
                     <div>
+                        { 
+                        productSelected?.key == 'pastel' &&
                         <div className='form-input'>
                             <label >Texto</label>
                             <input type='text' {...register("text")} placeholder='Feliz compleaños'></input>
                         </div>
-                        <div className='form-input'>
-                            <label >Tamaño</label>
-                            <input type='number' {...register("size")} placeholder='140'></input>
-                        </div>
+                        }
+                        
+                            <div className='form-input'>
+                                {productSelected?.key == 'pizza' ? <label >Rebanadas</label> : productSelected?.key == 'coop_cake' ? <label >Cantidad</label> : <label >Tamaño</label>}
+                                <input type='number' {...register("size")} placeholder='140'></input>
+                            </div>
                         <div className='form-select'>
                             <label >Tipo</label>
                             <select {...register("tipoId")}>
@@ -83,6 +88,7 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }) {
                                 ))}
                             </select>
                         </div>
+                         {productSelected?.key !== 'pizza' &&
                         <div className='form-select'>
                             <label >Sabor</label>
                             <select {...register("flavorId")}>
@@ -94,6 +100,7 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }) {
                                 ))}
                             </select>
                         </div>
+                        }
                         <div className='form-input'>
                             <label >Comentarios</label>
                             <textarea  {...register("comments")}></textarea>

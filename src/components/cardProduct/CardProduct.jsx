@@ -1,5 +1,6 @@
 import './CardProduct.css'
 export function CardProduct({productItem}) {
+    console.log(productItem)
     return (
         <div key={productItem.id} className='product'>
             <img className='product-img' src={productItem.product?.thumbnail} 
@@ -15,7 +16,7 @@ export function CardProduct({productItem}) {
                 Comentarios: 
                 {productItem.comments ? <p>{productItem.comments}</p> : ''}
             </ul>
-            <span className='product-size'>{productItem.size} personas</span>
+            <span className='product-size'>{productItem.key == 'pizza' ? `${productItem.size} Rebanadas` :productItem.key == 'pastel' ||  productItem.key == 'gelatina' ? `${productItem.size} Personas` : `${productItem.size} Piezas`} </span>
         </div>
     )
 

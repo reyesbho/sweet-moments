@@ -19,6 +19,7 @@ export function mapToProduct(productoPedido){
         text:productoPedido.texto,
         size:productoPedido.porciones,
         comments: productoPedido.comentarios,
+        key: productoPedido.producto.clave,
         product: {
             id: productoPedido.producto.id,
             nameProduct: productoPedido.producto.descripcion,

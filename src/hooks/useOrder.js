@@ -27,6 +27,8 @@ export function useOrder({ order, orderId }) {
   const getProductos = async(orderId) => { 
     await getProductsByPedidoId(orderId).
           then((products) => {
+              console.log("products")
+              console.log(products)
               setProductos([...products]);
           })
   }
