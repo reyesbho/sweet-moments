@@ -1,10 +1,10 @@
 import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { MdLocationOn } from "react-icons/md";
-import { useSearch } from "../../../hooks/userSearch";
+import { useSearch } from "../../hooks/userSearch";
 import { useCallback } from "react";
 import debounce from "just-debounce";
-import { useClients } from "../../../hooks/useClients";
+import { useClients } from "../../hooks/useClients";
 import './FormInfo.css';
 import Select from 'react-select';
 
@@ -47,8 +47,8 @@ export function FormInfo({ onSubmit }) {
     return (
         <><form onSubmit={handleSubmit(onSubmit)}>
             <div className='btn-next-container'>
-                <button className='btn-cancel' >Cancelar</button>
-                <button type="submit" className='btn-next' disabled={isDirty && !isValid} >Siguiente</button>
+                <button className='btn btn-cancel' >Cancelar</button>
+                <button type="submit" className='btn btn-next' disabled={isDirty && !isValid} >Siguiente</button>
             </div>
                 <div className="form-input">
                 <label htmlFor={idCliente}>Cliente</label>

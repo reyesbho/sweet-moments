@@ -45,7 +45,7 @@ export function DetailOrder({ order }) {
             <div className={`detailOrder-container ${(id ? cssClassName : '' )}`}>
                 <CardOrderInfo order={orderItem} styleStatus={(id ? '' : cssClassName)}></CardOrderInfo>
                 <hr></hr>
-                <button className='btn-add' onClick={() => handleModal()} >Agregar producto</button>
+                <button className='btn btn-add btn-sm' onClick={() => handleModal()} >Agregar producto</button>
                 <div className='content-product'>
                     {isOpen && <FormProducts handleSetNewProducts={handleSetNewProducts} handleIsOpen={handleModal}></FormProducts>}
                 </div>
@@ -55,8 +55,8 @@ export function DetailOrder({ order }) {
                     ))}
                 </div>
                 {
-                    productos && productos.length > 1 && 
-                    <button className='btn-success'onClick={(event) => handleOpenModal(event,true, STATUS.BACKLOG)} disabled={!productos || productos?.length<0} >Finalizar registro</button>
+                    productos && productos.length > 0 && 
+                    <button className='btn btn-success btn-sm'onClick={(event) => handleOpenModal(event,true, STATUS.BACKLOG)} disabled={!productos || productos?.length<0} >Finalizar registro</button>
                 }
                 
                 <ModalConfirm openModal={openModal} setOpenModal={setOpenModal} accept={handleUpdateState} ></ModalConfirm>

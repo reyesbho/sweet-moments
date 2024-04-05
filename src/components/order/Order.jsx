@@ -6,6 +6,7 @@ import { CardOrderInfo } from '../cardOrderInfo/CardOrderInfo';
 import { getProductsByPedidoId, updateStatePedido } from '../../services/pedidos.services';
 import { ModalConfirm } from '../modal/Modal';
 import { useModalConfirm } from '../../hooks/useModalConfirm';
+import { Link } from 'react-router-dom';
 
 export function Order({ order, handleRefreshOrders}) {
     const [open, setOpen] = useState(false)
@@ -31,9 +32,11 @@ export function Order({ order, handleRefreshOrders}) {
             <div className={`detail-order ${(open ? 'active' : 'inactive')}`}>
                 { (order?.status === STATUS.BACKLOG || order?.status === STATUS.INCOMPLETE)  &&
                     <div className='order-actions'>
-                        <button type='button' className='btn-cancel btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.CANCELED)}>Cancelar</button>
+                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.CANCELED)}>Cancelar</button>
+                        {order.status === STATUS.INCOMPLETE && 
+                        <Link className='btn btn-add btn-sm' to={`/order/${order.id}`}>Continuar</Link>}
                         {order?.status === STATUS.BACKLOG &&
-                        <button type='button' className='btn-add btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.DONE)}>Entregado</button>}
+                        <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.DONE)}>Entregado</button>}
                     </div>
                 }
                 <hr></hr>

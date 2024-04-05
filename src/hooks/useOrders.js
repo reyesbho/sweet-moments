@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getPedidos } from '../services/pedidos.services';
-import { STATUS, getValueStatus } from '../general/Status';
+import { STATUS } from '../general/Status';
 import { paginationInit } from '../general/Constants';
 
-export function useOrders(){
+export function useOrders(status){
     const [orders, setOrders] = useState([])
-    const [statusFilter, setStatusFilter] = useState(STATUS.INCOMPLETE) 
+    const [statusFilter, setStatusFilter] = useState(status) 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null)
     const [totalItems, setTotalItems] = useState(0)
@@ -58,5 +58,5 @@ export function useOrders(){
         return orders.slice().sort();
     },[orders])
 
-    return {orders: sortOrders,handleRefreshOrders,incrementPagination, changeStatusFilter,totalItems};
+    return {orders: sortOrders,handleRefreshOrders,incrementPagination, changeStatusFilter,totalItems, statusFilter};
 }

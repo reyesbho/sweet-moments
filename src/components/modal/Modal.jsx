@@ -9,10 +9,9 @@ export function ModalConfirm({openModal, setOpenModal, accept}){
                     <div className='modal-title'>
                         <p>¿Estas seguro de realizar esta acción? </p>
                     </div>
-                    <hr></hr>
                     <div className='modal-actions'>
-                        <button className='btn-cancel btn-md' onClick={(event) => {event.stopPropagation(); setOpenModal(false);}} >Cancelar</button>
-                        <button className='btn-success btn-md' onClick={accept}>Confirmar</button>
+                        <button className='btn btn-cancel btn-md' onClick={(event) => {event.stopPropagation(); setOpenModal(false);}} >Cancelar</button>
+                        <button className='btn btn-success btn-md' onClick={accept}>Confirmar</button>
                     </div>
                 </div>
             </div>

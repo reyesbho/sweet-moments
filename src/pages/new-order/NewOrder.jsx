@@ -43,8 +43,8 @@ export function NewOrder() {
                     </div>
                     
                     <div className='btn-next-container'>
-                        <Link className='btn-cancel' to={'/'} >Cancelar</Link>
-                        <button type="submit" className='btn-next' disabled={isDirty && !isValid} >Registrar</button>
+                        <Link className='btn btn-cancel btn-sm' to={'/'} >Cancelar</Link>
+                        <button type="submit" className='btn btn-next btn-sm' disabled={isDirty && !isValid} >Registrar</button>
                     </div>
                 </form>
                 </div>

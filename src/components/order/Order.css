@@ -5,20 +5,24 @@
     margin: 10px;
 }
 
-.order-status-success{
+.border-status-success{
     border: 2px solid var(--success-status);
 }
 
-.order-status-incomplete{
+.border-status-incomplete{
     border: 2px solid var(--incomplete-status);
 }
 
-.order-status-wrong{
+.border-status-wrong{
     border: 2px solid var(--wrong-status);
 }
 
-.order-status-backlog{
+.border-status-backlog{
     border: 2px solid var(--backlog-status);
+}
+
+.border-status-default{
+    border: 2px solid var(--default-status);
 }
 
 .order-actions{

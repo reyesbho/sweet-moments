@@ -41,14 +41,6 @@
     gap: 10px;
 }
 
-.orders-filters > button {
-    background: none;
-    border: none;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    color: var(--primary-font);
-}
 .orders-options{
     display: flex;
     flex-direction: row;

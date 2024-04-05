@@ -3,10 +3,11 @@ import { FaCheckSquare, FaHourglassStart, FaQuestion } from "react-icons/fa"
 import { MdOutlineCancel } from "react-icons/md"
 
 export const classStatusEnum = {
-    DONE:'order-status-success',
-    BACKLOG: 'order-status-backlog',
-    CANCELED: 'order-status-wrong',
-    INCOMPLETE:'order-status-incomplete',
+    DONE:'border-status-success',
+    BACKLOG: 'border-status-backlog',
+    CANCELED: 'border-status-wrong',
+    INCOMPLETE:'border-status-incomplete',
+    ALL:'border-status-default'
 }
 
 export const iconStatusEnum = {
@@ -21,16 +22,4 @@ export const STATUS = {
     BACKLOG: 'BACKLOG',
     CANCELED:'CANCELED',
     INCOMPLETE:'INCOMPLETE'
-}
-
-
-export const getValueStatus = (status) => {
-    return STATUS_VALUE[status];
-}
-
-const STATUS_VALUE = {
-    BACKLOG: 3,
-    DONE:2,
-    CANCELED:1,
-    INCOMPLETE:4
 }

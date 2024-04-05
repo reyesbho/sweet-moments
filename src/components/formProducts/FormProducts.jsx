@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useProducts } from "../../../hooks/useProducts";
-import { useCatalogs } from "../../../hooks/useCatalogs";
+import { useProducts } from "../../hooks/useProducts";
+import { useCatalogs } from "../../hooks/useCatalogs";
 import './FormProducts.css';
-import { Carousel } from "../../../components/carousel/Carousel";
+import { Carousel } from "../carousel/Carousel";
 
 export function FormProducts({ handleSetNewProducts, handleIsOpen }) {
     const { products, setProducts} = useProducts();
@@ -101,8 +101,8 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }) {
                     </div>
                 </div>
                 <div className="form-product-buttons">
-                    <button className='btn-cancel' type='none'  onClick={() => handleIsOpen()}>Cancelar</button>
-                    <button className='btn-add' type='submit'  >Agregar</button>
+                    <button className='btn btn-cancel' type='none'  onClick={() => handleIsOpen()}>Cancelar</button>
+                    <button className='btn btn-add' type='submit'  >Agregar</button>
                 </div>
             </div>
         </form>
