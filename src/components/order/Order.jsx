@@ -21,9 +21,11 @@ export function Order({ order, handleRefreshOrders}) {
 
     const handleShowProducts = async() => {
         setOpen(!open);
+        if(open){
+            return;
+        }
         const products = await getProductsByPedidoId(order.id);
         setProducts(products)
-        console.log(products)
     }
     
     return (

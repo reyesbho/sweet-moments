@@ -49,7 +49,6 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }) {
         if(!product){
             return
         }
-        console.log(product)
         getCatalogsType(product.id);
         setProductSelected(product);
     };
