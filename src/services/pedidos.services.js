@@ -16,6 +16,7 @@ export const getPedidos = async(status, pagination) => {
 }
 
 export const getProductsByPedidoId = async(orderId) => {
+    console.log("CAL PEDIDOs")
     try{
         const res = await fetch(API_PEDIDOS+`/${orderId}/producto`);
         const data = await res.json();

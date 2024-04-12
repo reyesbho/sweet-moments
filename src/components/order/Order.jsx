@@ -1,6 +1,6 @@
 import { STATUS, classStatusEnum } from '../../general/Status';
 import './Order.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CardProduct } from '../cardProduct/CardProduct';
 import { CardOrderInfo } from '../cardOrderInfo/CardOrderInfo';
 import { getProductsByPedidoId, updateStatePedido } from '../../services/pedidos.services';
@@ -12,20 +12,26 @@ export function Order({ order, handleRefreshOrders}) {
     const [open, setOpen] = useState(false)
     const cssClassName = classStatusEnum[order.status];
     const {openModal, statusConfirm, handleOpenModal, setOpenModal } = useModalConfirm()
-
     const [products, setProducts] = useState([])
+    const [isLoadedProductos, setIsLoadedProductos] = useState(false)
+    useEffect(() => {
+        if(!open){
+            return;
+        }
+        handleGetPedidos();
+    }, [isLoadedProductos])
 
+    const handleGetPedidos = async () => {
+        const result = await getProductsByPedidoId(order.id);
+        setProducts(result);
+    }
     const handleUpdateState = () => {
         updateStatePedido({id: order.id, status:statusConfirm}).then(() => handleRefreshOrders());
     }
 
     const handleShowProducts = async() => {
         setOpen(!open);
-        if(open){
-            return;
-        }
-        const products = await getProductsByPedidoId(order.id);
-        setProducts(products)
+        setIsLoadedProductos(true)
     }
     
     return (
