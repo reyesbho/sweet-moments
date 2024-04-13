@@ -1,0 +1,39 @@
+.principal-order{
+    border-radius: 25px;
+    background-color: var(--tertiary-bg);
+    padding: 10px;
+    margin: 10px;
+}
+
+.border-status-success{
+    border: 2px solid var(--success-status);
+}
+
+.border-status-incomplete{
+    border: 2px solid var(--incomplete-status);
+}
+
+.border-status-wrong{
+    border: 2px solid var(--wrong-status);
+}
+
+.border-status-backlog{
+    border: 2px solid var(--backlog-status);
+}
+
+.border-status-default{
+    border: 2px solid var(--default-status);
+}
+
+.order-actions{
+    display: flex;
+    gap: 10px;
+    justify-content: end;
+    padding-right: 5%;
+}
+
+.orders-options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

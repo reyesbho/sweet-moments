@@ -1,0 +1,49 @@
+.orders{
+    display: flex;
+    flex-direction: column;
+}
+.orders > p{
+    padding: 10px 0px;
+    margin: 0px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.orders > h2 {
+    text-align: center;
+    font-size: 2rem;
+    padding: 10px;
+    margin: 0px;
+    font-weight: bold;
+}
+
+.orders > a {
+    position: absolute;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    align-self: flex-end;
+    cursor: pointer;
+    margin: 0px;
+    padding: 0px;
+}
+
+.orders > a:hover {
+    transform: scale(1.1);
+    transition: 300ms ease;
+}
+
+.orders-filters{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    justify-content: end;
+    gap: 10px;
+}
+
+.orders-options{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+}

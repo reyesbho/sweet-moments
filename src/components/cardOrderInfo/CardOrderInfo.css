@@ -1,0 +1,90 @@
+
+.order-info{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-radius: 25px;
+    align-items: center;
+    padding: 10px 0px 10px 0px;
+    
+}
+.order-info > * {
+    flex: 1;
+}
+
+.order-info:hover{
+    transition: all 500ms;
+}
+.order-information{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.order-information > span {
+    font-size: 1.3rem;
+    font-weight: bolder;
+    font-weight: 700;
+}
+
+.order-information > p {
+    font-size: 1rem;
+    margin: 1px;
+    font-weight: bold;
+    opacity: 0.8;
+}
+
+.order-total{
+    justify-self: start;
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.order-total > p{
+    margin: 0px;
+    padding: 0px;
+    bottom: 0px;
+}
+
+.order-data{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: space-between;
+    align-self: stretch;
+    padding: 0px 15px;
+}
+.order-data > span{
+    font-size: 1rem;
+    font-weight: bold;
+}
+.order-data > p{
+    font-size: 0.7rem;
+    font-weight: bolder;
+    opacity: 0.8;
+    margin: 0px;
+    padding: 0px;
+    text-align: right;;
+}
+
+.order-icon-status{
+    width: fit-content;
+    flex: 0;
+    margin: 0px 20px;
+}
+
+.order-button-detail {
+    justify-self: center;
+    background: none;
+    border: none;
+    color: var(--primary-font);
+    justify-self: end;
+    cursor: pointer;
+    z-index: 10;
+    width: fit-content;
+    flex: 0;
+    margin: 0px 20px;
+}
+
+

@@ -1,0 +1,90 @@
+.new-order{
+    display: flex;
+    flex-direction: column;
+    background: var(--tertiary-bg);
+    border-radius: 25px 25px 25px 25px;
+    padding: 10px;
+}
+
+.new-order> h2 {
+    text-align: center;
+    font-size: 2rem;
+    padding: 20px;
+    margin: 0px;
+    font-weight: bold;
+}
+
+
+.bloc-tabs {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.bloc-tabs > div:hover {
+    cursor: pointer;
+
+}
+
+.tabs{
+    padding: 10px;    
+    border-radius: 10px  10px  0px  0px;
+}
+
+.tabs-active {
+    background: var(--tertiary-bg);
+    font-weight: 900;
+}
+
+.content{
+    display: none;
+    flex-direction: column;
+}
+
+.content > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-order{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+
+.content-active{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+}
+
+.btn-next-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.list-products-selected{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.list-products-selected > ul{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+.add-product{
+    display: flex;
+    justify-content: end;
+    justify-self: end;
+}
