@@ -5,7 +5,7 @@
     width: 100%;
     border-radius: 25px;
     align-items: center;
-    padding: 10px 0px 10px 0px;
+    padding: 3px 0px 3px 0px;
     
 }
 .order-info > * {
@@ -18,10 +18,9 @@
 .order-information{
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
 .order-information > span {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: bolder;
     font-weight: 700;
 }
@@ -39,7 +38,6 @@
     font-weight: bold;
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
 .order-total > p{
     margin: 0px;

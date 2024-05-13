@@ -36,8 +36,8 @@
 .orders-filters{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     padding: 10px;
-    justify-content: end;
     gap: 10px;
 }
 
@@ -47,3 +47,4 @@
     justify-content: end;
     align-items: center;
 }
+

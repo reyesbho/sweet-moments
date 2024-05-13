@@ -64,11 +64,24 @@
     font-weight: bold;
 }
 
+
+.product-totals{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: auto;
+}
 .product-size{
-    width: 100%;
-    height: 100%;
     text-align: end;
     color: var(--tertiary-font);
+    font-weight: bolder;
+    font-size: 1.1rem;
+    padding-top: 10px;
+}
+
+.product-price{
+    text-align: end;
+    color: var(--quaternary-font);
     font-weight: bolder;
     font-size: 1.1rem;
     padding-top: 10px;

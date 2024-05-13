@@ -351,7 +351,7 @@ hr{
     font-size: 0.8rem;
   }
 
-  .product-size{
+  .product-totals{
     z-index: 2;
     font-size: 0.9rem;
     position: absolute;
@@ -362,6 +362,9 @@ hr{
     width: -webkit-fill-available;
     height: -webkit-fill-available;
     padding-right: 10px;
+    flex-direction: row;
+    justify-content: end;
+    gap: 20px;
   }
 
   /*Form products component*/
