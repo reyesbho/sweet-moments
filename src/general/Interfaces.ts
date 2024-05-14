@@ -90,6 +90,7 @@ export interface ProductoTipoResponse{
 export interface Pagination{
     pageSize: Number;
     page: number;
+    totalItems:number;
 }
 
 

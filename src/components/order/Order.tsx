@@ -7,14 +7,16 @@ import { getProductsByPedidoId, updateStatePedido } from '../../services/pedidos
 import { ModalConfirm } from '../modal/Modal';
 import { useModalConfirm } from '../../hooks/useModalConfirm';
 import { Link } from 'react-router-dom';
-import { Order as OrderInterface } from '../../general/Interfaces';
+import { Order as OrderInterface, Product } from '../../general/Interfaces';
+import { useAuth } from '../../config/AuthProvider';
 
 export function Order({ order, handleRefreshOrders}:{order: OrderInterface, handleRefreshOrders: Function}) {
     const [open, setOpen] = useState(false)
     const cssClassName = classStatusEnum[order.status as keyof typeof classStatusEnum];
     const {openModal, statusConfirm, handleOpenModal, setOpenModal } = useModalConfirm()
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState<Product[]>([])
     const [isLoadedProductos, setIsLoadedProductos] = useState(false)
+    const token = useAuth().user?.token ?? '';
     useEffect(() => {
         if(!open){
             return;
@@ -23,7 +25,7 @@ export function Order({ order, handleRefreshOrders}:{order: OrderInterface, hand
     }, [isLoadedProductos])
 
     const handleGetPedidos = async () => {
-        const result = await getProductsByPedidoId(order.id);
+        const result = await getProductsByPedidoId(order.id, token);
         setProducts(result);
     }
     const handleUpdateState = () => {

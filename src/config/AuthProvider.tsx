@@ -1,16 +1,48 @@
-import { PropsWithChildren, useState } from "react";
+import {useContext, useEffect } from "react";
 
 
 import { createContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { useLocalStorage } from "./useLocalStorage";
+import { User } from "./User";
 
-export const AuthContext = createContext<{id:Number} | null>(null);
+export const AuthContext = createContext<{
+    user:User | null,
+    login: any,
+    logout:any} | undefined>(undefined);
 
-type AuthProviderProps = PropsWithChildren & {
-    isSignedIn?: boolean;
-}
 
-export function AuthProvider({children, isSignedIn}:AuthProviderProps){
-    const [user] = useState((isSignedIn?{id:1}:null))
-    return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
-}
+export function AuthProvider({children}:{children:any}){
+    const [user, setUser] = useLocalStorage("user", null);
+    const navigate = useNavigate();
+  
 
+    // call this function when you want to authenticate the user
+    const login = async (data:User) => {
+      console.log(data)
+      setUser(data);
+      //navigate("/profile");
+    };
+  
+    // call this function to sign out logged in user
+    const logout = () => {
+      setUser(null);
+      navigate("/", { replace: true });
+    };
+  
+    return <AuthContext.Provider value={{
+        user,
+        login,
+        logout,
+      }}>{children}</AuthContext.Provider>;
+  };
+
+
+  export function useAuth () {
+    const context = useContext(AuthContext);
+    console.log(context)
+    if (context === undefined){
+        throw new Error("useAth must be used within an AuthProvider")
+    }
+    return context;
+} 

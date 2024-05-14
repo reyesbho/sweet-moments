@@ -3,18 +3,22 @@ import { getPedidos } from '../services/pedidos.services';
 import { paginationInit } from '../general/Constants';
 import { classStatusEnum, STATUS } from '../general/Status';
 import { Order } from '../general/Interfaces';
+import { useAuth } from '../config/AuthProvider';
 
 export function useOrders(status: String){
+    console.log(status)
     const [orders, setOrders] = useState<Order[]>([])
     const [statusFilter, setStatusFilter] = useState<String>(status) 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null)
     const [totalItems, setTotalItems] = useState(0)
     const [pagination, setPagination] = useState(paginationInit)
+    const user = useAuth();
+    const token:string= user?.user?.token ?? '';
 
     const getOrders = async () =>{
         setLoading(true);
-        await getPedidos(statusFilter, pagination)
+        await getPedidos(statusFilter, pagination, token)
         .then(({pedidos, totalItems}) => {
             setOrders([...orders,...pedidos]); 
             setTotalItems(totalItems);
@@ -45,7 +49,7 @@ export function useOrders(status: String){
 
     const handleRefreshOrders = async() => {
         setLoading(true);
-        await getPedidos(statusFilter, paginationInit)
+        await getPedidos(statusFilter, paginationInit, token)
         .then(({pedidos, totalItems}) => {
             setOrders([...pedidos]); 
             setTotalItems(totalItems);

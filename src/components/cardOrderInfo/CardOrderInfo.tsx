@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatDate } from '../../utils/formatDate';
 import { Order } from '../../general/Interfaces';
 
-export function CardOrderInfo({ order, enableIcon,styleStatus }: { order: Order, enableIcon:boolean,styleStatus:string }) {
+export function CardOrderInfo({ order, enableIcon }: { order: Order, enableIcon:boolean}) {
     const iconStatus = iconStatusEnum[order.status as keyof typeof iconStatusEnum];
     const navigate = useNavigate();
     const handleClicDetail = (event: any) => {
@@ -15,7 +15,7 @@ export function CardOrderInfo({ order, enableIcon,styleStatus }: { order: Order,
         navigate(`/order/${order.id}`);
     }
     return (
-        <div className={`order-info ${styleStatus}`}>
+        <div className={`order-info`}>
                 <span className='order-icon-status'>
                     {iconStatus}
                 </span>

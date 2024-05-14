@@ -3,11 +3,20 @@ import { API_PEDIDOS } from "../general/url";
 import { mapToPedido } from "../utils/mapToPedido";
 import { mapToProducto } from "../utils/mapToProduct";
 import { Order, Pagination, Pedido, Product, ProductoPedido } from "../general/Interfaces";
+import { useAuth } from "../config/AuthProvider";
 
 
-export const getPedidos = async(statusFilter:String, pagination:Pagination) => {
-    try{
-        const res = await fetch(API_PEDIDOS+`?estatus=${statusFilter}&page=${pagination.page}&size=${pagination.pageSize}`);
+
+export const getPedidos = async(statusFilter:String, pagination:Pagination, token: string) => {
+        try{
+        const res = await fetch(API_PEDIDOS+`?estatus=${statusFilter}&page=${pagination.page}&size=${pagination.pageSize}`,
+            {
+                method: 'GET',
+                headers:{
+                    'Authorization':`Bearer ${token}`
+                }
+            }
+        );
         const data = await res.json();
         const {content, totalElements} = data;
         return {pedidos:content?.map((pedido:Pedido) => mapToOrder(pedido)), totalItems:totalElements};
@@ -16,9 +25,17 @@ export const getPedidos = async(statusFilter:String, pagination:Pagination) => {
     }
 }
 
-export const getProductsByPedidoId = async(orderId: number) => {
+export const getProductsByPedidoId = async(orderId: number, token: string) => {
+    const user = useAuth();    
     try{
-        const res = await fetch(API_PEDIDOS+`/${orderId}/producto`);
+        const res = await fetch(API_PEDIDOS+`/${orderId}/producto`,
+        {
+            method: 'GET',
+            headers:{
+                'Authorization':`Bearer ${token}`
+            }
+        }
+        );
         const data = await res.json();
         return data.map((producto:ProductoPedido) => mapToProduct(producto));
     } catch (error) {
@@ -27,9 +44,17 @@ export const getProductsByPedidoId = async(orderId: number) => {
     
 }
 
-export const getPedido = async(orderId: number) => {    
+export const getPedido = async(orderId: number, token: string) => {   
+    const user = useAuth();     
     try{
-        const res = await fetch(API_PEDIDOS+`/${orderId}`);
+        const res = await fetch(API_PEDIDOS+`/${orderId}`,
+        {
+            method: 'GET',
+            headers:{
+                'Authorization':`Bearer ${token}`
+            }
+        }
+        );
         const data = await res.json();
         return mapToOrder(data);
     } catch (error) {
