@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getCatalogType, getSabores } from "../services/catalogs.service";
-import { CatalogType, ProductoTipoResponse } from "../general/Interfaces";
+import { CatalogType } from "../general/Interfaces";
 
 export function useCatalogs(){
     const [catalog, setCatalog] = useState<CatalogType[]>([]);

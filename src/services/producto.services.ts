@@ -1,11 +1,16 @@
+import { ProductoResponse } from "../general/Interfaces";
 import { API_PRODUCTOS } from "../general/url";
+
 
 export const getProductos = async () => {
     try {
-        const response = await fetch(API_PRODUCTOS);
+        const response = await fetch(API_PRODUCTOS,
+            {
+                method:"GET",
+            });
         const data = await response.json();
         const {content} = data;
-        return content?.map(producto => (
+        return content?.map((producto:ProductoResponse) => (
             {
                 id: producto.id, 
                 key:producto.clave,
@@ -20,9 +25,13 @@ export const getProductos = async () => {
     }
 }
 
-export const getProducto = async ({id}) => {
+export const getProducto = async ({id}:{id:number}) => {
     try {
-        const response = await fetch(API_PRODUCTOS+ `/${id}`);
+        const response = await fetch(API_PRODUCTOS+ `/${id}`,
+        {
+            method:"GET",
+        }
+        );
         const producto = await response.json();
         return {
             id: producto.id, 

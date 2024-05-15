@@ -5,6 +5,8 @@ import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
 import { User } from "./User";
+import { jwtDecode } from "jwt-decode";
+import { getUser } from "../services/AuthService";
 
 export const AuthContext = createContext<{
     user:User | null,
@@ -19,9 +21,10 @@ export function AuthProvider({children}:{children:any}){
 
     // call this function when you want to authenticate the user
     const login = async (data:User) => {
-      console.log(data)
-      setUser(data);
-      //navigate("/profile");
+      const user = getUser(data.token).then((response:{email:string, user:string}) => {
+        const newUser = {...data, user: response.user, email: response.email};
+        setUser(newUser);
+      });
     };
   
     // call this function to sign out logged in user

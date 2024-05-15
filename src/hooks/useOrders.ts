@@ -1,9 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getPedidos } from '../services/pedidos.services';
 import { paginationInit } from '../general/Constants';
-import { classStatusEnum, STATUS } from '../general/Status';
 import { Order } from '../general/Interfaces';
-import { useAuth } from '../config/AuthProvider';
 
 export function useOrders(status: String){
     console.log(status)
@@ -13,12 +11,10 @@ export function useOrders(status: String){
     const [error, setError] = useState(null)
     const [totalItems, setTotalItems] = useState(0)
     const [pagination, setPagination] = useState(paginationInit)
-    const user = useAuth();
-    const token:string= user?.user?.token ?? '';
 
     const getOrders = async () =>{
         setLoading(true);
-        await getPedidos(statusFilter, pagination, token)
+        await getPedidos(statusFilter, pagination)
         .then(({pedidos, totalItems}) => {
             setOrders([...orders,...pedidos]); 
             setTotalItems(totalItems);
@@ -49,7 +45,7 @@ export function useOrders(status: String){
 
     const handleRefreshOrders = async() => {
         setLoading(true);
-        await getPedidos(statusFilter, paginationInit, token)
+        await getPedidos(statusFilter, paginationInit)
         .then(({pedidos, totalItems}) => {
             setOrders([...pedidos]); 
             setTotalItems(totalItems);

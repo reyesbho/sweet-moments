@@ -8,7 +8,6 @@ import { ModalConfirm } from '../modal/Modal';
 import { useModalConfirm } from '../../hooks/useModalConfirm';
 import { Link } from 'react-router-dom';
 import { Order as OrderInterface, Product } from '../../general/Interfaces';
-import { useAuth } from '../../config/AuthProvider';
 
 export function Order({ order, handleRefreshOrders}:{order: OrderInterface, handleRefreshOrders: Function}) {
     const [open, setOpen] = useState(false)
@@ -16,7 +15,6 @@ export function Order({ order, handleRefreshOrders}:{order: OrderInterface, hand
     const {openModal, statusConfirm, handleOpenModal, setOpenModal } = useModalConfirm()
     const [products, setProducts] = useState<Product[]>([])
     const [isLoadedProductos, setIsLoadedProductos] = useState(false)
-    const token = useAuth().user?.token ?? '';
     useEffect(() => {
         if(!open){
             return;
@@ -25,7 +23,7 @@ export function Order({ order, handleRefreshOrders}:{order: OrderInterface, hand
     }, [isLoadedProductos])
 
     const handleGetPedidos = async () => {
-        const result = await getProductsByPedidoId(order.id, token);
+        const result = await getProductsByPedidoId(order.id);
         setProducts(result);
     }
     const handleUpdateState = () => {

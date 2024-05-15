@@ -44,7 +44,7 @@ export function DetailOrder({ order}:{ order: Order | null}) {
         </div>
         {orderItem &&
             <div className={`detailOrder-container ${(id ? cssClassName : '' )}`}>
-                <CardOrderInfo order={orderItem} styleStatus={(id ? '' : cssClassName)} enableIcon={false}></CardOrderInfo>
+                <CardOrderInfo order={orderItem} enableIcon={false}></CardOrderInfo>
                 <hr></hr>
                 <button className='btn btn-add btn-sm' onClick={() => handleModal()} >Agregar producto</button>
                 <div className='content-product'>

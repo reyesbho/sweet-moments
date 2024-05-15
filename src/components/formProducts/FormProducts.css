@@ -37,3 +37,17 @@
     display: flex;
     justify-content: space-between;
 }
+
+@media only screen and (max-width:820px) {
+  
+  
+
+    /*Form products component*/
+    .content-products-inputs{
+      flex-direction: column;
+    }
+  
+    .carousel-container  {
+      width: 250px;
+    }
+}

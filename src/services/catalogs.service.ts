@@ -3,7 +3,11 @@ import { API_CATALOGOS,  API_PRODUCTOS } from "../general/url";
 export const getCatalogType = async({idProduct}:{idProduct:Number}):Promise<CatalogType[]> => {
     if (!idProduct) return [];
     try {
-        const response = await fetch(API_PRODUCTOS+ `/${idProduct}/tipo`);
+        const response = await fetch(API_PRODUCTOS+ `/${idProduct}/tipo`,
+        {
+            method:"GET",
+        }
+        );
         const tipos = await response.json();
         return tipos?.map((cat:ProductoTipoResponse) => ({
             value: cat.id,
@@ -20,7 +24,11 @@ export const searchClient = async({search}:{search:String}):Promise<Client[]> =>
     if (search === '') return [];
 
     try {
-        const response = await fetch(API_CATALOGOS+ `/cliente?search=${search}`);
+        const response = await fetch(API_CATALOGOS+ `/cliente?search=${search}`,
+        {
+            method:"GET",
+        }
+        );
         const clients = await response.json();
         return clients?.map((cliente:ClienteResponse) => ({
             id: cliente.id,
@@ -38,7 +46,11 @@ export const searchClient = async({search}:{search:String}):Promise<Client[]> =>
 
 export const getSabores = async():Promise<CatalogType[]> => {
     try {
-        const response = await fetch(API_CATALOGOS+ `/sabor`);
+        const response = await fetch(API_CATALOGOS+ `/sabor`,
+        {
+            method:"GET"
+        }
+        );
         const tipos = await response.json();
         return tipos?.map((cat: SaborResponse) => ({
             value: cat.id,

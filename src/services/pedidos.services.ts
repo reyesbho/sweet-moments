@@ -3,18 +3,14 @@ import { API_PEDIDOS } from "../general/url";
 import { mapToPedido } from "../utils/mapToPedido";
 import { mapToProducto } from "../utils/mapToProduct";
 import { Order, Pagination, Pedido, Product, ProductoPedido } from "../general/Interfaces";
-import { useAuth } from "../config/AuthProvider";
 
 
 
-export const getPedidos = async(statusFilter:String, pagination:Pagination, token: string) => {
+export const getPedidos = async(statusFilter:String, pagination:Pagination) => {
         try{
         const res = await fetch(API_PEDIDOS+`?estatus=${statusFilter}&page=${pagination.page}&size=${pagination.pageSize}`,
             {
-                method: 'GET',
-                headers:{
-                    'Authorization':`Bearer ${token}`
-                }
+                method: 'GET'
             }
         );
         const data = await res.json();
@@ -25,15 +21,11 @@ export const getPedidos = async(statusFilter:String, pagination:Pagination, toke
     }
 }
 
-export const getProductsByPedidoId = async(orderId: number, token: string) => {
-    const user = useAuth();    
+export const getProductsByPedidoId = async(orderId: number) => { 
     try{
         const res = await fetch(API_PEDIDOS+`/${orderId}/producto`,
         {
             method: 'GET',
-            headers:{
-                'Authorization':`Bearer ${token}`
-            }
         }
         );
         const data = await res.json();
@@ -44,15 +36,12 @@ export const getProductsByPedidoId = async(orderId: number, token: string) => {
     
 }
 
-export const getPedido = async(orderId: number, token: string) => {   
-    const user = useAuth();     
+export const getPedido = async(orderId: number) => {   
+       
     try{
         const res = await fetch(API_PEDIDOS+`/${orderId}`,
         {
             method: 'GET',
-            headers:{
-                'Authorization':`Bearer ${token}`
-            }
         }
         );
         const data = await res.json();
@@ -102,7 +91,7 @@ export const addProductoToPedido = async({id, producto}:{id:number, producto:Pro
         const res = await fetch(API_PEDIDOS+`/${id}/producto`,{
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(product)
         })

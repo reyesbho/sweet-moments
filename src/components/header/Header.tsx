@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import './Header.css';
-export function Header({ title }:{ title:String }) {
+import { useAuth } from '../../config/AuthProvider';
+export function Header({ title }:{ title:string }) {
+    const {user, logout} = useAuth()
 
     const logo = './src/assets/sweet-moments.png';
     return (
@@ -17,8 +19,8 @@ export function Header({ title }:{ title:String }) {
             </div>
             <div className="header-user">
                 <div>
-                    Fabiola Martinez
-                    <button>Cerrar sesion</button>
+                    {user?.user}
+                    <button onClick={logout}>Cerrar sesion</button>
                 </div>
                 <img className="header-avatar"
                     src="https://pbs.twimg.com/profile_images/730777468202688516/J34OEG_u_400x400.jpg"

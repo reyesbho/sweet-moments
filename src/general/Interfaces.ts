@@ -7,8 +7,8 @@ export interface Order{
     status:String,
     numProducts: number,
     total: number,
-    registerDate:Date,
-    updateDate: Date,
+    registerDate:Date | null,
+    updateDate: Date | null,
 }
 
 export interface Product{
@@ -33,12 +33,13 @@ export interface Pedido{
     id: number;
     fechaEntrega: Date;
     lugarEntrega: String;
-    estatus: String | null;
+    estatus: String;
     total: number;
     fechaRegistro: Date | null;
     fechaActualizacion: Date | null;
     cliente: ClienteResponse;
     numProductos: number;
+    registradoPor: string;
 }
 
 export interface ClienteResponse{
@@ -67,9 +68,9 @@ export interface ProductoPedido{
 export interface ProductoResponse{
     id: number;
     clave: String;
-    descripcion: String;
+    descripcion: string;
     estatus: String;
-    imagen: String;
+    imagen: string;
     cobroUnidad: boolean;
 }
 

@@ -6,7 +6,7 @@ export function mapToOrder(pedido:Pedido):Order{
         cliente:`${pedido.cliente.nombre} ${pedido.cliente.apellidoPaterno}`,
         lugarEntrega: pedido.lugarEntrega,
         fechaEntrega : pedido.fechaEntrega,
-        register: "Reyes Bustamante",
+        register: pedido.registradoPor,
         status:pedido.estatus,
         numProducts: pedido.numProductos,
         total: pedido.total,

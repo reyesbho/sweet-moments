@@ -7,7 +7,6 @@ export function useProducts(){
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null)
 
-
     const getProducts = () => {
         setLoading(true);
         getProductos()

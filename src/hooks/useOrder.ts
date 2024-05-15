@@ -3,7 +3,7 @@ import { addProductoToPedido, getPedido, getProductsByPedidoId } from "../servic
 import { classStatusEnum, STATUS } from "../general/Status";
 import { Order, Product } from "../general/Interfaces";
 
-export function useOrder({ order, orderId }:{order: Order, orderId: number}) {
+export function useOrder({ order, orderId }:{order: Order | null, orderId: number}) {
   const [orderItem, setOrderItem] = useState(order);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -36,14 +36,14 @@ export function useOrder({ order, orderId }:{order: Order, orderId: number}) {
   useEffect(() => {
     if (!orderId) {
       setOrderItem(order);
-      let status = order.status as keyof typeof STATUS;
+      let status = order?.status as keyof typeof STATUS;
       setCssClassName(classStatusEnum[status]);
     } else {
       getOrder(orderId);
     }
   }, [order]);
 
-  const handleSetNewProducts = async(producto) => {
+  const handleSetNewProducts = async(producto: Product) => {
     await addProductoToPedido({id: orderId, producto: producto})
     .then(() => {
       getProductos(orderId);
