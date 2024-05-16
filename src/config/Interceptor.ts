@@ -1,6 +1,7 @@
 import fetchIntercept from 'fetch-intercept';
-export const  registerInterceptor = () => { 
+export const  registerInterceptor = async() => { 
     console.log("registred")
+    fetchIntercept.clear();
      fetchIntercept.register({
         request: function (url, config) {
             console.log(url)

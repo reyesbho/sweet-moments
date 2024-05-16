@@ -14,14 +14,6 @@ function App() {
   const title = 'Dulces Momentos';
   const [searchParams, setSearchParams] = useSearchParams();
   const user = useAuth();
-  const [intercept, setIntercept] = useState(false);
-     
-  useEffect(() => {
-    if(!intercept){
-        setIntercept(true);
-        registerInterceptor();
-    }
-  }, [intercept])
 
   
   useEffect(() => {
