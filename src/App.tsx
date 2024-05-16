@@ -1,6 +1,6 @@
 import {  Route,  Routes,  useSearchParams } from 'react-router-dom';
 import './App.css'
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { getToken } from './services/AuthService';
 import { AuthProvider, useAuth } from './config/AuthProvider';
 import { ProtectedRoute } from './config/ProtectedRoute';
@@ -13,18 +13,27 @@ import { registerInterceptor } from './config/Interceptor';
 function App() {
   const title = 'Dulces Momentos';
   const [searchParams, setSearchParams] = useSearchParams();
-  registerInterceptor();
-  const user = useAuth()
+  const user = useAuth();
+  const [intercept, setIntercept] = useState(false);
+     
+  useEffect(() => {
+    if(!intercept){
+        setIntercept(true);
+        registerInterceptor();
+    }
+  }, [intercept])
+
   
   useEffect(() => {
-    console.log("inside useeffect")
     let code:string | null = searchParams.get('code');
     if(code !== undefined && code !== null){
-        getToken(code).then((response) => {
-          user.login({id:1, token:response.token});
-        });
+         getToken(code).then((response) => {
+          user.login({id:0, token:response.token});
+        }).catch((error) => {console.error(error)});
     }
   }, [])
+
+ 
 
   return (
       <div className='principal'>

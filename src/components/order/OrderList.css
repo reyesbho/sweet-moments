@@ -3,11 +3,6 @@
     flex-direction: column;
     gap: 10px;
     max-height: 75vh;
-    overflow-y: hidden;
     overflow-x: hidden;
     padding-bottom: 10px;
-}
-
-.infinite-scroll-component {
-    overflow-x: hidden !important;
 }

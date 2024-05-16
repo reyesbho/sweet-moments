@@ -58,9 +58,6 @@ export const addPedido = async(order: Order) => {
     try{
         const res = await fetch(API_PEDIDOS,{
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-              },
               body: JSON.stringify(productEntity)
         });
         const data = await res.json();
@@ -75,9 +72,6 @@ export const updateStatePedido = async({id, status}:{id:number, status:String}) 
     try{
         const res = await fetch(API_PEDIDOS+`/${id}/${status}`,{
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-              }
         });
         return res;
     } catch (error) {
@@ -90,9 +84,6 @@ export const addProductoToPedido = async({id, producto}:{id:number, producto:Pro
     try{
         const res = await fetch(API_PEDIDOS+`/${id}/producto`,{
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
             body: JSON.stringify(product)
         })
         return res;

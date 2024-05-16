@@ -4,7 +4,6 @@ import { paginationInit } from '../general/Constants';
 import { Order } from '../general/Interfaces';
 
 export function useOrders(status: String){
-    console.log(status)
     const [orders, setOrders] = useState<Order[]>([])
     const [statusFilter, setStatusFilter] = useState<String>(status) 
     const [loading, setLoading] = useState(false);
