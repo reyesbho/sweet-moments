@@ -29,7 +29,6 @@ export function AuthProvider({children}:{children:any}){
         const newUser = {...data, user: response.user, email: response.email};
         setUser(newUser);
       }).then(() => {
-        //window.document.location.href = "/";
         navigate("/",{replace:true});
       });
     };

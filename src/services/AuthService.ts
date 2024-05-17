@@ -6,7 +6,6 @@ export const getUrl = async() => {
         const data = await res.json();
         return data;
     } catch (error) {
-        console.log(error)
         throw new Error("Error al obtener la URL")
     }
 }

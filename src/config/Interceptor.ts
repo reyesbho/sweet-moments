@@ -1,12 +1,9 @@
 import fetchIntercept from 'fetch-intercept';
 export const  registerInterceptor = async() => { 
-    console.log("registred")
     fetchIntercept.clear();
      fetchIntercept.register({
         request: function (url, config) {
-            console.log(url)
             const user = JSON.parse(localStorage.getItem("user") ?? '');
-            console.log(user)
             if(url.includes("/api") && !url.includes("/private")){
                 const modifiedHeaders = new Headers();
                 modifiedHeaders.append('Content-Type', 'application/json');
