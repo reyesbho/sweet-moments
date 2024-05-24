@@ -36,7 +36,7 @@ export function Order({ order, handleRefreshOrders}:{order: OrderInterface, hand
     }
     
     return (
-        <div className={`principal-order ${cssClassName}`} onClick={handleShowProducts}> 
+        <div className={`principal-order `} onClick={handleShowProducts}> 
             <CardOrderInfo order={order} enableIcon={true}></CardOrderInfo>
             <div className={`detail-order ${(open ? 'active' : 'inactive')}`}>
                 { (order?.status === STATUS.BACKLOG || order?.status === STATUS.INCOMPLETE)  &&

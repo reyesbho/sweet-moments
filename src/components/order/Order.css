@@ -3,6 +3,7 @@
     background-color: var(--tertiary-bg);
     padding: 5px;
     margin: 5px;
+    border: 2px solid rgb(129, 122, 122);
 }
 
 .border-status-success{
