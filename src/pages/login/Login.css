@@ -12,6 +12,11 @@
     
 }
 
+.container-form{
+    display: flex;
+    flex-direction: column;
+}
+
 .login-container{
     display: flex;   
     flex-direction: column;
@@ -50,13 +55,14 @@
 
 
 .btn-login{
-    color: var(--quinary-font);
     cursor: pointer;
     text-decoration: none;
     font-family: 'Style Script';
     font-size: 2rem;
     font-weight: bold;
     opacity: 0.8;
+    background-color: transparent;
+    border: none;
   }
 
   .btn-login:hover{
@@ -64,4 +70,13 @@
     border-color: var(--tertiary-font);
     opacity: 1;
     color: var(--secondary-font);
+  }
+
+  .error-message{
+    margin: 0px;
+    padding: 0px;
+    color: red;
+    font-size: 0.8rem;
+    align-self: flex-end;
+    font-weight: normal;
   }

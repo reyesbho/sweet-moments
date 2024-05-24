@@ -58,7 +58,22 @@ button{
   line-height: 35px;
   font-size: 0.9rem;
   padding-left: 10px;
+  border: 1px solid rgb(129, 112, 73);
 }
+
+.form-input > input:focus-visible{
+  outline: 2px solid rgb(129, 112, 73);
+}
+
+.form-input > p{
+  margin: 0px;
+  padding: 0px;
+  color: red;
+  font-size: 0.8rem;
+  align-self: flex-end;
+  font-weight: normal;
+}
+
 
 .form-input > svg{
   position: absolute;

@@ -1,32 +1,32 @@
-import { API_AUTH, API_PRIVATE } from "../general/url";
+import { LoginError } from "../config/Errors";
+import { TokenResponse, UserLogin, UserResponse } from "../general/Interfaces";
+import { API_AUTH } from "../general/url";
 
-export const getUrl = async() => {
+export const login = async(userLogin: UserLogin):Promise<TokenResponse> => {
     try{
-        const res = await fetch(API_AUTH+`/url`);
-        const data = await res.json();
+        const response = await fetch(API_AUTH+`/login`,{
+            method:"POST",
+            body:JSON.stringify(userLogin)
+        });
+
+        if(!response.ok || response.status != 200){
+            throw new LoginError("Usuario o contraseña invalido")
+        }
+        const data = await response?.json();
         return data;
+
     } catch (error) {
-        throw new Error("Error al obtener la URL")
+        if(error instanceof LoginError){
+            throw error;
+        }
+        throw new Error("Error al intentar logearse")
     }
 }
 
-export const getToken = async(code:string) => {
+export const getUser = async():Promise<UserResponse> => {
     try{
-        const res = await fetch(API_AUTH+`/callback?code=${code}`);
-        const data = await res?.json();
-        return data;
-    } catch (error) {
-        throw new Error("Error al buscar los pedidos")
-    }
-}
-
-export const getUser = async(token:string) => {
-    try{
-        const res = await fetch(API_PRIVATE+`/user`,{
+        const res = await fetch(API_AUTH+`/user`,{
             method:"GET",
-            headers:{
-                "Authorization":"Bearer "+token
-            }
         });
         const data = await res?.json();
         return data;

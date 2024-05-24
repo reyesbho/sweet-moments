@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import './Header.css';
 import { useAuth } from '../../config/AuthProvider';
 export function Header({ title }:{ title:string }) {
-    const {user, logout} = useAuth()
+    const {principal, logout} = useAuth()
 
     const logo = './src/assets/sweet-moments.png';
     return (
@@ -19,7 +19,7 @@ export function Header({ title }:{ title:string }) {
             </div>
             <div className="header-user">
                 <div>
-                    {user?.user}
+                    {principal?.user}
                     <button onClick={logout}>Cerrar sesion</button>
                 </div>
                 <img className="header-avatar"
