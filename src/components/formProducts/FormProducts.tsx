@@ -57,7 +57,7 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetN
 
     return (
         <div className="modal"> 
-        <form onSubmit={handleSubmit(handleAddProduct)}>
+        <form className="form-products" onSubmit={handleSubmit(handleAddProduct)}>
             <div className='content-products'>
                 {products &&
                     <Carousel products={products}  onClickSelected={handleClickSelect}></Carousel>
@@ -114,8 +114,8 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetN
                     </div>
                 </div>
                 <div className="form-product-buttons">
-                    <button className='btn btn-cancel' type='button'  onClick={() => handleIsOpen()}>Cancelar</button>
-                    <button className='btn btn-add' type='submit'  >Agregar</button>
+                    <button className='btn btn-cancel btn-md' type='button'  onClick={() => handleIsOpen()}>Cancelar</button>
+                    <button className='btn btn-add btn-md' type='submit'  >Agregar</button>
                 </div>
             </div>
         </form>
