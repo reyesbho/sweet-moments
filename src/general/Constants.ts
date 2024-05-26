@@ -1,13 +1,3 @@
-export const dateOptions = {
-    hour12 : true,
-    hourCycle: "h12",
-    month: "2-digit",
-    year:"numeric",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-}
-
 
 export const catalogs = {
     sabores:'sabores',

@@ -1,24 +1,30 @@
 import './NewOrder.css';
 import { MdLocationOn } from 'react-icons/md';
-import { useId} from 'react';
-import { useForm } from 'react-hook-form';
+import { useId, useState} from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { FaUser } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { useNewOrder } from '../../hooks/useNewOrder';
+import dayjs, { Dayjs } from 'dayjs';
+import { DatePicker, MobileTimePicker } from '@mui/x-date-pickers';
 export function NewOrder() {
     
     const { registerOrder} = useNewOrder();
+    const [startDate, setStartDate] = useState<Dayjs>(dayjs(Date.now()));
     const idCliente = useId();
     const idLugarEntrega = useId();
     const idFechaHora = useId();
     
-    const { register,handleSubmit, formState: { isDirty, isValid  }, setValue } = useForm({
+    const { register,handleSubmit, formState: { isDirty, isValid  }, setValue,control } = useForm({
         defaultValues: {
             cliente: '',
             lugarEntrega: '',
-            fechaEntrega: ''
+            fechaEntrega: '',
+            horaEntrega:''
         }
     });
+
+   
 
     return (
         <div className="new-order">
@@ -38,8 +44,19 @@ export function NewOrder() {
                         <MdLocationOn ></MdLocationOn>
                     </div>
                     <div className='form-input'>
-                        <label htmlFor={idFechaHora} >Fecha y hora</label>
-                        <input id={idFechaHora} {...register("fechaEntrega",{required:false})} type='datetime-local' placeholder='2023-06-04 13:30' />
+                        <label htmlFor={idFechaHora} >Fecha</label>
+                        <Controller control={control} name='fechaEntrega' render={({field}) => (
+                            <DatePicker value={field.value} format="DD/MM/YYYY" onChange={(date) => field.onChange(date)}/>
+                            )}>
+                        </Controller>
+                            
+                    </div>
+                    <div className='form-input'>
+                        <label htmlFor={idFechaHora} >Fecha</label>
+                        <Controller control={control} name='horaEntrega' render={({field}) => (
+                            <MobileTimePicker value={field.value} onChange={(hour) => field.onChange(hour)} />
+                            )}>
+                        </Controller>
                     </div>
                     
                     <div className='btn-next-container'>

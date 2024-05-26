@@ -23,10 +23,9 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetN
 
     const isValidForm = (productInfo: ProductForm) => {
         if (!productInfo || !productSelected || ( 
-            productInfo.text === '' && 
-            productInfo.size !=0 && 
-            productInfo.flavorId !=0 && 
-            productInfo.comments === '' )){
+            productInfo.size ==0 ||
+            productInfo.tipoId == 0 || 
+            productInfo.flavorId ==0 )){
                 return false;
             }
         return true;

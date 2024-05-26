@@ -9,7 +9,9 @@ export const mapToPedido = (order: Order):Pedido => {
         fechaActualizacion:null,
         numProductos:0,
         fechaEntrega:order.fechaEntrega,
+        horaEntrega: order.horaEntrega,
         lugarEntrega:order.lugarEntrega,
+        registradoPor: null,
         total: 0,
         cliente: {
             id:0,

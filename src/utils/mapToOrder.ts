@@ -12,6 +12,7 @@ export function mapToOrder(pedido:Pedido):Order{
         total: pedido.total,
         registerDate:pedido.fechaRegistro,
         updateDate: pedido.fechaActualizacion,
+        horaEntrega: pedido.horaEntrega
     };
 }
 

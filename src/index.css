@@ -2,7 +2,7 @@
 :root{
   --primary-bg : #0B1320;
   --secondary-bg: #49D5C5;
-  --tertiary-bg: #1C3F60;
+  --tertiary-bg: #14395c;
   --forty-bg : #333333;
   --quinary-bg: #ffffff;
 
@@ -24,7 +24,7 @@
 }
 
 body{
-  background: var(--primary-bg);
+  background: var(--quinary-bg);
   color: var(--primary-font);
   font-family: 'Roboto', sans-serif;
   margin: 0px;

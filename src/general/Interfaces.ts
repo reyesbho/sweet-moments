@@ -3,7 +3,8 @@ export interface Order{
     cliente:String,
     lugarEntrega: String,
     fechaEntrega : Date,
-    register: String,
+    horaEntrega: Date,
+    register: string | null,
     status:String,
     numProducts: number,
     total: number,
@@ -32,6 +33,7 @@ export interface DetailProducto{
 export interface Pedido{
     id: number;
     fechaEntrega: Date;
+    horaEntrega: Date,
     lugarEntrega: String;
     estatus: String;
     total: number;
@@ -39,7 +41,7 @@ export interface Pedido{
     fechaActualizacion: Date | null;
     cliente: ClienteResponse;
     numProductos: number;
-    registradoPor: string;
+    registradoPor: string | null;
 }
 
 export interface ClienteResponse{

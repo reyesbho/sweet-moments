@@ -6,7 +6,6 @@ export const  registerInterceptor = async() => {
             const token = JSON.parse(localStorage.getItem("token") ?? '');
             const modifiedHeaders = new Headers();
             modifiedHeaders.append('Content-Type', 'application/json');
-            console.log(token)
             if(url.includes("/api") || url.includes("/user")){
                 modifiedHeaders.append('Authorization',  `Bearer ${token?.token}`);
             }

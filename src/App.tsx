@@ -13,40 +13,25 @@ import { createTheme, Theme } from '@mui/material';
 function App() {
   const title = 'Dulces Momentos';
 
-   
-  const newTheme = (theme:Theme) => createTheme({
-    ...theme,
-    components: {
-      MuiOutlinedInput: {
-        styleOverrides: {
-          root: {
-            color: '#ffffff',
-            borderRadius:"15px"
-          }
-        }
-      },
-      MuiInputBase: {
-        styleOverrides: {
-          root: {
-            color: '#ffffff',
-            backgroundColor: '#0B1320',
-            border: "2px solid",
-          }
-        }
-      },
-      MuiIconButton: {
-        styleOverrides: {
-          root: {
-            color:'#ffffff'
+   const themeDark = createTheme({
+    components:{
+      MuiOutlinedInput:{
+        styleOverrides:{
+          root:{
+            border:'1px solid'
           }
         }
       }
-    }
-  })
+    },
+    palette: {
+      mode: 'dark',
+    },
+   })
+
   return (
     
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <ThemeProvider theme={newTheme}>
+    <ThemeProvider theme={themeDark}>
       <div className='principal'>
         <div className='container-principal'>
           <Header title={title}></Header>

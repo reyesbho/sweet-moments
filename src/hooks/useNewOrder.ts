@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom"
 import { addPedido} from "../services/pedidos.services"
+import { Order } from "../general/Interfaces";
 
 export function useNewOrder(){
     const navigate = useNavigate();
 
-    const registerOrder = async(orderInfo) => {
+    const registerOrder = async(orderInfo: any) => {
         const neworder = {
             ...orderInfo,
             cliente: orderInfo.cliente,
@@ -12,6 +13,7 @@ export function useNewOrder(){
             register: 'Reyes Bustamante',
             status: 'BACKLOG',
         }
+        
         await addPedido(neworder)
             .then((order) => {
                 navigate(`/order/${order.id}`,{ replace: true });
