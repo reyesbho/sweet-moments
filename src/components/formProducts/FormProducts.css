@@ -11,7 +11,6 @@
 .form-products{
     margin: 0px;
     padding: 15px;
-    width: 100%;
 }
 
 .content-products{
@@ -46,8 +45,6 @@
 
 @media only screen and (max-width:820px) {
   
-  
-
     /*Form products component*/
     .content-products-inputs{
       flex-direction: column;

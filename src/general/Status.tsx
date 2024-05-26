@@ -17,9 +17,15 @@ export const iconStatusEnum = {
     CANCELED: <MdOutlineCancel size="2rem" className='color-wrong'></MdOutlineCancel>
 }
 
-export const STATUS = {
-    DONE:'DONE',
-    BACKLOG: 'BACKLOG',
-    CANCELED:'CANCELED',
-    INCOMPLETE:'INCOMPLETE'
+export enum STATUS {
+    DONE = 'DONE',
+    BACKLOG = 'BACKLOG',
+    CANCELED = 'CANCELED',
+    INCOMPLETE = 'INCOMPLETE',
 }
+
+enum OTHER_STATUS {
+    ALL = 'ALL'
+}
+
+export const STATUS_FILTER = {...STATUS,...OTHER_STATUS }

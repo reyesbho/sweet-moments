@@ -6,9 +6,9 @@ import { Order, Pagination, Pedido, Product, ProductoPedido } from "../general/I
 
 
 
-export const getPedidos = async(statusFilter:String, pagination:Pagination) => {
+export const getPedidos = async(statusFilter:String,date:String, pagination:Pagination) => {
         try{
-        const res = await fetch(API_PEDIDOS+`?estatus=${statusFilter}&page=${pagination.page}&size=${pagination.pageSize}`,
+        const res = await fetch(API_PEDIDOS+`?date=${date}&estatus=${statusFilter}&page=${pagination.page}&size=${pagination.pageSize}`,
             {
                 method: 'GET'
             }

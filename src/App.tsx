@@ -6,10 +6,47 @@ import { NewOrder } from './pages/new-order/NewOrder';
 import { DetailOrder } from './components/detailOrder/DetailOrder';
 import { Login } from './pages/login/Login';
 import { Header } from './components/header/Header';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { ThemeProvider } from '@emotion/react';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { createTheme, Theme } from '@mui/material';
 function App() {
   const title = 'Dulces Momentos';
 
+   
+  const newTheme = (theme:Theme) => createTheme({
+    ...theme,
+    components: {
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            color: '#ffffff',
+            borderRadius:"15px"
+          }
+        }
+      },
+      MuiInputBase: {
+        styleOverrides: {
+          root: {
+            color: '#ffffff',
+            backgroundColor: '#0B1320',
+            border: "2px solid",
+          }
+        }
+      },
+      MuiIconButton: {
+        styleOverrides: {
+          root: {
+            color:'#ffffff'
+          }
+        }
+      }
+    }
+  })
   return (
+    
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <ThemeProvider theme={newTheme}>
       <div className='principal'>
         <div className='container-principal'>
           <Header title={title}></Header>
@@ -23,7 +60,8 @@ function App() {
           </main>
         </div>
       </div>
-      
+        </ThemeProvider>
+      </LocalizationProvider>
 
   )
 }
