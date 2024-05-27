@@ -36,8 +36,8 @@
 .orders-filters{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     padding: 10px;
-    justify-content: end;
     gap: 10px;
 }
 
@@ -46,4 +46,30 @@
     flex-direction: row;
     justify-content: end;
     align-items: center;
+}
+
+.date-picker{
+    border-radius: 10px;
+    color: white;
+}
+
+@media only screen and (max-width:820px) {
+  
+  
+
+    /*Orders component css class*/
+    .orders > h2 {
+      font-size: 1.6rem;
+    }
+  
+    .orders  > a > svg {
+      height: 2.5rem;
+      width: 2.5rem;
+      padding-top: 10px;
+    }
+  
+    .principal-order{
+      padding: 5px;
+      margin: 5px;
+    }
 }

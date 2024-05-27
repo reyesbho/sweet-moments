@@ -3,11 +3,10 @@
     flex-direction: column;
     gap: 10px;
     max-height: 75vh;
-    overflow-y: auto;
     overflow-x: hidden;
     padding-bottom: 10px;
 }
 
-.infinite-scroll-component {
-    overflow-x: hidden !important;
+.order-list::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
 }
