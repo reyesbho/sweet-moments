@@ -1,5 +1,6 @@
 import fetchIntercept from 'fetch-intercept';
-export const  registerInterceptor = async() => { 
+import { useAuth } from './AuthProvider';
+export const  registerInterceptor = async(logout:any) => { 
     fetchIntercept.clear();
      fetchIntercept.register({
         request: function (url, config) {
@@ -18,10 +19,10 @@ export const  registerInterceptor = async() => {
         },
 
         response: function (response) {
-            /*console.log(response)
-            if(response.status == 401){
+            if(response.status == 403){
+                console.log("SALIR")
                 logout();
-            }*/
+            }
             return response;
         },
 

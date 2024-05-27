@@ -21,7 +21,7 @@ export function AuthProvider({children}:{children:any}){
     const [principal, setPrincipal] = useLocalStorage("principal", null);
     const navigate = useNavigate();
     const interceptor = () => {
-      registerInterceptor();
+      registerInterceptor(logout);
     }
   
     // call this function when you want to authenticate the user
