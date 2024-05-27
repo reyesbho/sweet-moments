@@ -6,8 +6,8 @@
 }
 
 const timeOptions:Intl.DateTimeFormatOptions = {
-    hour12 : false,
-    hourCycle: "h24",
+    hour12 : true,
+    hourCycle: "h12",
     hour: "2-digit",
     minute: "2-digit",
     timeZone:"UTC"
@@ -20,9 +20,9 @@ export const formatDate= (date: Date) => {
     return new Date(date).toLocaleDateString("es-MX", dateOptions);
 }
 
-export const formatTime= (date:string) => {
+export const formatTime= (date:Date) => {
     if(!date){
         return '00:00';
     }
-    return date;
+    return new Date(date).toLocaleTimeString("es-MX", timeOptions);
 }

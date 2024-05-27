@@ -65,14 +65,10 @@ button{
   font-size: 0.9rem;
   padding-left: 10px;
   border: 1px solid var(--quinary-bg);
-  background: none;
-  color: var(--primary-font);;
+  color: var(--quinary-font);
 }
 
-.form-input > input:focus-visible{
-  outline: 2px solid var(--secondary-font);
-  border: 1px solid var(--secondary-font);
-}
+
 
 .form-input > p{
   margin: 0px;
