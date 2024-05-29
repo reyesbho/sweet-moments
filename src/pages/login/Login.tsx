@@ -4,9 +4,9 @@ import { UserLogin } from "../../general/Interfaces";
 import { useEffect, useState } from "react";
 import { login } from "../../services/AuthService";
 import { useAuth } from "../../config/AuthProvider";
+import logoUrl from '../../assets/sweet-moments.png'
 
 export function Login() {
-    const logo = "./src/assets/sweet-moments.png";
     const user = useAuth();
     const [errorLogin, setErrorLogin] = useState<String | null>();
     const {
@@ -28,7 +28,7 @@ export function Login() {
         <section>
             <div className="container">
                 <div className="login-container">
-                    <img src={logo}></img>
+                    <img src={logoUrl}></img>
                         <form className="container-form" onSubmit={handleSubmit(handleLogin)} noValidate>
                             <div className="form-input">
                                 <label>Email</label>
