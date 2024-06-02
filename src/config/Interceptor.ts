@@ -1,6 +1,6 @@
 import fetchIntercept from 'fetch-intercept';
 import { useAuth } from './AuthProvider';
-export const  registerInterceptor = async(logout:any) => { 
+export const  registerInterceptor = async(logout:any) => {
     fetchIntercept.clear();
      fetchIntercept.register({
         request: function (url, config) {

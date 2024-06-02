@@ -10,9 +10,9 @@ import { updateStatePedido } from "../../services/pedidos.services";
 import { useModalConfirm } from "../../hooks/useModalConfirm";
 import { useModal } from "../../hooks/UseModal";
 import { FormProducts } from "../formProducts/FormProducts";
-import { Order } from "../../general/Interfaces";
+import { OrderDto } from "../../general/Interfaces";
 
-export function DetailOrder({ order}:{ order: Order | null}) {
+export function DetailOrder({ order}:{ order: OrderDto | null}) {
       const {id} = useParams();
       const {orderItem,cssClassName, hasReturn, loading, error, handleSetNewProducts, productos} = useOrder({order, orderId:Number(id)});
       const navigate = useNavigate();

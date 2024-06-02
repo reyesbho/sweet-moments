@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { searchClient } from "../services/catalogs.service";
-import { Client, ClienteResponse } from "../general/Interfaces";
+import { ClientDto } from "../general/Interfaces";
 
 export function useClients({ search }:{ search:String }) {
-  const [clients, setClients] = useState<Client[]>([]);
+  const [clients, setClients] = useState<ClientDto[]>([]);
   const [loanding, setLoanding] = useState(false);
   const [error, setError] = useState(null);
   const previousSearch = useRef(search);
@@ -25,7 +25,7 @@ export function useClients({ search }:{ search:String }) {
 
   //refresca el calculo solo si cambia la referencia
   const sortedClients = useMemo(() => {
-    return [...clients]?.sort((a:Client, b:Client) => a.name.localeCompare(b.name));
+    return [...clients]?.sort((a:ClientDto, b:ClientDto) => a.name.localeCompare(b.name));
   }, [clients]);
 
   return { clientsMap: sortedClients.map(client => ({value:client.id, label:`${client.name} ${client.apellidoPaterno}`, client})), getClients, loanding, errorClient: error };

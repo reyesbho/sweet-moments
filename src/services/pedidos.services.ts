@@ -1,8 +1,7 @@
-import { mapToOrder, mapToProduct } from "../utils/mapToOrder";
+import { mapToOrderDto, mapToProductOrderDto } from "../utils/mapsToDto";
 import { API_PEDIDOS } from "../general/url";
-import { mapToPedido } from "../utils/mapToPedido";
-import { mapToProducto } from "../utils/mapToProduct";
-import { Order, Pagination, Pedido, Product, ProductoPedido } from "../general/Interfaces";
+import {  OrderDto, Pagination, PedidoModel, ProductDto, ProductoPedidoModel, ProductOrderDto } from "../general/Interfaces";
+import { mapToPedidoModel, mapToProductoRequest } from "../utils/mapsToModel";
 
 
 
@@ -15,13 +14,13 @@ export const getPedidos = async(statusFilter:String,date:String, pagination:Pagi
         );
         const data = await res.json();
         const {content, totalElements} = data;
-        return {pedidos:content?.map((pedido:Pedido) => mapToOrder(pedido)), totalItems:totalElements};
+        return {pedidos:content?.map((pedido:PedidoModel) => mapToOrderDto(pedido)), totalItems:totalElements};
     } catch (error) {
         throw new Error("Error al buscar los pedidos")
     }
 }
 
-export const getProductsByPedidoId = async(orderId: number) => { 
+export const getProductsByPedidoId = async(orderId: number):Promise<ProductOrderDto[]> => { 
     try{
         const res = await fetch(API_PEDIDOS+`/${orderId}/producto`,
         {
@@ -29,7 +28,7 @@ export const getProductsByPedidoId = async(orderId: number) => {
         }
         );
         const data = await res.json();
-        return data.map((producto:ProductoPedido) => mapToProduct(producto));
+        return data.map((producto:ProductoPedidoModel) => mapToProductOrderDto(producto));
     } catch (error) {
         throw new Error("Error al buscar los productos")
     }
@@ -45,7 +44,7 @@ export const getPedido = async(orderId: number) => {
         }
         );
         const data = await res.json();
-        return mapToOrder(data);
+        return mapToOrderDto(data);
     } catch (error) {
         throw new Error("Error al buscar el pedido")
     }
@@ -53,8 +52,8 @@ export const getPedido = async(orderId: number) => {
 }
 
 
-export const addPedido = async(order: Order) => {
-    const productEntity = mapToPedido(order);
+export const addPedido = async(order: OrderDto) => {
+    const productEntity = mapToPedidoModel(order);
     try{
         const res = await fetch(API_PEDIDOS,{
             method: "POST",
@@ -79,8 +78,8 @@ export const updateStatePedido = async({id, status}:{id:number, status:String}) 
     }   
 }
 
-export const addProductoToPedido = async({id, producto}:{id:number, producto:Product}) => {
-    const product = mapToProducto(producto);
+export const addProductoToPedido = async({id, producto}:{id:number, producto:ProductOrderDto}) => {
+    const product = mapToProductoRequest(producto);
     try{
         const res = await fetch(API_PEDIDOS+`/${id}/producto`,{
             method: "POST",

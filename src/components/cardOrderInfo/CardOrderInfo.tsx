@@ -4,9 +4,9 @@ import { iconStatusEnum } from '../../general/Status';
 import './CardOrderInfo.css'
 import { useNavigate } from 'react-router-dom';
 import { formatDate, formatTime } from '../../utils/formatDate';
-import { Order } from '../../general/Interfaces';
+import { OrderDto } from '../../general/Interfaces';
 
-export function CardOrderInfo({ order, enableIcon }: { order: Order, enableIcon:boolean}) {
+export function CardOrderInfo({ order, enableIcon }: { order: OrderDto, enableIcon:boolean}) {
     const iconStatus = iconStatusEnum[order.status as keyof typeof iconStatusEnum];
     const navigate = useNavigate();
     const handleClicDetail = (event: any) => {

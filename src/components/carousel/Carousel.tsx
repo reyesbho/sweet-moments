@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Product } from "../product/Product";
 import './Carousel.css'
 import Slider from "react-slick";
 import "./../../../node_modules/slick-carousel/slick/slick.css"; 
 import "./../../../node_modules/slick-carousel/slick/slick-theme.css";
-import { Product as ProductType  } from "../../general/Interfaces";
+import { ProductSelectDto } from "../../general/Interfaces";
 
-export function Carousel({ products, onClickSelected }:{ products:ProductType[] , onClickSelected:CallableFunction }) {
-    const [productsList, setProductsList] = useState<ProductType[]>(structuredClone(products).map(product => ({ ...product, isCheck: false })));
 
-    const handleOnChange = (event:any, productSelected:ProductType, active: boolean) => {
+export function Carousel({ products, onClickSelected }:{ products:ProductSelectDto[] , onClickSelected:CallableFunction }) {
+    const [productsList, setProductsList] = useState(products);
+
+    const handleOnChange = (event:any, productSelected:ProductSelectDto, active: boolean) => {
         event.preventDefault();
         if (active) {
             const newProductSelected = { ...productSelected, isCheck: active }
@@ -45,7 +46,9 @@ export function Carousel({ products, onClickSelected }:{ products:ProductType[] 
             <Slider {...settings}>
                 {productsList &&
                     productsList.map((product) => (
-                        <Product key={product.id} product={product} isCheck={product.isCheck} onClickProduct={handleOnChange}></Product>
+                        <div>
+                            <Product  product={product} isCheck={product.isCheck} onClickProduct={handleOnChange}></Product>
+                        </div>
                     ))
                 }
             </Slider>

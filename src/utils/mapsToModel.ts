@@ -1,6 +1,7 @@
-import { Order, Pedido } from "../general/Interfaces";
+import { OrderDto, PedidoModel, ProductOrderDto } from "../general/Interfaces";
 
-export const mapToPedido = (order: Order):Pedido => {
+
+export const mapToPedidoModel = (order: OrderDto):PedidoModel => {
     const clienteArray = order.cliente.split(" ");
     return {
         id: 0,
@@ -22,3 +23,17 @@ export const mapToPedido = (order: Order):Pedido => {
         }
     }
 }
+
+export const mapToProductoRequest = (producto:ProductOrderDto) => {
+
+    return {
+            texto:producto.text,
+            porciones:producto.size,
+            comentarios: producto.comments,
+            idProducto: producto.product.id,
+            idSabor: producto.flavorId,
+            idTipoProducto: producto.tipoId,
+            precio:producto.price
+        }
+}
+

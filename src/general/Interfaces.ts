@@ -1,4 +1,4 @@
-export interface Order{
+export interface OrderDto{
     id:number,
     cliente:String,
     lugarEntrega: String,
@@ -12,17 +12,27 @@ export interface Order{
     updateDate: Date | null,
 }
 
-export interface Product{
+export interface ProductOrderDto{
     id:number,
     text:String,
     size:Number,
     comments: String,
     key: String,
     price: Number,
-    product: DetailProducto;
+    product: DetailProductoDto;
+    flavorId:number;
+    tipoId:number;
 }
 
-export interface DetailProducto{
+export interface ProductDto{
+    id: number, 
+    key:string,
+    nameProduct: string,
+    thumbnail: string,
+    status: string
+}
+
+export interface DetailProductoDto{
         id: number,
         nameProduct: string,
         thumbnail: string,    
@@ -30,7 +40,7 @@ export interface DetailProducto{
         flavor:String,
 }
 
-export interface Pedido{
+export interface PedidoModel{
     id: number;
     fechaEntrega: Date;
     horaEntrega: Date,
@@ -39,12 +49,12 @@ export interface Pedido{
     total: number;
     fechaRegistro: Date | null;
     fechaActualizacion: Date | null;
-    cliente: ClienteResponse;
+    cliente: ClienteModel;
     numProductos: number;
     registradoPor: string | null;
 }
 
-export interface ClienteResponse{
+export interface ClienteModel{
      id: number;
      nombre: String;
      apellidoPaterno: String;
@@ -52,12 +62,12 @@ export interface ClienteResponse{
      direccion: String;
 }
 
-export interface ProductoPedido{
+export interface ProductoPedidoModel{
     id: number;
     idPedido: Number;
-    producto: ProductoResponse;
-    sabor: SaborResponse;
-    tipoProducto: ProductoTipoResponse;
+    producto: ProductModel;
+    sabor: SaborModel;
+    tipoProducto: ProductoTipoModel;
     texto: String;
     comentarios: String;
     fechaRegistro: Date;
@@ -67,27 +77,27 @@ export interface ProductoPedido{
 }
 
 
-export interface ProductoResponse{
+export interface ProductModel{
     id: number;
-    clave: String;
+    clave: string;
     descripcion: string;
-    estatus: String;
+    estatus: string;
     imagen: string;
     cobroUnidad: boolean;
 }
 
-export interface SaborResponse{
+export interface SaborModel{
     id: number;
-    clave: String;
-    descripcion: String;
-    estatus: String;
+    clave: string;
+    descripcion: string;
+    estatus: string;
 }
 
-export interface ProductoTipoResponse{
+export interface ProductoTipoModel{
     id: number;
-    clave: String;
-    descripcion: String;
-    estatus: String;
+    clave: string;
+    descripcion: string;
+    estatus: string;
 }
 
 export interface Pagination{
@@ -106,13 +116,13 @@ export interface ProductForm{
     price:number
 }
 
-export interface CatalogType{
+export interface CatalogTypeDto{
     value: string;
     label: string;
     id: Number;
 }
 
-export interface Client{
+export interface ClientDto{
     id: Number,
     name: string,
     apellidoPaterno: string,
@@ -120,10 +130,10 @@ export interface Client{
     direccion: string
 }
 
-export interface ClientOption{
+export interface ClientOptionDto{
    value:Number;
    label:string;
-   client: Client;
+   client: ClientDto;
 }
 
 
@@ -158,4 +168,15 @@ export interface ErrorResponse {
     detail: String,
     instance: String,
     description: String
+}
+
+
+export interface ProductSelectDto{
+    id: number, 
+    key:string,
+    nameProduct: string,
+    thumbnail: string,
+    status: string,
+    isCheck:boolean;
+
 }

@@ -7,7 +7,7 @@ import debounce from "just-debounce";
 import { useClients } from "../../hooks/useClients";
 import './FormInfo.css';
 import Select, { ActionMeta } from 'react-select';
-import { Client, ClientOption } from "../../general/Interfaces";
+import { ClientOptionDto } from "../../general/Interfaces";
 
 export function FormInfo() {
     const idCliente = useId();
@@ -16,7 +16,7 @@ export function FormInfo() {
     const  {search, setSearch, error} = useSearch()
     const {clientsMap, getClients, loanding, errorClient} = useClients({search})
     const { register, handleSubmit, formState: { isDirty, isValid  }, setValue } = useForm<{
-        clienteObj: ClientOption | null,
+        clienteObj: ClientOptionDto | null,
         lugarEntrega: string,
         fechaEntrega: string
     }>({
@@ -27,9 +27,9 @@ export function FormInfo() {
         }
     });
 
-    const [selectedOption, setSelectedOption] = useState<ClientOption | null>(null);
+    const [selectedOption, setSelectedOption] = useState<ClientOptionDto | null>(null);
 
-    const handleSelectOption = (option: ClientOption | null, actionMeta: ActionMeta<ClientOption>) =>{
+    const handleSelectOption = (option: ClientOptionDto | null, actionMeta: ActionMeta<ClientOptionDto>) =>{
         if(!option){    
             setSelectedOption(option)
             setValue('clienteObj', null)

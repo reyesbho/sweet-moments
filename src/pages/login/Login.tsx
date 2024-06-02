@@ -4,7 +4,7 @@ import { UserLogin } from "../../general/Interfaces";
 import { useEffect, useState } from "react";
 import { login } from "../../services/AuthService";
 import { useAuth } from "../../config/AuthProvider";
-import logoUrl from '../../assets/sweet-moments.png'
+import logoUrl from '../../assets/sweet-moments.webp'
 
 export function Login() {
     const user = useAuth();

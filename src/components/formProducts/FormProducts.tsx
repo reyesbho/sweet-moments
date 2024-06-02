@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useProducts } from "../../hooks/useProducts";
 import { useCatalogs } from "../../hooks/useCatalogs";
 import './FormProducts.css';
 import { Carousel } from "../carousel/Carousel";
-import { Product, ProductForm } from "../../general/Interfaces";
+import { ProductDto, ProductForm } from "../../general/Interfaces";
 
-export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetNewProducts: Function, handleIsOpen:Function }) {
-    const { products, setProducts} = useProducts();
+export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetNewProducts: CallableFunction, handleIsOpen:CallableFunction }) {
+    const { products, setProducts, getProducts} = useProducts();
+    const [productSelected, setProductSelected] = useState<ProductDto | null>(null);
+    const { catalog,flavors, getCatalogsType, getFlavors } = useCatalogs()
     const { register, handleSubmit, reset, formState: { isSubmitSuccessful } } = useForm<ProductForm>({
         defaultValues: {
             text: '',
@@ -18,9 +20,8 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetN
             price:0
         }
     });
-    const [productSelected, setProductSelected] = useState<Product | null>(null);
-    const { catalog,flavors, getCatalogsType } = useCatalogs()
 
+    
     const isValidForm = (productInfo: ProductForm) => {
         if (!productInfo || !productSelected || ( 
             productInfo.size ==0 ||
@@ -46,7 +47,7 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetN
         handleIsOpen();
     }
 
-    const handleClickSelect = (product: Product) => {
+    const handleClickSelect = (product: ProductDto) => {
         if(!product){
             return
         }
@@ -54,12 +55,12 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetN
         setProductSelected(product);
     };
 
-    return (
+    return ( 
         <div className="modal"> 
         <form className="form-products" onSubmit={handleSubmit(handleAddProduct)}>
             <div className='content-products'>
-                {products &&
-                    <Carousel products={products}  onClickSelected={handleClickSelect}></Carousel>
+                {products && 
+                    <Carousel products={products.map(product => ({ ...product, isCheck: false }))}  onClickSelected={handleClickSelect}></Carousel>
                 }
             </div>
             <div className='content-products-info'>

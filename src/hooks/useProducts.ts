@@ -1,26 +1,24 @@
 import { useEffect, useState } from "react";
 import { getProductos } from "../services/producto.services";
-import { Product } from "../general/Interfaces";
+import { ProductDto } from "../general/Interfaces";
 
 export function useProducts(){
-    const [products, setProducts] = useState<Product[]>(null);
-    const [loading, setLoading] = useState(false);
+    const [products, setProducts] = useState<ProductDto[] | null>(null);
     const [error, setError] = useState(null)
 
-    const getProducts = () => {
-        setLoading(true);
+    const getProducts = async() => {
         getProductos()
-        .then(productsList =>setProducts(productsList))
-        .catch(error => setError(error))
-        .finally(() => setLoading(false))
+        .then((productsList:ProductDto[]) => {
+            setProducts(productsList);
+        })
+        .catch((error:any) => setError(error));
         
     }
-    useEffect(() => {
-        getProducts();
 
-        //clean effect
-        return () => {}
+    
+    useEffect(()=>{
+        getProducts();
     },[])
 
-    return {products, setProducts, loading, error};
+    return {products, setProducts, error, getProducts};
 }
