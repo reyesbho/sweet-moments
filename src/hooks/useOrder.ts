@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { addProductoToPedido, getPedido, getProductsByPedidoId } from "../services/pedidos.services";
 import { classStatusEnum, STATUS } from "../general/Status";
-import { Order, Product } from "../general/Interfaces";
+import { OrderDto, ProductOrderDto } from "../general/Interfaces";
 
-export function useOrder({ order, orderId }:{order: Order | null, orderId: number}) {
+
+export function useOrder({ order, orderId }:{order: OrderDto | null, orderId: number}) {
   const [orderItem, setOrderItem] = useState(order);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [cssClassName, setCssClassName] = useState("");
   const [hasReturn, setHasReturn] = useState(false);
-  const [productos, setProductos] = useState<Product[]>([]);
+  const [productos, setProductos] = useState<ProductOrderDto[]>([]);
   
 
   const getOrder = async (orderId: number) => {
@@ -43,7 +44,7 @@ export function useOrder({ order, orderId }:{order: Order | null, orderId: numbe
     }
   }, [order]);
 
-  const handleSetNewProducts = async(producto: Product) => {
+  const handleSetNewProducts = async(producto: ProductOrderDto) => {
     await addProductoToPedido({id: orderId, producto: producto})
     .then(() => {
       getProductos(orderId);

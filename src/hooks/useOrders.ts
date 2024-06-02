@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getPedidos } from '../services/pedidos.services';
 import { paginationInit } from '../general/Constants';
-import { Order } from '../general/Interfaces';
+import { OrderDto } from '../general/Interfaces';
 import dayjs from 'dayjs';
 
 export function useOrders(status: String){
-    const [orders, setOrders] = useState<Order[]>([])
+    const [orders, setOrders] = useState<OrderDto[]>([])
     const [statusFilter, setStatusFilter] = useState<String>(status) 
     const [date, setDate ] = useState<String>(dayjs(Date.now()).format('DD-MM-YYYY'));
     const [loading, setLoading] = useState(false);

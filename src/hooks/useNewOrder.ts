@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom"
 import { addPedido} from "../services/pedidos.services"
-import { Order } from "../general/Interfaces";
 
 export function useNewOrder(){
     const navigate = useNavigate();

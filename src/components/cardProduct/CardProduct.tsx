@@ -1,6 +1,6 @@
-import { Product } from '../../general/Interfaces'
+import { ProductOrderDto } from '../../general/Interfaces'
 import './CardProduct.css'
-export function CardProduct({productItem}:{productItem: Product}) {
+export function CardProduct({productItem}:{productItem: ProductOrderDto}) {
     return (
         <div key={productItem.id} className='product'>
             <img className='product-img' src={productItem.product?.thumbnail} 

@@ -1,10 +1,10 @@
-import { Order as OrderInterface } from '../../general/Interfaces';
+import { OrderDto } from '../../general/Interfaces';
 import { EmptyList } from '../EmptyList/EmptyList';
 import { Order } from './Order';
 import './OrderList.css'
 import InfiniteScroll from 'react-infinite-scroll-component';
 export function OrderList({ orders, handleRefreshOrders, incrementPagination, totalItems }:
-                        { orders:OrderInterface[] , handleRefreshOrders:Function, incrementPagination:Function, totalItems:number }) {
+                        { orders:OrderDto[] , handleRefreshOrders:Function, incrementPagination:Function, totalItems:number }) {
     
     const handleGetMoreData = async() => {
         incrementPagination();

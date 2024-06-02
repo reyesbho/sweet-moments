@@ -1,8 +1,9 @@
-import { ProductoResponse } from "../general/Interfaces";
+import { ProductDto, ProductModel } from "../general/Interfaces";
 import { API_PRODUCTOS } from "../general/url";
+import { mapToProductDto } from "../utils/mapsToDto";
 
 
-export const getProductos = async () => {
+export const getProductos = async ():Promise<ProductDto[]> => {
     try {
         const response = await fetch(API_PRODUCTOS,
             {
@@ -10,15 +11,7 @@ export const getProductos = async () => {
             });
         const data = await response.json();
         const {content} = data;
-        return content?.map((producto:ProductoResponse) => (
-            {
-                id: producto.id, 
-                key:producto.clave,
-                nameProduct: producto.descripcion,
-                thumbnail: producto.imagen,
-                status: producto.estatus
-           }
-        ))  
+        return content?.map((producto:ProductModel) => mapToProductDto(producto))  
 
     } catch (error) {
         throw new Error("Error al buscar los productos");
@@ -33,13 +26,7 @@ export const getProducto = async ({id}:{id:number}) => {
         }
         );
         const producto = await response.json();
-        return {
-            id: producto.id, 
-            key:producto.clave,
-            nameProduct: producto.descripcion,
-            thumbnail: producto.imagen,
-            status: producto.estatus
-       }
+        return mapToProductDto(producto);
 
     } catch (error) {
         throw new Error("Error al buscar el producto");

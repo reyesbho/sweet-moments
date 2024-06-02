@@ -10,6 +10,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { ThemeProvider } from '@emotion/react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { createTheme, Theme } from '@mui/material';
+import { NotFound } from './pages/NotFound/NotFound';
 function App() {
   const title = 'Dulces Momentos';
 
@@ -41,6 +42,7 @@ function App() {
             <Route path='/new-order' element={(<ProtectedRoute><NewOrder></NewOrder></ProtectedRoute>)}></Route>
             <Route path='/order/:id' element={(<ProtectedRoute><DetailOrder order={null}></DetailOrder></ProtectedRoute>)}></Route>
             <Route path='/login' element={<Login></Login>}></Route>
+            <Route path='*' element={<ProtectedRoute><NotFound></NotFound></ProtectedRoute>}></Route>
           </Routes>
           </main>
         </div>

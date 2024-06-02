@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom';
 import './Header.css';
 import { useAuth } from '../../config/AuthProvider';
+import logoUrl from '../../assets/sweet-moments.webp'
+
 export function Header({ title }:{ title:string }) {
     const {principal, logout} = useAuth()
 
-    const logo = './src/assets/sweet-moments.png';
     return (
         <div className="header">
             <div className='header-info'>
                 <Link to='/'>
-                    <img className='header-logo' src={logo} alt={title}></img>
+                    <img className='header-logo' src={logoUrl} alt={title}></img>
                 </Link>
                 <span className='header-title'>{title}</span>
             </div>

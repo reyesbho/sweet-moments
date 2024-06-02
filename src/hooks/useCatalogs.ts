@@ -1,33 +1,33 @@
 import { useEffect, useState } from "react";
 import { getCatalogType, getSabores } from "../services/catalogs.service";
-import { CatalogType } from "../general/Interfaces";
+import { CatalogTypeDto } from "../general/Interfaces";
+
 
 export function useCatalogs(){
-    const [catalog, setCatalog] = useState<CatalogType[]>([]);
-    const [flavors, setFlavors] = useState<CatalogType[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [catalog, setCatalog] = useState<CatalogTypeDto[]>([]);
+    const [flavors, setFlavors] = useState<CatalogTypeDto[]>([]);
     const [error, setError] = useState(null);
 
 
-    const getCatalogsType = async (idProduct: Number) => {
-        setLoading(true);
-        await getCatalogType({idProduct})
+    const getCatalogsType = (idProduct: Number) => {
+        getCatalogType({idProduct})
         .then(resultCatalog => {
             setCatalog(resultCatalog);})
         .catch(error => setError(error))
-        .finally(() => setLoading(false));
+        .finally(() =>{});
     }
 
-    const getFlavors = async () => {
-        await getSabores()
+    const getFlavors = () => {
+        getSabores()
         .then(resultCatalog => {
             setFlavors(resultCatalog);})
         .catch(error => setError(error));
     }
 
-    useEffect(()=>{
-        getFlavors()
-    }, [])
     
-    return {catalog,flavors, getCatalogsType, loading, error};
+    useEffect(()=>{
+        getFlavors();
+    },[])
+    
+    return {catalog,flavors, getCatalogsType, error, getFlavors};
 }
