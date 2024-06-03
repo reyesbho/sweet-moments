@@ -7,7 +7,8 @@ import dayjs from 'dayjs';
 export function useOrders(status: String){
     const [orders, setOrders] = useState<OrderDto[]>([])
     const [statusFilter, setStatusFilter] = useState<String>(status) 
-    const [date, setDate ] = useState<String>(dayjs(Date.now()).format('DD-MM-YYYY'));
+    const [dateInit, setDateInit ] = useState<String | null>(null);
+    const [dateEnd, setDateEnd ] = useState<String | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null)
     const [totalItems, setTotalItems] = useState(0)
@@ -15,7 +16,7 @@ export function useOrders(status: String){
 
     const getOrders = async () =>{
         setLoading(true);
-        await getPedidos(statusFilter,date, pagination)
+        await getPedidos(statusFilter,dateInit, dateEnd, pagination)
         .then(({pedidos, totalItems}) => {
             setOrders([...orders,...pedidos]); 
             setTotalItems(totalItems);
@@ -28,7 +29,7 @@ export function useOrders(status: String){
         getOrders();
         //clean effect
         return () => {}
-    }, [pagination, statusFilter, date])
+    }, [pagination, statusFilter, dateInit, dateEnd])
 
     const incrementPagination = () => {
         const newPagination = {...pagination, page: pagination.page + 1};
@@ -45,19 +46,20 @@ export function useOrders(status: String){
     }
 
 
-    const handleDateFilter = (newDate: string) => {
-        if(date === newDate){
+    const handleDateFilter = (newDateInit: string | null, newDateEnd: string | null) => {
+        if(dateInit === newDateInit && dateEnd === newDateEnd){
             return
         }
         setOrders([]);
         setPagination(paginationInit);
         setStatusFilter(statusFilter);
-        setDate(newDate)
+        setDateInit(newDateInit);
+        setDateEnd(newDateEnd);
     }
 
     const handleRefreshOrders = async() => {
         setLoading(true);
-        await getPedidos(statusFilter,date, paginationInit)
+        await getPedidos(statusFilter,dateInit, dateEnd, paginationInit)
         .then(({pedidos, totalItems}) => {
             setOrders([...pedidos]); 
             setTotalItems(totalItems);

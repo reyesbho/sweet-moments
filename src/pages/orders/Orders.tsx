@@ -6,15 +6,18 @@ import { Link } from 'react-router-dom'
 import { useStatus } from '../../hooks/useStatus'
 import { useState } from 'react'
 import { STATUS_FILTER } from '../../general/Status'
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs, { Dayjs } from 'dayjs'
+import { DateRangePicker } from 'rsuite';
+import 'rsuite/DateRangePicker/styles/index.css';
+import format from 'date-fns/format';
+import { predefinedRanges } from '../../general/Constants'
+import { formatDate } from '../../utils/formatDate'
+import dayjs from 'dayjs'
 
 export function Orders() {
-    const [status, setStatus] = useState<String>(STATUS_FILTER.BACKLOG)
-    const [startDate, setStartDate] = useState<Dayjs>(dayjs(Date.now()));
+    const [status, setStatus] = useState<String>(STATUS_FILTER.ALL)
+    
     const { orders, handleRefreshOrders, incrementPagination,changeStatusFilter,handleDateFilter,totalItems, statusFilter} = useOrders(status)
     const {cssClassStatus, handleSetStatus} = useStatus(status);
-
     
     const handleChangeStatusFilter = (status: String) => {
         setStatus(status);
@@ -22,8 +25,19 @@ export function Orders() {
         handleSetStatus(status);
     }
 
-    const handleChangeDate = (date: Dayjs | null) => {
-        handleDateFilter(date?.format('DD-MM-YYYY') ?? dayjs(Date.now()).format('DD-MM-YYYY'));
+    const handleChangeDate = (range:any) => {
+        const dateInit = dayjs(range[0]).format('DD-MM-YYYY');
+        const dateEnd = dayjs(range[1]).format('DD-MM-YYYY');
+        handleDateFilter(dateInit, dateEnd);
+    }
+    const onShortcutClick = (shortcut:any, event:any) => {
+        const dateInit = dayjs(shortcut.value[0]).format('DD-MM-YYYY');
+        const dateEnd = dayjs(shortcut.value[1]).format('DD-MM-YYYY');
+        handleDateFilter(dateInit, dateEnd);
+      }
+
+    const onCleanable = () => {
+        handleDateFilter(null, null);
     }
  
     return (
@@ -32,7 +46,16 @@ export function Orders() {
             <h2>Mis pedidos</h2>
             <div className='orders-options'>
                 <div className='orders-filters'>
-                    <DatePicker value={startDate} onChange={handleChangeDate} format='DD/MM/YYYY'/>
+                    <DateRangePicker showOneCalendar size="lg" placeholder="Select Date Range" appearance="subtle" 
+                    cleanable={true}
+                    onClean={onCleanable}
+                    ranges={predefinedRanges}
+                    onOk={handleChangeDate}
+                    onShortcutClick={onShortcutClick}
+                    renderValue={([start, end]) => {
+                        return format(start, 'dd/MM/yyyy') + ' - ' + format(end, 'dd/MM/yyyy');
+                    }}/>
+                    <button className={(statusFilter === STATUS_FILTER.ALL ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.ALL)}>Todos</button>
                     <button className={(statusFilter === STATUS_FILTER.INCOMPLETE ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.INCOMPLETE)}>Incompleto</button>
                     <button className={(statusFilter === STATUS_FILTER.BACKLOG ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.BACKLOG)}>Por hacer</button>
                     <button className={(statusFilter === STATUS_FILTER.DONE ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.DONE)}>Entregados</button>
