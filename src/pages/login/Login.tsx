@@ -52,7 +52,7 @@ export function Login() {
                                 {errors.email && <p>{errors.email?.message}</p>}
                             </div>
                             <div className="form-input">
-                                <label>Password</label>
+                                <label>Contraseña</label>
                                 <input
                                     type="password"
                                     {...register("password", {
@@ -61,7 +61,7 @@ export function Login() {
                                             message: "Password requerido"
                                         }
                                     })}
-                                    placeholder="****"
+                                    placeholder="Contraseña"
                                 ></input>
                                 {errors.password && <p>{errors.password.message}</p>}
                             </div>
