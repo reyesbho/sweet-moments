@@ -14,7 +14,7 @@
 }
 
 .main{
-  padding: 0px 350px;
+  padding: 20px 350px;
 }
 
 
@@ -209,20 +209,20 @@ hr{
 
 @media only screen and (min-width: 821px) and (max-width:1200px) {
   .main{
-    padding: 0px 100px;
+    padding: 10px 100px;
   } 
 }
 
 
 @media only screen and (min-width: 1201px) and (max-width:1400px) {
   .main{
-    padding: 0px 200px;
+    padding: 10px 200px;
   } 
 }
 
 @media only screen and (max-width:820px) {
   .main{
-    padding: 0px 10px;
+    padding: 10px 10px;
   } 
   
    

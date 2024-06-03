@@ -5,9 +5,12 @@ import { mapToPedidoModel, mapToProductoRequest } from "../utils/mapsToModel";
 
 
 
-export const getPedidos = async(statusFilter:String,date:String, pagination:Pagination) => {
+export const getPedidos = async(statusFilter:String,dateInit:String | null, dateEnd:String | null, pagination:Pagination) => {
         try{
-        const res = await fetch(API_PEDIDOS+`?date=${date}&estatus=${statusFilter}&page=${pagination.page}&size=${pagination.pageSize}`,
+        const res = await fetch(`${API_PEDIDOS}?`+
+            `estatus=${statusFilter}&page=${pagination.page}&size=${pagination.pageSize}`+
+            (dateInit?`&dateInit=${dateInit}`:'')+
+            (dateEnd?`&dateEnd=${dateEnd}`:''),
             {
                 method: 'GET'
             }

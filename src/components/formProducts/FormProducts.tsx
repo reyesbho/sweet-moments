@@ -12,12 +12,12 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetN
     const { catalog,flavors, getCatalogsType, getFlavors } = useCatalogs()
     const { register, handleSubmit, reset, formState: { isSubmitSuccessful } } = useForm<ProductForm>({
         defaultValues: {
-            text: '',
-            size: 0,
-            tipoId: 0,
-            flavorId: 0,
-            comments: '',
-            price:0
+            text: undefined,
+            size: undefined,
+            tipoId: undefined,
+            flavorId: undefined,
+            comments: undefined,
+            price:undefined
         }
     });
 
@@ -43,7 +43,7 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetN
         handleSetNewProducts(newProducItem);
         reset();
         setProductSelected(null);
-        setProducts([...products]);
+        setProducts(structuredClone(products));
         handleIsOpen();
     }
 
@@ -104,7 +104,7 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetN
                         }
                         <div className='form-input'>
                             <label >Precio</label>
-                            <input type='number' {...register("price")} placeholder='$00.00'></input>
+                            <input type='number' {...register("price")} placeholder='$0.00'></input>
                         </div>
                         
                         <div className='form-input'>
