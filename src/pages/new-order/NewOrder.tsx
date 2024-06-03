@@ -54,7 +54,7 @@ export function NewOrder() {
                     <div className='form-input'>
                         <label htmlFor={idFechaHora} >Fecha</label>
                         <Controller control={control} name='horaEntrega' render={({field}) => (
-                            <MobileTimePicker value={field.value} onChange={(hour) => field.onChange(hour)} />
+                            <MobileTimePicker ampm={false} minutesStep={10} timezone='default' value={field.value} onChange={(hour) => field.onChange(hour)} />
                             )}>
                         </Controller>
                     </div>

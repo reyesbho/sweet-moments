@@ -1,6 +1,5 @@
-import { useId, useState } from 'react';
 import './Product.css';
-import { ProductDto, ProductSelectDto } from '../../general/Interfaces';
+import { ProductSelectDto } from '../../general/Interfaces';
 import { getImage } from '../../general/Constants';
 
 export function Product({product,isCheck,  onClickProduct}:{product:ProductSelectDto,isCheck:boolean,  onClickProduct:CallableFunction}){

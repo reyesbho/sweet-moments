@@ -25,14 +25,14 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetN
     const isValidForm = (productInfo: ProductForm) => {
         if (!productInfo || !productSelected || ( 
             productInfo.size ==0 ||
-            productInfo.tipoId == 0 || 
-            productInfo.flavorId ==0 )){
+            productInfo.tipoId == 0 )){
                 return false;
             }
         return true;
     }
 
-    const handleAddProduct:SubmitHandler<ProductForm> = (productInfo:ProductForm) => {
+    const handleAddProduct:SubmitHandler<ProductForm> = (productInfo:ProductForm, event:any) => {
+        event?.preventDefault();
         if(!isValidForm(productInfo)){
             return
         }
@@ -75,7 +75,7 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetN
                         }
                         
                             <div className='form-input'>
-                                {productSelected?.key == 'pizza' ? <label >Rebanadas</label> : productSelected?.key == 'coop_cake' ? <label >Cantidad</label> : <label >Tamaño</label>}
+                                {productSelected?.key == 'pizza' ? <label >Rebanadas</label> : productSelected?.key == 'coop_cake' ? <label >Cantidad</label> : <label >Tamaño (Personas)</label>}
                                 <input type='number' {...register("size")} placeholder='140'></input>
                             </div>
                         <div className='form-select'>
@@ -103,7 +103,8 @@ export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetN
                         </div>
                         }
                         <div className='form-input'>
-                            <label >Precio</label>
+                            {productSelected?.key == 'coop_cake' ? <label >Precio Unitario</label> : <label >Precio</label>}
+
                             <input type='number' {...register("price")} placeholder='$0.00'></input>
                         </div>
                         
