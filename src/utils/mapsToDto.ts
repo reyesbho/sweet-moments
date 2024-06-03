@@ -32,6 +32,7 @@ export function mapToProductOrderDto(productoPedido:ProductoPedidoModel):Product
             thumbnail: productoPedido.producto.imagen,    
             type: productoPedido.tipoProducto.descripcion,
             flavor:productoPedido.sabor.clave,
+            key: productoPedido.producto.clave
         }
     }
 }

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './Sidebar.css';
 
-export function Sidebar({title}:{title: String}){
+export function Sidebar({title}:{title: string}){
     const logo = './src/assets/sweet-moments.png';
     return (
         <div className='sidebar'>
