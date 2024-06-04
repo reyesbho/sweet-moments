@@ -46,9 +46,7 @@ export function Carousel({ products, onClickSelected }:{ products:ProductSelectD
             <Slider {...settings}>
                 {productsList &&
                     productsList.map((product) => (
-                        <div>
-                            <Product  product={product} isCheck={product.isCheck} onClickProduct={handleOnChange}></Product>
-                        </div>
+                            <Product key={product.id} product={product} isCheck={product.isCheck} onClickProduct={handleOnChange}></Product>
                     ))
                 }
             </Slider>

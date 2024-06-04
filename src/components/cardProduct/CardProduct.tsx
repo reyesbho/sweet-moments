@@ -1,9 +1,12 @@
+import { getImage } from '../../general/Constants'
 import { ProductOrderDto } from '../../general/Interfaces'
 import './CardProduct.css'
 export function CardProduct({productItem}:{productItem: ProductOrderDto}) {
+
     return (
         <div key={productItem.id} className='product'>
-            <img className='product-img' src={productItem.product?.thumbnail} 
+            <img className='product-img' src={getImage(productItem.product?.key)} 
+                loading="lazy"  
                 alt={productItem.product?.nameProduct}></img>
             <div className='product-info'>
                 <h6>{productItem.product?.nameProduct}</h6>

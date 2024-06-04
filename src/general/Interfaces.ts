@@ -36,8 +36,9 @@ export interface DetailProductoDto{
         id: number,
         nameProduct: string,
         thumbnail: string,    
-        type: String,
-        flavor:String,
+        type: string,
+        flavor:string,
+        key:string;
 }
 
 export interface PedidoModel{
@@ -62,7 +63,7 @@ export interface ClienteModel{
      direccion: String;
 }
 
-export interface ProductoPedidoModel{
+export interface  ProductoPedidoModel{
     id: number;
     idPedido: Number;
     producto: ProductModel;

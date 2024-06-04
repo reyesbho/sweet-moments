@@ -57,7 +57,7 @@ export function DetailOrder({ order}:{ order: OrderDto | null}) {
                 </div>
                 {
                     productos && productos.length > 0 && 
-                    <button className='btn btn-success btn-sm'onClick={(event) => handleOpenModal(event,true, STATUS.BACKLOG as keyof typeof STATUS)} disabled={!productos || productos?.length<0} >Finalizar registro</button>
+                    <button className='btn btn-success btn-sm'onClick={(event) => handleOpenModal(event,true, STATUS.BACKLOG)} disabled={!productos || productos?.length<0} >Finalizar registro</button>
                 }
                 
                 <ModalConfirm openModal={openModal} setOpenModal={setOpenModal} accept={handleUpdateState} ></ModalConfirm>
