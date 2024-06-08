@@ -1,7 +1,7 @@
 import { CardProduct } from "../cardProduct/CardProduct";
 import { CardOrderInfo } from "../cardOrderInfo/CardOrderInfo";
 import './DetailOrder.css';
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useOrder } from "../../hooks/useOrder";
 import { IoIosArrowBack } from "react-icons/io";
 import { STATUS } from "../../general/Status";
@@ -12,9 +12,9 @@ import { useModal } from "../../hooks/UseModal";
 import { FormProducts } from "../formProducts/FormProducts";
 import { OrderDto } from "../../general/Interfaces";
 
-export function DetailOrder({ order}:{ order: OrderDto | null}) {
+export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
       const {id} = useParams();
-      const {orderItem,cssClassName, hasReturn, loading, error, handleSetNewProducts, productos} = useOrder({order, orderId:Number(id)});
+      const {order,cssClassName, hasReturn, loading, error, handleSetNewProducts, productos} = useOrder({order:orderItem, orderId:Number(id)});
       const navigate = useNavigate();
       const {openModal, statusConfirm, handleOpenModal, setOpenModal} = useModalConfirm();
       const {isOpen, handleModal} = useModal()
@@ -31,6 +31,22 @@ export function DetailOrder({ order}:{ order: OrderDto | null}) {
         });
     }
 
+    const canAddProduct = () => {
+        if(order?.status === STATUS.INCOMPLETE){
+            return true; 
+        }
+        return false;
+    }
+
+    const canEndOrder = () => {
+        if(order?.status === STATUS.INCOMPLETE){
+            return true;
+        }
+        return false;
+    }
+    const canShowButtons = () => {
+        return order?.status === STATUS.BACKLOG || order?.status === STATUS.INCOMPLETE;
+    }
      
     return (
     <div className="detailOrder">
@@ -40,13 +56,22 @@ export function DetailOrder({ order}:{ order: OrderDto | null}) {
                         <IoIosArrowBack size="2.5rem" />
                 </button>
             }
-            <h2>Detalle de pedido: {orderItem?.id}</h2>
+            <h2>Detalle de pedido: {order?.id}</h2>
         </div>
-        {orderItem &&
+        {order &&
             <div className={`detailOrder-container ${(id ? cssClassName : '' )}`}>
-                <CardOrderInfo order={orderItem} enableIcon={false}></CardOrderInfo>
+                <CardOrderInfo order={order} enableIcon={false}></CardOrderInfo>
+                { canShowButtons() &&
+                    <div className='order-actions'>
+                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.CANCELED)}>Cancelar Pedido</button>
+                        {order?.status === STATUS.BACKLOG &&
+                        <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.DONE)}>Entregado</button>}
+                    </div>
+                }
                 <hr></hr>
-                <button className='btn btn-add btn-sm' onClick={() => handleModal()} >Agregar producto</button>
+                {canAddProduct() && 
+                    <button className='btn btn-add btn-sm' onClick={() => handleModal()} >Agregar producto</button>
+                }
                 <div className='content-product'>
                     {isOpen && <FormProducts handleSetNewProducts={handleSetNewProducts} handleIsOpen={handleModal}></FormProducts>}
                 </div>
@@ -56,7 +81,7 @@ export function DetailOrder({ order}:{ order: OrderDto | null}) {
                     ))}
                 </div>
                 {
-                    productos && productos.length > 0 && 
+                    productos && productos.length > 0 && canEndOrder() && 
                     <button className='btn btn-success btn-sm'onClick={(event) => handleOpenModal(event,true, STATUS.BACKLOG)} disabled={!productos || productos?.length<0} >Finalizar registro</button>
                 }
                 
