@@ -10,11 +10,19 @@ export const classStatusEnum = {
     ALL:'border-status-default'
 }
 
-export const iconStatusEnum = {
-    INCOMPLETE: <FaQuestion size="2rem" className='color-incomplete'></FaQuestion>,
-    DONE: <FaCheckSquare size="2rem" className='color-success'></FaCheckSquare>,
-    BACKLOG: <FaHourglassStart size="2rem" className='color-backlog'></FaHourglassStart> ,
-    CANCELED: <MdOutlineCancel size="2rem" className='color-wrong'></MdOutlineCancel>
+export const iconStatusEnum = (status: String, size:string) =>  {
+    if(status === STATUS.INCOMPLETE){
+        return <FaQuestion size={size} className='color-incomplete'></FaQuestion>;
+    }
+    if(status === STATUS.DONE){
+        return <FaCheckSquare size={size} className='color-success'></FaCheckSquare>;
+    }
+    if(status === STATUS.BACKLOG){
+        return <FaHourglassStart size={size} className='color-backlog'></FaHourglassStart>;
+    }
+    if(status === STATUS.CANCELED){
+        return <MdOutlineCancel size={size} className='color-wrong'></MdOutlineCancel>;
+    }
 }
 
 export enum STATUS {

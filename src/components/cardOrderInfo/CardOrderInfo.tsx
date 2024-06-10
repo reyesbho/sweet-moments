@@ -7,7 +7,7 @@ import { formatDate, formatTime } from '../../utils/formatDate';
 import { OrderDto } from '../../general/Interfaces';
 
 export function CardOrderInfo({ order, enableIcon }: { order: OrderDto, enableIcon:boolean}) {
-    const iconStatus = iconStatusEnum[order.status as keyof typeof iconStatusEnum];
+    const iconStatus = iconStatusEnum(order.status, '2rem');
     const navigate = useNavigate();
     const handleClicDetail = (event: any) => {
         event.preventDefault();
