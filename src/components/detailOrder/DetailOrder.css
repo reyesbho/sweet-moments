@@ -32,3 +32,16 @@
     border: none;
     justify-self: flex-start;
 }
+
+.order-actions{
+    display: flex;
+    gap: 10px;
+    justify-content: end;
+    width: 100%;
+}
+
+.orders-options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

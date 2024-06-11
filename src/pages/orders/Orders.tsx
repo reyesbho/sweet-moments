@@ -5,7 +5,7 @@ import { useOrders } from '../../hooks/useOrders'
 import { Link } from 'react-router-dom'
 import { useStatus } from '../../hooks/useStatus'
 import { useState } from 'react'
-import { STATUS_FILTER } from '../../general/Status'
+import { iconStatusEnum, STATUS_FILTER } from '../../general/Status'
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/DateRangePicker/styles/index.css';
 import format from 'date-fns/format';
@@ -15,7 +15,6 @@ import dayjs from 'dayjs'
 
 export function Orders() {
     const [status, setStatus] = useState<String>(STATUS_FILTER.ALL)
-    
     const { orders, handleRefreshOrders, incrementPagination,changeStatusFilter,handleDateFilter,totalItems, statusFilter} = useOrders(status)
     const {cssClassStatus, handleSetStatus} = useStatus(status);
     
@@ -46,20 +45,37 @@ export function Orders() {
             <h2>Mis pedidos</h2>
             <div className='orders-options'>
                 <div className='orders-filters'>
-                    <DateRangePicker showOneCalendar size="lg" placeholder="Select Date Range" appearance="subtle" 
-                    cleanable={true}
-                    onClean={onCleanable}
-                    ranges={predefinedRanges}
-                    onOk={handleChangeDate}
-                    onShortcutClick={onShortcutClick}
-                    renderValue={([start, end]) => {
-                        return format(start, 'dd/MM/yyyy') + ' - ' + format(end, 'dd/MM/yyyy');
-                    }}/>
-                    <button className={(statusFilter === STATUS_FILTER.ALL ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.ALL)}>Todos</button>
-                    <button className={(statusFilter === STATUS_FILTER.INCOMPLETE ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.INCOMPLETE)}>Incompleto</button>
-                    <button className={(statusFilter === STATUS_FILTER.BACKLOG ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.BACKLOG)}>Por hacer</button>
-                    <button className={(statusFilter === STATUS_FILTER.DONE ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.DONE)}>Entregados</button>
-                    <button className={(statusFilter === STATUS_FILTER.CANCELED ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.CANCELED)}>Cancelados</button>
+                    <div className='periodo-filter'>
+                        <label htmlFor="periodo-filtro">Periodo</label>
+                        <DateRangePicker id='periodo-filtro' showOneCalendar size="lg" placeholder="Seleccionar el periodo" appearance="subtle" 
+                        cleanable={true}
+                        onClean={onCleanable}
+                        ranges={predefinedRanges}
+                        onOk={handleChangeDate}
+                        onShortcutClick={onShortcutClick}
+                        renderValue={([start, end]) => {
+                            return format(start, 'dd/MM/yyyy') + ' - ' + format(end, 'dd/MM/yyyy');
+                        }}/>
+                    </div>
+                    <div className='status-filters'>
+                        <button className={(statusFilter === STATUS_FILTER.ALL ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.ALL)}>Todos</button>
+                        <button className={(statusFilter === STATUS_FILTER.ALL ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.INCOMPLETE)}>
+                            <span >{iconStatusEnum(STATUS_FILTER.INCOMPLETE, "1rem")}</span> 
+                            Incompleto
+                        </button>
+                        <button className={(statusFilter === STATUS_FILTER.BACKLOG ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.BACKLOG)}>
+                            <span >{iconStatusEnum(STATUS_FILTER.BACKLOG, '1rem')} </span>
+                            Por hacer
+                        </button>
+                        <button className={(statusFilter === STATUS_FILTER.DONE ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.DONE)}>
+                            <span >{iconStatusEnum(STATUS_FILTER.DONE, '1rem')} </span>
+                            Entregados
+                        </button>
+                        <button className={(statusFilter === STATUS_FILTER.CANCELED ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.CANCELED)}>
+                            <span >{iconStatusEnum(STATUS_FILTER.CANCELED, '1rem')} </span>
+                            Cancelados
+                        </button>
+                    </div>
                 </div>
             </div>
             <OrderList orders={orders} incrementPagination={incrementPagination} totalItems={totalItems} handleRefreshOrders={handleRefreshOrders} ></OrderList>
