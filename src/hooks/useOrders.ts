@@ -3,6 +3,8 @@ import { getPedidos } from '../services/pedidos.services';
 import { paginationInit } from '../general/Constants';
 import { OrderDto } from '../general/Interfaces';
 import dayjs from 'dayjs';
+import { dateOptions, timeOptions } from '../utils/formatDate';
+import { compareDesc } from 'date-fns';
 
 export function useOrders(status: String){
     const [orders, setOrders] = useState<OrderDto[]>([])
@@ -70,7 +72,22 @@ export function useOrders(status: String){
     }
 
    const sortOrders = useMemo(() => {
-        return orders.slice().sort();
+        const ordersAux = orders.slice().sort((a,b) => {
+            const dateOne = new Date(a.fechaEntrega.toLocaleString("es-MX",dateOptions));
+            const dateOneHour = new Date(a.horaEntrega.toLocaleString("es-MX",timeOptions));
+            dateOne.setHours(dateOneHour.getHours());
+            dateOne.setMinutes(dateOneHour.getMinutes());
+            dateOne.setSeconds(dateOneHour.getSeconds());
+            
+            const dateTwo = new Date(b.fechaEntrega.toLocaleString("es-MX",dateOptions));
+            const dateTwoTime = new Date(b.horaEntrega.toLocaleString("es-MX",timeOptions));
+            dateTwo.setHours(dateTwoTime.getHours());
+            dateTwo.setMinutes(dateTwoTime.getMinutes());
+            dateTwo.setSeconds(dateTwoTime.getSeconds());
+   
+            return compareDesc(dateTwo, dateOne);
+        });
+        return ordersAux;
     },[orders])
 
     return {orders: sortOrders,handleRefreshOrders,incrementPagination, changeStatusFilter,handleDateFilter,totalItems, statusFilter};

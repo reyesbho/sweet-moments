@@ -1,16 +1,15 @@
- const dateOptions:Intl.DateTimeFormatOptions = {
+export const dateOptions:Intl.DateTimeFormatOptions = {
     month: "2-digit",
     year:"numeric",
     day: "2-digit",
     timeZone:"UTC"
 }
 
-const timeOptions:Intl.DateTimeFormatOptions = {
-    hour12 : true,
+export const timeOptions:Intl.DateTimeFormatOptions = {
+    hour12 : false,
     hourCycle: "h12",
     hour: "2-digit",
     minute: "2-digit",
-    timeZone:"UTC"
 }
 
 export const formatDate= (date: Date) => {

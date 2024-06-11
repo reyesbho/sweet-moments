@@ -20,7 +20,6 @@ export const  registerInterceptor = async(logout:any) => {
 
         response: function (response) {
             if(response.status == 403){
-                console.log("SALIR")
                 logout();
             }
             return response;
