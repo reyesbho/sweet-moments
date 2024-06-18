@@ -30,6 +30,7 @@ export enum STATUS {
     BACKLOG = 'BACKLOG',
     CANCELED = 'CANCELED',
     INCOMPLETE = 'INCOMPLETE',
+    DELETE = 'DELETE'
 }
 
 enum OTHER_STATUS {

@@ -68,7 +68,7 @@ export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
                 <CardOrderInfo order={order} enableIcon={false} ></CardOrderInfo>
                 { canShowButtons() &&
                     <div className='order-actions'>
-                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.CANCELED)}>Cancelar Pedido</button>
+                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.CANCELED)}>Cancelar</button>
                         {order?.status === STATUS.BACKLOG &&
                         <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.DONE)}>Entregado</button>}
                     </div>
