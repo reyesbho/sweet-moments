@@ -14,7 +14,7 @@ import { OrderDto } from "../../general/Interfaces";
 
 export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
       const {id} = useParams();
-      const {order,cssClassName, hasReturn, loading, error, handleSetNewProducts, productos} = useOrder({order:orderItem, orderId:Number(id)});
+      const {order,cssClassName, hasReturn, handleSetNewProducts, productos, setProductos} = useOrder({order:orderItem, orderId:Number(id)});
       const navigate = useNavigate();
       const {openModal, statusConfirm, handleOpenModal, setOpenModal} = useModalConfirm();
       const {isOpen, handleModal} = useModal()
@@ -47,7 +47,12 @@ export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
     const canShowButtons = () => {
         return order?.status === STATUS.BACKLOG || order?.status === STATUS.INCOMPLETE;
     }
-     
+    
+    const handleReload = (id:number) => {
+        const newProductos = structuredClone(productos);
+        setProductos(newProductos.filter((product) => product.id !== id));
+    }
+
     return (
     <div className="detailOrder">
         <div className="detail-title">
@@ -60,7 +65,7 @@ export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
         </div>
         {order &&
             <div className={`detailOrder-container ${(id ? cssClassName : '' )}`}>
-                <CardOrderInfo order={order} enableIcon={false}></CardOrderInfo>
+                <CardOrderInfo order={order} enableIcon={false} ></CardOrderInfo>
                 { canShowButtons() &&
                     <div className='order-actions'>
                         <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.CANCELED)}>Cancelar Pedido</button>
@@ -77,7 +82,7 @@ export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
                 </div>
                 <div className="detailOrder-products">
                     {productos && productos.map(product => (
-                        <CardProduct key={product.id} productItem={product}></CardProduct>
+                        <CardProduct key={product.id} productItem={product} reload={handleReload}></CardProduct>
                     ))}
                 </div>
                 {

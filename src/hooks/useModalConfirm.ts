@@ -5,7 +5,7 @@ export function useModalConfirm(){
     const [openModal, setOpenModal] = useState(false);
     const [statusConfirm, setStatusConfirm] = useState<String>(STATUS.BACKLOG);
 
-    const handleOpenModal = (event:any, open:boolean, action:any) => {
+    const handleOpenModal = (event:any, open:boolean, action?:any) => {
         event?.preventDefault();
         event?.stopPropagation(); 
         setStatusConfirm(action);

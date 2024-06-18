@@ -52,5 +52,5 @@ export function useOrder({ order, orderId }:{order: OrderDto | null, orderId: nu
     .catch((error) => console.error(error))
   }
 
-  return { order:orderItem, cssClassName, hasReturn, loading, error, handleSetNewProducts, productos};
+  return { order:orderItem, cssClassName, hasReturn, loading, error, handleSetNewProducts, productos, setProductos};
 }

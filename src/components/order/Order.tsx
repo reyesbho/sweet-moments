@@ -34,6 +34,11 @@ export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefr
         setOpen(!open);
         setIsLoadedProductos(true)
     }
+
+    const handleReload = (id:number) =>{
+        const newProducts = structuredClone(products);
+        setProducts(newProducts.filter((product) => product.id !== id));
+    }
     
     return (
         <div className={`principal-order `} onClick={handleShowProducts}> 
@@ -50,7 +55,7 @@ export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefr
                 }
                 
                 {products && <hr></hr> && products?.map(product => (
-                    <CardProduct key={product.id} productItem={product}></CardProduct>
+                    <CardProduct key={product.id} productItem={product} reload={handleReload}></CardProduct>
                 ))}
             </div>
             <ModalConfirm openModal={openModal} setOpenModal={setOpenModal} accept={handleUpdateState} ></ModalConfirm>
