@@ -22,6 +22,7 @@ export interface ProductOrderDto{
     product: DetailProductoDto;
     flavorId:number;
     tipoId:number;
+    idOrder: number;
 }
 
 export interface ProductDto{
@@ -74,7 +75,7 @@ export interface  ProductoPedidoModel{
     fechaRegistro: Date;
     fechaActualizacion: Date;
     porciones: Number;
-    precio: Number;
+    precio: number;
 }
 
 

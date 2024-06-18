@@ -143,6 +143,18 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   margin: 8px 0px;
 }
 
+.btn-delete{
+  background-color: var(--quaternary-btn);
+  color: var(--primary-font);
+  border-style: none;
+  border-radius: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  margin: 8px 0px;
+}
+
 .btn-add{
   background-color: var(--secondary-bg);
   color: var(--primary-font);

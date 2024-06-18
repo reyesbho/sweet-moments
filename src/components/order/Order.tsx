@@ -3,7 +3,7 @@ import './Order.css'
 import { useEffect, useState } from 'react';
 import { CardProduct } from '../cardProduct/CardProduct';
 import { CardOrderInfo } from '../cardOrderInfo/CardOrderInfo';
-import { getProductsByPedidoId, updateStatePedido } from '../../services/pedidos.services';
+import { deletePedido, getProductsByPedidoId, updateStatePedido } from '../../services/pedidos.services';
 import { ModalConfirm } from '../modal/Modal';
 import { useModalConfirm } from '../../hooks/useModalConfirm';
 import { Link } from 'react-router-dom';
@@ -27,6 +27,10 @@ export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefr
         setProducts(result);
     }
     const handleUpdateState = () => {
+        if(statusConfirm === STATUS.DELETE){
+            handleDelete(order.id);
+            return;
+        }
         updateStatePedido({id: order.id, status:statusConfirm}).then(() => handleRefreshOrders());
     }
 
@@ -34,24 +38,37 @@ export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefr
         setOpen(!open);
         setIsLoadedProductos(true)
     }
-    
+
+    const handleReload = (id:number) =>{
+        const newProducts = structuredClone(products);
+        setProducts(newProducts.filter((product) => product.id !== id));
+    }
+
+    const handleDelete = (idPedido: number) => {
+        deletePedido({idPedido})
+        .then((response) => {
+            handleRefreshOrders();
+        })
+    }
+
+
     return (
         <div className={`principal-order `} onClick={handleShowProducts}> 
             <CardOrderInfo order={order} enableIcon={true}></CardOrderInfo>
             <div className={`detail-order ${(open ? 'active' : 'inactive')}`}>
+                {products && <hr></hr> && products?.map(product => (
+                    <CardProduct key={product.id} productItem={product} reload={handleReload}></CardProduct>
+                ))}
                 { (order?.status === STATUS.BACKLOG || order?.status === STATUS.INCOMPLETE)  &&
                     <div className='order-actions'>
-                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.CANCELED)}>Cancelar Pedido</button>
+                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.CANCELED)}>Cancelar</button>
                         {order.status === STATUS.INCOMPLETE && 
                         <Link className='btn btn-add btn-sm' to={`/order/${order.id}`}>Continuar Registro</Link>}
                         {order?.status === STATUS.BACKLOG &&
                         <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.DONE)}>Entregado</button>}
+                        <button type='button' className='btn btn-delete btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.DELETE)}>Eliminar</button>
                     </div>
                 }
-                
-                {products && <hr></hr> && products?.map(product => (
-                    <CardProduct key={product.id} productItem={product}></CardProduct>
-                ))}
             </div>
             <ModalConfirm openModal={openModal} setOpenModal={setOpenModal} accept={handleUpdateState} ></ModalConfirm>
         </div>

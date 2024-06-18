@@ -26,6 +26,7 @@ export function mapToProductOrderDto(productoPedido:ProductoPedidoModel):Product
         price: productoPedido.precio,
         flavorId:productoPedido.sabor.id,
         tipoId:productoPedido.tipoProducto.id,
+        idOrder: productoPedido.idPedido,
         product: {
             id: productoPedido.producto.id,
             nameProduct: productoPedido.producto.descripcion,

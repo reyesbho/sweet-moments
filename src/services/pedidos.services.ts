@@ -93,3 +93,26 @@ export const addProductoToPedido = async({id, producto}:{id:number, producto:Pro
         throw new Error("Error al registrar el producto")
     }
 }
+
+export const deleteProductoPedido = async({idPedido, idProductoPedido}:{idPedido:number, idProductoPedido:number}) => {
+    try{
+        const res = await fetch(API_PEDIDOS+`/${idPedido}/producto/${idProductoPedido}`,{
+            method: "DELETE",
+        })
+        return res;
+    }catch (error){
+        throw new Error("Error al eliminar el producto")
+    }
+}
+
+
+export const deletePedido = async({idPedido}:{idPedido:number}) => {
+    try{
+        const res = await fetch(API_PEDIDOS+`/${idPedido}`,{
+            method: "DELETE",
+        })
+        return res;
+    }catch (error){
+        throw new Error("Error al eliminar el pedido")
+    }
+}
