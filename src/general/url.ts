@@ -1,5 +1,9 @@
-
-export const API_PEDIDOS = import.meta.env.VITE_URL_PEDIDOS;
-export const API_CATALOGOS = import.meta.env.VITE_URL_CATALOGOS;
-export const API_PRODUCTOS = import.meta.env.VITE_URL_PRODUCTOS;
+export const API_PEDIDO = import.meta.env.VITE_URL_PEDIDO;
+export const API_PRODUCTO = import.meta.env.VITE_URL_PRODUCTO;
 export const API_AUTH = import.meta.env.VITE_URL_AUTH;
+export const API_SABOR = import.meta.env.VITE_URL_SABOR;
+export const API_SIZE = import.meta.env.VITE_URL_SIZE;
+export const API_CLIENTE = import.meta.env.VITE_URL_CLIENTE;
+export const API_DETALLE_PRODUCTO = import.meta.env.VITE_URL_DETALLE_PRODUCTO;
+export const API_TIPO_COBRO = import.meta.env.VITE_URL_TIPO_COBRO;
+export const API_TIPO_PRODUCTO = import.meta.env.VITE_URL_TIPO_PRODUCTO;

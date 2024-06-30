@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getProductos } from "../services/producto.services";
+import { getDetalleProductos } from "../services/detalleProducto.services";
 import { ProductDto } from "../general/Interfaces";
 
 export function useProducts(){
@@ -7,7 +7,7 @@ export function useProducts(){
     const [error, setError] = useState(null)
 
     const getProducts = async() => {
-        getProductos()
+        getDetalleProductos()
         .then((productsList:ProductDto[]) => {
             setProducts(productsList);
         })

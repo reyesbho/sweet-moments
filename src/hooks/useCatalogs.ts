@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCatalogType, getSabores } from "../services/catalogs.service";
+import { getSabores } from "../services/sabor.service";
 import { CatalogTypeDto } from "../general/Interfaces";
 
 
@@ -10,11 +10,11 @@ export function useCatalogs(){
 
 
     const getCatalogsType = (idProduct: Number) => {
-        getCatalogType({idProduct})
+        /*getCatalogType({idProduct})
         .then(resultCatalog => {
             setCatalog(resultCatalog);})
         .catch(error => setError(error))
-        .finally(() =>{});
+        .finally(() =>{});*/
     }
 
     const getFlavors = () => {

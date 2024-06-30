@@ -4,7 +4,7 @@ import {useContext, useEffect, useState } from "react";
 import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
-import { getUser } from "../services/AuthService";
+import { getUser } from "../services/Auth.service";
 import { registerInterceptor } from "./Interceptor";
 import { TokenResponse, UserResponse } from "../general/Interfaces";
 

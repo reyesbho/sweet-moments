@@ -1,9 +1,13 @@
 .principal-order{
     border-radius: 25px;
     background-color: var(--tertiary-bg);
-    padding: 5px;
     margin: 5px;
+    padding: 5px;
     border: 2px solid rgb(129, 122, 122);
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: fit-content;
 }
 
 .border-status-success{
@@ -36,4 +40,10 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+}
+
+@media only screen and (max-width:420px) {
+    .principal-order{
+        width: 300px;
+    }
 }

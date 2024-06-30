@@ -14,15 +14,11 @@ export interface OrderDto{
 
 export interface ProductOrderDto{
     id:number,
-    text:String,
-    size:Number,
-    comments: String,
-    key: String,
-    price: Number,
-    product: DetailProductoDto;
-    flavorId:number;
-    tipoId:number;
-    idOrder: number;
+    idPedido:number,
+    detalleProducto:DetailProductoDto,
+    comentarios:String,
+    fechaRegistro:Date,
+    fechaActualizacion:Date
 }
 
 export interface ProductDto{
@@ -34,12 +30,27 @@ export interface ProductDto{
 }
 
 export interface DetailProductoDto{
-        id: number,
-        nameProduct: string,
-        thumbnail: string,    
-        type: string,
-        flavor:string,
-        key:string;
+    id: number,
+    producto:ProductDto,
+    size: CatalogTypeDto,
+    sabor: CatalogTypeDto,
+    tipoProducto: CatalogTypeDto,
+    tipoCobro:CatalogTypeDto,
+    descripcion: string,
+    estatus: boolean,
+    precio: number,
+}
+
+export interface DetailProductoModel{
+    id: number,
+    producto:ProductModel,
+    size: CatalogTypeModel,
+    sabor: CatalogTypeModel,
+    tipoProducto: CatalogTypeModel,
+    tipoCobro:CatalogTypeModel,
+    descripcion: string,
+    estatus: boolean,
+    precio: number,
 }
 
 export interface PedidoModel{
@@ -64,18 +75,13 @@ export interface ClienteModel{
      direccion: String;
 }
 
-export interface  ProductoPedidoModel{
-    id: number;
-    idPedido: Number;
-    producto: ProductModel;
-    sabor: SaborModel;
-    tipoProducto: ProductoTipoModel;
-    texto: String;
-    comentarios: String;
-    fechaRegistro: Date;
-    fechaActualizacion: Date;
-    porciones: Number;
-    precio: number;
+export interface  ProductoPedidoModel {
+    id:number,
+    idPedido:number,
+    detalleProducto:DetailProductoModel,
+    comentarios:String,
+    fechaRegistro:Date,
+    fechaActualizacion:Date
 }
 
 
@@ -85,17 +91,9 @@ export interface ProductModel{
     descripcion: string;
     estatus: string;
     imagen: string;
-    cobroUnidad: boolean;
 }
 
-export interface SaborModel{
-    id: number;
-    clave: string;
-    descripcion: string;
-    estatus: string;
-}
-
-export interface ProductoTipoModel{
+export interface CatalogTypeModel{
     id: number;
     clave: string;
     descripcion: string;
@@ -119,9 +117,10 @@ export interface ProductForm{
 }
 
 export interface CatalogTypeDto{
-    value: string;
-    label: string;
-    id: Number;
+    id: number;
+    clave: string;
+    descripcion: string;
+    estatus: string;
 }
 
 export interface ClientDto{

@@ -4,13 +4,15 @@ import './DetailOrder.css';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useOrder } from "../../hooks/useOrder";
 import { IoIosArrowBack } from "react-icons/io";
-import { STATUS } from "../../general/Status";
+import { iconStatusEnum, STATUS } from "../../general/Status";
 import { ModalConfirm } from "../modal/Modal";
 import { updateStatePedido } from "../../services/pedidos.services";
 import { useModalConfirm } from "../../hooks/useModalConfirm";
 import { useModal } from "../../hooks/UseModal";
 import { FormProducts } from "../formProducts/FormProducts";
 import { OrderDto } from "../../general/Interfaces";
+import { MdPlace } from "react-icons/md";
+import { formatDate, formatTime } from "../../utils/formatDate";
 
 export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
       const {id} = useParams();
@@ -18,6 +20,7 @@ export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
       const navigate = useNavigate();
       const {openModal, statusConfirm, handleOpenModal, setOpenModal} = useModalConfirm();
       const {isOpen, handleModal} = useModal()
+      const iconStatus = iconStatusEnum((order?.status ? order?.status : STATUS.INCOMPLETE), '3rem');
 
       const handleClicHome = (event:any) => {
         event?.preventDefault();
@@ -65,18 +68,37 @@ export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
         </div>
         {order &&
             <div className={`detailOrder-container ${(id ? cssClassName : '' )}`}>
-                <CardOrderInfo order={order} enableIcon={false} ></CardOrderInfo>
+                
+                    <div className='orderDetail'>    
+                        <div className="orderDetail-iconStatus">
+                            {iconStatus}
+                        </div>
+                        <div className="orderDetail-info">
+                            <div className="orderDetail-details">
+                                <p><span>Cliente:</span> {order.cliente}</p>
+                                <p ><span>Lugar de entrega: </span> {order.lugarEntrega}</p>   
+                            </div>
+                            <div className='orderDetail-details'>
+                                <p><span >Fecha de entrega:</span> {formatDate(order.fechaEntrega)} {formatTime(order.horaEntrega)}</p>
+                                <p><span>Productos:</span> {order.numProducts}</p>
+                            </div>    
+                            <div className='orderDetail-details'>
+                                <p><span>Total:</span> ${order.total}.00</p>
+                                <p><span>Registrado por:</span> {order.register}</p>
+                            </div>
+                        </div>
+                    </div>
                 { canShowButtons() &&
                     <div className='order-actions'>
                         <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.CANCELED)}>Cancelar</button>
                         {order?.status === STATUS.BACKLOG &&
-                        <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.DONE)}>Entregado</button>}
+                        <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.DONE)}>Entregado</button>}        
+                        {canAddProduct() && 
+                            <button className='btn btn-add btn-sm' onClick={() => handleModal()} >Agregar producto</button>
+                        }
                     </div>
                 }
                 <hr></hr>
-                {canAddProduct() && 
-                    <button className='btn btn-add btn-sm' onClick={() => handleModal()} >Agregar producto</button>
-                }
                 <div className='content-product'>
                     {isOpen && <FormProducts handleSetNewProducts={handleSetNewProducts} handleIsOpen={handleModal}></FormProducts>}
                 </div>
