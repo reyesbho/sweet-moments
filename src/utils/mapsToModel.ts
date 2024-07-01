@@ -1,29 +1,20 @@
-import { OrderDto, PedidoModel, ProductForm, ProductOrderDto } from "../general/Interfaces";
+import { OrderInfo, PedidoRequest, ProductForm } from "../general/Interfaces";
 
-
-export const mapToPedidoModel = (order: OrderDto):PedidoModel => {
-    const clienteArray = order.cliente.split(" ");
+export const mapToPedidoModel = (pedidoRequest: OrderInfo):PedidoRequest => {
+    const clienteArray = pedidoRequest.cliente?.split(" ") ?? [];
     return {
-        id: 0,
-        estatus: '',
-        fechaRegistro:null,
-        fechaActualizacion:null,
-        numProductos:0,
-        fechaEntrega:order.fechaEntrega,
-        horaEntrega: order.horaEntrega,
-        lugarEntrega:order.lugarEntrega,
-        registradoPor: null,
-        total: 0,
-        cliente: {
+        idPedido: pedidoRequest.idOrder,
+        fechaEntrega: pedidoRequest.fechaEntrega,
+        lugarEntrega: pedidoRequest.lugarEntrega,
+        cliente:  {
             id:0,
-            nombre: order.cliente,
+            nombre: pedidoRequest.cliente,
             apellidoPaterno: (clienteArray.length > 1 ? clienteArray[1] : clienteArray[0]),
             apellidoMaterno: (clienteArray.length > 2 ? clienteArray[2] : null),
-            direccion: order.lugarEntrega
-        }
+            direccion: pedidoRequest.lugarEntrega
+        },
     }
 }
-
 export const mapToProductoRequest = (producto:ProductForm) => {
 
     return {

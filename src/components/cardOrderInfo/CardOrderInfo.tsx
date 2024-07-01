@@ -3,7 +3,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { iconStatusEnum } from '../../general/Status';
 import './CardOrderInfo.css'
 import { useNavigate } from 'react-router-dom';
-import { formatDate, formatTime } from '../../utils/formatDate';
+import { formatDateTime } from '../../utils/formatDate';
 import { OrderDto } from '../../general/Interfaces';
 
 export function CardOrderInfo({ order, enableIcon }: { order: OrderDto, enableIcon:boolean}) {
@@ -20,7 +20,7 @@ export function CardOrderInfo({ order, enableIcon }: { order: OrderDto, enableIc
                 <div className='order-information'>
                     <p className='order-client'><span className='order-icon-status'>{iconStatus}</span>{order.cliente}</p>
                     <p className='order-place'><MdPlace></MdPlace> {order.lugarEntrega}</p>
-                    <p className='order-place'>{formatDate(order.fechaEntrega)} {formatTime(order.horaEntrega)}</p>
+                    <p className='order-place'>{formatDateTime(order.fechaEntrega)}</p>
                 </div>
                 <div className='order-total'>
                     <p>Productos: {order.numProducts}</p>

@@ -10,15 +10,18 @@ import { useModalConfirm } from "../../hooks/useModalConfirm";
 import { useModal } from "../../hooks/UseModal";
 import { FormProducts } from "../formProducts/FormProducts";
 import { OrderDto } from "../../general/Interfaces";
-import { formatDate, formatTime } from "../../utils/formatDate";
+import { formatDateTime } from "../../utils/formatDate";
+import { NewOrder } from "../new-order/NewOrder";
+import { useState } from "react";
 
 export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
       const {id} = useParams();
-      const {order,cssClassName, hasReturn, productos, setProductos} = useOrder({order:orderItem, orderId:Number(id)});
+      const {order,cssClassName, hasReturn, productos, setProductos, getOrder} = useOrder({order:orderItem as OrderDto, orderId:Number(id)});
       const navigate = useNavigate();
       const {openModal, statusConfirm, handleOpenModal, setOpenModal} = useModalConfirm();
-      const {isOpen, handleModal} = useModal()
+      let modalAddProduct = useModal()
       const iconStatus = iconStatusEnum((order?.status ? order?.status : STATUS.INCOMPLETE), '3rem');
+      let modalUpdateOrder = useModal();
 
       const handleClicHome = (event:any) => {
         event?.preventDefault();
@@ -54,6 +57,10 @@ export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
         setProductos(newProductos.filter((product) => product.id !== id));
     }
 
+    const handleRealoadOrder = () => {
+            getOrder(order.id);
+    }
+
     return (
     <div className="detailOrder">
         <div className="detail-title">
@@ -77,7 +84,7 @@ export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
                                 <p ><span>Lugar de entrega: </span> {order.lugarEntrega}</p>   
                             </div>
                             <div className='orderDetail-details'>
-                                <p><span >Fecha de entrega:</span> {formatDate(order.fechaEntrega)} {formatTime(order.horaEntrega)}</p>
+                                <p><span >Fecha de entrega:</span> {formatDateTime(order.fechaEntrega)}</p>
                                 <p><span>Productos:</span> {order.numProducts}</p>
                             </div>    
                             <div className='orderDetail-details'>
@@ -88,29 +95,36 @@ export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
                     </div>
                 { canShowButtons() &&
                     <div className='order-actions'>
+                        <button type='button' className='btn btn-next btn-sm' onClick={() => modalUpdateOrder.handleModal()}>Actualizar informacion</button>
                         <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.CANCELED)}>Cancelar</button>
                         {order?.status === STATUS.BACKLOG &&
                         <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.DONE)}>Entregado</button>}        
                         {canAddProduct() && 
-                            <button className='btn btn-add btn-sm' onClick={() => handleModal()} >Agregar producto</button>
+                            <button className='btn btn-add btn-sm' onClick={() => modalAddProduct.handleModal()} >Agregar producto</button>
                         }
                     </div>
                 }
-                <hr></hr>
                 <div className='content-product'>
-                    {isOpen && <FormProducts idPedido={order.id} handleIsOpen={handleModal}></FormProducts>}
+                    {modalAddProduct.isOpen && <FormProducts idPedido={order.id} handleIsOpen={modalAddProduct.handleModal}></FormProducts>}
                 </div>
-                <div className="detailOrder-products">
-                    {productos && productos.map(product => (
-                        <CardProduct key={product.id} productItem={product} reload={handleReload}></CardProduct>
-                    ))}
-                </div>
+                {productos.length > 0 &&
+                    <div className="detailOrder-products">
+                        <hr></hr>
+                        { productos.map(product => (
+                            <CardProduct key={product.id} productItem={product} reload={handleReload}></CardProduct>
+                        ))}
+                    </div>
+                }
                 {
                     productos && productos.length > 0 && canEndOrder() && 
                     <button className='btn btn-success btn-sm'onClick={(event) => handleOpenModal(event,true, STATUS.BACKLOG)} disabled={!productos || productos?.length<0} >Finalizar registro</button>
                 }
                 
                 <ModalConfirm openModal={openModal} setOpenModal={setOpenModal} accept={handleUpdateState} ></ModalConfirm>
+                {
+                modalUpdateOrder.isOpen && 
+                <NewOrder handleIsOpen={modalUpdateOrder.handleModal} orderDto={order} reload={handleRealoadOrder}></NewOrder>
+            }
             </div>}
     </div>
 

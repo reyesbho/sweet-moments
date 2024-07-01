@@ -17,7 +17,7 @@
     font-weight: bold;
 }
 
-.orders > a {
+.orders > .orders-add {
     position: absolute;
     background: none;
     border: none;
@@ -46,11 +46,18 @@
 }
 
 .status-filters{
+    position: relative;
     padding-top: 15px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 10px;
+}
+
+.status-filters label {
+    position: absolute;
+    left: 0px;
+    top: -3px;
 }
 
 .orders-options{
@@ -87,6 +94,18 @@
 
     .orders-options{
         justify-content: center;
+    }
+
+    .periodo-filter{
+        width: 100%;
+    }
+    
+    .status-filters{
+        justify-content: center;
+    }
+
+    .btn-pill{
+        padding: 10px;
     }
 
     /*Orders component css class*/

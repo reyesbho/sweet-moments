@@ -73,19 +73,7 @@ export function useOrders(status: String){
 
    const sortOrders = useMemo(() => {
         const ordersAux = orders.slice().sort((a,b) => {
-            const dateOne = new Date(a.fechaEntrega.toLocaleString("es-MX",dateOptions));
-            const dateOneHour = new Date(a.horaEntrega.toLocaleString("es-MX",timeOptions));
-            dateOne.setHours(dateOneHour.getHours());
-            dateOne.setMinutes(dateOneHour.getMinutes());
-            dateOne.setSeconds(dateOneHour.getSeconds());
-            
-            const dateTwo = new Date(b.fechaEntrega.toLocaleString("es-MX",dateOptions));
-            const dateTwoTime = new Date(b.horaEntrega.toLocaleString("es-MX",timeOptions));
-            dateTwo.setHours(dateTwoTime.getHours());
-            dateTwo.setMinutes(dateTwoTime.getMinutes());
-            dateTwo.setSeconds(dateTwoTime.getSeconds());
-   
-            return compareDesc(dateTwo, dateOne);
+            return compareDesc(a.fechaEntrega, b.fechaEntrega);
         });
         return ordersAux;
     },[orders])

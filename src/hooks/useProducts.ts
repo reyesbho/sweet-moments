@@ -25,8 +25,8 @@ export function useProducts(){
         })
     }
 
-    const addDetailProductToOrder = (idPedido:number, detailProduct: ProductForm) => {
-        addProductoToPedido({id:idPedido,producto:detailProduct})
+    const addDetailProductToOrder = async(idPedido:number, detailProduct: ProductForm) => {
+        await addProductoToPedido({id:idPedido,producto:detailProduct})
         .then((pedidoProducto: ProductOrderDto)=> {})
     }
 

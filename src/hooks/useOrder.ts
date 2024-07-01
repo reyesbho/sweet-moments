@@ -4,7 +4,7 @@ import { classStatusEnum, STATUS } from "../general/Status";
 import { OrderDto, ProductOrderDto } from "../general/Interfaces";
 
 
-export function useOrder({ order, orderId }:{order: OrderDto | null, orderId: number}) {
+export function useOrder({ order, orderId }:{order: OrderDto, orderId: number}) {
   const [orderItem, setOrderItem] = useState(order);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -42,9 +42,9 @@ export function useOrder({ order, orderId }:{order: OrderDto | null, orderId: nu
     } else {
       getOrder(orderId);
     }
-  }, [order]);
+  }, []);
 
 
 
-  return { order:orderItem, cssClassName, hasReturn, loading, error, productos, setProductos};
+  return { order:orderItem, cssClassName, hasReturn, loading, error, productos, setProductos, getOrder};
 }

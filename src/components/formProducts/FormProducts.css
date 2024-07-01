@@ -27,6 +27,13 @@
     
     align-items: center;
 }
+
+.container-detail-close{
+    position: absolute;
+    align-self: flex-end;
+    cursor: pointer;
+}
+
 .container-detail h2{
     margin: 10px 0px ;
 }

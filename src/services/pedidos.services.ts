@@ -1,6 +1,6 @@
 import { mapToOrderDto, mapToProductOrderDto } from "../utils/mapsToDto";
 import { API_PEDIDO } from "../general/url";
-import {  OrderDto, Pagination, PedidoModel, ProductForm, ProductoPedidoModel, ProductOrderDto } from "../general/Interfaces";
+import {  OrderDto, OrderInfo, Pagination, PedidoModel, ProductForm, ProductoPedidoModel, ProductOrderDto } from "../general/Interfaces";
 import { mapToPedidoModel, mapToProductoRequest } from "../utils/mapsToModel";
 
 
@@ -55,7 +55,7 @@ export const getPedido = async(orderId: number) => {
 }
 
 
-export const addPedido = async(order: OrderDto) => {
+export const addPedido = async(order: OrderInfo) => {
     const productEntity = mapToPedidoModel(order);
     try{
         const res = await fetch(API_PEDIDO,{
@@ -66,6 +66,20 @@ export const addPedido = async(order: OrderDto) => {
         return data;
     } catch (error) {
         throw new Error("Error al agregar el pedido")
+    }
+}
+
+export const updatePedido = async(order: OrderInfo) => {
+    const productEntity = mapToPedidoModel(order);
+    try{
+        const res = await fetch(API_PEDIDO,{
+            method: "PUT",
+              body: JSON.stringify(productEntity)
+        });
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        throw new Error("Error al actualizar el pedido")
     }
 }
 

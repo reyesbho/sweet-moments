@@ -1,9 +1,9 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useProducts } from "../../hooks/useProducts";
 import './FormProducts.css';
-import { Carousel } from "../carousel/Carousel";
 import { DetailProductoDto, ProductDto, ProductForm } from "../../general/Interfaces";
 import { useState } from "react";
+import { MdClose } from "react-icons/md";
 
 export function FormProducts({idPedido,  handleIsOpen }:{idPedido: number, handleIsOpen:CallableFunction }) {
     const { products, detailProducts, getDetailProducts, addDetailProductToOrder} = useProducts();
@@ -47,12 +47,16 @@ export function FormProducts({idPedido,  handleIsOpen }:{idPedido: number, handl
             return;
         }
         productInfo.idDetailProduct = detailProductSelected?.id ?? 0;
-        addDetailProductToOrder(idPedido,productInfo);   
+        addDetailProductToOrder(idPedido,productInfo)
+        .then(() =>{
+            handleIsOpen();
+        });   
     }
 
     return ( 
         <div className="modal"> 
             <div className="container-detail">
+                <span className="container-detail-close" onClick={() => handleIsOpen()}><MdClose size={'2rem'}></MdClose></span>
                 <h2>Productos</h2>
                 <div className="productos">
                     {

@@ -1,7 +1,7 @@
 export interface OrderDto{
     id:number,
     cliente:String,
-    lugarEntrega: String,
+    lugarEntrega: string,
     fechaEntrega : Date,
     horaEntrega: Date,
     register: string | null,
@@ -68,11 +68,11 @@ export interface PedidoModel{
 }
 
 export interface ClienteModel{
-     id: number;
-     nombre: String;
+     id: number | null;
+     nombre: String | undefined;
      apellidoPaterno: String;
      apellidoMaterno: String | null;
-     direccion: String;
+     direccion: string | undefined;
 }
 
 export interface  ProductoPedidoModel {
@@ -124,7 +124,7 @@ export interface ClientDto{
     id: Number,
     name: string,
     apellidoPaterno: string,
-    apellidoMaterno: string,
+    apellidoMaterno: string | null,
     direccion: string
 }
 
@@ -177,4 +177,18 @@ export interface ProductSelectDto{
     status: string,
     isCheck:boolean;
 
+}
+
+export interface OrderInfo{
+    idOrder: Number | undefined,
+    cliente: String | undefined,
+    lugarEntrega: string | undefined,
+    fechaEntrega: Date | undefined,
+}
+
+export interface PedidoRequest{
+    idPedido: Number | undefined,
+    lugarEntrega: String | undefined,
+    fechaEntrega: Date | undefined,
+    cliente: ClienteModel
 }
