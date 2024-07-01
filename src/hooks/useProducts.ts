@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { getDetalleProductos } from "../services/detalleProducto.services";
-import { ProductDto } from "../general/Interfaces";
+import { DetailProductoDto, ProductDto, ProductForm, ProductOrderDto } from "../general/Interfaces";
+import { getDetalleProducto, getProductos } from "../services/producto.service";
+import { addProductoToPedido } from "../services/pedidos.services";
 
 export function useProducts(){
     const [products, setProducts] = useState<ProductDto[] | null>(null);
+    const [detailProducts, setDetailProducts] = useState<DetailProductoDto[] | null>(null);
     const [error, setError] = useState(null)
 
     const getProducts = async() => {
-        getDetalleProductos()
+        getProductos()
         .then((productsList:ProductDto[]) => {
             setProducts(productsList);
         })
@@ -15,10 +18,22 @@ export function useProducts(){
         
     }
 
+    const getDetailProducts = async(idProducto: number) => {
+        getDetalleProducto(idProducto)
+        .then((detailProducts: DetailProductoDto[]) =>{
+            setDetailProducts(detailProducts);
+        })
+    }
+
+    const addDetailProductToOrder = (idPedido:number, detailProduct: ProductForm) => {
+        addProductoToPedido({id:idPedido,producto:detailProduct})
+        .then((pedidoProducto: ProductOrderDto)=> {})
+    }
+
     
     useEffect(()=>{
         getProducts();
     },[])
 
-    return {products, setProducts, error, getProducts};
+    return {products,detailProducts, getDetailProducts,addDetailProductToOrder, error};
 }

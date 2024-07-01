@@ -1,6 +1,6 @@
 import { mapToOrderDto, mapToProductOrderDto } from "../utils/mapsToDto";
 import { API_PEDIDO } from "../general/url";
-import {  OrderDto, Pagination, PedidoModel, ProductoPedidoModel, ProductOrderDto } from "../general/Interfaces";
+import {  OrderDto, Pagination, PedidoModel, ProductForm, ProductoPedidoModel, ProductOrderDto } from "../general/Interfaces";
 import { mapToPedidoModel, mapToProductoRequest } from "../utils/mapsToModel";
 
 
@@ -81,14 +81,16 @@ export const updateStatePedido = async({id, status}:{id:number, status:String}) 
     }   
 }
 
-export const addProductoToPedido = async({id, producto}:{id:number, producto:ProductOrderDto}) => {
+export const addProductoToPedido = async({id, producto}:{id:number, producto:ProductForm}) => {
     const product = mapToProductoRequest(producto);
     try{
         const res = await fetch(API_PEDIDO+`/${id}/producto`,{
             method: "POST",
             body: JSON.stringify(product)
         })
-        return res;
+        console.log(res)
+        const data = await res.json();
+        return mapToProductOrderDto(data);
     }catch (error){
         throw new Error("Error al registrar el producto")
     }

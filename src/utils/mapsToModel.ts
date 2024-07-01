@@ -1,4 +1,4 @@
-import { OrderDto, PedidoModel, ProductOrderDto } from "../general/Interfaces";
+import { OrderDto, PedidoModel, ProductForm, ProductOrderDto } from "../general/Interfaces";
 
 
 export const mapToPedidoModel = (order: OrderDto):PedidoModel => {
@@ -24,16 +24,12 @@ export const mapToPedidoModel = (order: OrderDto):PedidoModel => {
     }
 }
 
-export const mapToProductoRequest = (producto:ProductOrderDto) => {
+export const mapToProductoRequest = (producto:ProductForm) => {
 
     return {
-            texto:producto.text,
-            porciones:producto.size,
-            comentarios: producto.comments,
-            idProducto: producto.product.id,
-            idSabor: producto.flavorId,
-            idTipoProducto: producto.tipoId,
-            precio:producto.price
+        idDetalleProducto:producto.idDetailProduct,
+        comentarios:producto.comments,
+        cantidad: producto.quantity,
         }
 }
 

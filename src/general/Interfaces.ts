@@ -108,12 +108,9 @@ export interface Pagination{
 
 
 export interface ProductForm{
-    text: string,
-    size: number,
-    tipoId: number,
-    flavorId: number,
+    quantity: number,
     comments: String,
-    price:number
+    idDetailProduct: number
 }
 
 export interface CatalogTypeDto{

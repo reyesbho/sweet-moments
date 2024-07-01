@@ -11,7 +11,6 @@ import { OrderDto, ProductOrderDto } from '../../general/Interfaces';
 
 export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefreshOrders: Function}) {
     const [open, setOpen] = useState(false)
-    const cssClassName = classStatusEnum[order.status as keyof typeof classStatusEnum];
     const {openModal, statusConfirm, handleOpenModal, setOpenModal } = useModalConfirm()
     const [products, setProducts] = useState<ProductOrderDto[]>([])
     const [isLoadedProductos, setIsLoadedProductos] = useState(false)

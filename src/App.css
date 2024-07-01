@@ -14,7 +14,7 @@
 }
 
 .main{
-  padding: 10px;
+  padding: 0px 100px;
 }
 
 
@@ -62,6 +62,33 @@ button{
 .form-input > input{
   border-radius: 10px;
   line-height: 35px;
+  font-size: 0.9rem;
+  padding-left: 10px;
+  border: 1px solid var(--quinary-bg);
+  color: var(--quinary-font);
+}
+
+.form-input-sm{
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+  font-size: 0.9rem;
+  min-width: 150px;
+  color: var(--quinary-font);
+  font-weight: 500;
+  align-items: center;
+}
+
+
+.form-input-sm > label{
+  padding-bottom: 5px;
+  color: var(--primary-font);
+  width: 90px;
+}
+
+.form-input-sm > input{
+  border-radius: 5px;
+  line-height: 20px;
   font-size: 0.9rem;
   padding-left: 10px;
   border: 1px solid var(--quinary-bg);

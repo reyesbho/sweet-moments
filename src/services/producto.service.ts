@@ -1,8 +1,8 @@
-import { ProductDto, ProductModel } from "../general/Interfaces";
+import { DetailProductoDto, DetailProductoModel, ProductDto, ProductModel } from "../general/Interfaces";
 import { API_PRODUCTO } from "../general/url";
-import { mapToProductDto,  } from "../utils/mapsToDto";
+import { mapToDetailProductDto, mapToProductDto,  } from "../utils/mapsToDto";
 
-export const getProducto = async():Promise<ProductDto[]> => {
+export const getProductos = async():Promise<ProductDto[]> => {
     try {
         const response = await fetch(API_PRODUCTO,
         {
@@ -14,5 +14,20 @@ export const getProducto = async():Promise<ProductDto[]> => {
 
     } catch (error) {
         throw new Error("Error al buscar los productos");
+    }
+}
+
+
+export const getDetalleProducto = async(idProducto: number):Promise<DetailProductoDto[]> => {
+    try {
+        let response = await  fetch(API_PRODUCTO+`/${idProducto}/producto`, {
+            method: 'GET'
+        });
+
+        const productos = await response.json();
+        return productos?.map(mapToDetailProductDto);
+
+    }catch(error){
+        throw new Error("Error al buscar los detalles")
     }
 }

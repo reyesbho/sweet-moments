@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { addProductoToPedido, getPedido, getProductsByPedidoId } from "../services/pedidos.services";
+import {  getPedido, getProductsByPedidoId } from "../services/pedidos.services";
 import { classStatusEnum, STATUS } from "../general/Status";
 import { OrderDto, ProductOrderDto } from "../general/Interfaces";
 
@@ -44,13 +44,7 @@ export function useOrder({ order, orderId }:{order: OrderDto | null, orderId: nu
     }
   }, [order]);
 
-  const handleSetNewProducts = async(producto: ProductOrderDto) => {
-    await addProductoToPedido({id: orderId, producto: producto})
-    .then(() => {
-      getProductos(orderId);
-    })
-    .catch((error) => console.error(error))
-  }
 
-  return { order:orderItem, cssClassName, hasReturn, loading, error, handleSetNewProducts, productos, setProductos};
+
+  return { order:orderItem, cssClassName, hasReturn, loading, error, productos, setProductos};
 }

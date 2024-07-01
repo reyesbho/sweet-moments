@@ -1,7 +1,6 @@
 import { CardProduct } from "../cardProduct/CardProduct";
-import { CardOrderInfo } from "../cardOrderInfo/CardOrderInfo";
 import './DetailOrder.css';
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useOrder } from "../../hooks/useOrder";
 import { IoIosArrowBack } from "react-icons/io";
 import { iconStatusEnum, STATUS } from "../../general/Status";
@@ -11,12 +10,11 @@ import { useModalConfirm } from "../../hooks/useModalConfirm";
 import { useModal } from "../../hooks/UseModal";
 import { FormProducts } from "../formProducts/FormProducts";
 import { OrderDto } from "../../general/Interfaces";
-import { MdPlace } from "react-icons/md";
 import { formatDate, formatTime } from "../../utils/formatDate";
 
 export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
       const {id} = useParams();
-      const {order,cssClassName, hasReturn, handleSetNewProducts, productos, setProductos} = useOrder({order:orderItem, orderId:Number(id)});
+      const {order,cssClassName, hasReturn, productos, setProductos} = useOrder({order:orderItem, orderId:Number(id)});
       const navigate = useNavigate();
       const {openModal, statusConfirm, handleOpenModal, setOpenModal} = useModalConfirm();
       const {isOpen, handleModal} = useModal()
@@ -100,7 +98,7 @@ export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
                 }
                 <hr></hr>
                 <div className='content-product'>
-                    {isOpen && <FormProducts handleSetNewProducts={handleSetNewProducts} handleIsOpen={handleModal}></FormProducts>}
+                    {isOpen && <FormProducts idPedido={order.id} handleIsOpen={handleModal}></FormProducts>}
                 </div>
                 <div className="detailOrder-products">
                     {productos && productos.map(product => (

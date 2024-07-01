@@ -7,6 +7,7 @@ export const classStatusEnum = {
     BACKLOG: 'border-status-backlog',
     CANCELED: 'border-status-wrong',
     INCOMPLETE:'border-status-incomplete',
+    DELETE:'border-status-default',
     ALL:'border-status-default'
 }
 
