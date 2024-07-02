@@ -9,14 +9,12 @@ import { updateStatePedido } from "../../services/pedidos.services";
 import { useModalConfirm } from "../../hooks/useModalConfirm";
 import { useModal } from "../../hooks/UseModal";
 import { FormProducts } from "../formProducts/FormProducts";
-import { OrderDto } from "../../general/Interfaces";
 import { formatDateTime } from "../../utils/formatDate";
 import { NewOrder } from "../new-order/NewOrder";
-import { useState } from "react";
 
-export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
+export function DetailOrder() {
       const {id} = useParams();
-      const {order,cssClassName, hasReturn, productos, setProductos, getOrder} = useOrder({order:orderItem as OrderDto, orderId:Number(id)});
+      const {order,cssClassName, hasReturn, productos, setProductos, getOrder, getProductos} = useOrder({orderId:Number(id)});
       const navigate = useNavigate();
       const {openModal, statusConfirm, handleOpenModal, setOpenModal} = useModalConfirm();
       let modalAddProduct = useModal()
@@ -51,14 +49,16 @@ export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
     const canShowButtons = () => {
         return order?.status === STATUS.BACKLOG || order?.status === STATUS.INCOMPLETE;
     }
-    
-    const handleReload = (id:number) => {
-        const newProductos = structuredClone(productos);
-        setProductos(newProductos.filter((product) => product.id !== id));
-    }
+
 
     const handleRealoadOrder = () => {
-            getOrder(order.id);
+            getOrder();
+    }
+
+    const handleRealoadProducts = () => {
+        getProductos().then(() => {
+            handleRealoadOrder();
+        });
     }
 
     return (
@@ -105,13 +105,13 @@ export function DetailOrder({ orderItem}:{ orderItem: OrderDto | null}) {
                     </div>
                 }
                 <div className='content-product'>
-                    {modalAddProduct.isOpen && <FormProducts idPedido={order.id} handleIsOpen={modalAddProduct.handleModal}></FormProducts>}
+                    {modalAddProduct.isOpen && <FormProducts idPedido={order.id} handleIsOpen={modalAddProduct.handleModal} reload={handleRealoadProducts}></FormProducts>}
                 </div>
                 {productos.length > 0 &&
                     <div className="detailOrder-products">
                         <hr></hr>
                         { productos.map(product => (
-                            <CardProduct key={product.id} productItem={product} reload={handleReload}></CardProduct>
+                            <CardProduct key={product.id} productItem={product} reload={getProductos}></CardProduct>
                         ))}
                     </div>
                 }

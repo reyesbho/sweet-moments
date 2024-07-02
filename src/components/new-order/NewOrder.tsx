@@ -35,8 +35,10 @@ export function NewOrder({handleIsOpen, orderDto, reload}:{handleIsOpen: Callabl
         }else{
             registerOrder(orderInfo).then(() => {
                 handleIsOpen();
+                reload();
             })
         }
+        
     }
    
 
@@ -61,7 +63,7 @@ export function NewOrder({handleIsOpen, orderDto, reload}:{handleIsOpen: Callabl
                         <div className='form-input'>
                             <label htmlFor={idFechaHora} >Fecha: </label>
                             <Controller control={control} name='fechaEntrega' render={({field}) => (
-                                <MobileDateTimePicker value={dayjs(field.value)} format="DD/MM/YYYY HH:mm" timezone='default' ampm={false} minutesStep={30} onChange={(date) => field.onChange(date)}/>
+                                <MobileDateTimePicker value={(dayjs(field.value))} format="DD/MM/YYYY HH:mm" timezone='default' ampm={false} minutesStep={10} onChange={(date) => field.onChange(date)}/>
                                 )}>
                             </Controller>
                                 

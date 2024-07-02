@@ -5,7 +5,7 @@ import { DetailProductoDto, ProductDto, ProductForm } from "../../general/Interf
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
 
-export function FormProducts({idPedido,  handleIsOpen }:{idPedido: number, handleIsOpen:CallableFunction }) {
+export function FormProducts({idPedido,  handleIsOpen, reload}:{idPedido: number, handleIsOpen:CallableFunction, reload: CallableFunction }) {
     const { products, detailProducts, getDetailProducts, addDetailProductToOrder} = useProducts();
     const [productSelected, setProductSelected] = useState<ProductDto | null>(null);
     const [detailProductSelected, setDetailProductSelected] = useState<DetailProductoDto | null>(null);
@@ -50,6 +50,7 @@ export function FormProducts({idPedido,  handleIsOpen }:{idPedido: number, handl
         addDetailProductToOrder(idPedido,productInfo)
         .then(() =>{
             handleIsOpen();
+            reload();
         });   
     }
 

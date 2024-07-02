@@ -39,7 +39,7 @@ function App() {
           <main className='main'>
           <Routes>
             <Route path='/' element={(<ProtectedRoute><Orders></Orders></ProtectedRoute>)}></Route>
-            <Route path='/order/:id' element={(<ProtectedRoute><DetailOrder orderItem={null}></DetailOrder></ProtectedRoute>)}></Route>
+            <Route path='/order/:id' element={(<ProtectedRoute><DetailOrder ></DetailOrder></ProtectedRoute>)}></Route>
             <Route path='/login' element={<Login></Login>}></Route>
             <Route path='*' element={<ProtectedRoute><NotFound></NotFound></ProtectedRoute>}></Route>
           </Routes>

@@ -4,8 +4,8 @@ import { classStatusEnum, STATUS } from "../general/Status";
 import { OrderDto, ProductOrderDto } from "../general/Interfaces";
 
 
-export function useOrder({ order, orderId }:{order: OrderDto, orderId: number}) {
-  const [orderItem, setOrderItem] = useState(order);
+export function useOrder({ orderId }:{orderId: number}) {
+  const [orderItem, setOrderItem] = useState<OrderDto | null>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [cssClassName, setCssClassName] = useState("");
@@ -13,7 +13,7 @@ export function useOrder({ order, orderId }:{order: OrderDto, orderId: number}) 
   const [productos, setProductos] = useState<ProductOrderDto[]>([]);
   
 
-  const getOrder = async (orderId: number) => {
+  const getOrder = async () => {
     setLoading(true);
     await getPedido(orderId)
       .then(async(pedido) => {
@@ -21,13 +21,13 @@ export function useOrder({ order, orderId }:{order: OrderDto, orderId: number}) 
         let status = pedido.status as keyof typeof STATUS;
         setCssClassName(classStatusEnum[status]);
         setHasReturn(true);
-        getProductos(orderId);
+        getProductos();
       })
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
   };
 
-  const getProductos = async(orderId: number) => { 
+  const getProductos = async() => { 
     await getProductsByPedidoId(orderId).
           then((products) => {
               setProductos([...products]);
@@ -35,16 +35,10 @@ export function useOrder({ order, orderId }:{order: OrderDto, orderId: number}) 
   }
 
   useEffect(() => {
-    if (!orderId) {
-      setOrderItem(order);
-      let status = order?.status as keyof typeof STATUS;
-      setCssClassName(classStatusEnum[status]);
-    } else {
-      getOrder(orderId);
-    }
+      getOrder();
   }, []);
 
 
 
-  return { order:orderItem, cssClassName, hasReturn, loading, error, productos, setProductos, getOrder};
+  return { order:orderItem, cssClassName, hasReturn, loading, error, productos, setProductos, getOrder, getProductos};
 }

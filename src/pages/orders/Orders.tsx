@@ -85,7 +85,7 @@ export function Orders() {
             <p>{`Número de pedidos ${totalItems}`}</p>
             {
                 isOpen && 
-                <NewOrder handleIsOpen={handleModal} orderDto={null}></NewOrder>
+                <NewOrder handleIsOpen={handleModal} orderDto={null} reload={handleRefreshOrders}></NewOrder>
             }
         </div>
     )
