@@ -12,13 +12,15 @@ import { predefinedRanges } from '../../general/Constants'
 import dayjs from 'dayjs'
 import { NewOrder } from '../../components/new-order/NewOrder'
 import { useModal } from '../../hooks/UseModal'
+import { useNavigate } from 'react-router-dom'
 
 export function Orders() {
     const [status, setStatus] = useState<String>(STATUS_FILTER.ALL)
     const { orders, handleRefreshOrders, incrementPagination,changeStatusFilter,handleDateFilter,totalItems, statusFilter} = useOrders(status)
     const {cssClassStatus, handleSetStatus} = useStatus(status);
     const {isOpen, handleModal} = useModal();
-    
+    const navigate = useNavigate();
+
     const handleChangeStatusFilter = (status: String) => {
         setStatus(status);
         changeStatusFilter(status);
@@ -38,6 +40,10 @@ export function Orders() {
 
     const onCleanable = () => {
         handleDateFilter(null, null);
+    }
+
+    const navigateDetail = (idOrder: number) => {
+        navigate(`/order/${idOrder}`);
     }
 
  
@@ -85,7 +91,7 @@ export function Orders() {
             <p>{`Número de pedidos ${totalItems}`}</p>
             {
                 isOpen && 
-                <NewOrder handleIsOpen={handleModal} orderDto={null} reload={handleRefreshOrders}></NewOrder>
+                <NewOrder handleIsOpen={handleModal} orderDto={null} reload={navigateDetail}></NewOrder>
             }
         </div>
     )

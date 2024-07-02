@@ -33,9 +33,9 @@ export function NewOrder({handleIsOpen, orderDto, reload}:{handleIsOpen: Callabl
                 reload();
             })
         }else{
-            registerOrder(orderInfo).then(() => {
+            registerOrder(orderInfo).then((order: OrderDto) => {
                 handleIsOpen();
-                reload();
+                reload(order.id);
             })
         }
         

@@ -3,8 +3,9 @@ import { addPedido, updatePedido} from "../services/pedidos.services"
 export function useNewOrder(){
 
     const registerOrder = async(orderInfo: any) => {
-        await addPedido(orderInfo)
+        return await addPedido(orderInfo)
             .then((order) => {
+                return order;
             }).catch((error) => {console.error(error);});
     }
 
