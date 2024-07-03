@@ -58,16 +58,15 @@ export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefr
                 {products && <hr></hr> && products?.map(product => (
                     <CardProduct key={product.id} productItem={product} reload={handleReload}></CardProduct>
                 ))}
-                { (order?.status === STATUS.BACKLOG || order?.status === STATUS.INCOMPLETE)  &&
                     <div className='order-actions'>
-                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.CANCELED)}>Cancelar</button>
+                        { (order?.status === STATUS.BACKLOG || order?.status === STATUS.INCOMPLETE)  && 
+                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.CANCELED)}>Cancelar</button>}
                         {order.status === STATUS.INCOMPLETE && 
                         <Link className='btn btn-add btn-sm' to={`/order/${order.id}`}>Continuar Registro</Link>}
                         {order?.status === STATUS.BACKLOG &&
                         <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.DONE)}>Entregado</button>}
                         <button type='button' className='btn btn-delete btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.DELETE)}>Eliminar</button>
                     </div>
-                }
             </div>
             <ModalConfirm openModal={openModal} setOpenModal={setOpenModal} accept={handleUpdateState} ></ModalConfirm>
         </div>

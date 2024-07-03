@@ -73,7 +73,7 @@ export function useOrders(status: String){
 
    const sortOrders = useMemo(() => {
         const ordersAux = orders.slice().sort((a,b) => {
-            return compareDesc(a.fechaEntrega, b.fechaEntrega);
+            return compareDesc(b.fechaEntrega, a.fechaEntrega);
         });
         return ordersAux;
     },[orders])
