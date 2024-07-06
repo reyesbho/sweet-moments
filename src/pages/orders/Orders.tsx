@@ -8,17 +8,17 @@ import { iconStatusEnum, STATUS_FILTER } from '../../general/Status'
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/DateRangePicker/styles/index.css';
 import format from 'date-fns/format';
-import { predefinedRanges } from '../../general/Constants'
-import dayjs from 'dayjs'
-import { NewOrder } from '../../components/new-order/NewOrder'
-import { useModal } from '../../hooks/UseModal'
-import { useNavigate } from 'react-router-dom'
+import { predefinedRanges } from '../../general/Constants';
+import dayjs from 'dayjs';
+import { NewOrder } from '../../components/new-order/NewOrder';
+import { useNavigate } from 'react-router-dom';
+import { useModalConfirm } from '../../hooks/useModalConfirm'
 
 export function Orders() {
     const [status, setStatus] = useState<String>(STATUS_FILTER.ALL)
     const { orders, handleRefreshOrders, incrementPagination,changeStatusFilter,handleDateFilter,totalItems, statusFilter} = useOrders(status)
     const {cssClassStatus, handleSetStatus} = useStatus(status);
-    const {isOpen, handleModal} = useModal();
+    const {show, handleShow, handleClose} = useModalConfirm();
     const navigate = useNavigate();
 
     const handleChangeStatusFilter = (status: String) => {
@@ -49,7 +49,7 @@ export function Orders() {
  
     return (
         <div className="orders">
-            <button className='orders-add'><FaPlusCircle size="3rem" className='color-success' onClick={handleModal}></FaPlusCircle></button>
+            <button className='orders-add'><FaPlusCircle size="3rem" className='color-success' onClick={() => handleShow()}></FaPlusCircle></button>
             <h2>Mis pedidos</h2>
             <div className='orders-options'>
                 <div className='orders-filters'>
@@ -90,8 +90,8 @@ export function Orders() {
             <OrderList orders={orders} incrementPagination={incrementPagination} totalItems={totalItems} handleRefreshOrders={handleRefreshOrders} ></OrderList>
             <p>{`Número de pedidos ${totalItems}`}</p>
             {
-                isOpen && 
-                <NewOrder handleIsOpen={handleModal} orderDto={null} reload={navigateDetail}></NewOrder>
+                show && 
+                <NewOrder handleClose={handleClose} orderDto={null} reload={navigateDetail}></NewOrder>
             }
         </div>
     )

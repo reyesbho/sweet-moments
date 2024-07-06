@@ -7,19 +7,20 @@ import { iconStatusEnum, STATUS } from "../../general/Status";
 import { ModalConfirm } from "../modal/Modal";
 import { updateStatePedido } from "../../services/pedidos.services";
 import { useModalConfirm } from "../../hooks/useModalConfirm";
-import { useModal } from "../../hooks/UseModal";
 import { FormProducts } from "../formProducts/FormProducts";
 import { formatDateTime } from "../../utils/formatDate";
 import { NewOrder } from "../new-order/NewOrder";
+import { useState } from "react";
 
 export function DetailOrder() {
       const {id} = useParams();
       const {order,cssClassName, hasReturn, productos, setProductos, getOrder, getProductos} = useOrder({orderId:Number(id)});
       const navigate = useNavigate();
-      const {openModal, statusConfirm, handleOpenModal, setOpenModal} = useModalConfirm();
-      let modalAddProduct = useModal()
+      const {show, handleShow, handleClose} = useModalConfirm();
+      let modalAddProduct = useModalConfirm()
       const iconStatus = iconStatusEnum((order?.status ? order?.status : STATUS.INCOMPLETE), '3rem');
-      let modalUpdateOrder = useModal();
+      let modalUpdateOrder = useModalConfirm();
+      const [status, setStatus] = useState<String>('');
 
       const handleClicHome = (event:any) => {
         event?.preventDefault();
@@ -27,8 +28,13 @@ export function DetailOrder() {
         navigate("/");
       }
 
+    const handleStatusAction = (status: String) => {
+        handleShow();
+        setStatus(status);
+    }
+
     const handleUpdateState = () => {
-        updateStatePedido({id: Number(id), status:statusConfirm}).then(() => {
+        updateStatePedido({id: Number(id), status:status}).then(() => {
             handleClicHome(event);
         });
     }
@@ -95,17 +101,17 @@ export function DetailOrder() {
                     </div>
                 { canShowButtons() &&
                     <div className='order-actions'>
-                        <button type='button' className='btn btn-next btn-sm' onClick={() => modalUpdateOrder.handleModal()}>Actualizar informacion</button>
-                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.CANCELED)}>Cancelar</button>
+                        <button type='button' className='btn btn-next btn-sm' onClick={() => modalUpdateOrder.handleShow()}>Actualizar informacion</button>
+                        <button type='button' className='btn btn-cancel btn-sm' onClick={() => handleStatusAction(STATUS.CANCELED)}>Cancelar</button>
                         {order?.status === STATUS.BACKLOG &&
-                        <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleOpenModal(event,true, STATUS.DONE)}>Entregado</button>}        
+                        <button type='button' className='btn btn-add btn-sm' onClick={() => handleStatusAction(STATUS.DONE)}>Entregado</button>}        
                         {canAddProduct() && 
-                            <button className='btn btn-add btn-sm' onClick={() => modalAddProduct.handleModal()} >Agregar producto</button>
+                            <button className='btn btn-add btn-sm' onClick={() => modalAddProduct.handleShow()} >Agregar producto</button>
                         }
                     </div>
                 }
                 <div className='content-product'>
-                    {modalAddProduct.isOpen && <FormProducts idPedido={order.id} handleIsOpen={modalAddProduct.handleModal} reload={handleRealoadProducts}></FormProducts>}
+                    {modalAddProduct.show && <FormProducts idPedido={order.id} handleIsOpen={() => modalAddProduct.handleShow()} reload={handleRealoadProducts}></FormProducts>}
                 </div>
                 {productos.length > 0 &&
                     <div className="detailOrder-products">
@@ -117,13 +123,13 @@ export function DetailOrder() {
                 }
                 {
                     productos && productos.length > 0 && canEndOrder() && 
-                    <button className='btn btn-success btn-sm'onClick={(event) => handleOpenModal(event,true, STATUS.BACKLOG)} disabled={!productos || productos?.length<0} >Finalizar registro</button>
+                    <button className='btn btn-success btn-sm'onClick={() => handleStatusAction(STATUS.BACKLOG)} disabled={!productos || productos?.length<0} >Finalizar registro</button>
                 }
                 
-                <ModalConfirm openModal={openModal} setOpenModal={setOpenModal} accept={handleUpdateState} ></ModalConfirm>
+                <ModalConfirm show={show} handleClose={handleClose} handleOk={handleUpdateState} ></ModalConfirm>
                 {
-                modalUpdateOrder.isOpen && 
-                <NewOrder handleIsOpen={modalUpdateOrder.handleModal} orderDto={order} reload={handleRealoadOrder}></NewOrder>
+                modalUpdateOrder.show && 
+                <NewOrder handleClose={modalUpdateOrder.handleClose} orderDto={order} reload={handleRealoadOrder}></NewOrder>
             }
             </div>}
     </div>

@@ -16,3 +16,32 @@ export const getSizeProductos = async():Promise<CatalogTypeDto[]> => {
         throw new Error("Error al buscar los tamaños");
     }
 }
+
+export const daleteSizeProduct = async(idSizeProduct:number) => {
+    try {
+        const response = await fetch(API_SIZE+`/${idSizeProduct}`,
+        {
+            method:"DELETE"
+        }
+        );
+        return response;
+
+    } catch (error) {
+        throw new Error("Error al eliminar el tamaño producto");
+    }
+}
+
+export const updateStatusSizeProduct = async(idSizeProduct:number, estatus:boolean):Promise<CatalogTypeDto> => {
+    try {
+        const response = await fetch(API_SIZE+`/${idSizeProduct}/${estatus}`,
+        {
+            method:"PUT"
+        }
+        );
+        const tipo = await response.json();
+        return mapToCatalogTypeDto(tipo);
+
+    } catch (error) {
+        throw new Error("Error al actualizar el tamaño producto");
+    }
+}

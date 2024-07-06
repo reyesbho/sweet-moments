@@ -118,6 +118,8 @@ export interface CatalogTypeDto{
     clave: string;
     descripcion: string;
     estatus: string;
+    selfDelete: CallableFunction;
+    selfUpdateEstatus: CallableFunction;
 }
 
 export interface ClientDto{

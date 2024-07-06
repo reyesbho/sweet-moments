@@ -1,17 +1,17 @@
 import './ModalConfirm.css'
 
-export function ModalConfirm({openModal, setOpenModal, accept}:{openModal:boolean, setOpenModal:Function, accept:any}){
+export function ModalConfirm({show, handleClose, handleOk}:{show:boolean, handleClose:CallableFunction, handleOk:CallableFunction}){
     return (
         <>
-            {openModal && 
-            <div className='main-modal' onClick={(event) => {event.stopPropagation(); setOpenModal(false)}}>
+            {show && 
+            <div className='main-modal' >
                 <div className='modal-container'>
                     <div className='modal-title'>
                         <p>¿Estas seguro de realizar esta acción? </p>
                     </div>
                     <div className='modal-actions'>
-                        <button className='btn btn-cancel btn-md' onClick={(event) => {event.stopPropagation(); setOpenModal(false);}} >Cancelar</button>
-                        <button className='btn btn-success btn-md' onClick={accept}>Confirmar</button>
+                        <button className='btn btn-cancel btn-md' onClick={() => handleClose()} >Cancelar</button>
+                        <button className='btn btn-success btn-md' onClick={() => handleOk()}>Confirmar</button>
                     </div>
                 </div>
             </div>

@@ -17,3 +17,32 @@ export const getTipoCobro = async():Promise<CatalogTypeDto[]> => {
         throw new Error("Error al buscar los tipos de cobro");
     }
 }
+
+export const deleteTipoCobro = async(idTipoCobro:number) => {
+    try {
+        const response = await fetch(API_TIPO_COBRO+`/${idTipoCobro}`,
+        {
+            method:"DELETE"
+        }
+        );
+        return response;
+
+    } catch (error) {
+        throw new Error("Error al eliminar el tipo de cobro");
+    }
+}
+
+export const updateStatusTipoCobro = async(idTipoCobro:number, estatus:boolean):Promise<CatalogTypeDto> => {
+    try {
+        const response = await fetch(API_TIPO_COBRO+`/${idTipoCobro}/${estatus}`,
+        {
+            method:"PUT"
+        }
+        );
+        const tipo = await response.json();
+        return mapToCatalogTypeDto(tipo);
+
+    } catch (error) {
+        throw new Error("Error al actualizar el tipo de cobro");
+    }
+}

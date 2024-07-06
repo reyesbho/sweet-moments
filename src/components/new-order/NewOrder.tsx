@@ -7,7 +7,7 @@ import { useNewOrder } from '../../hooks/useNewOrder';
 import {  MobileDateTimePicker } from '@mui/x-date-pickers';
 import { OrderDto, OrderInfo } from '../../general/Interfaces';
 import dayjs from 'dayjs';
-export function NewOrder({handleIsOpen, orderDto, reload}:{handleIsOpen: CallableFunction, orderDto: OrderDto | null, reload: CallableFunction}) {
+export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFunction, orderDto: OrderDto | null, reload: CallableFunction}) {
     const [order, setOrder] = useState<OrderDto | null>(orderDto);
     const { registerOrder, updateOrder} = useNewOrder();
     const idCliente = useId();
@@ -29,12 +29,12 @@ export function NewOrder({handleIsOpen, orderDto, reload}:{handleIsOpen: Callabl
     const handleRegisterOrder = (orderInfo:OrderInfo) => {
         if(orderInfo.idOrder){
             updateOrder(orderInfo).then(() => {
-                handleIsOpen();
+                handleClose();
                 reload();
             })
         }else{
             registerOrder(orderInfo).then((order: OrderDto) => {
-                handleIsOpen();
+                handleClose();
                 reload(order.id);
             })
         }
@@ -70,7 +70,7 @@ export function NewOrder({handleIsOpen, orderDto, reload}:{handleIsOpen: Callabl
                         </div>
                         
                         <div className='btn-next-container'>
-                            <button className='btn btn-cancel btn-sm' onClick={() => handleIsOpen()}>Cancelar</button>
+                            <button className='btn btn-cancel btn-sm' onClick={() => handleClose()}>Cancelar</button>
                             <button type="submit" className='btn btn-next btn-sm' disabled={isDirty && !isValid} >{order ? "Actualizar":"Registrar"}</button>
                         </div>
                     </form>

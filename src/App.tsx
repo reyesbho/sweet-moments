@@ -11,6 +11,7 @@ import { ThemeProvider } from '@emotion/react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { createTheme, Theme } from '@mui/material';
 import { NotFound } from './pages/NotFound/NotFound';
+import { AdminCatalog } from './pages/catalog/adminCatalog';
 function App() {
   const title = 'Dulces Momentos';
 
@@ -41,6 +42,7 @@ function App() {
             <Route path='/' element={(<ProtectedRoute><Orders></Orders></ProtectedRoute>)}></Route>
             <Route path='/order/:id' element={(<ProtectedRoute><DetailOrder ></DetailOrder></ProtectedRoute>)}></Route>
             <Route path='/login' element={<Login></Login>}></Route>
+            <Route path='/admin' element={<AdminCatalog></AdminCatalog>}></Route>
             <Route path='*' element={<ProtectedRoute><NotFound></NotFound></ProtectedRoute>}></Route>
           </Routes>
           </main>

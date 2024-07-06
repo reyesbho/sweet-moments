@@ -17,3 +17,33 @@ export const getSabores = async():Promise<CatalogTypeDto[]> => {
         throw new Error("Error al buscar los sabores");
     }
 }
+
+
+export const deleteSabor = async(idSabor:number) => {
+    try {
+        const response = await fetch(API_SABOR+`/${idSabor}`,
+        {
+            method:"DELETE"
+        }
+        );
+        return response;
+
+    } catch (error) {
+        throw new Error("Error al eliminar el sabores");
+    }
+}
+
+export const updateStatusSabor = async(idSabor:number, estatus:boolean):Promise<CatalogTypeDto> => {
+    try {
+        const response = await fetch(API_SABOR+`/${idSabor}/${estatus}`,
+        {
+            method:"PUT"
+        }
+        );
+        const tipo = await response.json();
+        return mapToCatalogTypeDto(tipo);
+
+    } catch (error) {
+        throw new Error("Error al actualizar el sabor");
+    }
+}
