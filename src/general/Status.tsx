@@ -7,21 +7,22 @@ export const classStatusEnum = {
     BACKLOG: 'border-status-backlog',
     CANCELED: 'border-status-wrong',
     INCOMPLETE:'border-status-incomplete',
+    DELETE:'border-status-default',
     ALL:'border-status-default'
 }
 
 export const iconStatusEnum = (status: String, size:string) =>  {
     if(status === STATUS.INCOMPLETE){
-        return <FaQuestion size={size} className='color-incomplete'></FaQuestion>;
+        return <FaQuestion title="Incompleto" size={size} className='color-incomplete'></FaQuestion>;
     }
     if(status === STATUS.DONE){
-        return <FaCheckSquare size={size} className='color-success'></FaCheckSquare>;
+        return <FaCheckSquare title="Listo" size={size} className='color-success'></FaCheckSquare>;
     }
     if(status === STATUS.BACKLOG){
-        return <FaHourglassStart size={size} className='color-backlog'></FaHourglassStart>;
+        return <FaHourglassStart title="Por hacer" size={size} className='color-backlog'></FaHourglassStart>;
     }
     if(status === STATUS.CANCELED){
-        return <MdOutlineCancel size={size} className='color-wrong'></MdOutlineCancel>;
+        return <MdOutlineCancel title="Cancelado" size={size} className='color-wrong'></MdOutlineCancel>;
     }
 }
 

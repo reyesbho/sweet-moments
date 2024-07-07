@@ -1,12 +1,12 @@
 .order-list{
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-height: 75vh;
-    overflow-x: hidden;
-    padding-bottom: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
 }
 
-.order-list::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+@media only screen and (max-width:420px) {
+    .order-list{
+        justify-content: center;
+    }   
 }

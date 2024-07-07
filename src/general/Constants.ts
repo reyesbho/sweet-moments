@@ -79,3 +79,11 @@ export const predefinedRanges = [
     }
     return img;
 }
+
+
+export const CATALOGS = {
+  flavor:'flavor', 
+  typePaymment:'typePaymment',
+  typeProduct:'typeProduct',
+  sizeProduct:'sizeProduct'
+};

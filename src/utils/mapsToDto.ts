@@ -1,4 +1,4 @@
-import { CatalogTypeDto, ClienteModel, OrderDto, PedidoModel, ProductDto, ProductModel, ProductoPedidoModel, ProductOrderDto, ProductoTipoModel, ProductSelectDto, SaborModel } from "../general/Interfaces";
+import { CatalogTypeDto, CatalogTypeModel, ClienteModel, DetailProductoDto, DetailProductoModel, OrderDto, PedidoModel, ProductDto, ProductModel, ProductoPedidoModel, ProductOrderDto } from "../general/Interfaces";
 
 export function mapToOrderDto(pedido:PedidoModel):OrderDto{
     return {
@@ -19,30 +19,23 @@ export function mapToOrderDto(pedido:PedidoModel):OrderDto{
 export function mapToProductOrderDto(productoPedido:ProductoPedidoModel):ProductOrderDto{
     return {
         id:productoPedido.id,
-        text:productoPedido.texto,
-        size:productoPedido.porciones,
-        comments: productoPedido.comentarios,
-        key: productoPedido.producto.clave,
-        price: productoPedido.precio,
-        flavorId:productoPedido.sabor.id,
-        tipoId:productoPedido.tipoProducto.id,
-        idOrder: productoPedido.idPedido,
-        product: {
-            id: productoPedido.producto.id,
-            nameProduct: productoPedido.producto.descripcion,
-            thumbnail: productoPedido.producto.imagen,    
-            type: productoPedido.tipoProducto.descripcion,
-            flavor:productoPedido.sabor.clave,
-            key: productoPedido.producto.clave
-        }
+        idPedido:productoPedido.idPedido,
+        detalleProducto:mapToDetailProductDto(productoPedido.detalleProducto),
+        comentarios:productoPedido.comentarios,
+        fechaRegistro:productoPedido.fechaRegistro,
+        fechaActualizacion:productoPedido.fechaActualizacion,
+        cantidad: productoPedido.cantidad
     }
 }
 
-export function mapToCatalogTypeDto(cat: ProductoTipoModel | SaborModel):CatalogTypeDto{
+export function mapToCatalogTypeDto(cat: CatalogTypeModel):CatalogTypeDto{
     return {
-        value: cat.id.toString(),
-        label: cat.descripcion,
-        id: cat.id
+        id: cat.id,
+        clave: cat.clave,
+        descripcion: cat.descripcion,
+        estatus: cat.estatus,
+        selfDelete: () => {},
+        selfUpdateEstatus: () => {}
     }
 }
 
@@ -64,6 +57,20 @@ export function mapToProductDto(product:ProductModel):ProductDto{
         nameProduct: product.descripcion,
         thumbnail: product.imagen,
         status: product.estatus
+    }
+}
+
+export function mapToDetailProductDto(product:DetailProductoModel):DetailProductoDto{
+    return {
+        id: product.id,
+        producto:mapToProductDto(product.producto),
+        size: mapToCatalogTypeDto(product.size),
+        sabor: mapToCatalogTypeDto(product.sabor),
+        tipoProducto: mapToCatalogTypeDto(product.tipoProducto),
+        tipoCobro:mapToCatalogTypeDto(product.tipoCobro),
+        descripcion: product.descripcion,
+        estatus: product.estatus,
+        precio: product.precio,
     }
 }
 

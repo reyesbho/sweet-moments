@@ -1,7 +1,7 @@
 export interface OrderDto{
     id:number,
     cliente:String,
-    lugarEntrega: String,
+    lugarEntrega: string,
     fechaEntrega : Date,
     horaEntrega: Date,
     register: string | null,
@@ -14,15 +14,12 @@ export interface OrderDto{
 
 export interface ProductOrderDto{
     id:number,
-    text:String,
-    size:Number,
-    comments: String,
-    key: String,
-    price: Number,
-    product: DetailProductoDto;
-    flavorId:number;
-    tipoId:number;
-    idOrder: number;
+    idPedido:number,
+    detalleProducto:DetailProductoDto,
+    comentarios:String,
+    fechaRegistro:Date,
+    fechaActualizacion:Date,
+    cantidad:number
 }
 
 export interface ProductDto{
@@ -34,19 +31,34 @@ export interface ProductDto{
 }
 
 export interface DetailProductoDto{
-        id: number,
-        nameProduct: string,
-        thumbnail: string,    
-        type: string,
-        flavor:string,
-        key:string;
+    id: number,
+    producto:ProductDto,
+    size: CatalogTypeDto,
+    sabor: CatalogTypeDto,
+    tipoProducto: CatalogTypeDto,
+    tipoCobro:CatalogTypeDto,
+    descripcion: string,
+    estatus: boolean,
+    precio: number,
+}
+
+export interface DetailProductoModel{
+    id: number,
+    producto:ProductModel,
+    size: CatalogTypeModel,
+    sabor: CatalogTypeModel,
+    tipoProducto: CatalogTypeModel,
+    tipoCobro:CatalogTypeModel,
+    descripcion: string,
+    estatus: boolean,
+    precio: number,
 }
 
 export interface PedidoModel{
     id: number;
     fechaEntrega: Date;
     horaEntrega: Date,
-    lugarEntrega: String;
+    lugarEntrega: string;
     estatus: String;
     total: number;
     fechaRegistro: Date | null;
@@ -57,25 +69,21 @@ export interface PedidoModel{
 }
 
 export interface ClienteModel{
-     id: number;
-     nombre: String;
+     id: number | null;
+     nombre: String | undefined;
      apellidoPaterno: String;
      apellidoMaterno: String | null;
-     direccion: String;
+     direccion: string | undefined;
 }
 
-export interface  ProductoPedidoModel{
-    id: number;
-    idPedido: Number;
-    producto: ProductModel;
-    sabor: SaborModel;
-    tipoProducto: ProductoTipoModel;
-    texto: String;
-    comentarios: String;
-    fechaRegistro: Date;
-    fechaActualizacion: Date;
-    porciones: Number;
-    precio: number;
+export interface  ProductoPedidoModel {
+    id:number,
+    idPedido:number,
+    detalleProducto:DetailProductoModel,
+    comentarios:String,
+    fechaRegistro:Date,
+    fechaActualizacion:Date,
+    cantidad: number
 }
 
 
@@ -85,17 +93,9 @@ export interface ProductModel{
     descripcion: string;
     estatus: string;
     imagen: string;
-    cobroUnidad: boolean;
 }
 
-export interface SaborModel{
-    id: number;
-    clave: string;
-    descripcion: string;
-    estatus: string;
-}
-
-export interface ProductoTipoModel{
+export interface CatalogTypeModel{
     id: number;
     clave: string;
     descripcion: string;
@@ -110,25 +110,25 @@ export interface Pagination{
 
 
 export interface ProductForm{
-    text: string,
-    size: number,
-    tipoId: number,
-    flavorId: number,
+    quantity: number,
     comments: String,
-    price:number
+    idDetailProduct: number
 }
 
 export interface CatalogTypeDto{
-    value: string;
-    label: string;
-    id: Number;
+    id: number;
+    clave: string;
+    descripcion: string;
+    estatus: string;
+    selfDelete: CallableFunction ;
+    selfUpdateEstatus: CallableFunction;
 }
 
 export interface ClientDto{
     id: Number,
     name: string,
     apellidoPaterno: string,
-    apellidoMaterno: string,
+    apellidoMaterno: string | null,
     direccion: string
 }
 
@@ -181,4 +181,18 @@ export interface ProductSelectDto{
     status: string,
     isCheck:boolean;
 
+}
+
+export interface OrderInfo{
+    idOrder: Number | undefined,
+    cliente: String | undefined,
+    lugarEntrega: string | undefined,
+    fechaEntrega: Date | undefined,
+}
+
+export interface PedidoRequest{
+    idPedido: Number | undefined,
+    lugarEntrega: String | undefined,
+    fechaEntrega: Date | undefined,
+    cliente: ClienteModel
 }

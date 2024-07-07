@@ -17,7 +17,7 @@
     font-weight: bold;
 }
 
-.orders > a {
+.orders > .orders-add {
     position: absolute;
     background: none;
     border: none;
@@ -46,6 +46,7 @@
 }
 
 .status-filters{
+    position: relative;
     padding-top: 15px;
     display: flex;
     flex-wrap: wrap;
@@ -53,10 +54,15 @@
     margin-bottom: 10px;
 }
 
+.status-filters label {
+    position: absolute;
+    left: 0px;
+    top: -3px;
+}
+
 .orders-options{
     display: flex;
     flex-direction: row;
-    justify-content: end;
     align-items: center;
 }
 
@@ -82,7 +88,25 @@
 
 @media only screen and (max-width:820px) {
   
-  
+    .orders-filters{
+        justify-content: center;
+    }
+
+    .orders-options{
+        justify-content: center;
+    }
+
+    .periodo-filter{
+        width: 100%;
+    }
+    
+    .status-filters{
+        justify-content: center;
+    }
+
+    .btn-pill{
+        padding: 10px;
+    }
 
     /*Orders component css class*/
     .orders > h2 {

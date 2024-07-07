@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { addProductoToPedido, getPedido, getProductsByPedidoId } from "../services/pedidos.services";
+import {  getPedido, getProductsByPedidoId } from "../services/pedidos.services";
 import { classStatusEnum, STATUS } from "../general/Status";
 import { OrderDto, ProductOrderDto } from "../general/Interfaces";
 
 
-export function useOrder({ order, orderId }:{order: OrderDto | null, orderId: number}) {
-  const [orderItem, setOrderItem] = useState(order);
+export function useOrder({ orderId }:{orderId: number}) {
+  const [orderItem, setOrderItem] = useState<OrderDto | null>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [cssClassName, setCssClassName] = useState("");
@@ -13,7 +13,7 @@ export function useOrder({ order, orderId }:{order: OrderDto | null, orderId: nu
   const [productos, setProductos] = useState<ProductOrderDto[]>([]);
   
 
-  const getOrder = async (orderId: number) => {
+  const getOrder = async () => {
     setLoading(true);
     await getPedido(orderId)
       .then(async(pedido) => {
@@ -21,13 +21,13 @@ export function useOrder({ order, orderId }:{order: OrderDto | null, orderId: nu
         let status = pedido.status as keyof typeof STATUS;
         setCssClassName(classStatusEnum[status]);
         setHasReturn(true);
-        getProductos(orderId);
+        getProductos();
       })
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
   };
 
-  const getProductos = async(orderId: number) => { 
+  const getProductos = async() => { 
     await getProductsByPedidoId(orderId).
           then((products) => {
               setProductos([...products]);
@@ -35,22 +35,10 @@ export function useOrder({ order, orderId }:{order: OrderDto | null, orderId: nu
   }
 
   useEffect(() => {
-    if (!orderId) {
-      setOrderItem(order);
-      let status = order?.status as keyof typeof STATUS;
-      setCssClassName(classStatusEnum[status]);
-    } else {
-      getOrder(orderId);
-    }
-  }, [order]);
+      getOrder();
+  }, []);
 
-  const handleSetNewProducts = async(producto: ProductOrderDto) => {
-    await addProductoToPedido({id: orderId, producto: producto})
-    .then(() => {
-      getProductos(orderId);
-    })
-    .catch((error) => console.error(error))
-  }
 
-  return { order:orderItem, cssClassName, hasReturn, loading, error, handleSetNewProducts, productos, setProductos};
+
+  return { order:orderItem, cssClassName, hasReturn, loading, error, productos, setProductos, getOrder, getProductos};
 }

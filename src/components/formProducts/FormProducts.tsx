@@ -1,125 +1,131 @@
-import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useProducts } from "../../hooks/useProducts";
-import { useCatalogs } from "../../hooks/useCatalogs";
 import './FormProducts.css';
-import { Carousel } from "../carousel/Carousel";
-import { ProductDto, ProductForm } from "../../general/Interfaces";
+import { DetailProductoDto, ProductDto, ProductForm } from "../../general/Interfaces";
+import { useState } from "react";
+import { MdClose } from "react-icons/md";
 
-export function FormProducts({ handleSetNewProducts, handleIsOpen }:{ handleSetNewProducts: CallableFunction, handleIsOpen:CallableFunction }) {
-    const { products, setProducts, getProducts} = useProducts();
+export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number, handleClose:CallableFunction, reload: CallableFunction }) {
+    const { products, detailProducts, getDetailProducts, addDetailProductToOrder} = useProducts();
     const [productSelected, setProductSelected] = useState<ProductDto | null>(null);
-    const { catalog,flavors, getCatalogsType, getFlavors } = useCatalogs()
+    const [detailProductSelected, setDetailProductSelected] = useState<DetailProductoDto | null>(null);
+    
     const { register, handleSubmit, reset, formState: { isSubmitSuccessful } } = useForm<ProductForm>({
         defaultValues: {
-            text: undefined,
-            size: undefined,
-            tipoId: undefined,
-            flavorId: undefined,
+            quantity: 1,
             comments: undefined,
-            price:undefined
         }
     });
 
     
-    const isValidForm = (productInfo: ProductForm) => {
-        if (!productInfo || !productSelected || ( 
-            productInfo.size ==0 ||
-            productInfo.tipoId == 0 )){
-                return false;
-            }
+    const isValidForm = () => {
+        if (!detailProductSelected){
+            return false;
+        }
         return true;
     }
 
-    const handleAddProduct:SubmitHandler<ProductForm> = (productInfo:ProductForm, event:any) => {
-        event?.preventDefault();
-        if(!isValidForm(productInfo)){
+    const handleClickSelect = (product: ProductDto) => {
+        if(productSelected?.id === product.id){
             return
         }
-        const { tipoId, flavorId } = productInfo;
-        
-        const productRef = { ...productSelected, type:catalog.find(cat => cat.id == tipoId)?.label, flavor: flavors.find(cat => cat.id === flavorId)?.label };
-        const newProducItem = { ...productInfo, product: productRef, id: new Date().getMilliseconds() };
-        handleSetNewProducts(newProducItem);
-        reset();
-        setProductSelected(null);
-        setProducts(structuredClone(products));
-        handleIsOpen();
+        setProductSelected(product);
+        getDetailProducts(product.id);
+    };
+
+    const handleDetailProductSelected = (detailProduc: DetailProductoDto) => {
+        if(detailProductSelected?.id === detailProduc.id){
+            return
+        }
+        setDetailProductSelected(detailProduc);
     }
 
-    const handleClickSelect = (product: ProductDto) => {
-        if(!product){
-            return
+
+    const handleAddDetailProduct = (productInfo: ProductForm, event: any) => {
+        event?.preventDefault();
+        if(!isValidForm()){
+            return;
         }
-        getCatalogsType(product.id);
-        setProductSelected(product);
-    };
+        productInfo.idDetailProduct = detailProductSelected?.id ?? 0;
+        addDetailProductToOrder(idPedido,productInfo)
+        .then(() =>{
+            handleClose();
+            reload();
+        });   
+    }
 
     return ( 
         <div className="modal"> 
-        <form className="form-products" onSubmit={handleSubmit(handleAddProduct)}>
-            <div className='content-products'>
-                {products && 
-                    <Carousel products={products.map(product => ({ ...product, isCheck: false }))}  onClickSelected={handleClickSelect}></Carousel>
-                }
-            </div>
-            <div className='content-products-info'>
-                <div className='content-products-inputs'>
-                    <div>
-                        { 
-                        productSelected?.key == 'pastel' &&
-                        <div className='form-input'>
-                            <label >Texto</label>
-                            <input type='text' {...register("text")} placeholder='Feliz compleaños'></input>
-                        </div>
-                        }
-                        
-                            <div className='form-input'>
-                                {productSelected?.key == 'pizza' ? <label >Rebanadas</label> : productSelected?.key == 'coop_cake' ? <label >Cantidad</label> : <label >Tamaño (Personas)</label>}
-                                <input type='number' {...register("size")} placeholder='140'></input>
+            <div className="container-detail">
+                <span className="container-detail-close" onClick={() => handleClose()}><MdClose size={'2rem'}></MdClose></span>
+                <h2>Productos</h2>
+                <div className="productos">
+                    {
+                        products && 
+                        products.map((producto => (
+                            <div className="producto" key={producto.id} onClick={() => handleClickSelect(producto)}>
+                                <img className="producto-img" src={producto.thumbnail}></img>
+                                <span className="producto-title">{producto.nameProduct}</span>
                             </div>
-                        <div className='form-select'>
-                            <label >Tipo</label>
-                            <select {...register("tipoId")}>
-                                <option value=''>Seleccionar</option>
-                                {catalog.map(optionSelect => (
-                                    <option key={optionSelect.value} value={optionSelect.value}>
-                                        {optionSelect.label}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                         {productSelected?.key !== 'pizza' &&
-                        <div className='form-select'>
-                            <label >Sabor</label>
-                            <select {...register("flavorId")}>
-                                <option value=''>Seleccionar</option>
-                                {flavors?.map(optionSelect => (
-                                    <option key={optionSelect.value} value={optionSelect.value}>
-                                        {optionSelect.label}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                        )))
+                    }
+                </div>
+                <hr></hr>
+                <div className="container-detailProduct-selected">
+                    <h3>Producto seleccionado</h3>
+                    <div className="container-detailProduct-selected-form">
+                        {detailProductSelected && 
+                            <div className="detailProduct-selected" >
+                                <img className="detailProduct-selected-img" src={detailProductSelected?.producto.thumbnail}></img>
+                                <div className="detailProduct-selected-info">
+                                    <ul>
+                                        <li><span>Tipo: </span>{detailProductSelected?.tipoProducto.descripcion}</li>
+                                        <li><span>Sabor: </span>{detailProductSelected?.sabor.descripcion}</li>
+                                        <li><span>Tamaño: </span>{detailProductSelected?.size.descripcion}</li>
+                                        <li><span>Precio: </span>{detailProductSelected?.precio}</li>
+                                        {detailProductSelected?.descripcion && <li><span>Detalles: </span>{detailProductSelected?.descripcion}</li>}
+                                    </ul>
+                                </div>
+                            </div>
                         }
-                        <div className='form-input'>
-                            {productSelected?.key == 'coop_cake' ? <label >Precio Unitario</label> : <label >Precio</label>}
-
-                            <input type='number' {...register("price")} placeholder='$0.00'></input>
-                        </div>
-                        
-                        <div className='form-input'>
-                            <label >Comentarios</label>
-                            <textarea  {...register("comments")}></textarea>
-                        </div>
+                        <form className="form-add-product" onSubmit={handleSubmit(handleAddDetailProduct)}>
+                            <div className="form-input-sm">
+                                <label>Comentarios:</label>
+                                <input type="text" {...register("comments")}></input>
+                            </div>
+                            <div className="form-input-sm">
+                                <label>Cantidad:</label>
+                                <input type="number" {...register("quantity")}></input>
+                            </div>
+                            <button type="submit" className="btn btn-add">Agregar producto</button>
+                        </form>
                     </div>
                 </div>
-                <div className="form-product-buttons">
-                    <button className='btn btn-cancel btn-md' type='button'  onClick={() => handleIsOpen()}>Cancelar</button>
-                    <button className='btn btn-add btn-md' type='submit'  >Agregar</button>
+                <hr></hr>
+                <div className="detailProducts">
+                    <h3>Tipos de productos</h3>
+                    <div className="container-detailProducts">
+                        {
+                            
+                            detailProducts && 
+                            detailProducts.map((detailProduct) => (
+                                <div className="detailProduct" key={detailProduct.id} onClick={() => handleDetailProductSelected(detailProduct)}>
+                                    <img className="detailProduct-img" src={detailProduct.producto.thumbnail}></img>
+                                    <div className="detailProduct-info">
+                                        <ul>
+                                            <li><span>Tipo: </span>{detailProduct.tipoProducto.descripcion}</li>
+                                            <li><span>Sabor: </span>{detailProduct.sabor.descripcion}</li>
+                                            <li><span>Tamaño: </span>{detailProduct.size.descripcion}</li>
+                                            <li><span>Precio: </span>{detailProduct.precio}</li>
+                                            {detailProduct.descripcion && <li><span>Detalles: </span>{detailProduct.descripcion}</li>}
+                                        </ul>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
             </div>
-        </form>
         </div>
     )
 }

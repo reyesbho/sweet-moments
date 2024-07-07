@@ -3,11 +3,11 @@ import { IoIosArrowForward } from "react-icons/io";
 import { iconStatusEnum } from '../../general/Status';
 import './CardOrderInfo.css'
 import { useNavigate } from 'react-router-dom';
-import { formatDate, formatTime } from '../../utils/formatDate';
+import { formatDateTime } from '../../utils/formatDate';
 import { OrderDto } from '../../general/Interfaces';
 
 export function CardOrderInfo({ order, enableIcon }: { order: OrderDto, enableIcon:boolean}) {
-    const iconStatus = iconStatusEnum(order.status, '2rem');
+    const iconStatus = iconStatusEnum(order.status, '1.5rem');
     const navigate = useNavigate();
     const handleClicDetail = (event: any) => {
         event.preventDefault();
@@ -16,26 +16,21 @@ export function CardOrderInfo({ order, enableIcon }: { order: OrderDto, enableIc
     }
     return (
         <div className={`order-info`}>
-                <span className='order-icon-status'>
-                    {iconStatus}
-                </span>
+                
                 <div className='order-information'>
-                    <span>{order.cliente}</span>
-                    <p><MdPlace></MdPlace> {order.lugarEntrega}</p>
+                    <p className='order-client'><span className='order-icon-status'>{iconStatus}</span>{order.cliente}</p>
+                    <p className='order-place'><MdPlace></MdPlace> {order.lugarEntrega}</p>
+                    <p className='order-place'>{formatDateTime(order.fechaEntrega)}</p>
                 </div>
                 <div className='order-total'>
                     <p>Productos: {order.numProducts}</p>
                     <span>Total: ${order.total}.00</span>
                 </div>
                 <div className='order-data'>
-                    <span>{formatDate(order.fechaEntrega)} {formatTime(order.horaEntrega)}</span>
+                    
                     <p>Registrado por: {order.register}</p>
                 </div>
-            {enableIcon &&
-                <button className='order-button-detail' onClick={(e) => handleClicDetail(e)}>
-                        <IoIosArrowForward size="2.5rem" />
-                </button>
-            }
+           
 
         </div>
     )

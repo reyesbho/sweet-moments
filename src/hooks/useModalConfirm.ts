@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { STATUS } from "../general/Status";
 
 export function useModalConfirm(){
-    const [openModal, setOpenModal] = useState(false);
-    const [statusConfirm, setStatusConfirm] = useState<String>(STATUS.BACKLOG);
+    const [show, setShow] = useState(false);
 
-    const handleOpenModal = (event:any, open:boolean, action?:any) => {
-        event?.preventDefault();
-        event?.stopPropagation(); 
-        setStatusConfirm(action);
-        setOpenModal(open);
-    }
+    
 
-    return {openModal, statusConfirm, handleOpenModal, setOpenModal};
+    const handleShow = (event:any) => {
+        event?.stopPropagation();
+        setShow(true)
+    };
+    const handleClose = (event:any) => {
+        event?.stopPropagation();
+        setShow(false)
+    };
+
+    return {show, handleShow, handleClose};
 }

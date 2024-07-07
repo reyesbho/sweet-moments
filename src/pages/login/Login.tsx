@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import "./Login.css";
 import { UserLogin } from "../../general/Interfaces";
 import { useEffect, useState } from "react";
-import { login } from "../../services/AuthService";
+import { login } from "../../services/Auth.service";
 import { useAuth } from "../../config/AuthProvider";
 import logoUrl from '../../assets/sweet-moments.webp'
 

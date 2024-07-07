@@ -2,22 +2,27 @@ import './Orders.css'
 import { OrderList } from '../../components/order/OrderList'
 import { FaPlusCircle } from 'react-icons/fa'
 import { useOrders } from '../../hooks/useOrders'
-import { Link } from 'react-router-dom'
 import { useStatus } from '../../hooks/useStatus'
 import { useState } from 'react'
 import { iconStatusEnum, STATUS_FILTER } from '../../general/Status'
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/DateRangePicker/styles/index.css';
 import format from 'date-fns/format';
-import { predefinedRanges } from '../../general/Constants'
-import { formatDate } from '../../utils/formatDate'
-import dayjs from 'dayjs'
+import { predefinedRanges } from '../../general/Constants';
+import dayjs from 'dayjs';
+import { NewOrder } from '../../components/new-order/NewOrder';
+import { useNavigate } from 'react-router-dom';
+import { useModalConfirm } from '../../hooks/useModalConfirm'
+import startOfMonth from 'date-fns/startOfMonth';
+import endOfMonth from 'date-fns/endOfMonth';
 
 export function Orders() {
     const [status, setStatus] = useState<String>(STATUS_FILTER.ALL)
     const { orders, handleRefreshOrders, incrementPagination,changeStatusFilter,handleDateFilter,totalItems, statusFilter} = useOrders(status)
     const {cssClassStatus, handleSetStatus} = useStatus(status);
-    
+    const {show, handleShow, handleClose} = useModalConfirm();
+    const navigate = useNavigate();
+
     const handleChangeStatusFilter = (status: String) => {
         setStatus(status);
         changeStatusFilter(status);
@@ -36,12 +41,19 @@ export function Orders() {
       }
 
     const onCleanable = () => {
-        handleDateFilter(null, null);
+        const dateInit = dayjs(startOfMonth(new Date())).format('DD-MM-YYYY');
+        const dateEnd = dayjs(endOfMonth(new Date())).format('DD-MM-YYYY');
+        handleDateFilter(dateInit, dateEnd);
     }
+
+    const navigateDetail = (idOrder: number) => {
+        navigate(`/order/${idOrder}`);
+    }
+
  
     return (
         <div className="orders">
-            <Link to={"/new-order"}><FaPlusCircle size="3rem" className='color-success'></FaPlusCircle></Link>
+            <button className='orders-add'><FaPlusCircle size="3rem" className='color-success' onClick={(event) => handleShow(event)}></FaPlusCircle></button>
             <h2>Mis pedidos</h2>
             <div className='orders-options'>
                 <div className='orders-filters'>
@@ -58,8 +70,9 @@ export function Orders() {
                         }}/>
                     </div>
                     <div className='status-filters'>
+                        <label >Estatus</label>
                         <button className={(statusFilter === STATUS_FILTER.ALL ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.ALL)}>Todos</button>
-                        <button className={(statusFilter === STATUS_FILTER.ALL ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.INCOMPLETE)}>
+                        <button className={(statusFilter === STATUS_FILTER.INCOMPLETE ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.INCOMPLETE)}>
                             <span >{iconStatusEnum(STATUS_FILTER.INCOMPLETE, "1rem")}</span> 
                             Incompleto
                         </button>
@@ -80,6 +93,10 @@ export function Orders() {
             </div>
             <OrderList orders={orders} incrementPagination={incrementPagination} totalItems={totalItems} handleRefreshOrders={handleRefreshOrders} ></OrderList>
             <p>{`Número de pedidos ${totalItems}`}</p>
+            {
+                show && 
+                <NewOrder handleClose={handleClose} orderDto={null} reload={navigateDetail}></NewOrder>
+            }
         </div>
     )
 }

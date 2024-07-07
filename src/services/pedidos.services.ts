@@ -1,13 +1,13 @@
 import { mapToOrderDto, mapToProductOrderDto } from "../utils/mapsToDto";
-import { API_PEDIDOS } from "../general/url";
-import {  OrderDto, Pagination, PedidoModel, ProductDto, ProductoPedidoModel, ProductOrderDto } from "../general/Interfaces";
+import { API_PEDIDO } from "../general/url";
+import {  OrderDto, OrderInfo, Pagination, PedidoModel, ProductForm, ProductoPedidoModel, ProductOrderDto } from "../general/Interfaces";
 import { mapToPedidoModel, mapToProductoRequest } from "../utils/mapsToModel";
 
 
 
 export const getPedidos = async(statusFilter:String,dateInit:String | null, dateEnd:String | null, pagination:Pagination) => {
         try{
-        const res = await fetch(`${API_PEDIDOS}?`+
+        const res = await fetch(`${API_PEDIDO}?`+
             `estatus=${statusFilter}&page=${pagination.page}&size=${pagination.pageSize}`+
             (dateInit?`&dateInit=${dateInit}`:'')+
             (dateEnd?`&dateEnd=${dateEnd}`:''),
@@ -25,7 +25,7 @@ export const getPedidos = async(statusFilter:String,dateInit:String | null, date
 
 export const getProductsByPedidoId = async(orderId: number):Promise<ProductOrderDto[]> => { 
     try{
-        const res = await fetch(API_PEDIDOS+`/${orderId}/producto`,
+        const res = await fetch(API_PEDIDO+`/${orderId}/producto`,
         {
             method: 'GET',
         }
@@ -41,7 +41,7 @@ export const getProductsByPedidoId = async(orderId: number):Promise<ProductOrder
 export const getPedido = async(orderId: number) => {   
        
     try{
-        const res = await fetch(API_PEDIDOS+`/${orderId}`,
+        const res = await fetch(API_PEDIDO+`/${orderId}`,
         {
             method: 'GET',
         }
@@ -55,10 +55,10 @@ export const getPedido = async(orderId: number) => {
 }
 
 
-export const addPedido = async(order: OrderDto) => {
+export const addPedido = async(order: OrderInfo) => {
     const productEntity = mapToPedidoModel(order);
     try{
-        const res = await fetch(API_PEDIDOS,{
+        const res = await fetch(API_PEDIDO,{
             method: "POST",
               body: JSON.stringify(productEntity)
         });
@@ -69,10 +69,24 @@ export const addPedido = async(order: OrderDto) => {
     }
 }
 
+export const updatePedido = async(order: OrderInfo) => {
+    const productEntity = mapToPedidoModel(order);
+    try{
+        const res = await fetch(API_PEDIDO,{
+            method: "PUT",
+              body: JSON.stringify(productEntity)
+        });
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        throw new Error("Error al actualizar el pedido")
+    }
+}
+
 
 export const updateStatePedido = async({id, status}:{id:number, status:String}) => {
     try{
-        const res = await fetch(API_PEDIDOS+`/${id}/${status}`,{
+        const res = await fetch(API_PEDIDO+`/${id}/${status}`,{
             method: "PUT",
         });
         return res;
@@ -81,14 +95,16 @@ export const updateStatePedido = async({id, status}:{id:number, status:String}) 
     }   
 }
 
-export const addProductoToPedido = async({id, producto}:{id:number, producto:ProductOrderDto}) => {
+export const addProductoToPedido = async({id, producto}:{id:number, producto:ProductForm}) => {
     const product = mapToProductoRequest(producto);
     try{
-        const res = await fetch(API_PEDIDOS+`/${id}/producto`,{
+        const res = await fetch(API_PEDIDO+`/${id}/producto`,{
             method: "POST",
             body: JSON.stringify(product)
         })
-        return res;
+        console.log(res)
+        const data = await res.json();
+        return mapToProductOrderDto(data);
     }catch (error){
         throw new Error("Error al registrar el producto")
     }
@@ -96,7 +112,7 @@ export const addProductoToPedido = async({id, producto}:{id:number, producto:Pro
 
 export const deleteProductoPedido = async({idPedido, idProductoPedido}:{idPedido:number, idProductoPedido:number}) => {
     try{
-        const res = await fetch(API_PEDIDOS+`/${idPedido}/producto/${idProductoPedido}`,{
+        const res = await fetch(API_PEDIDO+`/${idPedido}/producto/${idProductoPedido}`,{
             method: "DELETE",
         })
         return res;
@@ -108,7 +124,7 @@ export const deleteProductoPedido = async({idPedido, idProductoPedido}:{idPedido
 
 export const deletePedido = async({idPedido}:{idPedido:number}) => {
     try{
-        const res = await fetch(API_PEDIDOS+`/${idPedido}`,{
+        const res = await fetch(API_PEDIDO+`/${idPedido}`,{
             method: "DELETE",
         })
         return res;
