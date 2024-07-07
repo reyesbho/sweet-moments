@@ -2,14 +2,13 @@ import {  Route,  Routes } from 'react-router-dom';
 import './App.css'
 import { ProtectedRoute } from './config/ProtectedRoute';
 import { Orders } from './pages/orders/Orders';
-import { NewOrder } from './components/new-order/NewOrder';
 import { DetailOrder } from './components/detailOrder/DetailOrder';
 import { Login } from './pages/login/Login';
 import { Header } from './components/header/Header';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { ThemeProvider } from '@emotion/react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { createTheme, Theme } from '@mui/material';
+import { createTheme } from '@mui/material';
 import { NotFound } from './pages/NotFound/NotFound';
 import { AdminCatalog } from './pages/catalog/AdminCatalog';
 
