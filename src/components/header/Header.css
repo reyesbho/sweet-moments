@@ -10,22 +10,13 @@
     flex-direction: row;
     align-items: center;
     justify-content: end;
+    position: relative;
+    gap: 10px;
 }
 
 
-.header-user > div {
-    display: flex;
-    flex-direction: column;
-    font-size: 1rem;
-    padding: 0px 5px 0px 0px;
-    margin: 0px;
-    font-weight: bold;
-    align-items: end;
-    gap: 5px;
-    word-spacing: 5px;
-}
 
-.header-user > div > button{ 
+.header-user  span, a{ 
     border: none;
     background: none;
     color: white;
@@ -33,23 +24,19 @@
     margin: 0px;
     font-size: 0.9rem;
     font-weight: normal;
+    cursor: pointer;
+    text-decoration: none;
 }
 
-.header-user > div > button:hover{ 
-    cursor: pointer;
-    font-size: 1rem;
+.header-user span:hover,a:hover{ 
+    font-weight: bolder;
 }
 
 .header-avatar{ 
     width: 50px;
     height: 50px;
     border-radius: 100%;
-}
-
-.header-navbar{ 
-    font-size: 0.9rem;
-    font-weight: bold;
-
+    cursor: pointer;
 }
 
 .header-info {
@@ -76,6 +63,20 @@
     line-height: 35px;
     color: var(--quaternary-font);
     word-break: break-word;
+}
+
+
+.header-menu{
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background-color: var(--tertiary-bg);
+    z-index: 10;
+    padding: 10px;
+    width: 100px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 
