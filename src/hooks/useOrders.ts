@@ -2,8 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { getPedidos } from '../services/pedidos.services';
 import { paginationInit } from '../general/Constants';
 import { OrderDto } from '../general/Interfaces';
-import dayjs from 'dayjs';
-import { dateOptions, timeOptions } from '../utils/formatDate';
 import { compareDesc } from 'date-fns';
 
 export function useOrders(status: String){

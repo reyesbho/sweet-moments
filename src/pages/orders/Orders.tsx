@@ -13,6 +13,8 @@ import dayjs from 'dayjs';
 import { NewOrder } from '../../components/new-order/NewOrder';
 import { useNavigate } from 'react-router-dom';
 import { useModalConfirm } from '../../hooks/useModalConfirm'
+import startOfMonth from 'date-fns/startOfMonth';
+import endOfMonth from 'date-fns/endOfMonth';
 
 export function Orders() {
     const [status, setStatus] = useState<String>(STATUS_FILTER.ALL)
@@ -39,7 +41,9 @@ export function Orders() {
       }
 
     const onCleanable = () => {
-        handleDateFilter(null, null);
+        const dateInit = dayjs(startOfMonth(new Date())).format('DD-MM-YYYY');
+        const dateEnd = dayjs(endOfMonth(new Date())).format('DD-MM-YYYY');
+        handleDateFilter(dateInit, dateEnd);
     }
 
     const navigateDetail = (idOrder: number) => {
