@@ -45,3 +45,20 @@ export const updateStatusSizeProduct = async(idSizeProduct:number, estatus:boole
         throw new Error("Error al actualizar el tamaño producto");
     }
 }
+
+
+export const addSizeProduct = async (catalog: CatalogTypeDto):Promise<CatalogTypeDto> => {
+    try {
+        const response = await fetch(API_SIZE,
+        {
+            method:"POST",
+            body:JSON.stringify(catalog)
+        }
+        );
+        const tipo = await response.json();
+        return mapToCatalogTypeDto(tipo);
+
+    } catch (error) {
+        throw new Error("Error al agregar el tamaño del producto");
+    }   
+}

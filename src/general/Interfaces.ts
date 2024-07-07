@@ -18,7 +18,8 @@ export interface ProductOrderDto{
     detalleProducto:DetailProductoDto,
     comentarios:String,
     fechaRegistro:Date,
-    fechaActualizacion:Date
+    fechaActualizacion:Date,
+    cantidad:number
 }
 
 export interface ProductDto{
@@ -57,7 +58,7 @@ export interface PedidoModel{
     id: number;
     fechaEntrega: Date;
     horaEntrega: Date,
-    lugarEntrega: String;
+    lugarEntrega: string;
     estatus: String;
     total: number;
     fechaRegistro: Date | null;
@@ -81,7 +82,8 @@ export interface  ProductoPedidoModel {
     detalleProducto:DetailProductoModel,
     comentarios:String,
     fechaRegistro:Date,
-    fechaActualizacion:Date
+    fechaActualizacion:Date,
+    cantidad: number
 }
 
 
@@ -118,7 +120,7 @@ export interface CatalogTypeDto{
     clave: string;
     descripcion: string;
     estatus: string;
-    selfDelete: CallableFunction;
+    selfDelete: CallableFunction ;
     selfUpdateEstatus: CallableFunction;
 }
 

@@ -45,3 +45,19 @@ export const updateStatusTipoProduct = async(idTipoProduct:number, estatus:boole
         throw new Error("Error al actualizar el tipo de producto");
     }
 }
+
+export const addTipoProducto = async (catalog: CatalogTypeDto):Promise<CatalogTypeDto> => {
+    try {
+        const response = await fetch(API_TIPO_PRODUCTO,
+        {
+            method:"POST",
+            body:JSON.stringify(catalog)
+        }
+        );
+        const tipo = await response.json();
+        return mapToCatalogTypeDto(tipo);
+
+    } catch (error) {
+        throw new Error("Error al agregar el tipo de producto");
+    }   
+}

@@ -28,8 +28,8 @@ export function DetailOrder() {
         navigate("/");
       }
 
-    const handleStatusAction = (status: String) => {
-        handleShow();
+    const handleStatusAction = (event:any,status: String) => {
+        handleShow(event);
         setStatus(status);
     }
 
@@ -101,17 +101,17 @@ export function DetailOrder() {
                     </div>
                 { canShowButtons() &&
                     <div className='order-actions'>
-                        <button type='button' className='btn btn-next btn-sm' onClick={() => modalUpdateOrder.handleShow()}>Actualizar informacion</button>
-                        <button type='button' className='btn btn-cancel btn-sm' onClick={() => handleStatusAction(STATUS.CANCELED)}>Cancelar</button>
+                        <button type='button' className='btn btn-next btn-sm' onClick={(event) => modalUpdateOrder.handleShow(event)}>Actualizar</button>
+                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleStatusAction(event,STATUS.CANCELED)}>Cancelar</button>
                         {order?.status === STATUS.BACKLOG &&
-                        <button type='button' className='btn btn-add btn-sm' onClick={() => handleStatusAction(STATUS.DONE)}>Entregado</button>}        
+                        <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleStatusAction(event,STATUS.DONE)}>Entregado</button>}        
                         {canAddProduct() && 
-                            <button className='btn btn-add btn-sm' onClick={() => modalAddProduct.handleShow()} >Agregar producto</button>
+                            <button className='btn btn-add btn-sm' onClick={(event) => modalAddProduct.handleShow(event)} >Agregar producto</button>
                         }
                     </div>
                 }
                 <div className='content-product'>
-                    {modalAddProduct.show && <FormProducts idPedido={order.id} handleIsOpen={() => modalAddProduct.handleShow()} reload={handleRealoadProducts}></FormProducts>}
+                    {modalAddProduct.show && <FormProducts idPedido={order.id} handleClose={() => modalAddProduct.handleClose(event)} reload={handleRealoadProducts}></FormProducts>}
                 </div>
                 {productos.length > 0 &&
                     <div className="detailOrder-products">
@@ -123,7 +123,7 @@ export function DetailOrder() {
                 }
                 {
                     productos && productos.length > 0 && canEndOrder() && 
-                    <button className='btn btn-success btn-sm'onClick={() => handleStatusAction(STATUS.BACKLOG)} disabled={!productos || productos?.length<0} >Finalizar registro</button>
+                    <button className='btn btn-success btn-sm'onClick={(event) => handleStatusAction(event,STATUS.BACKLOG)} disabled={!productos || productos?.length<0} >Finalizar registro</button>
                 }
                 
                 <ModalConfirm show={show} handleClose={handleClose} handleOk={handleUpdateState} ></ModalConfirm>

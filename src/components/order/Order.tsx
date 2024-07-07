@@ -1,6 +1,6 @@
 import { STATUS, classStatusEnum } from '../../general/Status';
 import './Order.css'
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CardProduct } from '../cardProduct/CardProduct';
 import { CardOrderInfo } from '../cardOrderInfo/CardOrderInfo';
 import { deletePedido, getProductsByPedidoId, updateStatePedido } from '../../services/pedidos.services';
@@ -11,49 +11,35 @@ import { OrderDto, ProductOrderDto } from '../../general/Interfaces';
 
 export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefreshOrders: Function}) {
     const [showProducts, setShowProducts] = useState(false)
-    const {show, handleShow, handleClose } = useModalConfirm()
     const [products, setProducts] = useState<ProductOrderDto[]>([])
-    const [isLoadedProductos, setIsLoadedProductos] = useState(false)
+
+    const {show, handleClose, handleShow} = useModalConfirm();
     const [status, setStatus] = useState<String>('');
-    const [action, setAction] = useState<CallableFunction>(() =>{});
 
     const handleShowProducts = async() => {
         setShowProducts(!showProducts);
-        setIsLoadedProductos(true)
-    }
-    
-    useEffect(() => {
-        if(!open){
-            return;
-        }
-        handleGetPedidos();
-    }, [isLoadedProductos])
-
-    const handleGetPedidos = async () => {
-        const result = await getProductsByPedidoId(order.id);
-        setProducts(result);
     }
 
-    const handleSelectStatus = (event:any, newStatus: String, action: CallableFunction) => {
+    const handleSelectStatus = (event:any, newStatus: String) => {
         event.stopPropagation();
-        handleShow();
+        handleShow(event);
         setStatus(newStatus);
-        setAction(action)
     }
 
-    const handleUpdateState = () => {
+    const handleUpdateState = (event:any) => {
         if(status === STATUS.DELETE){
-            handleDelete(order.id);
+            deletePedido({idPedido:order.id})
+                .then((response) => {
+                    handleRefreshOrders();
+                    handleClose(event);
+                })
             return;
+        }else{
+            updateStatePedido({id: order.id, status:status}).then(() => {
+                handleRefreshOrders()
+                handleClose(event);
+            });
         }
-        updateStatePedido({id: order.id, status:status}).then(() => handleRefreshOrders());
-    }
-
-    const handleDelete = (idPedido: number) => {
-        deletePedido({idPedido})
-        .then((response) => {
-            handleRefreshOrders();
-        })
     }
 
     const handleReload = (id:number) =>{
@@ -62,8 +48,17 @@ export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefr
         updateStatePedido({id: order.id, status:status}).then(() => handleRefreshOrders());
     }
 
+    useEffect(() => {
+        if(products.length === 0 && showProducts){        
+            getProductsByPedidoId(order.id).then((products) => {
+                setProducts(products);
+            });
+        }
+    },[showProducts])
+
 
     return (
+        <>
         <div className={`principal-order `} onClick={handleShowProducts}> 
             <CardOrderInfo order={order} enableIcon={true}></CardOrderInfo>
             <div className={`detail-order ${(showProducts ? 'active' : 'inactive')}`}>
@@ -72,15 +67,16 @@ export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefr
                 ))}
                     <div className='order-actions'>
                         { (order?.status === STATUS.BACKLOG || order?.status === STATUS.INCOMPLETE)  && 
-                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleSelectStatus(event, STATUS.CANCELED, handleDelete)}>Cancelar</button>}
+                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleSelectStatus(event, STATUS.CANCELED)}>Cancelar</button>}
                         {order.status === STATUS.INCOMPLETE && 
                         <Link className='btn btn-add btn-sm' to={`/order/${order.id}`}>Continuar Registro</Link>}
                         {order?.status === STATUS.BACKLOG &&
-                        <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleSelectStatus(event, STATUS.DONE, handleUpdateState)}>Entregado</button>}
-                        <button type='button' className='btn btn-delete btn-sm' onClick={(event) => handleSelectStatus(event, STATUS.DELETE, handleUpdateState)}>Eliminar</button>
+                        <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleSelectStatus(event, STATUS.DONE)}>Entregado</button>}
+                        <button type='button' className='btn btn-delete btn-sm' onClick={(event) => handleSelectStatus(event, STATUS.DELETE)}>Eliminar</button>
                     </div>
             </div>
-            <ModalConfirm show={show} handleClose={handleClose} handleOk={action} ></ModalConfirm>
         </div>
+        <ModalConfirm show={show} handleClose={(e:any) => handleClose(e)} handleOk={handleUpdateState} ></ModalConfirm>
+        </>
     )
 }

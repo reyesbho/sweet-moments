@@ -5,8 +5,14 @@ export function useModalConfirm(){
 
     
 
-    const handleShow = () => setShow(true);
-    const handleClose = () => setShow(false);
+    const handleShow = (event:any) => {
+        event?.stopPropagation();
+        setShow(true)
+    };
+    const handleClose = (event:any) => {
+        event?.stopPropagation();
+        setShow(false)
+    };
 
     return {show, handleShow, handleClose};
 }

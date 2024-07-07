@@ -49,7 +49,7 @@ export function Orders() {
  
     return (
         <div className="orders">
-            <button className='orders-add'><FaPlusCircle size="3rem" className='color-success' onClick={() => handleShow()}></FaPlusCircle></button>
+            <button className='orders-add'><FaPlusCircle size="3rem" className='color-success' onClick={(event) => handleShow(event)}></FaPlusCircle></button>
             <h2>Mis pedidos</h2>
             <div className='orders-options'>
                 <div className='orders-filters'>

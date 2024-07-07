@@ -5,7 +5,7 @@ import { DetailProductoDto, ProductDto, ProductForm } from "../../general/Interf
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
 
-export function FormProducts({idPedido,  handleIsOpen, reload}:{idPedido: number, handleIsOpen:CallableFunction, reload: CallableFunction }) {
+export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number, handleClose:CallableFunction, reload: CallableFunction }) {
     const { products, detailProducts, getDetailProducts, addDetailProductToOrder} = useProducts();
     const [productSelected, setProductSelected] = useState<ProductDto | null>(null);
     const [detailProductSelected, setDetailProductSelected] = useState<DetailProductoDto | null>(null);
@@ -49,7 +49,7 @@ export function FormProducts({idPedido,  handleIsOpen, reload}:{idPedido: number
         productInfo.idDetailProduct = detailProductSelected?.id ?? 0;
         addDetailProductToOrder(idPedido,productInfo)
         .then(() =>{
-            handleIsOpen();
+            handleClose();
             reload();
         });   
     }
@@ -57,7 +57,7 @@ export function FormProducts({idPedido,  handleIsOpen, reload}:{idPedido: number
     return ( 
         <div className="modal"> 
             <div className="container-detail">
-                <span className="container-detail-close" onClick={() => handleIsOpen()}><MdClose size={'2rem'}></MdClose></span>
+                <span className="container-detail-close" onClick={() => handleClose()}><MdClose size={'2rem'}></MdClose></span>
                 <h2>Productos</h2>
                 <div className="productos">
                     {

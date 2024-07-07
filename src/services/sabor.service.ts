@@ -47,3 +47,19 @@ export const updateStatusSabor = async(idSabor:number, estatus:boolean):Promise<
         throw new Error("Error al actualizar el sabor");
     }
 }
+
+export const addSabor = async (catalog: CatalogTypeDto):Promise<CatalogTypeDto> => {
+    try {
+        const response = await fetch(API_SABOR,
+        {
+            method:"POST",
+            body:JSON.stringify(catalog)
+        }
+        );
+        const tipo = await response.json();
+        return mapToCatalogTypeDto(tipo);
+
+    } catch (error) {
+        throw new Error("Error al agregar el sabor");
+    }   
+}

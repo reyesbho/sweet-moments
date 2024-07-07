@@ -23,7 +23,8 @@ export function mapToProductOrderDto(productoPedido:ProductoPedidoModel):Product
         detalleProducto:mapToDetailProductDto(productoPedido.detalleProducto),
         comentarios:productoPedido.comentarios,
         fechaRegistro:productoPedido.fechaRegistro,
-        fechaActualizacion:productoPedido.fechaActualizacion
+        fechaActualizacion:productoPedido.fechaActualizacion,
+        cantidad: productoPedido.cantidad
     }
 }
 
@@ -32,7 +33,9 @@ export function mapToCatalogTypeDto(cat: CatalogTypeModel):CatalogTypeDto{
         id: cat.id,
         clave: cat.clave,
         descripcion: cat.descripcion,
-        estatus: cat.estatus
+        estatus: cat.estatus,
+        selfDelete: () => {},
+        selfUpdateEstatus: () => {}
     }
 }
 
