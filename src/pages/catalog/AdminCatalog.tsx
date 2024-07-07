@@ -1,7 +1,8 @@
+import './AdminCatalog.css';
 import { TableCatalogType } from "../../components/tableCatalog/TableCatalogType";
 import { CATALOGS } from "../../general/Constants";
 import { useCatalogs } from "../../hooks/useCatalogs";
-import './Admincatalog.css';
+
 
 export function AdminCatalog(){
     const {flavors, typePayments, typeProducts, sizes, handleTogleReload, addNewRecord} = useCatalogs();
