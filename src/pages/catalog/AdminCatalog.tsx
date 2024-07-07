@@ -1,4 +1,4 @@
-import './Admincatalog.css';
+import './AdminCatalog.css';
 import { TableCatalogType } from "../../components/tableCatalog/TableCatalogType";
 import { CATALOGS } from "../../general/Constants";
 import { useCatalogs } from "../../hooks/useCatalogs";
