@@ -1,5 +1,4 @@
 import { FaTrash } from 'react-icons/fa'
-import { getImage } from '../../general/Constants'
 import { ProductOrderDto } from '../../general/Interfaces'
 import './CardProduct.css'
 import { useModalConfirm } from '../../hooks/useModalConfirm';
@@ -18,7 +17,7 @@ export function CardProduct({productItem,reload }:{productItem: ProductOrderDto,
     return (
         <section>
         <div key={productItem.id} className='product'>
-            <img className='product-img' src={getImage(productItem.detalleProducto.producto?.key)} 
+            <img className='product-img' src={productItem.detalleProducto.producto.thumbnail} 
                 loading="lazy"  
                 alt={productItem.detalleProducto.producto?.nameProduct}></img>
             <div className='product-segment'>

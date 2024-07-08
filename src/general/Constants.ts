@@ -3,10 +3,6 @@ import endOfWeek from 'date-fns/endOfWeek';
 import addDays from 'date-fns/addDays';
 import startOfMonth from 'date-fns/startOfMonth';
 import endOfMonth from 'date-fns/endOfMonth';
-import pastelImg from '../assets/pastel.webp';
-import pizzaImg from '../assets/pizza.webp';
-import gelatinaImg from '../assets/gelatina.webp';
-import coopcakesImg from '../assets/coopcakes.webp';
 
 export const catalogs = {
     sabores:'sabores',
@@ -62,24 +58,7 @@ export const predefinedRanges = [
   ];
   
 
-  export const getImage = (productKey: string) => {
-    let img;
-    switch(productKey){
-        case 'pizza':
-            img = pizzaImg;
-            break;
-        case 'pastel':
-            img = pastelImg;
-            break;
-        case 'cupcake':
-            img = coopcakesImg;
-            break;
-        default: 
-            img = gelatinaImg;
-    }
-    return img;
-}
-
+ 
 
 export const CATALOGS = {
   flavor:'flavor', 

@@ -1,6 +1,5 @@
 import './Product.css';
 import { ProductSelectDto } from '../../general/Interfaces';
-import { getImage } from '../../general/Constants';
 
 export function Product({product,isCheck,  onClickProduct}:{product:ProductSelectDto,isCheck:boolean,  onClickProduct:CallableFunction}){
    
@@ -10,7 +9,7 @@ export function Product({product,isCheck,  onClickProduct}:{product:ProductSelec
     }
     return (
         <div  className={`product-cat ${isCheck ? 'product-cat-selected':''}`} onClick={(e) => handleClickCheck(e)}>
-               <img src={getImage(product.key)} loading='lazy'></img>
+               <img src={product.thumbnail} loading='lazy'></img>
                <span>{product.nameProduct}</span>
         </div> 
         
