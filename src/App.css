@@ -97,6 +97,22 @@
 }
 
 
+.form-input-sm > select{
+  border-radius: 5px;
+  line-height: 20px;
+  font-size: 0.9rem;
+  padding-left: 10px;
+  border: 1px solid var(--quinary-bg);
+  color: var(--quinary-font);
+  width:70%;
+}
+
+.form-input-sm option{
+  cursor: pointer;
+  padding: 5px;
+} 
+
+
 
 .form-input > p{
   margin: 0px;
@@ -200,33 +216,6 @@ button {
   transition: all 0.2s ease;
 }
 
-
-.form-select {
-  display: flex;
-  flex-direction: column;
-  padding: 5px;
-  max-width: 350px;
-  font-weight: bolder;
-  font-size: 1rem;
-  min-width: 300px;
-  color: var(--quinary-font);
-}
-
-.form-select > label {
-  padding-bottom: 5px;
-  color: var(--primary-font);
-}
-
-.form-select > select {
-  border-radius: 10px;
-  height: 35px;
-  font-size: 0.8rem;
-  padding-left: 10px;
-}
-.form-select > div{
-  padding-top: 5px ;
-  
-}
 
 hr{
   min-width: 100%;

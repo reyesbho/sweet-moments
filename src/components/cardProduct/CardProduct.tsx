@@ -25,9 +25,11 @@ export function CardProduct({productItem,reload }:{productItem: ProductOrderDto,
                 <h2>{productItem.detalleProducto.producto?.nameProduct}</h2>
                 <ul className='product-properties'>
                     <li>{productItem.comentarios && <p><strong>Texto: </strong>{productItem.comentarios}</p> }</li>
-                    <li>{productItem.detalleProducto.tipoProducto && <p><strong>Tipo: </strong>{productItem.detalleProducto.tipoProducto?.descripcion }</p>}</li>
-                    <li>{productItem.detalleProducto.sabor.clave && <p><strong>Sabor: </strong>{productItem.detalleProducto.sabor.descripcion}</p>}</li>
+                    <li>{productItem.tipoProducto && <p><strong>Tipo: </strong>{productItem.tipoProducto?.descripcion }</p>}</li>
+                    <li>{productItem.sabor.clave && <p><strong>Sabor: </strong>{productItem.sabor.descripcion}</p>}</li>
                     <li>{productItem.cantidad && productItem.cantidad > 1 && <p><strong>Cantidad: </strong>{productItem.cantidad}</p>}</li>
+                    <li>{productItem.descuento > 0 && <p><strong>Descuento: </strong>${productItem.descuento}</p>}</li>
+                    <li><p><strong>Total producto: </strong>${productItem.total}</p></li>
                     <li>{productItem.detalleProducto.descripcion && <div className='product-comments'><strong>Detalles: </strong><p >{productItem.detalleProducto.descripcion}</p></div>}</li>                    
                 </ul>
             </div>

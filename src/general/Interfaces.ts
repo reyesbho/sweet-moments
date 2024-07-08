@@ -16,10 +16,14 @@ export interface ProductOrderDto{
     id:number,
     idPedido:number,
     detalleProducto:DetailProductoDto,
+    sabor: CatalogTypeDto,
+    tipoProducto: CatalogTypeDto,
     comentarios:String,
     fechaRegistro:Date,
     fechaActualizacion:Date,
-    cantidad:number
+    cantidad:number,
+    total: number,
+    descuento: number
 }
 
 export interface ProductDto{
@@ -34,8 +38,6 @@ export interface DetailProductoDto{
     id: number,
     producto:ProductDto,
     size: CatalogTypeDto,
-    sabor: CatalogTypeDto,
-    tipoProducto: CatalogTypeDto,
     tipoCobro:CatalogTypeDto,
     descripcion: string,
     estatus: boolean,
@@ -46,8 +48,6 @@ export interface DetailProductoModel{
     id: number,
     producto:ProductModel,
     size: CatalogTypeModel,
-    sabor: CatalogTypeModel,
-    tipoProducto: CatalogTypeModel,
     tipoCobro:CatalogTypeModel,
     descripcion: string,
     estatus: boolean,
@@ -80,10 +80,14 @@ export interface  ProductoPedidoModel {
     id:number,
     idPedido:number,
     detalleProducto:DetailProductoModel,
+    sabor: CatalogTypeModel,
+    tipoProducto: CatalogTypeModel,
     comentarios:String,
     fechaRegistro:Date,
     fechaActualizacion:Date,
-    cantidad: number
+    cantidad: number,
+    total: number,
+    descuento: number
 }
 
 
@@ -111,8 +115,22 @@ export interface Pagination{
 
 export interface ProductForm{
     quantity: number,
-    comments: String,
-    idDetailProduct: number
+    comments: string,
+    idDetailProduct: number,
+    idFlavor:number ,
+    idTypeProduct: number,
+    descuento: number,
+    total: number
+}
+
+export interface ProductFormRequest{
+        idDetalleProducto:number,
+        idSabor:number,
+        idTipoProducto: number,
+        comentarios:string,
+        cantidad: number,
+        total: number,
+        descuento: number
 }
 
 export interface CatalogTypeDto{
