@@ -28,7 +28,7 @@ export function CardProduct({productItem,reload }:{productItem: ProductOrderDto,
                     <li>{productItem.sabor.clave && <p><strong>Sabor: </strong>{productItem.sabor.descripcion}</p>}</li>
                     <li>{productItem.cantidad && productItem.cantidad > 1 && <p><strong>Cantidad: </strong>{productItem.cantidad}</p>}</li>
                     <li>{productItem.descuento > 0 && <p><strong>Descuento: </strong>${productItem.descuento}</p>}</li>
-                    <li><p><strong>Total producto: </strong>${productItem.total}</p></li>
+                    <li><p><strong>Subtotal: </strong>${productItem.total}</p></li>
                     <li>{productItem.detalleProducto.descripcion && <div className='product-comments'><strong>Detalles: </strong><p >{productItem.detalleProducto.descripcion}</p></div>}</li>                    
                 </ul>
             </div>
