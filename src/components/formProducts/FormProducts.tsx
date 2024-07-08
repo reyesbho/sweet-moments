@@ -4,16 +4,22 @@ import './FormProducts.css';
 import { DetailProductoDto, ProductDto, ProductForm } from "../../general/Interfaces";
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
+import { useCatalogs } from "../../hooks/useCatalogs";
 
 export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number, handleClose:CallableFunction, reload: CallableFunction }) {
     const { products, detailProducts, getDetailProducts, addDetailProductToOrder} = useProducts();
     const [productSelected, setProductSelected] = useState<ProductDto | null>(null);
     const [detailProductSelected, setDetailProductSelected] = useState<DetailProductoDto | null>(null);
+    const {flavors, typeProducts} = useCatalogs();
     
     const { register, handleSubmit, reset, formState: { isSubmitSuccessful } } = useForm<ProductForm>({
         defaultValues: {
             quantity: 1,
             comments: undefined,
+            idFlavor:0,
+            idTypeProduct:undefined,
+            descuento:0,
+            total:0
         }
     });
 
@@ -75,30 +81,52 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
                     <h3>Producto seleccionado</h3>
                     <div className="container-detailProduct-selected-form">
                         {detailProductSelected && 
-                            <div className="detailProduct-selected" >
-                                <img className="detailProduct-selected-img" src={detailProductSelected?.producto.thumbnail}></img>
-                                <div className="detailProduct-selected-info">
-                                    <ul>
-                                        <li><span>Tipo: </span>{detailProductSelected?.tipoProducto.descripcion}</li>
-                                        <li><span>Sabor: </span>{detailProductSelected?.sabor.descripcion}</li>
-                                        <li><span>Tamaño: </span>{detailProductSelected?.size.descripcion}</li>
-                                        <li><span>Precio: </span>{detailProductSelected?.precio}</li>
-                                        {detailProductSelected?.descripcion && <li><span>Detalles: </span>{detailProductSelected?.descripcion}</li>}
-                                    </ul>
-                                </div>
+                            <div className="detailProduct" >
+                            <img className="detailProduct-img" src={detailProductSelected.producto.thumbnail}></img>
+                            <div className="detailProduct-info">
+                                <ul>
+                                    <li><span>Tamaño: </span>{detailProductSelected.size.descripcion}</li>
+                                    <li><span>Precio: </span>${detailProductSelected.precio}</li>
+                                    {detailProductSelected.descripcion && <li><span>Detalles: </span>{detailProductSelected.descripcion}</li>}
+                                </ul>
                             </div>
+                        </div>
                         }
-                        <form className="form-add-product" onSubmit={handleSubmit(handleAddDetailProduct)}>
-                            <div className="form-input-sm">
-                                <label>Comentarios:</label>
-                                <input type="text" {...register("comments")}></input>
-                            </div>
-                            <div className="form-input-sm">
-                                <label>Cantidad:</label>
-                                <input type="number" {...register("quantity")}></input>
-                            </div>
-                            <button type="submit" className="btn btn-add">Agregar producto</button>
-                        </form>
+                        {detailProductSelected && 
+                            <form className="form-add-product" onSubmit={handleSubmit(handleAddDetailProduct)}>
+                                
+                                <div className="form-input-sm">
+                                    <label>Sabor:</label>
+                                    <select {...register("idFlavor")}>
+                                        <option key={0} value={0}>Sin sabor</option>
+                                        {flavors && flavors.map((flavor) => (
+                                            <option key={flavor.id} value={flavor.id}>{flavor.descripcion}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="form-input-sm">
+                                    <label>Tipo:</label>
+                                    <select {...register("idTypeProduct")}>
+                                    {typeProducts && typeProducts.map((type) =>(
+                                        <option key={type.id} value={type.id}>{type.descripcion}</option>
+                                    ))}
+                                    </select>
+                                </div>
+                                <div className="form-input-sm">
+                                    <label>Cantidad:</label>
+                                    <input type="number" {...register("quantity")}></input>
+                                </div>
+                                <div className="form-input-sm">
+                                    <label>Comentarios:</label>
+                                    <input type="text" {...register("comments")}></input>
+                                </div>
+                                <div className="form-input-sm">
+                                    <label>Descuento:</label>
+                                    <input type="number" {...register("descuento")} placeholder="$0"></input>
+                                </div>
+                                <button type="submit" className="btn btn-add">Agregar producto</button>
+                            </form>
+                        }
                     </div>
                 </div>
                 <hr></hr>
@@ -113,10 +141,8 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
                                     <img className="detailProduct-img" src={detailProduct.producto.thumbnail}></img>
                                     <div className="detailProduct-info">
                                         <ul>
-                                            <li><span>Tipo: </span>{detailProduct.tipoProducto.descripcion}</li>
-                                            <li><span>Sabor: </span>{detailProduct.sabor.descripcion}</li>
                                             <li><span>Tamaño: </span>{detailProduct.size.descripcion}</li>
-                                            <li><span>Precio: </span>{detailProduct.precio}</li>
+                                            <li><span>Precio: </span>${detailProduct.precio}</li>
                                             {detailProduct.descripcion && <li><span>Detalles: </span>{detailProduct.descripcion}</li>}
                                         </ul>
                                     </div>

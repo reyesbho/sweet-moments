@@ -21,10 +21,14 @@ export function mapToProductOrderDto(productoPedido:ProductoPedidoModel):Product
         id:productoPedido.id,
         idPedido:productoPedido.idPedido,
         detalleProducto:mapToDetailProductDto(productoPedido.detalleProducto),
+        sabor: mapToCatalogTypeDto(productoPedido.sabor),
+        tipoProducto: mapToCatalogTypeDto(productoPedido.tipoProducto),
         comentarios:productoPedido.comentarios,
         fechaRegistro:productoPedido.fechaRegistro,
         fechaActualizacion:productoPedido.fechaActualizacion,
-        cantidad: productoPedido.cantidad
+        cantidad: productoPedido.cantidad,
+        total: productoPedido.total,
+        descuento: productoPedido.descuento
     }
 }
 
@@ -65,8 +69,6 @@ export function mapToDetailProductDto(product:DetailProductoModel):DetailProduct
         id: product.id,
         producto:mapToProductDto(product.producto),
         size: mapToCatalogTypeDto(product.size),
-        sabor: mapToCatalogTypeDto(product.sabor),
-        tipoProducto: mapToCatalogTypeDto(product.tipoProducto),
         tipoCobro:mapToCatalogTypeDto(product.tipoCobro),
         descripcion: product.descripcion,
         estatus: product.estatus,

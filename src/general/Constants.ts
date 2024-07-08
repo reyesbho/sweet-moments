@@ -71,7 +71,7 @@ export const predefinedRanges = [
         case 'pastel':
             img = pastelImg;
             break;
-        case 'coop_cake':
+        case 'cupcake':
             img = coopcakesImg;
             break;
         default: 

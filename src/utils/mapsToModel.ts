@@ -1,4 +1,4 @@
-import { OrderInfo, PedidoRequest, ProductForm } from "../general/Interfaces";
+import { OrderInfo, PedidoRequest, ProductForm, ProductFormRequest } from "../general/Interfaces";
 
 export const mapToPedidoModel = (pedidoRequest: OrderInfo):PedidoRequest => {
     const clienteArray = pedidoRequest.cliente?.split(" ") ?? [];
@@ -15,12 +15,16 @@ export const mapToPedidoModel = (pedidoRequest: OrderInfo):PedidoRequest => {
         },
     }
 }
-export const mapToProductoRequest = (producto:ProductForm) => {
+export const mapToProductoRequest = (producto:ProductForm):ProductFormRequest => {
 
     return {
         idDetalleProducto:producto.idDetailProduct,
+        idSabor:producto.idFlavor,
+        idTipoProducto: producto.idTypeProduct,
         comentarios:producto.comments,
         cantidad: producto.quantity,
-        }
+        total: producto.total,
+        descuento: producto.descuento    
+    }
 }
 
