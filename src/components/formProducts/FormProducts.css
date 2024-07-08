@@ -204,4 +204,10 @@
         width: 350px;
     }
 
+    .container-detailProduct-selected-form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
 }

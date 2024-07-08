@@ -9,7 +9,7 @@ export function Header({ title }:{ title:string }) {
     const [open, setOpen] = useState(false);
 
     return (
-        <div className="header">
+        <div className="header" onClick={() => setOpen(!open)}>
             <div className='header-info'>
                 <Link to='/'>
                     <img className='header-logo' src={logoUrl} alt={title}></img>
@@ -25,9 +25,15 @@ export function Header({ title }:{ title:string }) {
                 ></img>
                 {open && 
                     <div className='header-menu'>
-                        <Link to='/catalogos' onClick={() => setOpen(!open)}>Catalogos</Link>
-                        <Link to='/productos' onClick={() => setOpen(!open)}>Productos</Link>
-                        <span onClick={logout}>Cerrar sesion</span>
+                        <img className="header-avatar"
+                            src="https://pbs.twimg.com/profile_images/730777468202688516/J34OEG_u_400x400.jpg"
+                            alt="user avatar"
+                        ></img>
+                        <span className='header-menu_greetings'>¡Hola {principal?.user}!</span>
+                        <Link className='header-menu_options' to='/' onClick={() => setOpen(!open)}>Principal</Link>
+                        <Link className='header-menu_options' to='/catalogos' onClick={() => setOpen(!open)}>Catalogos</Link>
+                        <Link className='header-menu_options' to='/productos' onClick={() => setOpen(!open)}>Productos</Link>
+                        <span className='header-menu_options' onClick={logout}>Cerrar sesion</span>
                     </div>
                 }
             </div>
