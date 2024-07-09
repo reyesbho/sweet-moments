@@ -222,6 +222,7 @@ hr{
 
 .btn-sm{
   font-size: 0.8rem;
+    padding: 8px;
 }
 
 .btn-md{
@@ -245,11 +246,6 @@ hr{
   } 
   
    
-  /*Buttons*/
-  .btn-sm{
-    font-size: 0.8rem;
-    padding: 8px;
-  }
 
   .form-input-sm{
     flex-direction: column;
