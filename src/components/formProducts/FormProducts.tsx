@@ -5,6 +5,7 @@ import { DetailProductoDto, ProductDto, ProductForm } from "../../general/Interf
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useCatalogs } from "../../hooks/useCatalogs";
+import { DetailProduct } from "./DetailProduct";
 
 export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number, handleClose:CallableFunction, reload: CallableFunction }) {
     const { products, detailProducts, getDetailProducts, addDetailProductToOrder} = useProducts();
@@ -77,20 +78,24 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
                     }
                 </div>
                 <hr></hr>
+                <div className="detailProducts-container">
+                    <h3>Tipos de productos</h3>
+                    <div className="detailProducts-list">
+                        {
+                            detailProducts && 
+                            detailProducts.map((detailProduct) => (
+                                <DetailProduct key={detailProduct.id} detailProduct={detailProduct} handleDetailProductSelected={handleDetailProductSelected}></DetailProduct>
+                            ))
+                        }
+                    </div>
+                </div>
+                
+                <hr></hr>
                 <div className="container-detailProduct-selected">
                     <h3>Producto seleccionado</h3>
                     <div className="container-detailProduct-selected-form">
                         {detailProductSelected && 
-                            <div className="detailProduct" >
-                            <img className="detailProduct-img" src={detailProductSelected.producto.thumbnail}></img>
-                            <div className="detailProduct-info">
-                                <ul>
-                                    <li><span>Tamaño: </span>{detailProductSelected.size.descripcion}</li>
-                                    <li><span>Precio: </span>${detailProductSelected.precio}</li>
-                                    {detailProductSelected.descripcion && <li><span>Detalles: </span>{detailProductSelected.descripcion}</li>}
-                                </ul>
-                            </div>
-                        </div>
+                        <DetailProduct detailProduct={detailProductSelected} ></DetailProduct>
                         }
                         {detailProductSelected && 
                             <form className="form-add-product" onSubmit={handleSubmit(handleAddDetailProduct)}>
@@ -122,32 +127,10 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
                                 </div>
                                 <div className="form-input-sm">
                                     <label>Descuento:</label>
-                                    <input type="number" {...register("descuento")} placeholder="$0"></input>
+                                    <input type="number" max={detailProductSelected.precio} {...register("descuento")} placeholder="$0"></input>
                                 </div>
                                 <button type="submit" className="btn btn-add">Agregar producto</button>
                             </form>
-                        }
-                    </div>
-                </div>
-                <hr></hr>
-                <div className="detailProducts">
-                    <h3>Tipos de productos</h3>
-                    <div className="container-detailProducts">
-                        {
-                            
-                            detailProducts && 
-                            detailProducts.map((detailProduct) => (
-                                <div className="detailProduct" key={detailProduct.id} onClick={() => handleDetailProductSelected(detailProduct)}>
-                                    <img className="detailProduct-img" src={detailProduct.producto.thumbnail}></img>
-                                    <div className="detailProduct-info">
-                                        <ul>
-                                            <li><span>Tamaño: </span>{detailProduct.size.descripcion}</li>
-                                            <li><span>Precio: </span>${detailProduct.precio}</li>
-                                            {detailProduct.descripcion && <li><span>Detalles: </span>{detailProduct.descripcion}</li>}
-                                        </ul>
-                                    </div>
-                                </div>
-                            ))
                         }
                     </div>
                 </div>

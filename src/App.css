@@ -9,7 +9,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 10px;
   height: auto;
 }
 
@@ -104,7 +103,7 @@
   padding-left: 10px;
   border: 1px solid var(--quinary-bg);
   color: var(--quinary-font);
-  width:70%;
+  width: 189px;
 }
 
 .form-input-sm option{
@@ -250,6 +249,15 @@ hr{
   .btn-sm{
     font-size: 0.8rem;
     padding: 8px;
+  }
+
+  .form-input-sm{
+    flex-direction: column;
+  }
+
+  .form-input-sm > label{
+    align-self: flex-start;
+    padding-bottom: 0px;
   }
 }
 
