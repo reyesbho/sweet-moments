@@ -68,7 +68,6 @@ export function Login() {
                                     
                             {errorLogin && <p className="error-message">{errorLogin}</p>}
                             <div className="actions-login">
-                                <button className="btn-login" type="button">Registrarse</button>
                                 <button className="btn-login" type="submit">
                                     Iniciar sesion
                                 </button>

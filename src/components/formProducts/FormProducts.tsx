@@ -13,7 +13,7 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
     const [detailProductSelected, setDetailProductSelected] = useState<DetailProductoDto | null>(null);
     const {flavors, typeProducts} = useCatalogs();
     
-    const { register, handleSubmit, reset, formState: { isSubmitSuccessful } } = useForm<ProductForm>({
+    const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors } } = useForm<ProductForm>({
         defaultValues: {
             quantity: 1,
             comments: undefined,
@@ -116,6 +116,7 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
                                         <option key={type.id} value={type.id}>{type.descripcion}</option>
                                     ))}
                                     </select>
+                                    {errors.idTypeProduct && <p>{errors.idTypeProduct.message}</p>}
                                 </div>
                                 <div className="form-input-sm">
                                     <label>Cantidad:</label>

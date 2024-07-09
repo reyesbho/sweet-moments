@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 export function NewCatalogRecord({handleClose,catalogType, addRecordCallback}:{handleClose: CallableFunction,catalogType:string, addRecordCallback:CallableFunction}){
 
-    const { register, handleSubmit, reset, formState: { isSubmitSuccessful } } = useForm<CatalogTypeDto>({
+    const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors}, } = useForm<CatalogTypeDto>({
         defaultValues: {
             clave: undefined,
             descripcion: undefined,
@@ -29,6 +29,10 @@ export function NewCatalogRecord({handleClose,catalogType, addRecordCallback}:{h
                             required:{
                                 value: true,
                                 message:"Valor requerido"
+                            },
+                            maxLength:{
+                                value: 50,
+                                message:"Maximo 50 caracteres"
                             }
                         })}></input>
                     </div>
@@ -41,9 +45,10 @@ export function NewCatalogRecord({handleClose,catalogType, addRecordCallback}:{h
                             },
                             pattern:{
                                 value:new RegExp('^([a-z])+$'),
-                                message:"Formato invalido"
+                                message:"Solo minusculas, sin caracteres especiales"
                             }
                         })}></input>
+                        {errors.clave && <p>{errors.clave?.message}</p>}
                     </div>
                     <div className='buttons'>
                         <button className='btn btn-cancel btn-md' onClick={() => handleClose()}>Cancelar</button>
