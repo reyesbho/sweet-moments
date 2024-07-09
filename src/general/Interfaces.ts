@@ -99,6 +99,13 @@ export interface ProductModel{
     imagen: string;
 }
 
+export interface ProductRequest{
+    clave: string;
+    descripcion: string;
+    estatus: string;
+    imagen: string;
+}
+
 export interface CatalogTypeModel{
     id: number;
     clave: string;
@@ -138,6 +145,7 @@ export interface CatalogTypeDto{
     clave: string;
     descripcion: string;
     estatus: string;
+    image: string,
     selfDelete: CallableFunction ;
     selfUpdateEstatus: CallableFunction;
 }

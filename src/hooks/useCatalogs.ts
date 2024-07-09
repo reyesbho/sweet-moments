@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { addSabor, deleteSabor, getSabores, updateStatusSabor } from "../services/sabor.service";
-import { CatalogTypeDto } from "../general/Interfaces";
+import { CatalogTypeDto, ProductRequest } from "../general/Interfaces";
 import { addSizeProduct, daleteSizeProduct, getSizeProductos, updateStatusSizeProduct } from "../services/sizeProducto.service";
 import { addTipoProducto, deleteTipoProduct, getTipoProducto, updateStatusTipoProduct } from "../services/tipoProducto.service";
 import { addTipoCobro, deleteTipoCobro, getTipoCobro, updateStatusTipoCobro } from "../services/tipoCobro.service";
 import { CATALOGS } from "../general/Constants";
+import { addProducto, deleteProducto, getProductos, updateStatusProducto } from "../services/producto.service";
 
 
 export function useCatalogs(){
@@ -12,6 +13,7 @@ export function useCatalogs(){
     const [sizes, setSizes] = useState<CatalogTypeDto[]>([]);
     const [typeProducts, setTypeProducts] = useState<CatalogTypeDto[]>([]);
     const [typePayments, setTypePayments] = useState<CatalogTypeDto[]>([]);
+    const [products, setProducts] = useState<CatalogTypeDto[]>([]);
     const [reload, setReload] = useState(false);
     
     
@@ -56,6 +58,22 @@ export function useCatalogs(){
         })
     }
 
+    const getProducts = () => {
+        getProductos().then((products) => {
+            setProducts(products.map((product)=> ({
+                id: product.id,
+                clave: product.key,
+                descripcion: product.nameProduct,
+                estatus: product.status,
+                image: product.thumbnail,
+                selfDelete: () => deleteProducto(product.id),
+                selfUpdateEstatus: (status:boolean) => updateStatusProducto(product.id,status)
+            })))
+        })
+
+        
+    }
+
     const addNewRecord = (catalog:String, newRecord: CatalogTypeDto) => {
         if(catalog === CATALOGS.flavor){
             addSabor(newRecord).then(() => {
@@ -77,6 +95,18 @@ export function useCatalogs(){
                 setReload(!reload);
             });
         }
+        if(catalog === CATALOGS.products){
+            console.log(newRecord);
+            const productModel:ProductRequest = {
+                clave: newRecord.clave,
+                descripcion: newRecord.descripcion,
+                estatus: newRecord.estatus,
+                imagen: newRecord.image
+            }
+            addProducto(productModel).then(()=> {
+                setReload(!reload);
+            })
+        }
     }
     
     const handleTogleReload = () => {
@@ -88,7 +118,8 @@ export function useCatalogs(){
         getsizes();
         getTipePayment();
         getTypeProduct();
+        getProducts();
     },[reload])
     
-    return {flavors, sizes, typeProducts, typePayments, handleTogleReload, addNewRecord};
+    return {flavors, sizes, typeProducts, typePayments, products, handleTogleReload, addNewRecord};
 }

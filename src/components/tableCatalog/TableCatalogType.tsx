@@ -5,7 +5,8 @@ import { useModalConfirm } from "../../hooks/useModalConfirm";
 import { NewCatalogRecord } from "../newCatalogRecord/NewCatalogRecord";
 import { CatalogTypeRecord } from "./CatalogTypeRecord";
 
-export function TableCatalogType({title, catalogArray,catalogType, handleReaload, addNewRecord}:{title:String, catalogArray: CatalogTypeDto[],catalogType:string, handleReaload: CallableFunction, addNewRecord: CallableFunction}){
+export function TableCatalogType({title, catalogArray,catalogType, handleReaload, addNewRecord, hasImage=false}:
+    {title:String, catalogArray: CatalogTypeDto[],catalogType:string, handleReaload: CallableFunction, addNewRecord: CallableFunction, hasImage?:boolean}){
     const {show, handleClose, handleShow} = useModalConfirm();
     return (
         <>
@@ -19,6 +20,7 @@ export function TableCatalogType({title, catalogArray,catalogType, handleReaload
         <table className="table">
             <thead>
                 <tr>
+                    {hasImage && <th>Imagen</th>}
                     <th>Descripcion</th>
                     <th>Clave</th>
                     <th>Estatus</th>
@@ -26,7 +28,7 @@ export function TableCatalogType({title, catalogArray,catalogType, handleReaload
                 </tr>
             </thead>
             <tbody>
-                {catalogType && 
+                {catalogArray && 
                     catalogArray.map(catalog => (
                         <CatalogTypeRecord key={catalog.id} catalog={catalog} handleReload={handleReaload}></CatalogTypeRecord>
                     ))
@@ -36,7 +38,7 @@ export function TableCatalogType({title, catalogArray,catalogType, handleReaload
        
     </div>
     
-    {show && <NewCatalogRecord catalogType={catalogType} addRecordCallback={addNewRecord} handleClose={handleClose}></NewCatalogRecord>}
+    {show && <NewCatalogRecord catalogType={catalogType} addRecordCallback={addNewRecord} handleClose={handleClose} hasImage={hasImage}></NewCatalogRecord>}
     </>   
     )
 }

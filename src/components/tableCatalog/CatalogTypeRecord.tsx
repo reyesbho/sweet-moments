@@ -27,6 +27,7 @@ export function CatalogTypeRecord({catalog, handleReload}:{catalog: CatalogTypeD
 
     return (
             <tr key={catalog.id}>
+                {catalog.image && <td><img className="table-img" src={catalog.image}></img></td>}
                 <td>{catalog.descripcion}</td>
                 <td>{catalog.clave}</td>
                 <td>{catalog.estatus ? 'ACTIVO' : 'INACTIVO'}</td>
@@ -34,7 +35,7 @@ export function CatalogTypeRecord({catalog, handleReload}:{catalog: CatalogTypeD
                     <span onClick={(event:any) => modalUpdate.handleShow(event)}><MdCheckBox size='1.2rem'></MdCheckBox></span>
                     <span onClick={(event:any) => modalDelete.handleShow(event)}><MdDelete size='1.2rem' color="#e04141"></MdDelete></span>
                     <ModalConfirm show={modalUpdate.show} handleClose={(event:any) => modalUpdate.handleClose(event)} handleOk={handleUpdateModal} ></ModalConfirm>
-                <ModalConfirm show={modalDelete.show} handleClose={(event:any) => modalDelete.handleClose(event)} handleOk={handleDeleteModal} ></ModalConfirm>
+                    <ModalConfirm show={modalDelete.show} handleClose={(event:any) => modalDelete.handleClose(event)} handleOk={handleDeleteModal} ></ModalConfirm>
                 </td>
             </tr>
     )

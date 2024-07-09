@@ -3,12 +3,14 @@ import './NewCatalogRecord.css';
 import { CatalogTypeDto } from '../../general/Interfaces';
 import { useForm } from 'react-hook-form';
 
-export function NewCatalogRecord({handleClose,catalogType, addRecordCallback}:{handleClose: CallableFunction,catalogType:string, addRecordCallback:CallableFunction}){
+export function NewCatalogRecord({handleClose,catalogType, addRecordCallback, hasImage}:
+    {handleClose: CallableFunction,catalogType:string, addRecordCallback:CallableFunction,hasImage:boolean}){
 
-    const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors}, } = useForm<CatalogTypeDto>({
+    const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors},setValue } = useForm<CatalogTypeDto>({
         defaultValues: {
             clave: undefined,
             descripcion: undefined,
+            image: undefined
         }
     });
 
@@ -17,12 +19,30 @@ export function NewCatalogRecord({handleClose,catalogType, addRecordCallback}:{h
         handleClose();
     }
 
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            if (reader.result) {
+              const base64String = reader.result.toString();
+              setValue('image', base64String);
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+
     return(
         <div className="main-modal ">
             <div className='modal-container catalogRecord'>
             <span className="main-modal-close" onClick={() => handleClose()}><MdClose size={'2rem'}></MdClose></span>
             <h3>Agregar nuevo registro</h3>
                 <form onSubmit={handleSubmit(handleRegister)}>
+                    {hasImage && <div className='form-input'>
+                        <label >Imagen</label>
+                        <input type="file" accept="image/webp" onChange={handleFileChange} />
+                    </div>}
                     <div className='form-input'>
                         <label >Descripcion</label>
                         <input type='text' {...register("descripcion",{

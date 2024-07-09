@@ -64,5 +64,6 @@ export const CATALOGS = {
   flavor:'flavor', 
   typePaymment:'typePaymment',
   typeProduct:'typeProduct',
-  sizeProduct:'sizeProduct'
+  sizeProduct:'sizeProduct',
+  products:'products'
 };
