@@ -7,7 +7,7 @@ export function DetailProduct({detailProduct, handleDetailProductSelected}:{deta
             <img className="detailProduct-img" src={detailProduct.producto.thumbnail}></img>
             <div className="detailProduct-info">
                 <ul>
-                    <li><span>Tamaño: </span>{detailProduct.size.descripcion}</li>
+                    <li><strong>{detailProduct.size.descripcion}</strong></li>
                     <li><span>Precio: </span>${detailProduct.precio}</li>
                     {detailProduct.descripcion && <li><span>Detalles: </span>{detailProduct.descripcion}</li>}
                 </ul>

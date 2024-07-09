@@ -78,9 +78,9 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
                     }
                 </div>
                 <hr></hr>
-                <div className="detailProducts">
+                <div className="detailProducts-container">
                     <h3>Tipos de productos</h3>
-                    <div className="container-detailProducts">
+                    <div className="detailProducts-list">
                         {
                             detailProducts && 
                             detailProducts.map((detailProduct) => (
@@ -127,7 +127,7 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
                                 </div>
                                 <div className="form-input-sm">
                                     <label>Descuento:</label>
-                                    <input type="number" {...register("descuento")} placeholder="$0"></input>
+                                    <input type="number" max={detailProductSelected.precio} {...register("descuento")} placeholder="$0"></input>
                                 </div>
                                 <button type="submit" className="btn btn-add">Agregar producto</button>
                             </form>

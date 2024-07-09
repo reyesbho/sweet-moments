@@ -27,8 +27,8 @@ export function CardProduct({productItem,reload }:{productItem: ProductOrderDto,
                     <li>{productItem.tipoProducto && <p><strong>Tipo: </strong>{productItem.tipoProducto?.descripcion }</p>}</li>
                     <li>{productItem.sabor.clave && <p><strong>Sabor: </strong>{productItem.sabor.descripcion}</p>}</li>
                     <li>{productItem.cantidad && productItem.cantidad > 1 && <p><strong>Cantidad: </strong>{productItem.cantidad}</p>}</li>
+                    <li>{productItem.detalleProducto.precio > 0 && <p><strong>Precio: </strong>${productItem.detalleProducto.precio}</p>}</li>
                     <li>{productItem.descuento > 0 && <p><strong>Descuento: </strong>${productItem.descuento}</p>}</li>
-                    <li><p><strong>Subtotal: </strong>${productItem.total}</p></li>
                     <li>{productItem.detalleProducto.descripcion && <div className='product-comments'><strong>Detalles: </strong><p >{productItem.detalleProducto.descripcion}</p></div>}</li>                    
                 </ul>
             </div>
@@ -36,7 +36,7 @@ export function CardProduct({productItem,reload }:{productItem: ProductOrderDto,
                 <hr />
                 <div className='product-totals'>
                     <span className='product-size'>{productItem.detalleProducto.size.descripcion} </span>
-                    <span className='product-price'>{`$${productItem.detalleProducto.precio}.00`} </span>
+                    <span className='product-price'>{`$${productItem.total}`} </span>
                     <span onClick={(event) => handleShow(event)} className='icon-actions' title='Eliminar'>
                     <FaTrash size="1rem" className='color-wrong'></FaTrash>
                     </span>
