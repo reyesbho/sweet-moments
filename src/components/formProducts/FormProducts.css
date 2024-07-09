@@ -171,6 +171,9 @@
         padding-top: 100px;
     }
 
+    .detailProducts-container{
+        width: 350px;
+    }
     .container-detail{
         width: 350px;
         padding: 5px;

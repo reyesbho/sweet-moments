@@ -61,19 +61,20 @@ export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefr
         <>
         <div className={`principal-order `} onClick={handleShowProducts}> 
             <CardOrderInfo order={order} enableIcon={true}></CardOrderInfo>
-            <div className={`detail-order ${(showProducts ? 'active' : 'inactive')}`}>
-                {products && <hr></hr> && products?.map(product => (
-                    <CardProduct key={product.id} productItem={product} reload={handleReload}></CardProduct>
-                ))}
-                    <div className='order-actions'>
+            <div className='order-actions'>
                         { (order?.status === STATUS.BACKLOG || order?.status === STATUS.INCOMPLETE)  && 
                         <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleSelectStatus(event, STATUS.CANCELED)}>Cancelar</button>}
                         {order.status === STATUS.INCOMPLETE && 
-                        <Link className='btn btn-add btn-sm' to={`/order/${order.id}`}>Continuar Registro</Link>}
+                        <Link className='btn btn-add btn-sm' to={`/order/${order.id}`}>Continuar</Link>}
                         {order?.status === STATUS.BACKLOG &&
                         <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleSelectStatus(event, STATUS.DONE)}>Entregado</button>}
                         <button type='button' className='btn btn-delete btn-sm' onClick={(event) => handleSelectStatus(event, STATUS.DELETE)}>Eliminar</button>
                     </div>
+            <div className={`detail-order ${(showProducts ? 'active' : 'inactive')}`}>
+                {products && <hr></hr> && products?.map(product => (
+                    <CardProduct key={product.id} productItem={product} reload={handleReload}></CardProduct>
+                ))}
+                    
             </div>
         </div>
         <ModalConfirm show={show} handleClose={(e:any) => handleClose(e)} handleOk={handleUpdateState} ></ModalConfirm>
