@@ -9,7 +9,7 @@ export function Header({ title }:{ title:string }) {
     const [open, setOpen] = useState(false);
 
     return (
-        <div className="header" onClick={() => setOpen(!open)}>
+        <div className="header">
             <div className='header-info'>
                 <Link to='/'>
                     <img className='header-logo' src={logoUrl} alt={title}></img>

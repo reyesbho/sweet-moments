@@ -6,6 +6,7 @@ import { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useCatalogs } from "../../hooks/useCatalogs";
 import { DetailProduct } from "./DetailProduct";
+import { Product } from "./Product";
 
 export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number, handleClose:CallableFunction, reload: CallableFunction }) {
     const { products, detailProducts, getDetailProducts, addDetailProductToOrder} = useProducts();
@@ -70,10 +71,7 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
                     {
                         products && 
                         products.map((producto => (
-                            <div className="producto" key={producto.id} onClick={() => handleClickSelect(producto)}>
-                                <img className="producto-img" src={producto.thumbnail}></img>
-                                <span className="producto-title">{producto.nameProduct}</span>
-                            </div>
+                            <Product key={producto.id} product={producto} handleClickSelect={handleClickSelect}></Product>
                         )))
                     }
                 </div>

@@ -145,7 +145,7 @@ export interface CatalogTypeDto{
     clave: string;
     descripcion: string;
     estatus: string;
-    image: string,
+    image: string | null,
     selfDelete: CallableFunction ;
     selfUpdateEstatus: CallableFunction;
 }

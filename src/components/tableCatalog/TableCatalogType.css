@@ -12,19 +12,7 @@
     margin: 0px;
     text-align: center;
 }
-.catalogType-title{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-.catalogType-add {
-    background: none;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    align-self: flex-end;
-    
-}
+
 
 .table{
     width: 100%;

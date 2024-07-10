@@ -8,8 +8,8 @@ export function AdminCatalog(){
     const {flavors, typePayments, typeProducts, sizes,products, handleTogleReload, addNewRecord} = useCatalogs();
 
     return (
-        <section>
-            <h1 className="title-catalogos">Administracion de catalogos</h1>
+        <div>
+            <h1>Administracion de catalogos</h1>
             <div className="catalog">
                 <TableCatalogType title={"Sabores"} catalogArray={flavors} catalogType={CATALOGS.flavor} handleReaload={handleTogleReload} addNewRecord={addNewRecord}></TableCatalogType>
                 <TableCatalogType title={"Tipo cobro"} catalogArray={typePayments} catalogType={CATALOGS.typePaymment}  handleReaload={handleTogleReload} addNewRecord={addNewRecord}></TableCatalogType>
@@ -17,6 +17,6 @@ export function AdminCatalog(){
                 <TableCatalogType title={"Tamaños"} catalogArray={sizes} catalogType={CATALOGS.sizeProduct}  handleReaload={handleTogleReload} addNewRecord={addNewRecord}></TableCatalogType>
                 <TableCatalogType title={"Productos"} catalogArray={products} catalogType={CATALOGS.products}  handleReaload={handleTogleReload} addNewRecord={addNewRecord} hasImage={true}></TableCatalogType>
             </div>
-        </section>
+        </div>
     )
 }

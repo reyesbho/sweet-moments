@@ -1,4 +1,4 @@
-import { CatalogTypeDto, CatalogTypeModel, ClienteModel, DetailProductoDto, DetailProductoModel, OrderDto, PedidoModel, ProductDto, ProductModel, ProductoPedidoModel, ProductOrderDto } from "../general/Interfaces";
+import { CatalogTypeDto, CatalogTypeModel, ClienteModel, DetailProductoDto, DetailProductoModel, OrderDto, PedidoModel, ProductDto, ProductModel, ProductoPedidoModel, ProductOrderDto, ProductRequest } from "../general/Interfaces";
 
 export function mapToOrderDto(pedido:PedidoModel):OrderDto{
     return {
@@ -38,6 +38,7 @@ export function mapToCatalogTypeDto(cat: CatalogTypeModel):CatalogTypeDto{
         clave: cat.clave,
         descripcion: cat.descripcion,
         estatus: cat.estatus,
+        image: null,
         selfDelete: () => {},
         selfUpdateEstatus: () => {}
     }
@@ -76,3 +77,11 @@ export function mapToDetailProductDto(product:DetailProductoModel):DetailProduct
     }
 }
 
+export function mapToProductRequestByCatalog(newRecord: CatalogTypeDto):ProductRequest{
+    return {
+        clave: newRecord.clave,
+        descripcion: newRecord.descripcion,
+        estatus: newRecord.estatus,
+        imagen: newRecord.image ?? ''
+    }   
+}

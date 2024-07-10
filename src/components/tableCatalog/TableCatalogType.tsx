@@ -11,9 +11,9 @@ export function TableCatalogType({title, catalogArray,catalogType, handleReaload
     return (
         <>
     <div className="catalogType">
-        <div className="catalogType-title">
+        <div className="subtitle">
             <h3>{title}</h3>
-            <button className='catalogType-add'>
+            <button className='subtitle-add'>
                 <FaPlusCircle size="2rem" className='color-success' onClick={(event) => handleShow(event)}></FaPlusCircle>
             </button>
         </div>

@@ -6,6 +6,7 @@ import { addTipoProducto, deleteTipoProduct, getTipoProducto, updateStatusTipoPr
 import { addTipoCobro, deleteTipoCobro, getTipoCobro, updateStatusTipoCobro } from "../services/tipoCobro.service";
 import { CATALOGS } from "../general/Constants";
 import { addProducto, deleteProducto, getProductos, updateStatusProducto } from "../services/producto.service";
+import { mapToProductRequestByCatalog } from "../utils/mapsToDto";
 
 
 export function useCatalogs(){
@@ -96,14 +97,7 @@ export function useCatalogs(){
             });
         }
         if(catalog === CATALOGS.products){
-            console.log(newRecord);
-            const productModel:ProductRequest = {
-                clave: newRecord.clave,
-                descripcion: newRecord.descripcion,
-                estatus: newRecord.estatus,
-                imagen: newRecord.image
-            }
-            addProducto(productModel).then(()=> {
+            addProducto(mapToProductRequestByCatalog(newRecord)).then(()=> {
                 setReload(!reload);
             })
         }
