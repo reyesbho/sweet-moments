@@ -4,8 +4,8 @@ import { deleteProducto, updateStatusProducto } from "../../services/producto.se
 import { ModalConfirm } from "../modal/Modal";
 import './Product.css';
 
-export function Product({product, handleClickSelect, showActions=false, handleReload}:
-    {product:ProductDto,handleClickSelect:CallableFunction,showActions:boolean,handleReload:CallableFunction}){
+export function Product({product, handleClickSelect, showActions=false, handleReload=() => {}}:
+    {product:ProductDto,handleClickSelect:CallableFunction,showActions?:boolean,handleReload?:CallableFunction}){
 
     const modalUpdate = useModalConfirm( );
     const modalDelete = useModalConfirm();
