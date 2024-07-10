@@ -75,7 +75,7 @@ export function DetailOrder() {
                         <IoIosArrowBack size="2.5rem" />
                 </button>
             }
-            <h2>Detalle de pedido: {order?.id}</h2>
+            <h2>Detalle de pedido para {order?.cliente}</h2>
         </div>
         {order &&
             <div className={`detailOrder-container ${(id ? cssClassName : '' )}`}>

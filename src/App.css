@@ -68,11 +68,27 @@ h1 {
 .form-input > input{
   border-radius: 10px;
   line-height: 35px;
-  font-size: 0.9rem;
+  font-size: 1rem;
   padding-left: 10px;
   border: 1px solid var(--quinary-bg);
   color: var(--quinary-font);
 }
+
+
+
+.form-input > select{
+  border-radius: 10px;
+  height: 35px;
+  font-size: 1rem;
+  padding-left: 10px;
+  border: 1px solid var(--quinary-bg);
+  color: var(--quinary-font);
+}
+
+.form-input > select > option{
+  font-size: 1.2rem;
+}
+
 
 .form-input-sm{
   display: flex;

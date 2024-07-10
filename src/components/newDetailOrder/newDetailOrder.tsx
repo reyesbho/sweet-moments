@@ -33,7 +33,7 @@ export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
             <span className="main-modal-close" onClick={(e) => handleClose(e)}><MdClose size={'2rem'}></MdClose></span>
             <h3>Nuevo tipo de {product.nameProduct}</h3>
                 <form onSubmit={handleSubmit(handleAddDetailProduct)}>
-                    <div className="form-input-sm">
+                    <div className="form-input">
                         <label>Tipo:</label>
                         <select {...register("idTipoCobro",{
                             required:{
@@ -47,7 +47,7 @@ export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
                         </select>
                         {errors.idTipoCobro && <p>{errors.idTipoCobro.message}</p>}
                     </div>
-                    <div className="form-input-sm">
+                    <div className="form-input">
                         <label>Tamaño:</label>
                         <select {...register("idSize",{
                             required:{
@@ -61,11 +61,11 @@ export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
                         </select>
                         {errors.idSize && <p>{errors.idSize.message}</p>}
                     </div>
-                    <div className="form-input-sm">
+                    <div className="form-input">
                         <label>Comentarios:</label>
                         <input type="text" {...register("descripcion")}></input>
                     </div>
-                    <div className="form-input-sm">
+                    <div className="form-input">
                         <label>Precio:</label>
                         <input type="number" {...register("precio",{
                             required:{

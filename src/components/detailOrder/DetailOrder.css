@@ -51,10 +51,9 @@
 
 
 .orderDetail-info{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
 }
 
 .orderDetail-info p{

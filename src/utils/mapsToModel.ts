@@ -8,7 +8,7 @@ export const mapToPedidoModel = (pedidoRequest: OrderInfo):PedidoRequest => {
         lugarEntrega: pedidoRequest.lugarEntrega,
         cliente:  {
             id:0,
-            nombre: pedidoRequest.cliente,
+            nombre: clienteArray[0],
             apellidoPaterno: (clienteArray.length > 1 ? clienteArray[1] : clienteArray[0]),
             apellidoMaterno: (clienteArray.length > 2 ? clienteArray[2] : null),
             direccion: pedidoRequest.lugarEntrega
