@@ -44,6 +44,15 @@ export interface DetailProductoDto{
     precio: number,
 }
 
+
+export interface DetailProductoRequest{
+    idProducto:number,
+    idSize: number,
+    idTipoCobro:number,
+    descripcion: string,
+    precio: number,
+}
+
 export interface DetailProductoModel{
     id: number,
     producto:ProductModel,

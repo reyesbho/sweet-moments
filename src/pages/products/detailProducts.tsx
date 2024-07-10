@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { DetailProduct } from "../../components/formProducts/DetailProduct";
 import { useProducts } from "../../hooks/useProducts"
 import { Product } from "../../components/formProducts/Product";
 import { ProductDto } from "../../general/Interfaces";
@@ -8,6 +7,9 @@ import { FaPlusCircle } from "react-icons/fa";
 import { useModalConfirm } from "../../hooks/useModalConfirm";
 import { NewCatalogRecord } from "../../components/newCatalogRecord/NewCatalogRecord";
 import { CATALOGS } from "../../general/Constants";
+import { TableComponent } from "../../components/tableComponent/tableComponent";
+import { DetailProductRecord } from "../../components/detailProductRecord/DetailProductRecord";
+import { NewDetailOrder } from "../../components/newDetailOrder/newDetailOrder";
 
 
 export function DetailProducts(){
@@ -23,6 +25,11 @@ export function DetailProducts(){
         setProductSelected(product);
         getDetailProducts(product.id);
     };
+
+
+    const configTable = {
+        columns:['Producto','Tamaño','Tipo cobro','Comentario',"Precio",'Estatus' ,'Acciones']
+    }
 
     return (
         <>
@@ -44,19 +51,28 @@ export function DetailProducts(){
             {   productSelected && detailProducts && 
             <div className="segment-pageProducts">
                 <div className="subtitle">
-                    <h3>Tipos de productos</h3>
+                    <h3>Detalles de producto</h3>
                     <button className='subtitle-add'>
                         <FaPlusCircle title="Nuevo tipo de producto" size="2rem" className='color-success' onClick={(event) => modalDetalleProducto.handleShow(event)}></FaPlusCircle>
                     </button>
                 </div>
                  <div className="container-products">
-                 {detailProducts.map((detailProduct) =>(
-                        <DetailProduct key={detailProduct.id} detailProduct={detailProduct} showActions={true} handleReload={() => getDetailProducts(productSelected.id)}></DetailProduct>
-                    ))}
+                    <TableComponent configTable={configTable} title='Tipos de producto' >
+                        <tbody>
+                        {detailProducts && 
+                            detailProducts.map(detailProduct => (
+                                <DetailProductRecord key={detailProduct.id} catalog={detailProduct} handleReload={() => getDetailProducts(productSelected.id)}></DetailProductRecord>
+                            ))
+                        }
+                        </tbody>
+                    </TableComponent>
                 </div>
             </div>}
         </div>
         {modalProducto.show && <NewCatalogRecord catalogType={CATALOGS.products} addRecordCallback={addProduct} handleClose={modalProducto.handleClose} hasImage={true}></NewCatalogRecord>}
+        {modalDetalleProducto.show && productSelected && 
+            <NewDetailOrder handleClose={modalDetalleProducto.handleClose} product={productSelected} handleReload={() => getDetailProducts(productSelected.id)}></NewDetailOrder>
+        }
         </>
     )
 }

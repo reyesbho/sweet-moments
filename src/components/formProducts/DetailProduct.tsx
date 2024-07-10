@@ -4,8 +4,8 @@ import { deleteDetalleProducto, updateStatusDetalleProducto } from '../../servic
 import { ModalConfirm } from '../modal/Modal';
 import { useModalConfirm } from '../../hooks/useModalConfirm';
 
-export function DetailProduct({detailProduct, handleDetailProductSelected, showActions=false, handleReload}:
-    {detailProduct:DetailProductoDto, handleDetailProductSelected?:CallableFunction, showActions?:boolean,handleReload:CallableFunction}){
+export function DetailProduct({detailProduct, handleDetailProductSelected, showActions=false, handleReload=() => {}}:
+    {detailProduct:DetailProductoDto, handleDetailProductSelected?:CallableFunction, showActions?:boolean,handleReload?:CallableFunction}){
     const modalUpdate = useModalConfirm( );
     const modalDelete = useModalConfirm();
 

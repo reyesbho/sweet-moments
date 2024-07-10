@@ -31,8 +31,20 @@
     border-radius: 20px;
 }
 
+
+
 @media only screen and (max-width:820px) {
     .container-products{
         padding: 10px 5px;
+        width: 350px;
     }
+
+    .container-products  th:nth-last-child(-n+2),th:nth-last-child(4){
+        display: none;
+    }  
+
+    .container-products  td:nth-last-child(-n+2),td:nth-last-child(4){
+        display: none;
+    }  
+   
 }

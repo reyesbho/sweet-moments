@@ -14,40 +14,6 @@
 }
 
 
-.table{
-    width: 100%;
-    border-spacing: 0px;
-}
-
-.table thead{
-    background-color: var(--primary-bg);
-}
-
-.table th{
-    text-align: center;
-    padding: 5px;
-}
-
-.table td{
-    width: auto;
-}
-
-.table-actions{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-.table-actions span{
-    cursor: pointer;
-}
-
-.table-img{
-    width: 30px;
-    height: 30px;
-    border-radius: 5px;
-}
-
-
 @media only screen and (max-width:820px) {
 
 }

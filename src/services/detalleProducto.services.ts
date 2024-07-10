@@ -1,4 +1,4 @@
-import { DetailProductoDto, DetailProductoModel } from "../general/Interfaces";
+import { DetailProductoDto, DetailProductoModel, DetailProductoRequest } from "../general/Interfaces";
 import { API_DETALLE_PRODUCTO } from "../general/url";
 import { mapToDetailProductDto } from "../utils/mapsToDto";
 
@@ -38,6 +38,22 @@ export const updateStatusDetalleProducto = async(idDetalleProducto:number, estat
         const response = await fetch(API_DETALLE_PRODUCTO+`/${idDetalleProducto}/${estatus}`,
         {
             method:"PUT"
+        }
+        );
+        const tipo = await response.json();
+        return mapToDetailProductDto(tipo);
+
+    } catch (error) {
+        throw new Error("Error al actualizar el detalle del producto");
+    }
+}
+
+export const createDetalleProducto = async(newRecord:DetailProductoRequest):Promise<DetailProductoDto> => {
+    try {
+        const response = await fetch(API_DETALLE_PRODUCTO,
+        {
+            method:"POST",
+            body:JSON.stringify(newRecord)
         }
         );
         const tipo = await response.json();
