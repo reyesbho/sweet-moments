@@ -32,7 +32,7 @@ export function DetailProducts(){
                 <div className="subtitle">
                     <h3>Productos</h3>
                     <button className='subtitle-add'>
-                        <FaPlusCircle size="2rem" className='color-success' onClick={(event) => modalProducto.handleShow(event)}></FaPlusCircle>
+                        <FaPlusCircle title="Nuevo producto" size="2rem" className='color-success' onClick={(event) => modalProducto.handleShow(event)}></FaPlusCircle>
                     </button>
                 </div>
                 <div className="container-products">
@@ -46,7 +46,7 @@ export function DetailProducts(){
                 <div className="subtitle">
                     <h3>Tipos de productos</h3>
                     <button className='subtitle-add'>
-                        <FaPlusCircle size="2rem" className='color-success' onClick={(event) => modalDetalleProducto.handleShow(event)}></FaPlusCircle>
+                        <FaPlusCircle title="Nuevo tipo de producto" size="2rem" className='color-success' onClick={(event) => modalDetalleProducto.handleShow(event)}></FaPlusCircle>
                     </button>
                 </div>
                  <div className="container-products">
