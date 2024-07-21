@@ -27,12 +27,19 @@ export function DetailProduct({detailProduct, handleDetailProductSelected, showA
         <>
         <div key={detailProduct.id} className="container-product">
             <div className="detailProduct" key={detailProduct.id} onClick={handleDetailProductSelected ?() => handleDetailProductSelected(detailProduct) : () => {}}>
-                <img className="detailProduct-img" src={detailProduct.producto.thumbnail}></img>
+                <img className="detailProduct-img" src={detailProduct.imagen ? 
+                    detailProduct.imagen : detailProduct.producto.thumbnail
+                }></img>
                 <div className="detailProduct-info">
+                    {detailProduct.descripcion && 
+                    <h4 className='no-pm'>
+                        {detailProduct.descripcion}
+                    </h4>}
                     <ul>
+                        <li><strong>{detailProduct.producto.nameProduct}</strong></li>
                         <li><strong>{detailProduct.size.descripcion}</strong></li>
                         <li><span>Precio: </span>${detailProduct.precio}</li>
-                        {detailProduct.descripcion && <li><span>Detalles: </span>{detailProduct.descripcion}</li>}
+                        {detailProduct.comentarios && <li><p className='no-pm'><span>Comentarios: </span></p>{detailProduct.comentarios}</li>}
                     </ul>
                 </div>
             </div>

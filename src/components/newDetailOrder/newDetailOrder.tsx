@@ -4,18 +4,21 @@ import { useForm } from "react-hook-form";
 import { useCatalogs } from "../../hooks/useCatalogs";
 import './newDetailOrder.css'
 import { createDetalleProducto } from "../../services/detalleProducto.services";
+import { useState } from "react";
 
 export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
     {handleClose: CallableFunction, product:ProductDto,handleReload:CallableFunction}){
         const {sizes, typePayments} = useCatalogs()
+        const [image, setImage] = useState<string | undefined>();
     
-        const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors },setValue } = useForm<DetailProductoRequest>({
+        const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors },setValue} = useForm<DetailProductoRequest>({
             defaultValues: {
                idProducto:0, 
                idSize: undefined,
                idTipoCobro: undefined,
                descripcion: undefined,
-               precio:undefined
+               precio:undefined,
+               imagen:undefined
             }
         });
 
@@ -26,6 +29,20 @@ export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
                 handleClose();
             })
         }
+        const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const file = event.target.files?.[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onloadend = () => {
+                if (reader.result) {
+                  const base64String = reader.result.toString();
+                  setValue('imagen', base64String);
+                  setImage(base64String);
+                }
+              };
+              reader.readAsDataURL(file);
+            }
+          };
 
     return (
         <div className="main-modal" >
@@ -33,6 +50,11 @@ export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
             <span className="main-modal-close" onClick={(e) => handleClose(e)}><MdClose size={'2rem'}></MdClose></span>
             <h3>Nuevo tipo de {product.nameProduct}</h3>
                 <form onSubmit={handleSubmit(handleAddDetailProduct)}>
+                    {image && <img className="detailProduct-img" src={image}></img>}
+                    <div className='form-input'>
+                        <label >Imagen</label>
+                        <input type="file" accept="image/webp" onChange={handleFileChange} />
+                    </div>
                     <div className="form-input">
                         <label>Tipo:</label>
                         <select {...register("idTipoCobro",{
@@ -41,6 +63,7 @@ export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
                                 message:"Valor requerido"
                             }
                         })}>
+                        <option value={undefined}>Seleccionar</option>
                         {typePayments && typePayments.map((type) =>(
                             <option key={type.id} value={type.id}>{type.descripcion}</option>
                         ))}
@@ -55,6 +78,7 @@ export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
                                 message:"Valor requerido"
                             }
                         })}>
+                        <option value={undefined}>Seleccionar</option>
                         {sizes && sizes.map((type) =>(
                             <option key={type.id} value={type.id}>{type.descripcion}</option>
                         ))}

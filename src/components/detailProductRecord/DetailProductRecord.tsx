@@ -25,6 +25,7 @@ export function DetailProductRecord({catalog, handleReload}:{catalog: DetailProd
 
     return (
             <tr key={catalog.id}>
+                <td><img className="table-img" src={catalog.imagen ? catalog.imagen : catalog.producto.thumbnail}></img></td>
                 <td>{catalog.producto.nameProduct}</td>
                 <td>{catalog.size.descripcion}</td>
                 <td>{catalog.tipoCobro.descripcion}</td>

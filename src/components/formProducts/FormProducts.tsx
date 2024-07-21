@@ -46,6 +46,7 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
             return
         }
         setDetailProductSelected(detailProduc);
+        console.log(detailProduc)
     }
 
 
@@ -97,7 +98,7 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
                         }
                         {detailProductSelected && 
                             <form className="form-add-product" onSubmit={handleSubmit(handleAddDetailProduct)}>
-                                
+                                {!detailProductSelected.producto.completed &&
                                 <div className="form-input-sm">
                                     <label>Sabor:</label>
                                     <select {...register("idFlavor")}>
@@ -106,16 +107,18 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
                                             <option key={flavor.id} value={flavor.id}>{flavor.descripcion}</option>
                                         ))}
                                     </select>
-                                </div>
+                                </div> }
+                                {!detailProductSelected.producto.completed &&
                                 <div className="form-input-sm">
                                     <label>Tipo:</label>
                                     <select {...register("idTypeProduct")}>
+                                    <option key={0} value={0}>Sin sabor</option>
                                     {typeProducts && typeProducts.map((type) =>(
                                         <option key={type.id} value={type.id}>{type.descripcion}</option>
                                     ))}
                                     </select>
                                     {errors.idTypeProduct && <p>{errors.idTypeProduct.message}</p>}
-                                </div>
+                                </div>}
                                 <div className="form-input-sm">
                                     <label>Cantidad:</label>
                                     <input type="number" {...register("quantity")}></input>

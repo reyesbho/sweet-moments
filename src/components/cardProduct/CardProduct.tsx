@@ -17,19 +17,21 @@ export function CardProduct({productItem,reload }:{productItem: ProductOrderDto,
     return (
         <section>
         <div key={productItem.id} className='product'>
-            <img className='product-img' src={productItem.detalleProducto.producto.thumbnail} 
+            <img className='product-img' src={productItem.detalleProducto.imagen 
+                ? productItem.detalleProducto.imagen : productItem.detalleProducto.producto.thumbnail} 
                 loading="lazy"  
                 alt={productItem.detalleProducto.producto?.nameProduct}></img>
             <div className='product-segment'>
                 <h2>{productItem.detalleProducto.producto?.nameProduct}</h2>
+                <h4 className='no-pm'>{productItem.detalleProducto.descripcion}</h4>
                 <ul className='product-properties'>
-                    <li>{productItem.comentarios && <p><strong>Texto: </strong>{productItem.comentarios}</p> }</li>
                     <li>{productItem.tipoProducto && <p><strong>Tipo: </strong>{productItem.tipoProducto?.descripcion }</p>}</li>
-                    <li>{productItem.sabor.clave && <p><strong>Sabor: </strong>{productItem.sabor.descripcion}</p>}</li>
+                    <li>{productItem.sabor && <p><strong>Sabor: </strong>{productItem.sabor.descripcion}</p>}</li>
+                    <li>{productItem.comentarios && <p><strong>Texto: </strong>{productItem.comentarios}</p> }</li>
                     <li>{productItem.cantidad && productItem.cantidad > 1 && <p><strong>Cantidad: </strong>{productItem.cantidad}</p>}</li>
                     <li>{productItem.detalleProducto.precio > 0 && <p><strong>Precio: </strong>${productItem.detalleProducto.precio}</p>}</li>
                     <li>{productItem.descuento > 0 && <p><strong>Descuento: </strong>${productItem.descuento}</p>}</li>
-                    <li>{productItem.detalleProducto.descripcion && <div className='product-comments'><strong>Detalles: </strong><p >{productItem.detalleProducto.descripcion}</p></div>}</li>                    
+                    <li>{productItem.detalleProducto.comentarios && <div className='product-comments'><strong>Detalles: </strong><p >{productItem.detalleProducto.comentarios}</p></div>}</li>                    
                 </ul>
             </div>
             <div  className='product-segment'>

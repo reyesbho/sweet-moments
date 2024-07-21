@@ -16,8 +16,8 @@ export interface ProductOrderDto{
     id:number,
     idPedido:number,
     detalleProducto:DetailProductoDto,
-    sabor: CatalogTypeDto,
-    tipoProducto: CatalogTypeDto,
+    sabor: CatalogTypeDto | null,
+    tipoProducto: CatalogTypeDto | null,
     comentarios:String,
     fechaRegistro:Date,
     fechaActualizacion:Date,
@@ -31,7 +31,8 @@ export interface ProductDto{
     key:string,
     nameProduct: string,
     thumbnail: string,
-    status: string
+    status: string,
+    completed: boolean;
 }
 
 export interface DetailProductoDto{
@@ -42,6 +43,8 @@ export interface DetailProductoDto{
     descripcion: string,
     estatus: boolean,
     precio: number,
+    imagen:string,
+    comentarios:string
 }
 
 
@@ -51,6 +54,7 @@ export interface DetailProductoRequest{
     idTipoCobro:number,
     descripcion: string,
     precio: number,
+    imagen:string
 }
 
 export interface DetailProductoModel{
@@ -59,8 +63,10 @@ export interface DetailProductoModel{
     size: CatalogTypeModel,
     tipoCobro:CatalogTypeModel,
     descripcion: string,
+    comentarios: string,
     estatus: boolean,
     precio: number,
+    imagen: string;
 }
 
 export interface PedidoModel{
@@ -106,6 +112,7 @@ export interface ProductModel{
     descripcion: string;
     estatus: string;
     imagen: string;
+    completed: boolean;
 }
 
 export interface ProductRequest{

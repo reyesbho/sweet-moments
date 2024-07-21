@@ -16,15 +16,24 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    border-radius: 15px;
-    width: 100px;
-    height: 150px;
+    border-radius: 20px;
+    width: 120px;
+    height: fit-content;
     cursor: pointer;
-    padding: 0px 5px;
+    padding: 0px 0px;
+}
+
+.detailProduct-info{
+    padding: 2px 2px;
+    font-size: 0.8rem;
+}
+
+.detailProduct-info > h4{
+    color: var(--quaternary-font);
 }
 
 .detailProduct-img{
-    width: 100px;
+    width: -webkit-fill-available;
     border-radius: 25px;
     object-fit: cover;
     aspect-ratio: 1/1;

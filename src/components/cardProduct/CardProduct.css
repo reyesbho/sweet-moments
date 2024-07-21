@@ -46,6 +46,13 @@
     color: var(--quaternary-font);
 }
 
+.product-segment  h4{
+    font-size: 1rem;
+    margin: 0px;
+    padding: 0px;
+    color: var(--tertiary-font);
+}
+
 .product-properties{
     display: flex;
     flex-direction: column;

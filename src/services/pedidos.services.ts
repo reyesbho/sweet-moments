@@ -33,6 +33,7 @@ export const getProductsByPedidoId = async(orderId: number):Promise<ProductOrder
         const data = await res.json();
         return data.map((producto:ProductoPedidoModel) => mapToProductOrderDto(producto));
     } catch (error) {
+        console.log(error)
         throw new Error("Error al buscar los productos")
     }
     

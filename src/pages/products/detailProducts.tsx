@@ -28,7 +28,7 @@ export function DetailProducts(){
 
 
     const configTable = {
-        columns:['Producto','Tamaño','Tipo cobro','Comentario',"Precio",'Estatus' ,'Acciones']
+        columns:[ 'Imagen','Producto','Tamaño','Tipo cobro','Comentario',"Precio",'Estatus' ,'Acciones']
     }
 
     return (
@@ -57,7 +57,7 @@ export function DetailProducts(){
                     </button>
                 </div>
                  <div className="container-products">
-                    <TableComponent configTable={configTable} title='Tipos de producto' >
+                    <TableComponent configTable={configTable} hasImage={true} title='Tipos de producto' >
                         <tbody>
                         {detailProducts && 
                             detailProducts.map(detailProduct => (
