@@ -56,8 +56,8 @@ export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
                         <input type="file" accept="image/webp" onChange={handleFileChange} />
                     </div>
                     <div className="form-input">
-                        <label>Tipo:</label>
-                        <select {...register("idTipoCobro",{
+                        <label htmlFor="idTipoCobro">Tipo:</label>
+                        <select id="idTipoCobro" {...register("idTipoCobro",{
                             required:{
                                 value: true,
                                 message:"Valor requerido"
@@ -71,8 +71,8 @@ export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
                         {errors.idTipoCobro && <p>{errors.idTipoCobro.message}</p>}
                     </div>
                     <div className="form-input">
-                        <label>Tamaño:</label>
-                        <select {...register("idSize",{
+                        <label htmlFor="idSize">Tamaño:</label>
+                        <select id="idSize" {...register("idSize",{
                             required:{
                                 value: true,
                                 message:"Valor requerido"
@@ -86,12 +86,12 @@ export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
                         {errors.idSize && <p>{errors.idSize.message}</p>}
                     </div>
                     <div className="form-input">
-                        <label>Comentarios:</label>
-                        <input type="text" {...register("descripcion")}></input>
+                        <label htmlFor="descripcion">Comentarios:</label>
+                        <input id="descripcion" type="text" {...register("descripcion")}></input>
                     </div>
                     <div className="form-input">
-                        <label>Precio:</label>
-                        <input type="number" {...register("precio",{
+                        <label htmlFor="precio">Precio:</label>
+                        <input id="precio" type="number" {...register("precio",{
                             required:{
                                 value: true,
                                 message:"Valor requerido"

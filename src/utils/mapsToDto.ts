@@ -39,6 +39,7 @@ export function mapToCatalogTypeDto(cat: CatalogTypeModel):CatalogTypeDto{
         descripcion: cat.descripcion,
         estatus: cat.estatus,
         image: null,
+        tags: cat.tags,
         selfDelete: () => {},
         selfUpdateEstatus: () => {}
     }

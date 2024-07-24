@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useProducts } from "../../hooks/useProducts";
 import './FormProducts.css';
-import { DetailProductoDto, ProductDto, ProductForm } from "../../general/Interfaces";
+import { CatalogTypeDto, DetailProductoDto, ProductDto, ProductForm } from "../../general/Interfaces";
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useCatalogs } from "../../hooks/useCatalogs";
@@ -13,6 +13,7 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
     const [productSelected, setProductSelected] = useState<ProductDto | null>(null);
     const [detailProductSelected, setDetailProductSelected] = useState<DetailProductoDto | null>(null);
     const {flavors, typeProducts} = useCatalogs();
+    const [typeProductList, setTypeProductList] = useState<CatalogTypeDto[]>();
     
     const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors } } = useForm<ProductForm>({
         defaultValues: {
@@ -39,6 +40,7 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
         }
         setProductSelected(product);
         getDetailProducts(product.id);
+        filterProductsType(product.key);
     };
 
     const handleDetailProductSelected = (detailProduc: DetailProductoDto) => {
@@ -46,8 +48,8 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
             return
         }
         setDetailProductSelected(detailProduc);
-        console.log(detailProduc)
     }
+
 
 
     const handleAddDetailProduct = (productInfo: ProductForm, event: any) => {
@@ -61,6 +63,11 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
             handleClose();
             reload();
         });   
+    }
+
+    const filterProductsType = (keyProduct: string) => {
+        const newArray = typeProducts.filter((type) => type.tags?.includes(keyProduct) || !type.tags);
+        setTypeProductList(newArray) ;
     }
 
     return ( 
@@ -100,9 +107,9 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
                             <form className="form-add-product" onSubmit={handleSubmit(handleAddDetailProduct)}>
                                 {!detailProductSelected.producto.completed &&
                                 <div className="form-input-sm">
-                                    <label>Sabor:</label>
-                                    <select {...register("idFlavor")}>
-                                        <option key={0} value={0}>Sin sabor</option>
+                                    <label htmlFor="idFlavor" >Sabor:</label>
+                                    <select id="idFlavor" {...register("idFlavor")}>
+                                        <option key={0} value={0}>Seleccionar</option>
                                         {flavors && flavors.map((flavor) => (
                                             <option key={flavor.id} value={flavor.id}>{flavor.descripcion}</option>
                                         ))}
@@ -110,26 +117,26 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
                                 </div> }
                                 {!detailProductSelected.producto.completed &&
                                 <div className="form-input-sm">
-                                    <label>Tipo:</label>
-                                    <select {...register("idTypeProduct")}>
-                                    <option key={0} value={0}>Sin sabor</option>
-                                    {typeProducts && typeProducts.map((type) =>(
+                                    <label htmlFor="idTypeProduct">Tipo:</label>
+                                    <select id="idTypeProduct" {...register("idTypeProduct")}>
+                                    <option key={0} value={0}>Seleccionar</option>
+                                    {typeProductList && typeProductList.map((type) =>(
                                         <option key={type.id} value={type.id}>{type.descripcion}</option>
                                     ))}
                                     </select>
                                     {errors.idTypeProduct && <p>{errors.idTypeProduct.message}</p>}
                                 </div>}
                                 <div className="form-input-sm">
-                                    <label>Cantidad:</label>
-                                    <input type="number" {...register("quantity")}></input>
+                                    <label htmlFor="quantity">Cantidad:</label>
+                                    <input id="quantity" type="number" {...register("quantity")}></input>
                                 </div>
                                 <div className="form-input-sm">
-                                    <label>Comentarios:</label>
-                                    <input type="text" {...register("comments")}></input>
+                                    <label htmlFor="comments">Comentarios:</label>
+                                    <input id="comments" type="text" {...register("comments")}></input>
                                 </div>
                                 <div className="form-input-sm">
-                                    <label>Descuento:</label>
-                                    <input type="number" max={detailProductSelected.precio} {...register("descuento")} placeholder="$0"></input>
+                                    <label htmlFor="descuento">Descuento:</label>
+                                    <input id="descuento" type="number" max={detailProductSelected.precio} {...register("descuento")} placeholder="$0"></input>
                                 </div>
                                 <button type="submit" className="btn btn-add">Agregar producto</button>
                             </form>

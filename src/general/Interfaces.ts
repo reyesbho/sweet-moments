@@ -127,6 +127,7 @@ export interface CatalogTypeModel{
     clave: string;
     descripcion: string;
     estatus: string;
+    tags: string;
 }
 
 export interface Pagination{
@@ -164,6 +165,7 @@ export interface CatalogTypeDto{
     image: string | null,
     selfDelete: CallableFunction ;
     selfUpdateEstatus: CallableFunction;
+    tags: string | null;
 }
 
 export interface ClientDto{

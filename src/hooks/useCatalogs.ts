@@ -67,6 +67,7 @@ export function useCatalogs(){
                 descripcion: product.nameProduct,
                 estatus: product.status,
                 image: product.thumbnail,
+                tags:null,
                 selfDelete: () => deleteProducto(product.id),
                 selfUpdateEstatus: (status:boolean) => updateStatusProducto(product.id,status)
             })))

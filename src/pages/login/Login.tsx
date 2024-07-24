@@ -31,8 +31,8 @@ export function Login() {
                     <img src={logoUrl}></img>
                         <form className="container-form" onSubmit={handleSubmit(handleLogin)} noValidate>
                             <div className="form-input">
-                                <label>Email</label>
-                                <input
+                                <label htmlFor="email">Email</label>
+                                <input id="email"
                                     type="text"
                                     {...register("email",
                                         {
@@ -52,8 +52,8 @@ export function Login() {
                                 {errors.email && <p>{errors.email?.message}</p>}
                             </div>
                             <div className="form-input">
-                                <label>Contraseña</label>
-                                <input
+                                <label htmlFor="password">Contraseña</label>
+                                <input id="password"
                                     type="password"
                                     {...register("password", {
                                         required: {
