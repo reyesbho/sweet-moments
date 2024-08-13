@@ -15,7 +15,7 @@ export function DetailProductRecord({catalog, handleReload}:{catalog: DetailProd
             modalUpdate.handleClose(event);
             handleReload();
             toast.success("Actualizado correctamente.")
-        }).catch(error => toast.error("Error al actualizar el registro."));
+        }).catch((error: Error) => toast.error(error.message));
     }
 
     const handleDeleteModal = (event:MouseEvent) => {
@@ -23,7 +23,7 @@ export function DetailProductRecord({catalog, handleReload}:{catalog: DetailProd
             modalDelete.handleClose(event);
             handleReload();
             toast.success("Eliminado correctamente.")
-        }).catch(error => toast.error("Error al eliminar el registro."));
+        }).catch((error: Error) => toast.error(error.message));
     }
 
     return (

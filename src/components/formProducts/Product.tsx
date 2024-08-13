@@ -16,7 +16,7 @@ export function Product({product, handleClickSelect, showActions=false, handleRe
             handleReload();
             modalUpdate.handleClose(event);
             toast.success("Actualizado correctamente.")
-        }).catch(error => toast.error("Error al actualizar el registro.")); 
+        }).catch((error: Error) => toast.error(error.message));
     }
 
     const handleDeleteModal = (event:MouseEvent) => {
@@ -24,7 +24,7 @@ export function Product({product, handleClickSelect, showActions=false, handleRe
             handleReload();
             modalDelete.handleClose(event);
             toast.success("Eliminado correctamente.")
-        }).catch(error => toast.error("Error al eliminar el registro.")); 
+        }).catch((error: Error) => toast.error(error.message));
     }
     return (
         <>

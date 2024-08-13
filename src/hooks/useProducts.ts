@@ -15,7 +15,7 @@ export function useProducts(){
         .then((productsList:ProductDto[]) => {
             setProducts(productsList);
         })
-        .catch(error => toast.error("Error al obtener los productos."));
+        .catch((error: Error) => toast.error(error.message));
         
     }
 
@@ -23,21 +23,21 @@ export function useProducts(){
         getDetalleProducto(idProducto)
         .then((responseList: DetailProductoDto[]) =>{
             setDetailProducts(responseList);
-        }).catch(error => toast.error("Error al obtener el detalle."));
+        }).catch((error: Error) => toast.error(error.message));
     }
 
     const addDetailProductToOrder = async(idPedido:number, detailProduct: ProductForm) => {
         await addProductoToPedido({id:idPedido,producto:detailProduct})
         .then((pedidoProducto: ProductOrderDto)=> {
             toast.success("Registrado correctamente.");
-        }).catch(error => toast.error("Error agregar el producto."));
+        }).catch((error: Error) => toast.error(error.message));
     }
 
     const addProduct = async(catalog:string,newRecord: CatalogTypeDto) =>{
         await addProducto(mapToProductRequestByCatalog(newRecord)).then(()=> {
             handleReloadProducts();
             toast.success("Registrado correctamente.");
-        }).catch(error => toast.error("Error al agregar el producto."));
+        }).catch((error: Error) => toast.error(error.message));
     }
 
     const removeProduct = async(idProduct:number) => {
@@ -45,7 +45,7 @@ export function useProducts(){
             handleReloadProducts();
             toast.success("Eliminado correctamente.");
         })
-        .catch(error => toast.error("Error al eliminar el producto."));
+        .catch((error: Error) => toast.error(error.message));
     }
 
     const handleReloadProducts = () => {

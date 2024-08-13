@@ -38,7 +38,7 @@ export function DetailOrder() {
         updateStatePedido({id: Number(id), status:status}).then(() => {
             handleClicHome(event);
             toast.success("Actualizado correctamente.")
-        }).catch(error => toast.error("Error actualizar el estado."));;
+        }).catch((error: Error) => toast.error(error.message));
     }
 
     const canAddProduct = () => {
@@ -66,7 +66,7 @@ export function DetailOrder() {
     const handleRealoadProducts = () => {
         getProductos().then(() => {
             handleRealoadOrder();
-        }).catch(error => toast.error("Error al obtener los productos."));
+        }).catch((error: Error) => toast.error(error.message));
     }
 
     return (

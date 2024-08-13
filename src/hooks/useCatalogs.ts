@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { addSabor, deleteSabor, getSabores, updateStatusSabor } from "../services/sabor.service";
-import { CatalogTypeDto, ProductRequest } from "../general/Interfaces";
+import { CatalogTypeDto } from "../general/Interfaces";
 import { addSizeProduct, daleteSizeProduct, getSizeProductos, updateStatusSizeProduct } from "../services/sizeProducto.service";
 import { addTipoProducto, deleteTipoProduct, getTipoProducto, updateStatusTipoProduct } from "../services/tipoProducto.service";
 import { addTipoCobro, deleteTipoCobro, getTipoCobro, updateStatusTipoCobro } from "../services/tipoCobro.service";
@@ -23,52 +23,42 @@ export function useCatalogs(){
         getSabores()
         .then(resultCatalog => {
             resultCatalog.map((catalog: CatalogTypeDto) => {
-                catalog.selfDelete = () => deleteSabor(catalog.id).then(item => toast.success("Eliminado correctamente.")).catch(error => toast.error("Error al eliminar."));
+                catalog.selfDelete = () => deleteSabor(catalog.id).then(item => toast.success("Eliminado correctamente.")).catch((error: Error) => toast.error(error.message));
                 catalog.selfUpdateEstatus = (status: boolean) => updateStatusSabor(catalog.id, status).then(item => toast.success("Actualizado correctamente.")).catch(error => toast.error("Error al actualizar el registro."));
             })
             setFlavors(resultCatalog);})
-        .catch(error => {
-            toast.error("Error al obtener el catalogo.");
-        });
+            .catch((error: Error) => toast.error(error.message));
     }
 
     const getsizes = () => {
         getSizeProductos().then((listSize: CatalogTypeDto[])=>{
             listSize.map((size: CatalogTypeDto) => {
-                size.selfDelete = () => daleteSizeProduct(size.id).then(item => toast.success("Eliminado correctamente.")).catch(error => toast.error("Error al eliminar."));;
+                size.selfDelete = () => daleteSizeProduct(size.id).then(item => toast.success("Eliminado correctamente.")).catch((error: Error) => toast.error(error.message));
                 size.selfUpdateEstatus = (status: boolean) => updateStatusSizeProduct(size.id, status).then(item => toast.success("Actualizado correctamente.")).catch(error => toast.error("Error al actualizar el registro."));
             })
             setSizes(listSize);
         })
-        .catch(error => {
-            toast.error("Error al obtener el catalogo.");
-        })
+        .catch((error: Error) => toast.error(error.message));
     }
 
     const getTypeProduct = () => {
         getTipoProducto().then((listTipoProduc: CatalogTypeDto[])=> {
             listTipoProduc.map((catalog: CatalogTypeDto) => {
-                catalog.selfDelete = () => deleteTipoProduct(catalog.id).then(item => toast.success("Eliminado correctamente.")).catch(error => toast.error("Error al eliminar."));;
+                catalog.selfDelete = () => deleteTipoProduct(catalog.id).then(item => toast.success("Eliminado correctamente.")).catch((error: Error) => toast.error(error.message));
                 catalog.selfUpdateEstatus = (status: boolean) => updateStatusTipoProduct(catalog.id,status ).then(item => toast.success("Actualizado correctamente.")).catch(error => toast.error("Error al actualizar el registro."));
             })
             setTypeProducts(listTipoProduc);
-        })
-        .catch(error => {
-            toast.error("Error al obtener el catalogo.");
-        })
+        }).catch((error: Error) => toast.error(error.message));
     }
 
     const getTipePayment = () => {
         getTipoCobro().then((listTipoCobro: CatalogTypeDto[])=> {
             listTipoCobro.map((catalog: CatalogTypeDto)=> {
-                catalog.selfDelete = () => deleteTipoCobro(catalog.id).then(item => toast.success("Eliminado correctamente.")).catch(error => toast.error("Error al eliminar."));;
+                catalog.selfDelete = () => deleteTipoCobro(catalog.id).then(item => toast.success("Eliminado correctamente.")).catch((error: Error) => toast.error(error.message));
                 catalog.selfUpdateEstatus = (status: boolean) => updateStatusTipoCobro(catalog.id, status).then(item => toast.success("Actualizado correctamente.")).catch(error => toast.error("Error al actualizar el registro."));
             })
             setTypePayments(listTipoCobro);
-        })
-        .catch(error => {
-            toast.error("Error al obtener el catalogo.");
-        })
+        }).catch((error: Error) => toast.error(error.message));
     }
 
     const getProducts = () => {
@@ -83,12 +73,7 @@ export function useCatalogs(){
                 selfDelete: () => deleteProducto(product.id),
                 selfUpdateEstatus: (status:boolean) => updateStatusProducto(product.id,status)
             })))
-        })
-        .catch(error => {
-            toast.error("Error al obtener los productos.");
-        })
-
-        
+        }).catch((error: Error) => toast.error(error.message));
     }
 
     const addNewRecord = (catalog:String, newRecord: CatalogTypeDto) => {
@@ -96,31 +81,31 @@ export function useCatalogs(){
             addSabor(newRecord).then(() => {
                 setReload(!reload);
                 toast.success("Registrado correctamente.");
-            }).catch(error => toast.error("Error al agregar el registro."));
+            }).catch((error: Error) => toast.error(error.message));
         }
         if(catalog === CATALOGS.typePaymment){
             addTipoCobro(newRecord).then(() => {
                 setReload(!reload);
                 toast.success("Registrado correctamente.");
-            }).catch(error => toast.error("Error al agregar el registro."));;
+            }).catch((error: Error) => toast.error(error.message));
         }
         if(catalog === CATALOGS.typeProduct){
             addTipoProducto(newRecord).then(() => {
                 setReload(!reload);
                 toast.success("Registrado correctamente.");
-            }).catch(error => toast.error("Error al agregar el registro."));;
+            }).catch((error: Error) => toast.error(error.message));
         }
         if(catalog === CATALOGS.sizeProduct){
             addSizeProduct(newRecord).then(() => {
                 setReload(!reload);
                 toast.success("Registrado correctamente.");
-            }).catch(error => toast.error("Error al agregar el registro."));;
+            }).catch((error: Error) => toast.error(error.message));
         }
         if(catalog === CATALOGS.products){
             addProducto(mapToProductRequestByCatalog(newRecord)).then(()=> {
                 setReload(!reload);
                 toast.success("Registrado correctamente.");
-            }).catch(error => toast.error("Error al agregar el registro."));
+            }).catch((error: Error) => toast.error(error.message));
         }
     }
     

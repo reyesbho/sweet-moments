@@ -33,13 +33,13 @@ export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFu
                 handleClose();
                 reload();
                 toast.success("Actualizado correctamente.")
-            }).catch(error => toast.error("Error al actualizar el registro."));
+            }).catch((error: Error) => toast.error(error.message));
         }else{
             registerOrder(orderInfo).then((order: OrderDto) => {
                 handleClose();
                 reload(order.id);
                 toast.success("Registrado correctamente.")
-            }).catch(error => toast.error("Error al agregar el registro."));
+            }).catch((error: Error) => toast.error(error.message));
         }
         
     }

@@ -34,14 +34,14 @@ export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefr
                     handleRefreshOrders();
                     handleClose(event);
                     toast.success("Eliminado correctamente.")
-                }).catch(error => toast.error("Error al eliminar el registro."));
+                }).catch((error: Error) => toast.error(error.message));
             return;
         }else{
             updateStatePedido({id: order.id, status:status}).then(() => {
                 handleRefreshOrders()
                 handleClose(event);
                 toast.success("Actualizado correctamente.")
-            }).catch(error => toast.error("Error al actualizar el registro."));
+            }).catch((error: Error) => toast.error(error.message));
         }
     }
 

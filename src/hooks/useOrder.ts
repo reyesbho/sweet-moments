@@ -23,7 +23,7 @@ export function useOrder({ orderId }:{orderId: number}) {
         setHasReturn(true);
         getProductos();
       })
-      .catch(error => toast.error("Error al obtener el pedido."))
+      .catch((error: Error) => toast.error(error.message))
       .finally(() => setLoading(false));
   };
 
@@ -31,7 +31,7 @@ export function useOrder({ orderId }:{orderId: number}) {
     await getProductsByPedidoId(orderId).
           then((products) => {
               setProductos([...products]);
-          }).catch(error => toast.error("Error al obtener los productos"));
+          }).catch((error: Error) => toast.error(error.message));
   }
 
   useEffect(() => {

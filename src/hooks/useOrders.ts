@@ -21,7 +21,7 @@ export function useOrders(status: String){
             setOrders([...orders,...pedidos]); 
             setTotalItems(totalItems);
         })
-        .catch(error => toast.error("Error al obtener los pedidos."))
+        .catch((error: Error) => toast.error(error.message))
         .finally(() => setLoading(false));
     }
 
@@ -65,7 +65,7 @@ export function useOrders(status: String){
             setTotalItems(totalItems);
             setPagination(paginationInit);
         })
-        .catch(error => toast.error("Error al obtener los pedidos."))
+        .catch((error: Error) => toast.error(error.message))
         .finally(() => setLoading(false));
     }
 

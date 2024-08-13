@@ -29,7 +29,7 @@ export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
                 handleReload();
                 handleClose();
                 toast.success("Registrado correctamente.")
-            }).catch(error => toast.error("Error al registrar el producto."));
+            }).catch((error: Error) => toast.error(error.message));
         }
         const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             const file = event.target.files?.[0];

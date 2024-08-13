@@ -13,7 +13,7 @@ export function CardProduct({productItem,reload }:{productItem: ProductOrderDto,
         .then((res) => {
             reload(productItem.id);
             toast.success("Eliminado correctamente.")
-        }).catch(error => toast.error("Error al eliminar el producto."));
+        }).catch((error: Error) => toast.error(error.message));
     }
     
     return (

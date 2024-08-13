@@ -8,18 +8,14 @@ export function useNewOrder(){
             .then((order) => {
                 toast.success("Registrado correctamente");
                 return order;
-            }).catch((error) => {
-                toast.error("Error al registrar");
-            });
+            }).catch((error: Error) => toast.error(error.message));
     }
 
     const updateOrder = async(orderInfo: any) => {
         await updatePedido(orderInfo)
             .then((order) => {
                 toast.success("Actualizado correctamente");
-            }).catch((error) => {
-                toast.error("Error al actualizar");
-            });
+            }).catch((error: Error) => toast.error(error.message));
     }
     
     return { registerOrder, updateOrder}
