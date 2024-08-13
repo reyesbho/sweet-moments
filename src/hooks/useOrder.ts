@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import {  getPedido, getProductsByPedidoId } from "../services/pedidos.services";
 import { classStatusEnum, STATUS } from "../general/Status";
 import { OrderDto, ProductOrderDto } from "../general/Interfaces";
+import { toast } from "react-toastify";
 
 
 export function useOrder({ orderId }:{orderId: number}) {
   const [orderItem, setOrderItem] = useState<OrderDto | null>();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [cssClassName, setCssClassName] = useState("");
   const [hasReturn, setHasReturn] = useState(false);
   const [productos, setProductos] = useState<ProductOrderDto[]>([]);
@@ -23,7 +23,7 @@ export function useOrder({ orderId }:{orderId: number}) {
         setHasReturn(true);
         getProductos();
       })
-      .catch((error) => setError(error))
+      .catch(error => toast.error("Error al obtener el pedido."))
       .finally(() => setLoading(false));
   };
 
@@ -31,7 +31,7 @@ export function useOrder({ orderId }:{orderId: number}) {
     await getProductsByPedidoId(orderId).
           then((products) => {
               setProductos([...products]);
-          })
+          }).catch(error => toast.error("Error al obtener los productos"));
   }
 
   useEffect(() => {
@@ -40,5 +40,5 @@ export function useOrder({ orderId }:{orderId: number}) {
 
 
 
-  return { order:orderItem, cssClassName, hasReturn, loading, error, productos, setProductos, getOrder, getProductos};
+  return { order:orderItem, cssClassName, hasReturn, loading, productos, setProductos, getOrder, getProductos};
 }

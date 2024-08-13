@@ -7,6 +7,7 @@ import { addTipoCobro, deleteTipoCobro, getTipoCobro, updateStatusTipoCobro } fr
 import { CATALOGS } from "../general/Constants";
 import { addProducto, deleteProducto, getProductos, updateStatusProducto } from "../services/producto.service";
 import { mapToProductRequestByCatalog } from "../utils/mapsToDto";
+import { toast } from "react-toastify";
 
 
 export function useCatalogs(){
@@ -22,40 +23,51 @@ export function useCatalogs(){
         getSabores()
         .then(resultCatalog => {
             resultCatalog.map((catalog: CatalogTypeDto) => {
-                catalog.selfDelete = () => deleteSabor(catalog.id);
-                catalog.selfUpdateEstatus = (status: boolean) => updateStatusSabor(catalog.id, status);
+                catalog.selfDelete = () => deleteSabor(catalog.id).then(item => toast.success("Eliminado correctamente.")).catch(error => toast.error("Error al eliminar."));
+                catalog.selfUpdateEstatus = (status: boolean) => updateStatusSabor(catalog.id, status).then(item => toast.success("Actualizado correctamente.")).catch(error => toast.error("Error al actualizar el registro."));
             })
             setFlavors(resultCatalog);})
-        .catch(error => {});
+        .catch(error => {
+            toast.error("Error al obtener el catalogo.");
+        });
     }
 
     const getsizes = () => {
         getSizeProductos().then((listSize: CatalogTypeDto[])=>{
             listSize.map((size: CatalogTypeDto) => {
-                size.selfDelete = () => daleteSizeProduct(size.id);
-                size.selfUpdateEstatus = (status: boolean) => updateStatusSizeProduct(size.id, status);
+                size.selfDelete = () => daleteSizeProduct(size.id).then(item => toast.success("Eliminado correctamente.")).catch(error => toast.error("Error al eliminar."));;
+                size.selfUpdateEstatus = (status: boolean) => updateStatusSizeProduct(size.id, status).then(item => toast.success("Actualizado correctamente.")).catch(error => toast.error("Error al actualizar el registro."));
             })
             setSizes(listSize);
+        })
+        .catch(error => {
+            toast.error("Error al obtener el catalogo.");
         })
     }
 
     const getTypeProduct = () => {
         getTipoProducto().then((listTipoProduc: CatalogTypeDto[])=> {
             listTipoProduc.map((catalog: CatalogTypeDto) => {
-                catalog.selfDelete = () => deleteTipoProduct(catalog.id);
-                catalog.selfUpdateEstatus = (status: boolean) => updateStatusTipoProduct(catalog.id,status );
+                catalog.selfDelete = () => deleteTipoProduct(catalog.id).then(item => toast.success("Eliminado correctamente.")).catch(error => toast.error("Error al eliminar."));;
+                catalog.selfUpdateEstatus = (status: boolean) => updateStatusTipoProduct(catalog.id,status ).then(item => toast.success("Actualizado correctamente.")).catch(error => toast.error("Error al actualizar el registro."));
             })
             setTypeProducts(listTipoProduc);
+        })
+        .catch(error => {
+            toast.error("Error al obtener el catalogo.");
         })
     }
 
     const getTipePayment = () => {
         getTipoCobro().then((listTipoCobro: CatalogTypeDto[])=> {
             listTipoCobro.map((catalog: CatalogTypeDto)=> {
-                catalog.selfDelete = () => deleteTipoCobro(catalog.id);
-                catalog.selfUpdateEstatus = (status: boolean) => updateStatusTipoCobro(catalog.id, status);
+                catalog.selfDelete = () => deleteTipoCobro(catalog.id).then(item => toast.success("Eliminado correctamente.")).catch(error => toast.error("Error al eliminar."));;
+                catalog.selfUpdateEstatus = (status: boolean) => updateStatusTipoCobro(catalog.id, status).then(item => toast.success("Actualizado correctamente.")).catch(error => toast.error("Error al actualizar el registro."));
             })
             setTypePayments(listTipoCobro);
+        })
+        .catch(error => {
+            toast.error("Error al obtener el catalogo.");
         })
     }
 
@@ -72,6 +84,9 @@ export function useCatalogs(){
                 selfUpdateEstatus: (status:boolean) => updateStatusProducto(product.id,status)
             })))
         })
+        .catch(error => {
+            toast.error("Error al obtener los productos.");
+        })
 
         
     }
@@ -80,27 +95,32 @@ export function useCatalogs(){
         if(catalog === CATALOGS.flavor){
             addSabor(newRecord).then(() => {
                 setReload(!reload);
-            });
+                toast.success("Registrado correctamente.");
+            }).catch(error => toast.error("Error al agregar el registro."));
         }
         if(catalog === CATALOGS.typePaymment){
             addTipoCobro(newRecord).then(() => {
                 setReload(!reload);
-            });
+                toast.success("Registrado correctamente.");
+            }).catch(error => toast.error("Error al agregar el registro."));;
         }
         if(catalog === CATALOGS.typeProduct){
             addTipoProducto(newRecord).then(() => {
                 setReload(!reload);
-            });
+                toast.success("Registrado correctamente.");
+            }).catch(error => toast.error("Error al agregar el registro."));;
         }
         if(catalog === CATALOGS.sizeProduct){
             addSizeProduct(newRecord).then(() => {
                 setReload(!reload);
-            });
+                toast.success("Registrado correctamente.");
+            }).catch(error => toast.error("Error al agregar el registro."));;
         }
         if(catalog === CATALOGS.products){
             addProducto(mapToProductRequestByCatalog(newRecord)).then(()=> {
                 setReload(!reload);
-            })
+                toast.success("Registrado correctamente.");
+            }).catch(error => toast.error("Error al agregar el registro."));
         }
     }
     

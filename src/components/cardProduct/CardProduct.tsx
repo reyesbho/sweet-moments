@@ -4,6 +4,7 @@ import './CardProduct.css'
 import { useModalConfirm } from '../../hooks/useModalConfirm';
 import { ModalConfirm } from '../modal/Modal';
 import { deleteProductoPedido } from '../../services/pedidos.services';
+import { toast } from 'react-toastify';
 export function CardProduct({productItem,reload }:{productItem: ProductOrderDto, reload: CallableFunction}) {
     const {show, handleShow, handleClose} = useModalConfirm();
 
@@ -11,7 +12,8 @@ export function CardProduct({productItem,reload }:{productItem: ProductOrderDto,
         deleteProductoPedido({idPedido:productItem.idPedido, idProductoPedido:productItem.id})
         .then((res) => {
             reload(productItem.id);
-        })
+            toast.success("Eliminado correctamente.")
+        }).catch(error => toast.error("Error al eliminar el producto."));
     }
     
     return (

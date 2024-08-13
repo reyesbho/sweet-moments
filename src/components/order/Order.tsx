@@ -8,6 +8,7 @@ import { ModalConfirm } from '../modal/Modal';
 import { useModalConfirm } from '../../hooks/useModalConfirm';
 import { Link } from 'react-router-dom';
 import { OrderDto, ProductOrderDto } from '../../general/Interfaces';
+import { toast } from 'react-toastify';
 
 export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefreshOrders: Function}) {
     const [showProducts, setShowProducts] = useState(false)
@@ -32,13 +33,15 @@ export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefr
                 .then((response) => {
                     handleRefreshOrders();
                     handleClose(event);
-                })
+                    toast.success("Eliminado correctamente.")
+                }).catch(error => toast.error("Error al eliminar el registro."));
             return;
         }else{
             updateStatePedido({id: order.id, status:status}).then(() => {
                 handleRefreshOrders()
                 handleClose(event);
-            });
+                toast.success("Actualizado correctamente.")
+            }).catch(error => toast.error("Error al actualizar el registro."));
         }
     }
 

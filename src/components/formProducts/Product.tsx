@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { ProductDto } from "../../general/Interfaces";
 import { useModalConfirm } from "../../hooks/useModalConfirm";
 import { deleteProducto, updateStatusProducto } from "../../services/producto.service";
@@ -14,14 +15,16 @@ export function Product({product, handleClickSelect, showActions=false, handleRe
         updateStatusProducto(product.id,  !product.status).then(() => {
             handleReload();
             modalUpdate.handleClose(event);
-        }) 
+            toast.success("Actualizado correctamente.")
+        }).catch(error => toast.error("Error al actualizar el registro.")); 
     }
 
     const handleDeleteModal = (event:MouseEvent) => {
         deleteProducto(product.id).then(() => {
             handleReload();
             modalDelete.handleClose(event);
-        }) 
+            toast.success("Eliminado correctamente.")
+        }).catch(error => toast.error("Error al eliminar el registro.")); 
     }
     return (
         <>

@@ -3,6 +3,7 @@ import { getPedidos } from '../services/pedidos.services';
 import { paginationInit } from '../general/Constants';
 import { OrderDto } from '../general/Interfaces';
 import { compareDesc } from 'date-fns';
+import { toast } from 'react-toastify';
 
 export function useOrders(status: String){
     const [orders, setOrders] = useState<OrderDto[]>([])
@@ -10,7 +11,6 @@ export function useOrders(status: String){
     const [dateInit, setDateInit ] = useState<String | null>(null);
     const [dateEnd, setDateEnd ] = useState<String | null>(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null)
     const [totalItems, setTotalItems] = useState(0)
     const [pagination, setPagination] = useState(paginationInit)
 
@@ -21,7 +21,7 @@ export function useOrders(status: String){
             setOrders([...orders,...pedidos]); 
             setTotalItems(totalItems);
         })
-        .catch(error => setError(error))
+        .catch(error => toast.error("Error al obtener los pedidos."))
         .finally(() => setLoading(false));
     }
 
@@ -65,7 +65,7 @@ export function useOrders(status: String){
             setTotalItems(totalItems);
             setPagination(paginationInit);
         })
-        .catch(error => setError(error))
+        .catch(error => toast.error("Error al obtener los pedidos."))
         .finally(() => setLoading(false));
     }
 

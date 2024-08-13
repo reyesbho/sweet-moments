@@ -7,6 +7,7 @@ import { MdClose } from "react-icons/md";
 import { useCatalogs } from "../../hooks/useCatalogs";
 import { DetailProduct } from "./DetailProduct";
 import { Product } from "./Product";
+import { toast } from "react-toastify";
 
 export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number, handleClose:CallableFunction, reload: CallableFunction }) {
     const { products, detailProducts, getDetailProducts, addDetailProductToOrder} = useProducts();
@@ -62,7 +63,7 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
         .then(() =>{
             handleClose();
             reload();
-        });   
+        });
     }
 
     const filterProductsType = (keyProduct: string) => {

@@ -12,6 +12,9 @@ import { createTheme } from '@mui/material';
 import { NotFound } from './pages/NotFound/NotFound';
 import { AdminCatalog } from './pages/catalog/AdminCatalog';
 import { DetailProducts } from './pages/products/detailProducts';
+import 'react-toastify/dist/ReactToastify.css';
+import { Bounce, ToastContainer } from 'react-toastify';
+
 
 function App() {
   const title = 'Dulces Momentos';
@@ -48,6 +51,18 @@ function App() {
             <Route path='*' element={<ProtectedRoute><NotFound></NotFound></ProtectedRoute>}></Route>
           </Routes>
           </main>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce} />
         </div>
       </div>
         </ThemeProvider>

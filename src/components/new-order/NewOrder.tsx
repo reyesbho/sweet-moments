@@ -7,6 +7,7 @@ import { useNewOrder } from '../../hooks/useNewOrder';
 import {  MobileDateTimePicker } from '@mui/x-date-pickers';
 import { OrderDto, OrderInfo } from '../../general/Interfaces';
 import dayjs from 'dayjs';
+import { toast } from 'react-toastify';
 export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFunction, orderDto: OrderDto | null, reload: CallableFunction}) {
     const [order, setOrder] = useState<OrderDto | null>(orderDto);
     const { registerOrder, updateOrder} = useNewOrder();
@@ -31,12 +32,14 @@ export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFu
             updateOrder(orderInfo).then(() => {
                 handleClose();
                 reload();
-            })
+                toast.success("Actualizado correctamente.")
+            }).catch(error => toast.error("Error al actualizar el registro."));
         }else{
             registerOrder(orderInfo).then((order: OrderDto) => {
                 handleClose();
                 reload(order.id);
-            })
+                toast.success("Registrado correctamente.")
+            }).catch(error => toast.error("Error al agregar el registro."));
         }
         
     }

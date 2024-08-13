@@ -11,6 +11,7 @@ import { FormProducts } from "../formProducts/FormProducts";
 import { formatDateTime } from "../../utils/formatDate";
 import { NewOrder } from "../new-order/NewOrder";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export function DetailOrder() {
       const {id} = useParams();
@@ -36,7 +37,8 @@ export function DetailOrder() {
     const handleUpdateState = () => {
         updateStatePedido({id: Number(id), status:status}).then(() => {
             handleClicHome(event);
-        });
+            toast.success("Actualizado correctamente.")
+        }).catch(error => toast.error("Error actualizar el estado."));;
     }
 
     const canAddProduct = () => {
@@ -64,7 +66,7 @@ export function DetailOrder() {
     const handleRealoadProducts = () => {
         getProductos().then(() => {
             handleRealoadOrder();
-        });
+        }).catch(error => toast.error("Error al obtener los productos."));
     }
 
     return (

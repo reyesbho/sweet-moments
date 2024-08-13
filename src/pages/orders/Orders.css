@@ -35,7 +35,7 @@
     margin-bottom: 10px;
 }
 
-.status-filters label {
+.status-filters > span {
     position: absolute;
     left: 0px;
     top: -3px;

@@ -5,6 +5,7 @@ import { useCatalogs } from "../../hooks/useCatalogs";
 import './newDetailOrder.css'
 import { createDetalleProducto } from "../../services/detalleProducto.services";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
     {handleClose: CallableFunction, product:ProductDto,handleReload:CallableFunction}){
@@ -27,7 +28,8 @@ export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
             createDetalleProducto(newRecord).then(() => {
                 handleReload();
                 handleClose();
-            })
+                toast.success("Registrado correctamente.")
+            }).catch(error => toast.error("Error al registrar el producto."));
         }
         const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             const file = event.target.files?.[0];
@@ -52,8 +54,8 @@ export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
                 <form onSubmit={handleSubmit(handleAddDetailProduct)}>
                     {image && <img className="detailProduct-img" src={image}></img>}
                     <div className='form-input'>
-                        <label >Imagen</label>
-                        <input type="file" accept="image/webp" onChange={handleFileChange} />
+                        <label htmlFor="imageProduct" >Imagen</label>
+                        <input id="imageProduct" type="file" accept="image/webp" onChange={handleFileChange} />
                     </div>
                     <div className="form-input">
                         <label htmlFor="idTipoCobro">Tipo:</label>

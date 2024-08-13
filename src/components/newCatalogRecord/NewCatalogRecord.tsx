@@ -40,12 +40,12 @@ export function NewCatalogRecord({handleClose,catalogType, addRecordCallback, ha
             <h3>Agregar nuevo registro</h3>
                 <form onSubmit={handleSubmit(handleRegister)}>
                     {hasImage && <div className='form-input'>
-                        <label >Imagen</label>
-                        <input type="file" accept="image/webp" onChange={handleFileChange} />
+                        <label  htmlFor='fileImage'>Imagen</label>
+                        <input id='fileImage' type="file" accept="image/webp" onChange={handleFileChange} />
                     </div>}
                     <div className='form-input'>
-                        <label >Descripcion</label>
-                        <input type='text' {...register("descripcion",{
+                        <label htmlFor='descriptionCatalog' >Descripcion</label>
+                        <input id='descriptionCatalog' type='text' {...register("descripcion",{
                             required:{
                                 value: true,
                                 message:"Valor requerido"
@@ -57,8 +57,8 @@ export function NewCatalogRecord({handleClose,catalogType, addRecordCallback, ha
                         })}></input>
                     </div>
                     <div className='form-input'>
-                        <label >Clave</label>
-                        <input type='text' {...register("clave",{
+                        <label htmlFor='keyCatalog' >Clave</label>
+                        <input id='keyCatalog' type='text' {...register("clave",{
                             required:{
                                 value: true,
                                 message:"Valor requerido"

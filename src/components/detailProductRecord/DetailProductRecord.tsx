@@ -3,6 +3,7 @@ import { DetailProductoDto } from "../../general/Interfaces";
 import { useModalConfirm } from "../../hooks/useModalConfirm";
 import { ModalConfirm } from "../modal/Modal";
 import { deleteDetalleProducto, updateStatusDetalleProducto } from "../../services/detalleProducto.services";
+import { toast } from "react-toastify";
 
 
 export function DetailProductRecord({catalog, handleReload}:{catalog: DetailProductoDto, handleReload:any}){
@@ -13,14 +14,16 @@ export function DetailProductRecord({catalog, handleReload}:{catalog: DetailProd
         updateStatusDetalleProducto(catalog.id, !catalog.estatus).then(() => {
             modalUpdate.handleClose(event);
             handleReload();
-        })
+            toast.success("Actualizado correctamente.")
+        }).catch(error => toast.error("Error al actualizar el registro."));
     }
 
     const handleDeleteModal = (event:MouseEvent) => {
         deleteDetalleProducto(catalog.id).then(()=>{
             modalDelete.handleClose(event);
             handleReload();
-        })
+            toast.success("Eliminado correctamente.")
+        }).catch(error => toast.error("Error al eliminar el registro."));
     }
 
     return (
