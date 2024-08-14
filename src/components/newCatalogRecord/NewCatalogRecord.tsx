@@ -2,10 +2,11 @@ import { MdClose } from 'react-icons/md';
 import './NewCatalogRecord.css';
 import { CatalogTypeDto } from '../../general/Interfaces';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 
 export function NewCatalogRecord({handleClose,catalogType, addRecordCallback, hasImage}:
     {handleClose: CallableFunction,catalogType:string, addRecordCallback:CallableFunction,hasImage:boolean}){
-
+    const [image, setImage] = useState<string | undefined>();
     const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors},setValue } = useForm<CatalogTypeDto>({
         defaultValues: {
             clave: undefined,
@@ -27,6 +28,7 @@ export function NewCatalogRecord({handleClose,catalogType, addRecordCallback, ha
             if (reader.result) {
               const base64String = reader.result.toString();
               setValue('image', base64String);
+              setImage(base64String);
             }
           };
           reader.readAsDataURL(file);
@@ -35,10 +37,11 @@ export function NewCatalogRecord({handleClose,catalogType, addRecordCallback, ha
 
     return(
         <div className="main-modal ">
-            <div className='modal-container catalogRecord'>
-            <span className="main-modal-close" onClick={() => handleClose()}><MdClose size={'2rem'}></MdClose></span>
-            <h3>Agregar nuevo registro</h3>
+            <div className='modal-container catalogRecord container-detailProducto'>
+                <span className="main-modal-close" onClick={() => handleClose()}><MdClose size={'2rem'}></MdClose></span>
+                <h3>Agregar nuevo registro</h3>
                 <form onSubmit={handleSubmit(handleRegister)}>
+                {image && <img className="detailProduct-img" src={image}></img>}
                     {hasImage && <div className='form-input'>
                         <label  htmlFor='fileImage'>Imagen</label>
                         <input id='fileImage' type="file" accept="image/webp" onChange={handleFileChange} />

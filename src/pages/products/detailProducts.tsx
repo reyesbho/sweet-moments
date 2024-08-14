@@ -69,7 +69,9 @@ export function DetailProducts(){
                 </div>
             </div>}
         </div>
-        {modalProducto.show && <NewCatalogRecord catalogType={CATALOGS.products} addRecordCallback={addProduct} handleClose={modalProducto.handleClose} hasImage={true}></NewCatalogRecord>}
+        {modalProducto.show && 
+            <NewCatalogRecord catalogType={CATALOGS.products} addRecordCallback={addProduct} handleClose={modalProducto.handleClose} hasImage={true}></NewCatalogRecord>
+        }
         {modalDetalleProducto.show && productSelected && 
             <NewDetailOrder handleClose={modalDetalleProducto.handleClose} product={productSelected} handleReload={() => getDetailProducts(productSelected.id)}></NewDetailOrder>
         }
