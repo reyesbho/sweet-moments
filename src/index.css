@@ -25,7 +25,7 @@
 }
 
 body{
-  background: var(--quinary-bg);
+  background-color: var(--primary-bg);
   color: var(--primary-font);
   font-family: 'Roboto', sans-serif;
   margin: 0px;
