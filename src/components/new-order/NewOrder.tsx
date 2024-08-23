@@ -32,14 +32,12 @@ export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFu
             updateOrder(orderInfo).then(() => {
                 handleClose();
                 reload();
-                toast.success("Actualizado correctamente.")
-            }).catch((error: Error) => toast.error(error.message));
+            });
         }else{
             registerOrder(orderInfo).then((order: OrderDto) => {
                 handleClose();
                 reload(order.id);
-                toast.success("Registrado correctamente.")
-            }).catch((error: Error) => toast.error(error.message));
+            });
         }
         
     }
@@ -48,7 +46,7 @@ export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFu
     return (
         <div className='modal'>
             <div className="new-order">
-                <h2>{order ? "Actualizar Orden" : "Nueva Orden"}</h2>
+                <h2>{order ? "Actualizar Pedido" : "Registro de Pedido"}</h2>
                 <div className='content-order'>
                     <div className='content-active'>
                         <form onSubmit={handleSubmit(handleRegisterOrder)}>

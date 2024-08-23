@@ -68,7 +68,7 @@ export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefr
                         { (order?.status === STATUS.BACKLOG || order?.status === STATUS.INCOMPLETE)  && 
                         <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleSelectStatus(event, STATUS.CANCELED)}>Cancelar</button>}
                         {order.status === STATUS.INCOMPLETE && 
-                        <Link className='btn btn-add btn-sm' to={`/order/${order.id}`}>Continuar</Link>}
+                        <Link className='btn btn-add btn-sm' to={`/order/${order.id}`}>Productos</Link>}
                         {order?.status === STATUS.BACKLOG &&
                         <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleSelectStatus(event, STATUS.DONE)}>Entregado</button>}
                         <button type='button' className='btn btn-delete btn-sm' onClick={(event) => handleSelectStatus(event, STATUS.DELETE)}>Eliminar</button>

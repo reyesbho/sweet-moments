@@ -81,7 +81,12 @@ export function DetailOrder() {
         </div>
         {order &&
             <div className={`detailOrder-container ${(id ? cssClassName : '' )}`}>
-                
+                { canShowButtons() &&
+                    <div className='order-actions'>
+                        <button type='button' className='btn btn-next btn-sm' onClick={(event) => modalUpdateOrder.handleShow(event)}>Actualizar</button>
+                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleStatusAction(event,STATUS.CANCELED)}>Cancelar</button>
+                    </div>
+                }
                     <div className='orderDetail'>    
                         <div className="orderDetail-iconStatus">
                             {iconStatus}
@@ -103,8 +108,6 @@ export function DetailOrder() {
                     </div>
                 { canShowButtons() &&
                     <div className='order-actions'>
-                        <button type='button' className='btn btn-next btn-sm' onClick={(event) => modalUpdateOrder.handleShow(event)}>Actualizar</button>
-                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleStatusAction(event,STATUS.CANCELED)}>Cancelar</button>
                         {order?.status === STATUS.BACKLOG &&
                         <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleStatusAction(event,STATUS.DONE)}>Entregado</button>}        
                         {canAddProduct() && 
