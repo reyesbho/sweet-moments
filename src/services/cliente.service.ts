@@ -1,4 +1,6 @@
-import {    ClientDto,  ClienteModel } from "../general/Interfaces";
+
+import { ClientDto } from "../general/Dtos";
+import { ClienteModel } from "../general/Models";
 import { API_CLIENTE } from "../general/url";
 import {  mapToClienteDto } from "../utils/mapsToDto";
 

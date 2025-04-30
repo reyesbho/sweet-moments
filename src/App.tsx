@@ -11,9 +11,17 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { createTheme } from '@mui/material';
 import { NotFound } from './pages/NotFound/NotFound';
 import { AdminCatalog } from './pages/catalog/AdminCatalog';
+import { DetailProducts } from './pages/products/detailProducts';
+import 'react-toastify/dist/ReactToastify.css';
+import { Bounce, ToastContainer } from 'react-toastify';
+import { useState } from 'react';
+import { HeaderProvider, useHeader } from './context/HeaderContext';
+
+
 
 function App() {
   const title = 'Dulces Momentos';
+  const {handleClose} = useHeader();
 
    const themeDark = createTheme({
     components:{
@@ -29,25 +37,36 @@ function App() {
       mode: 'dark',
     },
    })
-
+  
   return (
     
     <LocalizationProvider dateAdapter={AdapterDayjs}>
     <ThemeProvider theme={themeDark}>
-      <div className='principal'>
-        <div className='container-principal'>
-          <Header title={title}></Header>
-          <main className='main'>
-          <Routes>
-            <Route path='/' element={(<ProtectedRoute><Orders></Orders></ProtectedRoute>)}></Route>
-            <Route path='/order/:id' element={(<ProtectedRoute><DetailOrder ></DetailOrder></ProtectedRoute>)}></Route>
-            <Route path='/login' element={<Login></Login>}></Route>
-            <Route path='/catalogos' element={<AdminCatalog></AdminCatalog>}></Route>
-            <Route path='*' element={<ProtectedRoute><NotFound></NotFound></ProtectedRoute>}></Route>
-          </Routes>
-          </main>
+      <div className='container-principal' >
+            <Header title={title}></Header>
+            <main className='main' onClick={() => handleClose()}>
+            <Routes>
+              <Route path='/' element={(<ProtectedRoute><Orders></Orders></ProtectedRoute>)}></Route>
+              <Route path='/order/:id' element={(<ProtectedRoute><DetailOrder ></DetailOrder></ProtectedRoute>)}></Route>
+              <Route path='/login' element={<Login></Login>}></Route>
+              <Route path='/catalogos' element={<AdminCatalog></AdminCatalog>}></Route>
+              <Route path='/productos' element={<DetailProducts></DetailProducts>}></Route>
+              <Route path='*' element={<ProtectedRoute><NotFound></NotFound></ProtectedRoute>}></Route>
+            </Routes>
+            </main>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce} />
         </div>
-      </div>
         </ThemeProvider>
       </LocalizationProvider>
 

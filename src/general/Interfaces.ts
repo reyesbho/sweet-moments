@@ -1,110 +1,29 @@
-export interface OrderDto{
-    id:number,
-    cliente:String,
-    lugarEntrega: string,
-    fechaEntrega : Date,
-    horaEntrega: Date,
-    register: string | null,
-    status:String,
-    numProducts: number,
-    total: number,
-    registerDate:Date | null,
-    updateDate: Date | null,
-}
 
-export interface ProductOrderDto{
-    id:number,
-    idPedido:number,
-    detalleProducto:DetailProductoDto,
-    sabor: CatalogTypeDto,
-    tipoProducto: CatalogTypeDto,
-    comentarios:String,
-    fechaRegistro:Date,
-    fechaActualizacion:Date,
-    cantidad:number,
-    total: number,
-    descuento: number
-}
+import { Dayjs } from "dayjs";
+import { ClientDto } from "./Dtos";
+import { ClienteModel } from "./Models";
 
-export interface ProductDto{
-    id: number, 
-    key:string,
-    nameProduct: string,
-    thumbnail: string,
-    status: string
-}
-
-export interface DetailProductoDto{
-    id: number,
-    producto:ProductDto,
-    size: CatalogTypeDto,
-    tipoCobro:CatalogTypeDto,
+export interface DetailProductoRequest{
+    idProducto:number,
+    idSize: number,
+    idTipoCobro:number,
     descripcion: string,
-    estatus: boolean,
     precio: number,
-}
-
-export interface DetailProductoModel{
-    id: number,
-    producto:ProductModel,
-    size: CatalogTypeModel,
-    tipoCobro:CatalogTypeModel,
-    descripcion: string,
-    estatus: boolean,
-    precio: number,
-}
-
-export interface PedidoModel{
-    id: number;
-    fechaEntrega: Date;
-    horaEntrega: Date,
-    lugarEntrega: string;
-    estatus: String;
-    total: number;
-    fechaRegistro: Date | null;
-    fechaActualizacion: Date | null;
-    cliente: ClienteModel;
-    numProductos: number;
-    registradoPor: string | null;
-}
-
-export interface ClienteModel{
-     id: number | null;
-     nombre: String | undefined;
-     apellidoPaterno: String;
-     apellidoMaterno: String | null;
-     direccion: string | undefined;
-}
-
-export interface  ProductoPedidoModel {
-    id:number,
-    idPedido:number,
-    detalleProducto:DetailProductoModel,
-    sabor: CatalogTypeModel,
-    tipoProducto: CatalogTypeModel,
-    comentarios:String,
-    fechaRegistro:Date,
-    fechaActualizacion:Date,
-    cantidad: number,
-    total: number,
-    descuento: number
+    imagen:string
 }
 
 
-export interface ProductModel{
-    id: number;
+
+
+
+export interface ProductRequest{
     clave: string;
     descripcion: string;
-    estatus: string;
+    estatus: boolean;
     imagen: string;
 }
 
-export interface CatalogTypeModel{
-    id: number;
-    clave: string;
-    descripcion: string;
-    estatus: string;
-}
+
 
 export interface Pagination{
     pageSize: Number;
@@ -131,23 +50,6 @@ export interface ProductFormRequest{
         cantidad: number,
         total: number,
         descuento: number
-}
-
-export interface CatalogTypeDto{
-    id: number;
-    clave: string;
-    descripcion: string;
-    estatus: string;
-    selfDelete: CallableFunction ;
-    selfUpdateEstatus: CallableFunction;
-}
-
-export interface ClientDto{
-    id: Number,
-    name: string,
-    apellidoPaterno: string,
-    apellidoMaterno: string | null,
-    direccion: string
 }
 
 export interface ClientOptionDto{
@@ -202,15 +104,19 @@ export interface ProductSelectDto{
 }
 
 export interface OrderInfo{
-    idOrder: Number | undefined,
-    cliente: String | undefined,
+    idOrder: number | undefined,
+    idCliente: number | undefined,
+    cliente: string | undefined,
+    clienteAux: string | undefined,
+    firstName: string | undefined,
+    lastName: string | undefined | null,
     lugarEntrega: string | undefined,
-    fechaEntrega: Date | undefined,
+    fechaEntrega: Dayjs | undefined,
 }
 
 export interface PedidoRequest{
-    idPedido: Number | undefined,
-    lugarEntrega: String | undefined,
-    fechaEntrega: Date | undefined,
+    idPedido: number | undefined,
+    lugarEntrega: string | undefined,
+    fechaEntrega: number ,
     cliente: ClienteModel
 }

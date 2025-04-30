@@ -16,13 +16,12 @@
     justify-content: center;
     align-items: center;
     height: auto;
-    width: 500px;
     background: var(--primary-bg);
     margin: 10px;
-    padding: 10px;
-    border-radius: 35px;
+    padding: 40px;
+    border-radius: 15px;
     font-size: 1.5rem;
-    position: relative;
+    position: absolute;
 }
 
 .modal-actions{
@@ -36,4 +35,16 @@
     position: absolute;
     right: 5px;
     top: 5px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.main-modal-close:hover{
+    opacity: 1;
+}
+
+@media only screen and (max-width:820px) {
+    .modal-container{
+        width: 350px;
+    }
 }

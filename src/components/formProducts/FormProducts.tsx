@@ -1,19 +1,23 @@
 import { useForm } from "react-hook-form";
 import { useProducts } from "../../hooks/useProducts";
 import './FormProducts.css';
-import { DetailProductoDto, ProductDto, ProductForm } from "../../general/Interfaces";
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useCatalogs } from "../../hooks/useCatalogs";
 import { DetailProduct } from "./DetailProduct";
+import { Product } from "./Product";
+import { toast } from "react-toastify";
+import { CatalogTypeDto, DetailProductoDto, ProductDto } from "../../general/Dtos";
+import { ProductForm } from "../../general/Interfaces";
 
 export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number, handleClose:CallableFunction, reload: CallableFunction }) {
     const { products, detailProducts, getDetailProducts, addDetailProductToOrder} = useProducts();
     const [productSelected, setProductSelected] = useState<ProductDto | null>(null);
     const [detailProductSelected, setDetailProductSelected] = useState<DetailProductoDto | null>(null);
     const {flavors, typeProducts} = useCatalogs();
+    const [typeProductList, setTypeProductList] = useState<CatalogTypeDto[]>();
     
-    const { register, handleSubmit, reset, formState: { isSubmitSuccessful } } = useForm<ProductForm>({
+    const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors } } = useForm<ProductForm>({
         defaultValues: {
             quantity: 1,
             comments: undefined,
@@ -38,6 +42,7 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
         }
         setProductSelected(product);
         getDetailProducts(product.id);
+        filterProductsType(product.key);
     };
 
     const handleDetailProductSelected = (detailProduc: DetailProductoDto) => {
@@ -46,6 +51,7 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
         }
         setDetailProductSelected(detailProduc);
     }
+
 
 
     const handleAddDetailProduct = (productInfo: ProductForm, event: any) => {
@@ -58,7 +64,12 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
         .then(() =>{
             handleClose();
             reload();
-        });   
+        });
+    }
+
+    const filterProductsType = (keyProduct: string) => {
+        const newArray = typeProducts.filter((type) => type.tags?.includes(keyProduct) || !type.tags);
+        setTypeProductList(newArray) ;
     }
 
     return ( 
@@ -70,10 +81,7 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
                     {
                         products && 
                         products.map((producto => (
-                            <div className="producto" key={producto.id} onClick={() => handleClickSelect(producto)}>
-                                <img className="producto-img" src={producto.thumbnail}></img>
-                                <span className="producto-title">{producto.nameProduct}</span>
-                            </div>
+                            <Product key={producto.id} product={producto} handleClickSelect={handleClickSelect}></Product>
                         )))
                     }
                 </div>
@@ -99,35 +107,38 @@ export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number,
                         }
                         {detailProductSelected && 
                             <form className="form-add-product" onSubmit={handleSubmit(handleAddDetailProduct)}>
-                                
+                                {!detailProductSelected.producto.completed &&
                                 <div className="form-input-sm">
-                                    <label>Sabor:</label>
-                                    <select {...register("idFlavor")}>
-                                        <option key={0} value={0}>Sin sabor</option>
+                                    <label htmlFor="idFlavor" >Sabor:</label>
+                                    <select id="idFlavor" {...register("idFlavor")}>
+                                        <option key={0} value={0}>Seleccionar</option>
                                         {flavors && flavors.map((flavor) => (
                                             <option key={flavor.id} value={flavor.id}>{flavor.descripcion}</option>
                                         ))}
                                     </select>
-                                </div>
+                                </div> }
+                                {!detailProductSelected.producto.completed &&
                                 <div className="form-input-sm">
-                                    <label>Tipo:</label>
-                                    <select {...register("idTypeProduct")}>
-                                    {typeProducts && typeProducts.map((type) =>(
+                                    <label htmlFor="idTypeProduct">Tipo:</label>
+                                    <select id="idTypeProduct" {...register("idTypeProduct")}>
+                                    <option key={0} value={0}>Seleccionar</option>
+                                    {typeProductList && typeProductList.map((type) =>(
                                         <option key={type.id} value={type.id}>{type.descripcion}</option>
                                     ))}
                                     </select>
+                                    {errors.idTypeProduct && <p>{errors.idTypeProduct.message}</p>}
+                                </div>}
+                                <div className="form-input-sm">
+                                    <label htmlFor="quantity">Cantidad:</label>
+                                    <input id="quantity" type="number" {...register("quantity")}></input>
                                 </div>
                                 <div className="form-input-sm">
-                                    <label>Cantidad:</label>
-                                    <input type="number" {...register("quantity")}></input>
+                                    <label htmlFor="comments">Comentarios:</label>
+                                    <input id="comments" type="text" {...register("comments")}></input>
                                 </div>
                                 <div className="form-input-sm">
-                                    <label>Comentarios:</label>
-                                    <input type="text" {...register("comments")}></input>
-                                </div>
-                                <div className="form-input-sm">
-                                    <label>Descuento:</label>
-                                    <input type="number" max={detailProductSelected.precio} {...register("descuento")} placeholder="$0"></input>
+                                    <label htmlFor="descuento">Descuento:</label>
+                                    <input id="descuento" type="number" max={detailProductSelected.precio} {...register("descuento")} placeholder="$0"></input>
                                 </div>
                                 <button type="submit" className="btn btn-add">Agregar producto</button>
                             </form>

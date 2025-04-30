@@ -2,9 +2,6 @@ import { useState } from "react";
 
 export function useModalConfirm(){
     const [show, setShow] = useState(false);
-
-    
-
     const handleShow = (event:any) => {
         event?.stopPropagation();
         setShow(true)

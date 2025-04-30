@@ -11,6 +11,8 @@ import { FormProducts } from "../formProducts/FormProducts";
 import { formatDateTime } from "../../utils/formatDate";
 import { NewOrder } from "../new-order/NewOrder";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { getNameClient } from "../../general/Constants";
 
 export function DetailOrder() {
       const {id} = useParams();
@@ -36,7 +38,8 @@ export function DetailOrder() {
     const handleUpdateState = () => {
         updateStatePedido({id: Number(id), status:status}).then(() => {
             handleClicHome(event);
-        });
+            toast.success("Actualizado correctamente.")
+        }).catch((error: Error) => toast.error(error.message));
     }
 
     const canAddProduct = () => {
@@ -64,8 +67,10 @@ export function DetailOrder() {
     const handleRealoadProducts = () => {
         getProductos().then(() => {
             handleRealoadOrder();
-        });
+        }).catch((error: Error) => toast.error(error.message));
     }
+
+   
 
     return (
     <div className="detailOrder">
@@ -75,18 +80,23 @@ export function DetailOrder() {
                         <IoIosArrowBack size="2.5rem" />
                 </button>
             }
-            <h2>Detalle de pedido: {order?.id}</h2>
+            <h1>Detalle de pedido para {getNameClient(order)}</h1>
         </div>
         {order &&
             <div className={`detailOrder-container ${(id ? cssClassName : '' )}`}>
-                
+                { canShowButtons() &&
+                    <div className='order-actions'>
+                        <button type='button' className='btn btn-next btn-sm' onClick={(event) => modalUpdateOrder.handleShow(event)}>Actualizar</button>
+                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleStatusAction(event,STATUS.CANCELED)}>Cancelar</button>
+                    </div>
+                }
                     <div className='orderDetail'>    
                         <div className="orderDetail-iconStatus">
                             {iconStatus}
                         </div>
                         <div className="orderDetail-info">
                             <div className="orderDetail-details">
-                                <p><span>Cliente:</span> {order.cliente}</p>
+                                <p><span>Cliente:</span> {getNameClient(order)}</p>
                                 <p ><span>Lugar de entrega: </span> {order.lugarEntrega}</p>   
                             </div>
                             <div className='orderDetail-details'>
@@ -101,8 +111,6 @@ export function DetailOrder() {
                     </div>
                 { canShowButtons() &&
                     <div className='order-actions'>
-                        <button type='button' className='btn btn-next btn-sm' onClick={(event) => modalUpdateOrder.handleShow(event)}>Actualizar</button>
-                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleStatusAction(event,STATUS.CANCELED)}>Cancelar</button>
                         {order?.status === STATUS.BACKLOG &&
                         <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleStatusAction(event,STATUS.DONE)}>Entregado</button>}        
                         {canAddProduct() && 

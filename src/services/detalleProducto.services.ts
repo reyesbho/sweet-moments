@@ -1,4 +1,6 @@
-import { DetailProductoDto, DetailProductoModel, ProductDto, ProductModel } from "../general/Interfaces";
+import { DetailProductoDto } from "../general/Dtos";
+import { DetailProductoRequest } from "../general/Interfaces";
+import { DetailProductoModel } from "../general/Models";
 import { API_DETALLE_PRODUCTO } from "../general/url";
 import { mapToDetailProductDto } from "../utils/mapsToDto";
 
@@ -15,5 +17,51 @@ export const getDetalleProductos = async ():Promise<DetailProductoDto[]> => {
 
     } catch (error) {
         throw new Error("Error al buscar los productos");
+    }
+}
+
+
+export const deleteDetalleProducto = async(idDetalleProducto:number) => {
+    try {
+        const response = await fetch(API_DETALLE_PRODUCTO+`/${idDetalleProducto}`,
+        {
+            method:"DELETE"
+        }
+        );
+        return response;
+
+    } catch (error) {
+        throw new Error("Error al eliminar el detalle del producto");
+    }
+}
+
+export const updateStatusDetalleProducto = async(idDetalleProducto:number, estatus:boolean):Promise<DetailProductoDto> => {
+    try {
+        const response = await fetch(API_DETALLE_PRODUCTO+`/${idDetalleProducto}/${estatus}`,
+        {
+            method:"PUT"
+        }
+        );
+        const tipo = await response.json();
+        return mapToDetailProductDto(tipo);
+
+    } catch (error) {
+        throw new Error("Error al actualizar el detalle del producto");
+    }
+}
+
+export const createDetalleProducto = async(newRecord:DetailProductoRequest):Promise<DetailProductoDto> => {
+    try {
+        const response = await fetch(API_DETALLE_PRODUCTO,
+        {
+            method:"POST",
+            body:JSON.stringify(newRecord)
+        }
+        );
+        const tipo = await response.json();
+        return mapToDetailProductDto(tipo);
+
+    } catch (error) {
+        throw new Error("Error al actualizar el detalle del producto");
     }
 }

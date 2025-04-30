@@ -1,7 +1,9 @@
 import { mapToOrderDto, mapToProductOrderDto } from "../utils/mapsToDto";
 import { API_PEDIDO } from "../general/url";
-import {  OrderDto, OrderInfo, Pagination, PedidoModel, ProductForm, ProductoPedidoModel, ProductOrderDto } from "../general/Interfaces";
+import {  OrderInfo, Pagination, ProductForm } from "../general/Interfaces";
 import { mapToPedidoModel, mapToProductoRequest } from "../utils/mapsToModel";
+import { PedidoModel, ProductoPedidoModel } from "../general/Models";
+import { ProductOrderDto } from "../general/Dtos";
 
 
 
@@ -102,7 +104,6 @@ export const addProductoToPedido = async({id, producto}:{id:number, producto:Pro
             method: "POST",
             body: JSON.stringify(product)
         })
-        console.log(res)
         const data = await res.json();
         return mapToProductOrderDto(data);
     }catch (error){

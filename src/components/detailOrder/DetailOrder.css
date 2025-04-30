@@ -9,12 +9,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
     background-color: var(--tertiary-bg);
     padding: 10px;
     border-radius: 25px;
-    
-    width: 80%;
+
 }
 
 .detailOrder-products{
@@ -53,10 +51,9 @@
 
 
 .orderDetail-info{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
 }
 
 .orderDetail-info p{

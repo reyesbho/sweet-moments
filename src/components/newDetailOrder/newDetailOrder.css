@@ -1,0 +1,5 @@
+.container-detailProducto > form{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}

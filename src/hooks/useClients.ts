@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import { searchClient } from "../services/catalogs.service";
 import { ClientDto } from "../general/Interfaces";
+import { searchClient } from "../services/cliente.service";
 
 export function useClients({ search }:{ search:String }) {
   const [clients, setClients] = useState<ClientDto[]>([]);

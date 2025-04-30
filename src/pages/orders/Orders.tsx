@@ -17,13 +17,13 @@ import startOfMonth from 'date-fns/startOfMonth';
 import endOfMonth from 'date-fns/endOfMonth';
 
 export function Orders() {
-    const [status, setStatus] = useState<String>(STATUS_FILTER.ALL)
+    const [status, setStatus] = useState<string>(STATUS_FILTER.ALL)
     const { orders, handleRefreshOrders, incrementPagination,changeStatusFilter,handleDateFilter,totalItems, statusFilter} = useOrders(status)
     const {cssClassStatus, handleSetStatus} = useStatus(status);
     const {show, handleShow, handleClose} = useModalConfirm();
     const navigate = useNavigate();
 
-    const handleChangeStatusFilter = (status: String) => {
+    const handleChangeStatusFilter = (status: string) => {
         setStatus(status);
         changeStatusFilter(status);
         handleSetStatus(status);
@@ -50,15 +50,36 @@ export function Orders() {
         navigate(`/order/${idOrder}`);
     }
 
+    const statusButtons = [
+        { label: 'Todos', value: STATUS_FILTER.ALL },
+        { label: 'Incompleto', value: STATUS_FILTER.INCOMPLETE },
+        { label: 'Por hacer', value: STATUS_FILTER.BACKLOG },
+        { label: 'Entregados', value: STATUS_FILTER.DONE },
+        { label: 'Cancelados', value: STATUS_FILTER.CANCELED }
+      ];
+
+    const renderStatusButtons = () => statusButtons.map(({ label, value }) => (
+        <button
+          key={value}
+          className={`btn btn-pill ${statusFilter === value ? cssClassStatus : ''}`}
+          onClick={() => handleChangeStatusFilter(value)}
+        >
+          {value !== STATUS_FILTER.ALL && <span>{iconStatusEnum(value, '1rem')}</span>}
+          {label}
+        </button>
+      ));
  
     return (
         <div className="orders">
-            <button className='orders-add'><FaPlusCircle size="3rem" className='color-success' onClick={(event) => handleShow(event)}></FaPlusCircle></button>
-            <h2>Mis pedidos</h2>
+            <div className="subtitle">
+            <h1>Mis pedidos</h1>
+            <button className='subtitle-add'  onClick={(event) => handleShow(event)}>
+                <FaPlusCircle size="3rem" className='color-success'></FaPlusCircle>
+            </button>
+        </div>
             <div className='orders-options'>
                 <div className='orders-filters'>
                     <div className='periodo-filter'>
-                        <label htmlFor="periodo-filtro">Periodo</label>
                         <DateRangePicker id='periodo-filtro' showOneCalendar size="lg" placeholder="Seleccionar el periodo" appearance="subtle" 
                         cleanable={true}
                         onClean={onCleanable}
@@ -70,28 +91,11 @@ export function Orders() {
                         }}/>
                     </div>
                     <div className='status-filters'>
-                        <label >Estatus</label>
-                        <button className={(statusFilter === STATUS_FILTER.ALL ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.ALL)}>Todos</button>
-                        <button className={(statusFilter === STATUS_FILTER.INCOMPLETE ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.INCOMPLETE)}>
-                            <span >{iconStatusEnum(STATUS_FILTER.INCOMPLETE, "1rem")}</span> 
-                            Incompleto
-                        </button>
-                        <button className={(statusFilter === STATUS_FILTER.BACKLOG ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.BACKLOG)}>
-                            <span >{iconStatusEnum(STATUS_FILTER.BACKLOG, '1rem')} </span>
-                            Por hacer
-                        </button>
-                        <button className={(statusFilter === STATUS_FILTER.DONE ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.DONE)}>
-                            <span >{iconStatusEnum(STATUS_FILTER.DONE, '1rem')} </span>
-                            Entregados
-                        </button>
-                        <button className={(statusFilter === STATUS_FILTER.CANCELED ? `btn btn-pill ${cssClassStatus}` : 'btn btn-pill')} onClick={() => handleChangeStatusFilter(STATUS_FILTER.CANCELED)}>
-                            <span >{iconStatusEnum(STATUS_FILTER.CANCELED, '1rem')} </span>
-                            Cancelados
-                        </button>
+                        {renderStatusButtons()}
                     </div>
                 </div>
             </div>
-            <OrderList orders={orders} incrementPagination={incrementPagination} totalItems={totalItems} handleRefreshOrders={handleRefreshOrders} ></OrderList>
+            <OrderList orders={orders} handleRefreshOrders={handleRefreshOrders} ></OrderList>
             <p>{`Número de pedidos ${totalItems}`}</p>
             {
                 show && 
