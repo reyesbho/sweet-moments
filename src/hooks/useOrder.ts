@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import {  getPedido, getProductsByPedidoId } from "../services/pedidos.services";
 import { classStatusEnum, STATUS } from "../general/Status";
-import { OrderDto, ProductOrderDto } from "../general/Interfaces";
 import { toast } from "react-toastify";
+import { OrderDto, ProductOrderDto } from "../general/Dtos";
 
 
 export function useOrder({ orderId }:{orderId: number}) {

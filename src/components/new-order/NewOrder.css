@@ -88,3 +88,31 @@
     justify-content: end;
     justify-self: end;
 }
+
+.searchClients{
+    display: flex;
+    color: var(--primary-font);
+    flex-direction: column;
+    position: absolute;
+    width: 300px;
+    background-color: #1d4d7a;
+    z-index: 999;
+}
+
+.searchClients-option{
+    display: flex;
+    flex-direction: column;
+    opacity: 0.9;
+    border: 1px solid rgb(255, 255, 255);
+    border-top: none;
+    width: auto;
+    padding: 5px;
+    font-size: 1rem;
+}
+
+.searchClients-option:hover{
+    opacity: 1;
+    background-color: rgba(170, 177, 206, 0.603);
+    cursor: pointer;
+ 
+}

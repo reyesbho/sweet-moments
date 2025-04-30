@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getPedidos } from '../services/pedidos.services';
 import { paginationInit } from '../general/Constants';
-import { OrderDto } from '../general/Interfaces';
 import { compareDesc } from 'date-fns';
 import { toast } from 'react-toastify';
+import { OrderDto } from '../general/Dtos';
 
 export function useOrders(status: String){
     const [orders, setOrders] = useState<OrderDto[]>([])

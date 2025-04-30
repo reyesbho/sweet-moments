@@ -1,4 +1,6 @@
-import { DetailProductoDto, DetailProductoModel, ProductDto, ProductModel, ProductRequest } from "../general/Interfaces";
+import { DetailProductoDto, ProductDto } from "../general/Dtos";
+import { ProductRequest } from "../general/Interfaces";
+import { ProductModel } from "../general/Models";
 import { API_PRODUCTO } from "../general/url";
 import { mapToDetailProductDto, mapToProductDto,  } from "../utils/mapsToDto";
 
@@ -74,6 +76,7 @@ export const getDetalleProducto = async(idProducto: number):Promise<DetailProduc
         return productos?.map(mapToDetailProductDto);
 
     }catch(error){
+        console.log(error);
         throw new Error("Error al buscar los detalles")
     }
 }

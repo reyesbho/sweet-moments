@@ -1,4 +1,5 @@
-import {  CatalogTypeDto, CatalogTypeModel } from "../general/Interfaces";
+import { CatalogTypeDto } from "../general/Dtos";
+import { CatalogTypeModel } from "../general/Models";
 import { API_TIPO_PRODUCTO } from "../general/url";
 import { mapToCatalogTypeDto,  } from "../utils/mapsToDto";
 

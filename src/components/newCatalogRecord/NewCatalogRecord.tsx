@@ -1,8 +1,8 @@
 import { MdClose } from 'react-icons/md';
 import './NewCatalogRecord.css';
-import { CatalogTypeDto } from '../../general/Interfaces';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { CatalogTypeDto } from '../../general/Dtos';
 
 export function NewCatalogRecord({handleClose,catalogType, addRecordCallback, hasImage}:
     {handleClose: CallableFunction,catalogType:string, addRecordCallback:CallableFunction,hasImage:boolean}){

@@ -1,0 +1,56 @@
+.catalogRecord{
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+}
+
+.catalogRecord h3 {
+    padding: 10px;
+    margin: 0px;
+}
+
+.catalogRecord .buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.container-configProduct{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: var(--tertiary-bg);
+    padding: 10px;
+    gap: 10px;
+}
+
+.container-configProduct-selection{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.container-configProduct-selection-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px 10px 0px 0px;
+    background-color: var(--primary-bg);
+}
+
+.container-configProduct-selection-option{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.541);
+    border-radius: 10pxd;
+    min-width: 300px;
+    padding: 10px;
+}
+
+.container-configProduct-selection-option > span{
+    padding-left: 10px;
+    font-size: 1.2rem;
+}

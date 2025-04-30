@@ -1,33 +1,26 @@
 import { MdPlace } from 'react-icons/md';
-import { IoIosArrowForward } from "react-icons/io";
-import { iconStatusEnum } from '../../general/Status';
 import './CardOrderInfo.css'
-import { useNavigate } from 'react-router-dom';
 import { formatDateTime } from '../../utils/formatDate';
-import { OrderDto } from '../../general/Interfaces';
+import { FaClock, FaUser } from 'react-icons/fa';
+import { OrderDto } from '../../general/Dtos';
+import { getNameClient } from '../../general/Constants';
 
 export function CardOrderInfo({ order, enableIcon }: { order: OrderDto, enableIcon:boolean}) {
-    const iconStatus = iconStatusEnum(order.status, '1.5rem');
-    const navigate = useNavigate();
-    const handleClicDetail = (event: any) => {
-        event.preventDefault();
-        event.stopPropagation();
-        navigate(`/order/${order.id}`);
-    }
+
     return (
         <div className={`order-info`}>
                 
                 <div className='order-information'>
-                    <p className='order-client'><span className='order-icon-status'>{iconStatus}</span>{order.cliente}</p>
-                    <p className='order-place'><MdPlace></MdPlace> {order.lugarEntrega}</p>
-                    <p className='order-place'>{formatDateTime(order.fechaEntrega)}</p>
+                    <p className='order-client'><FaUser/>{getNameClient(order)}</p>
+                    <p className='order-client'><MdPlace></MdPlace>{order.lugarEntrega}</p>
+                    <p className='order-client'><FaClock />
+                    {formatDateTime(order.fechaEntrega)}</p>
                 </div>
                 <div className='order-total'>
-                    <p>Productos: {order.numProducts}</p>
-                    <span>Total: ${order.total}.00</span>
+                    <p className='order-client'>Productos: {order.numProducts}</p>
+                    <p className='order-client'>Total: ${order.total}.00</p>
                 </div>
                 <div className='order-data'>
-                    
                     <p>Registrado por: {order.register}</p>
                 </div>
            

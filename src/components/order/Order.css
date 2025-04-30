@@ -36,7 +36,17 @@
     justify-content: end;
 }
 
+.detail-order{
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+    max-height: 1000px; /* debe ser mayor al alto máximo estimado de la tabla */
+    opacity: 1;
+}
 
+.detail-order.inactive{
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+}
 
 @media only screen and (max-width:420px) {
     .principal-order{

@@ -12,6 +12,7 @@ import { formatDateTime } from "../../utils/formatDate";
 import { NewOrder } from "../new-order/NewOrder";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { getNameClient } from "../../general/Constants";
 
 export function DetailOrder() {
       const {id} = useParams();
@@ -69,6 +70,8 @@ export function DetailOrder() {
         }).catch((error: Error) => toast.error(error.message));
     }
 
+   
+
     return (
     <div className="detailOrder">
         <div className="detail-title">
@@ -77,7 +80,7 @@ export function DetailOrder() {
                         <IoIosArrowBack size="2.5rem" />
                 </button>
             }
-            <h2>Detalle de pedido para {order?.cliente}</h2>
+            <h1>Detalle de pedido para {getNameClient(order)}</h1>
         </div>
         {order &&
             <div className={`detailOrder-container ${(id ? cssClassName : '' )}`}>
@@ -93,7 +96,7 @@ export function DetailOrder() {
                         </div>
                         <div className="orderDetail-info">
                             <div className="orderDetail-details">
-                                <p><span>Cliente:</span> {order.cliente}</p>
+                                <p><span>Cliente:</span> {getNameClient(order)}</p>
                                 <p ><span>Lugar de entrega: </span> {order.lugarEntrega}</p>   
                             </div>
                             <div className='orderDetail-details'>

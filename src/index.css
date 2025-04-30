@@ -21,7 +21,7 @@
   --primary-btn:#3164F4;
   --secondary-btn: #FF6262;
   --tertiary-btn: #72DD76;
-  --quaternary-btn: #a00303;
+  --quaternary-btn: #474646;
 }
 
 body{
@@ -30,6 +30,14 @@ body{
   font-family: 'Roboto', sans-serif;
   margin: 0px;
   padding: 0px;
+}
+
+.m-0{
+  margin: 0px !important;
+}
+
+.p-0{
+  padding: 0px !important;
 }
 
 /* width */

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useProducts } from "../../hooks/useProducts"
 import { Product } from "../../components/formProducts/Product";
-import { ProductDto } from "../../general/Interfaces";
 import './detailProducts.css';
 import { FaPlusCircle } from "react-icons/fa";
 import { useModalConfirm } from "../../hooks/useModalConfirm";
@@ -10,6 +9,8 @@ import { CATALOGS } from "../../general/Constants";
 import { TableComponent } from "../../components/tableComponent/tableComponent";
 import { DetailProductRecord } from "../../components/detailProductRecord/DetailProductRecord";
 import { NewDetailOrder } from "../../components/newDetailOrder/newDetailOrder";
+import { ProductDto } from "../../general/Dtos";
+import { ModalConfigProduct } from "../../components/modalConfigProduct/ConfigProduct";
 
 
 export function DetailProducts(){
@@ -28,7 +29,7 @@ export function DetailProducts(){
 
 
     const configTable = {
-        columns:[ 'Imagen','Producto','Tamaño','Tipo cobro','Comentario',"Precio",'Estatus' ,'Acciones']
+        columns:[ 'Imagen','Producto','Tamaño','Tipo producto','Comentario',"Precio",'Estatus' ,'Acciones']
     }
 
     return (
@@ -75,6 +76,7 @@ export function DetailProducts(){
         {modalDetalleProducto.show && productSelected && 
             <NewDetailOrder handleClose={modalDetalleProducto.handleClose} product={productSelected} handleReload={() => getDetailProducts(productSelected.id)}></NewDetailOrder>
         }
+        
         </>
     )
 }

@@ -1,4 +1,6 @@
-import { DetailProductoDto, DetailProductoModel, DetailProductoRequest } from "../general/Interfaces";
+import { DetailProductoDto } from "../general/Dtos";
+import { DetailProductoRequest } from "../general/Interfaces";
+import { DetailProductoModel } from "../general/Models";
 import { API_DETALLE_PRODUCTO } from "../general/url";
 import { mapToDetailProductDto } from "../utils/mapsToDto";
 

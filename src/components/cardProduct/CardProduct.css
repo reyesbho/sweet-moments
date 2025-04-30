@@ -1,11 +1,14 @@
-.detail-order.inactive{
-    display: none;
+.detail-order{
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+    max-height: 1000px; /* debe ser mayor al alto máximo estimado de la tabla */
+    opacity: 1;
 }
 
 .detail-order.active{
-    display: block;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
 }
-
 .product{
     display: flex;
     flex-direction: row;;

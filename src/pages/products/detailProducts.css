@@ -1,3 +1,4 @@
+
 .container-pageProducts{
     display: flex;
     flex-direction: column;
@@ -24,10 +25,8 @@
     flex-direction: row;
     gap: 5px;
     flex-wrap: wrap;
-    padding-top: 5px;
-    margin-top: 10px;
     background-color: var(--tertiary-bg);
-    padding: 10px 15px;
+    padding: 10px;
     border-radius: 20px;
 }
 
@@ -39,12 +38,5 @@
         width: 350px;
     }
 
-    .container-products  th:nth-last-child(-n+2),th:nth-last-child(4){
-        display: none;
-    }  
-
-    .container-products  td:nth-last-child(-n+2),td:nth-last-child(4){
-        display: none;
-    }  
    
 }

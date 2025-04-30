@@ -9,6 +9,9 @@
     
 }
 
+.order-information > p > svg{
+    padding-right: 10px;
+}
 
 .order-info:hover{
     transition: all 500ms;
@@ -21,8 +24,6 @@
 }
 
 .order-client{
-  display: flex;
-  justify-content: center;
   font-size: 1.1rem;
   font-weight: bolder;
   font-weight: 700;
@@ -44,7 +45,7 @@
     font-size: 1rem;
     font-weight: bold;
     width: 100%;
-    align-items: end;
+    padding-top: 10px;
 }
 .order-total > p{
     margin: 0px;

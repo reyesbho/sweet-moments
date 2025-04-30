@@ -3,6 +3,7 @@ import endOfWeek from 'date-fns/endOfWeek';
 import addDays from 'date-fns/addDays';
 import startOfMonth from 'date-fns/startOfMonth';
 import endOfMonth from 'date-fns/endOfMonth';
+import { OrderDto } from './Dtos';
 
 export const catalogs = {
     sabores:'sabores',
@@ -67,3 +68,8 @@ export const CATALOGS = {
   sizeProduct:'sizeProduct',
   products:'products'
 };
+
+export const getNameClient = (order: OrderDto | null | undefined) => {
+        if(order && order.cliente)
+            return `${order.cliente.name} ${order.cliente.apellidoPaterno} ${order.cliente.apellidoMaterno ? order.cliente.apellidoMaterno : ''}`;
+    }

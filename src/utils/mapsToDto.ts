@@ -1,9 +1,12 @@
-import { CatalogTypeDto, CatalogTypeModel, ClienteModel, DetailProductoDto, DetailProductoModel, OrderDto, PedidoModel, ProductDto, ProductModel, ProductoPedidoModel, ProductOrderDto, ProductRequest } from "../general/Interfaces";
+import { CatalogTypeDto, ClientDto, DetailProductoDto, OrderDto, ProductDto, ProductOrderDto } from "../general/Dtos";
+import { ProductRequest } from "../general/Interfaces";
+import { CatalogTypeModel, ClienteModel, DetailProductoModel, PedidoModel, ProductModel, ProductoPedidoModel } from "../general/Models";
+
 
 export function mapToOrderDto(pedido:PedidoModel):OrderDto{
     return {
         id:pedido.id,
-        cliente:`${pedido.cliente.nombre} ${pedido.cliente.apellidoPaterno}`,
+        cliente:mapToClienteDto(pedido.cliente),
         lugarEntrega: pedido.lugarEntrega,
         fechaEntrega : pedido.fechaEntrega,
         register: pedido.registradoPor,
@@ -12,7 +15,6 @@ export function mapToOrderDto(pedido:PedidoModel):OrderDto{
         total: pedido.total,
         registerDate:pedido.fechaRegistro,
         updateDate: pedido.fechaActualizacion,
-        horaEntrega: pedido.horaEntrega
     };
 }
 
@@ -33,6 +35,17 @@ export function mapToProductOrderDto(productoPedido:ProductoPedidoModel):Product
 }
 
 export function mapToCatalogTypeDto(cat: CatalogTypeModel):CatalogTypeDto{
+    if(!cat)
+        return {
+            id: 0,
+            clave: '',
+            descripcion: '',
+            estatus: false,
+            image: null,
+            tags: '',
+            selfDelete: () => {},
+            selfUpdateEstatus: () => {}
+        }
     return {
         id: cat.id,
         clave: cat.clave,
@@ -46,7 +59,7 @@ export function mapToCatalogTypeDto(cat: CatalogTypeModel):CatalogTypeDto{
 }
 
 
-export function mapToClienteDto(cliente: ClienteModel){
+export function mapToClienteDto(cliente: ClienteModel):ClientDto{
     return {
         id: cliente.id,
         name: cliente.nombre,
@@ -72,7 +85,8 @@ export function mapToDetailProductDto(product:DetailProductoModel):DetailProduct
         id: product.id,
         producto:mapToProductDto(product.producto),
         size: mapToCatalogTypeDto(product.size),
-        tipoCobro:mapToCatalogTypeDto(product.tipoCobro),
+        sabor:mapToCatalogTypeDto(product.sabor),
+        tipoProducto:mapToCatalogTypeDto(product.tipoProducto),
         descripcion: product.descripcion,
         estatus: product.estatus,
         precio: product.precio,

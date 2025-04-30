@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form";
 import { useProducts } from "../../hooks/useProducts";
 import './FormProducts.css';
-import { CatalogTypeDto, DetailProductoDto, ProductDto, ProductForm } from "../../general/Interfaces";
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useCatalogs } from "../../hooks/useCatalogs";
 import { DetailProduct } from "./DetailProduct";
 import { Product } from "./Product";
 import { toast } from "react-toastify";
+import { CatalogTypeDto, DetailProductoDto, ProductDto } from "../../general/Dtos";
+import { ProductForm } from "../../general/Interfaces";
 
 export function FormProducts({idPedido,  handleClose, reload}:{idPedido: number, handleClose:CallableFunction, reload: CallableFunction }) {
     const { products, detailProducts, getDetailProducts, addDetailProductToOrder} = useProducts();

@@ -1,15 +1,16 @@
 import { MdClose } from "react-icons/md"
-import { DetailProductoRequest, ProductDto } from "../../general/Interfaces"
+import { DetailProductoRequest } from "../../general/Interfaces"
 import { useForm } from "react-hook-form";
 import { useCatalogs } from "../../hooks/useCatalogs";
 import './newDetailOrder.css'
 import { createDetalleProducto } from "../../services/detalleProducto.services";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { ProductDto } from "../../general/Dtos";
 
 export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
     {handleClose: CallableFunction, product:ProductDto,handleReload:CallableFunction}){
-        const {sizes, typePayments} = useCatalogs()
+        const {sizes} = useCatalogs()
         const [image, setImage] = useState<string | undefined>();
     
         const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors },setValue} = useForm<DetailProductoRequest>({
@@ -56,21 +57,6 @@ export function NewDetailOrder({handleClose, product, handleReload=() => {}}:
                     <div className='form-input'>
                         <label htmlFor="imageProduct" >Imagen</label>
                         <input id="imageProduct" type="file" accept="image/webp" onChange={handleFileChange} />
-                    </div>
-                    <div className="form-input">
-                        <label htmlFor="idTipoCobro">Tipo:</label>
-                        <select id="idTipoCobro" {...register("idTipoCobro",{
-                            required:{
-                                value: true,
-                                message:"Valor requerido"
-                            }
-                        })}>
-                        <option value={undefined}>Seleccionar</option>
-                        {typePayments && typePayments.map((type) =>(
-                            <option key={type.id} value={type.id}>{type.descripcion}</option>
-                        ))}
-                        </select>
-                        {errors.idTipoCobro && <p>{errors.idTipoCobro.message}</p>}
                     </div>
                     <div className="form-input">
                         <label htmlFor="idSize">Tamaño:</label>

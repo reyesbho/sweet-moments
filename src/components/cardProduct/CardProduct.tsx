@@ -27,9 +27,9 @@ export function CardProduct({productItem,reload }:{productItem: ProductOrderDto,
                 <h2>{productItem.detalleProducto.producto?.nameProduct}</h2>
                 <h4 className='no-pm'>{productItem.detalleProducto.descripcion}</h4>
                 <ul className='product-properties'>
-                    <li>{productItem.tipoProducto && <p><strong>Tipo: </strong>{productItem.tipoProducto?.descripcion }</p>}</li>
-                    <li>{productItem.sabor && <p><strong>Sabor: </strong>{productItem.sabor.descripcion}</p>}</li>
-                    <li>{productItem.comentarios && <p><strong>Texto: </strong>{productItem.comentarios}</p> }</li>
+                    <li>{productItem.detalleProducto.tipoProducto && <p><strong>Tipo: </strong>{productItem.detalleProducto.tipoProducto?.descripcion }</p>}</li>
+                    <li>{productItem.detalleProducto.sabor.descripcion && <p><strong>Sabor: </strong>{productItem.detalleProducto.sabor?.descripcion}</p>}</li>
+                    <li>{productItem.comentarios && <p><strong>Nota: </strong>{productItem.comentarios}</p> }</li>
                     <li>{productItem.cantidad && productItem.cantidad > 1 && <p><strong>Cantidad: </strong>{productItem.cantidad}</p>}</li>
                     <li>{productItem.detalleProducto.precio > 0 && <p><strong>Precio: </strong>${productItem.detalleProducto.precio}</p>}</li>
                     <li>{productItem.descuento > 0 && <p><strong>Descuento: </strong>${productItem.descuento}</p>}</li>

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { CatalogTypeDto, DetailProductoDto, ProductDto, ProductForm, ProductOrderDto } from "../general/Interfaces";
 import { addProducto, deleteProducto, getDetalleProducto, getProductos } from "../services/producto.service";
 import { addProductoToPedido } from "../services/pedidos.services";
 import { mapToProductRequestByCatalog } from "../utils/mapsToDto";
 import { toast } from "react-toastify";
+import { CatalogTypeDto, DetailProductoDto, ProductDto, ProductOrderDto } from "../general/Dtos";
+import { ProductForm } from "../general/Interfaces";
 
 export function useProducts(){
     const [products, setProducts] = useState<ProductDto[] | null>(null);
