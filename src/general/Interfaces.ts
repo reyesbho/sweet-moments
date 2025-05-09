@@ -31,6 +31,12 @@ export interface Pagination{
     totalItems:number;
 }
 
+export interface AddNewProductForm{
+    cantidad: number,
+    size: string,
+    precio: number
+    idProducto: number,
+}
 
 export interface ProductForm{
     quantity: number,

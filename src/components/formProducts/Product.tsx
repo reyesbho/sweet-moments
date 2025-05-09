@@ -20,7 +20,12 @@ export function Product({product, handleClickSelect, showActions=false, handleRe
     }
 
     const handleDeleteModal = (event:MouseEvent) => {
-        deleteProducto(product.id).then(() => {
+        deleteProducto(product.id).then((response) => {
+            if(response.status !== 200){
+                toast.error("No se puede eliminar el producto.");
+                modalDelete.handleClose(event);
+                return;
+            }
             handleReload();
             modalDelete.handleClose(event);
             toast.success("Eliminado correctamente.")

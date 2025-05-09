@@ -13,9 +13,9 @@ import { OrderDto, ProductOrderDto } from '../../general/Dtos';
 export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefreshOrders: Function}) {
     const [showProducts, setShowProducts] = useState(false)
     const [products, setProducts] = useState<ProductOrderDto[]>([])
-
     const {show, handleClose, handleShow} = useModalConfirm();
     const [status, setStatus] = useState<String>('');
+    const [cssClassStatus, setCssClassStatus] = useState(classStatusEnum[order.status as keyof typeof classStatusEnum]);
 
     const handleShowProducts = async() => {
         setShowProducts(!showProducts);
@@ -62,7 +62,7 @@ export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefr
 
     return (
         <>
-        <div className={`principal-order `} onClick={handleShowProducts}> 
+        <div className={`principal-order ${cssClassStatus}`} onClick={handleShowProducts}> 
             <CardOrderInfo order={order} enableIcon={true}></CardOrderInfo>
             <div className='order-actions'>
                 { (order?.status === STATUS.BACKLOG || order?.status === STATUS.INCOMPLETE)  && 
@@ -83,4 +83,4 @@ export function Order({ order, handleRefreshOrders}:{order: OrderDto, handleRefr
         <ModalConfirm show={show} handleClose={(e:any) => handleClose(e)} handleOk={handleUpdateState} ></ModalConfirm>
         </>
     )
-}
+} 

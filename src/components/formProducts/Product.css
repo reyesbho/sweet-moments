@@ -23,11 +23,12 @@
     background-color: var(--quinary-bg);
     border-radius: 25px;
     align-items: center;
+    padding: 10px;
 }
 
 .producto > img{
     display: flex;
-    width: 120px;
+    width: 70px;
     border-radius: 25px;
     object-fit: cover;
     justify-self: start;
@@ -40,6 +41,7 @@
     justify-content: center;
     top: 0px;
     font-weight: bolder;
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-shadow: 2px 1px 9px rgba(2, 2, 2, 0.81);
+    color: var(--secondary-font);
 }

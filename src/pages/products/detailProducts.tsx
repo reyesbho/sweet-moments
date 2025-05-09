@@ -10,7 +10,6 @@ import { TableComponent } from "../../components/tableComponent/tableComponent";
 import { DetailProductRecord } from "../../components/detailProductRecord/DetailProductRecord";
 import { NewDetailOrder } from "../../components/newDetailOrder/newDetailOrder";
 import { ProductDto } from "../../general/Dtos";
-import { ModalConfigProduct } from "../../components/modalConfigProduct/ConfigProduct";
 
 
 export function DetailProducts(){
