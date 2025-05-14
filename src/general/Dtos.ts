@@ -14,15 +14,13 @@ export interface OrderDto{
 export interface ProductOrderDto{
     id:number,
     idPedido:number,
-    detalleProducto:DetailProductoDto,
-    sabor: CatalogTypeDto | null,
-    tipoProducto: CatalogTypeDto | null,
-    comentarios:String,
+    producto: ProductDto,
+    sizeProducto: CatalogTypeDto,
+    caracteristicas:string[] | null,
     fechaRegistro:Date,
     fechaActualizacion:Date,
     cantidad:number,
-    total: number,
-    descuento: number
+    precio: number,
 }
 
 export interface ProductDto{
@@ -63,6 +61,6 @@ export interface ClientDto{
     id: number,
     name: string,
     apellidoPaterno: string,
-    apellidoMaterno: string | null,
-    direccion: string
+    apellidoMaterno: string | null | undefined,
+    direccion: string | undefined
 }

@@ -30,14 +30,6 @@ export interface Pagination{
     page: number;
     totalItems:number;
 }
-
-export interface AddNewProductForm{
-    cantidad: number,
-    size: string,
-    precio: number
-    idProducto: number,
-}
-
 export interface ProductForm{
     quantity: number,
     comments: string,
@@ -49,13 +41,11 @@ export interface ProductForm{
 }
 
 export interface ProductFormRequest{
-        idDetalleProducto:number,
-        idSabor:number,
-        idTipoProducto: number,
-        comentarios:string,
+        idProducto:number,
+        idSize:number,
+        caracteristicas:string,
         cantidad: number,
-        total: number,
-        descuento: number
+        precio: number,
 }
 
 export interface ClientOptionDto{
@@ -111,13 +101,13 @@ export interface ProductSelectDto{
 
 export interface OrderInfo{
     idOrder: number | undefined,
-    idCliente: number | undefined,
-    cliente: string | undefined,
-    clienteAux: string | undefined,
-    firstName: string | undefined,
+    idCliente: number,
+    cliente: string,
+    clienteAux: string,
+    firstName: string,
     lastName: string | undefined | null,
-    lugarEntrega: string | undefined,
-    fechaEntrega: Dayjs | undefined,
+    lugarEntrega: string,
+    fechaEntrega: Dayjs,
 }
 
 export interface PedidoRequest{

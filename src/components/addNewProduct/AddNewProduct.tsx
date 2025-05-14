@@ -2,38 +2,34 @@ import { useForm } from "react-hook-form";
 import { useProducts } from "../../hooks/useProducts";
 import './AddNewProduct.css';
 import { useState } from "react";
-import { MdClose } from "react-icons/md";
+import { MdCancel, MdClose } from "react-icons/md";
 import { useCatalogs } from "../../hooks/useCatalogs";
 import { toast } from "react-toastify";
 import { CatalogTypeDto, DetailProductoDto, ProductDto } from "../../general/Dtos";
-import { AddNewProductForm, ProductForm } from "../../general/Interfaces";
-import { DetailProduct } from "../formProducts/DetailProduct";
 import { Product } from "../formProducts/Product";
+import { FaPlusCircle } from "react-icons/fa";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { AddNewProductForm, AddNewProductSchema } from "../../general/Constants";
+
 
 export function AddNewProduct({idPedido,  handleClose, reload}:{idPedido: number, handleClose:CallableFunction, reload: CallableFunction }) {
-    const { products, detailProducts, getDetailProducts, addDetailProductToOrder} = useProducts();
+    const {products, addDetailProductToOrder} = useProducts();
     const [productSelected, setProductSelected] = useState<ProductDto | null>(null);
-    const [detailProductSelected, setDetailProductSelected] = useState<DetailProductoDto | null>(null);
-    const {sizes, typeProducts} = useCatalogs();
-    const [typeProductList, setTypeProductList] = useState<CatalogTypeDto[]>();
+    const {sizes} = useCatalogs();
     const [sizesList, setSizesList] = useState<CatalogTypeDto[]>();
+    const [detailList, setDetailList] = useState<string[]>([]);
+    const [detail, setDetail] = useState<string>('');
     
-    const { register, handleSubmit, reset,setValue, formState: { isSubmitSuccessful, errors } } = useForm<AddNewProductForm>({
+    const { register, handleSubmit,setValue, formState:{errors} } = useForm<AddNewProductForm>({
+        resolver: zodResolver(AddNewProductSchema),
         defaultValues: {
             cantidad: 1,
-            size: undefined,
+            idSize: 0,
             precio:0,
             idProducto: 0,
+            caracteristicas:''
         }
     });
-
-    
-    const isValidForm = () => {
-        if (!detailProductSelected){
-            return false;
-        }
-        return true;
-    }
 
     const handleClickSelect = (product: ProductDto) => {
         if(productSelected?.id === product.id){
@@ -41,17 +37,12 @@ export function AddNewProduct({idPedido,  handleClose, reload}:{idPedido: number
         }
         setProductSelected(product);
         setValue("idProducto", product.id);
-        console.log("productSelected", sizes);
-        console.log("productSelected", product);
-        setSizesList([...sizes].filter((size) => size.tags?.includes(product.key)));
+        setSizesList([...sizes].filter((size) => size.tags?.includes(product.key) || !size.tags));
     };
 
-    const handleAddDetailProduct = (productInfo: ProductForm, event: any) => {
-        event?.preventDefault();
-        if(!isValidForm()){
-            return;
-        }
-        productInfo.idDetailProduct = detailProductSelected?.id ?? 0;
+    const handleAddDetailProduct = (productInfo: AddNewProductForm) => {
+        productInfo.idProducto = productSelected?.id ?? 0;
+        productInfo.caracteristicas = detailList.join(',');
         addDetailProductToOrder(idPedido,productInfo)
         .then(() =>{
             handleClose();
@@ -59,9 +50,22 @@ export function AddNewProduct({idPedido,  handleClose, reload}:{idPedido: number
         });
     }
 
-    const filterProductsType = (keyProduct: string) => {
-        const newArray = typeProducts.filter((type) => type.tags?.includes(keyProduct) || !type.tags);
-        setTypeProductList(newArray) ;
+    const handleAddDetail = (e:React.MouseEvent) =>{
+        e.preventDefault();
+        if(detailList.length >= 5){
+            toast.error("No se pueden agregar más de 5 detalles");
+            return
+        }
+        if (detail.trim() !== '') {
+            setDetailList([...detailList, detail]);
+            setDetail('');
+        }
+    }
+
+    const handleRemoveDetail = (e:React.MouseEvent, indexRemove:number) => {
+        e.preventDefault();
+        const newList = detailList.filter((_, index) => index !== indexRemove);
+        setDetailList(newList);
     }
 
     return ( 
@@ -73,7 +77,7 @@ export function AddNewProduct({idPedido,  handleClose, reload}:{idPedido: number
                     {
                         products && 
                         products.map((producto => (
-                            <Product key={producto.id} product={producto} handleClickSelect={handleClickSelect}></Product>
+                            <Product key={producto.id} product={producto} handleClickSelect={handleClickSelect} ></Product>
                         )))
                     }
                 </div>
@@ -83,25 +87,50 @@ export function AddNewProduct({idPedido,  handleClose, reload}:{idPedido: number
                     <div className="container-detailProduct-selected-form">
                         {productSelected && 
                             <form className="form-add-product" onSubmit={handleSubmit(handleAddDetailProduct)}>
-                                
-                                <div className="form-input">
-                                    <label htmlFor="quantity">Cantidad:</label>
-                                    <input id="quantity" type="number" {...register("cantidad")}></input>
+                                <div>
+                                    <div className="form-input">
+                                        <label htmlFor="quantity">Cantidad:</label>
+                                        <input id="quantity" type="number" {...register("cantidad")}></input>
+                                        {errors.cantidad && <span className="error">{errors.cantidad.message}</span>}
+                                    </div>
+                                    <div className="form-input">
+                                        <label htmlFor="comments">Tamaño:</label>
+                                        <select id="size" {...register("idSize")}>
+                                            <option value="">Seleccionar</option>
+                                            {sizesList && sizesList.map((size) => (
+                                                <option key={size.id} value={size.id}>{size.descripcion}</option>
+                                            ))} 
+                                        </select>
+                                        {errors.idSize && <span className="error">{errors.idSize.message}</span>}
+                                    </div>
+                                    <div className="form-input">
+                                        <label htmlFor="descuento">Precio:</label>
+                                        <input id="descuento" type="number" {...register("precio")} placeholder="$0"></input>
+                                        {errors.precio && <span className="error">{errors.precio.message}</span>}
+                                    </div>
                                 </div>
-                                <div className="form-input">
-                                    <label htmlFor="comments">Tamaño:</label>
-                                    <select id="size" {...register("size")} onChange={(e) => filterProductsType(e.target.value)}>
-                                        <option value="">Seleccionar</option>
-                                        {sizesList && sizesList.map((size) => (
-                                            <option key={size.id} value={size.id}>{size.descripcion}</option>
-                                        ))} 
-                                    </select>
+                                <div>
+                                    <div className="form-input">
+                                        <label htmlFor="descuento">Detalles:</label>
+                                        <div className="form-input-add">
+                                            <input id="detalles" type="text" value={detail} onChange={(e) => setDetail(e.target.value)} maxLength={30}></input>                                    
+                                            <button className='button-add-icon' onClick={handleAddDetail}>
+                                                        <FaPlusCircle size="2rem" className='color-success'></FaPlusCircle>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <ul className="list-details"> 
+                                        {detailList && detailList.map((detail, index) => (
+                                            <li key={index}>
+                                                <span >{detail}</span>
+                                                <span  className='icon-actions' title='Eliminar' onClick={(event) => handleRemoveDetail(event,index)}>
+                                                                        <MdCancel size="1.4rem" className='color-wrong'></MdCancel>
+                                                                    </span>
+                                            </li>
+                                        ))}       
+                                    </ul>
+                                    <button type="submit" className="btn btn-add btn-md rigth">Agregar</button>
                                 </div>
-                                <div className="form-input">
-                                    <label htmlFor="descuento">Precio:</label>
-                                    <input id="descuento" type="number" {...register("precio")} placeholder="$0"></input>
-                                </div>
-                                <button type="submit" className="btn btn-add btn-md">Agregar producto</button>
                             </form>
                         }
                     </div>

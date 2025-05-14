@@ -55,6 +55,7 @@ h1 {
   min-width: 300px;
   color: var(--quinary-font);
   font-weight: 500;
+  position: relative;
 }
 
 
@@ -63,18 +64,18 @@ h1 {
   color: var(--primary-font);
 }
 
-.form-input > input{
-  border-radius: 10px;
+.form-input  input{
   line-height: 35px;
   font-size: 1rem;
   padding-left: 10px;
-  border: 1px solid var(--quinary-bg);
   color: var(--quinary-font);
+  background-color: white;
+  border-radius: 10px;
 }
 
 
 
-.form-input > select{
+.form-input  select{
   border-radius: 10px;
   height: 35px;
   font-size: 1rem;
@@ -83,7 +84,7 @@ h1 {
   color: var(--quinary-font);
 }
 
-.form-input > select > option{
+.form-input  select > option{
   font-size: 1.2rem;
 }
 
@@ -106,7 +107,7 @@ h1 {
   width: 90px;
 }
 
-.form-input-sm > input{
+.form-input-sm  input{
   border-radius: 5px;
   line-height: 20px;
   font-size: 0.9rem;
@@ -116,7 +117,7 @@ h1 {
 }
 
 
-.form-input-sm > select{
+.form-input-sm  select{
   border-radius: 5px;
   line-height: 20px;
   font-size: 0.9rem;
@@ -147,7 +148,7 @@ h1 {
   color: var(--quinary-bg);
 }
 
-.form-input > textarea{
+.form-input  textarea{
   border-radius: 10px;
   line-height: 25px;
   font-size: 0.8rem;
@@ -349,6 +350,11 @@ hr{
     align-self: flex-start;
     padding-bottom: 0px;
   }
+  
+  .product{
+    min-width: 300px;
+    gap: 15px;
+  }
 }
 
 hr{
@@ -441,4 +447,9 @@ hr{
   left: 0;
   width: 40px;
   height: 18px;
+}
+
+.rigth{
+  display: flex;
+  justify-self: end;
 }

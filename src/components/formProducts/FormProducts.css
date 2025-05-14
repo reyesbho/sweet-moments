@@ -145,6 +145,7 @@
     .container-detail{
         width: 350px;
         padding: 5px;
+        min-width: 350px;
     }
 
     .productos{

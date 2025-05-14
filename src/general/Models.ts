@@ -27,25 +27,23 @@ export interface PedidoModel{
 
 
 export interface ClienteModel{
-    id: number | undefined;
-    nombre: string | undefined;
-    apellidoPaterno: string | undefined;
+    id: number ;
+    nombre: string ;
+    apellidoPaterno: string ;
     apellidoMaterno: string | null | undefined;
     direccion: string | undefined;
 }
 
 export interface  ProductoPedidoModel {
-   id:number,
-   idPedido:number,
-   detalleProducto:DetailProductoModel,
-   sabor: CatalogTypeModel,
-   tipoProducto: CatalogTypeModel,
-   comentarios:String,
-   fechaRegistro:Date,
-   fechaActualizacion:Date,
-   cantidad: number,
-   total: number,
-   descuento: number
+   id:number;
+   idPedido:number;
+   producto: ProductModel;
+   sizeProducto: CatalogTypeModel;
+   caracteristicas:string;
+   fechaRegistro:Date;
+   fechaActualizacion:Date;
+   cantidad: number;
+   precio: number;
 }
 
 

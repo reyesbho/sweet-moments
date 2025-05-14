@@ -22,15 +22,13 @@ export function mapToProductOrderDto(productoPedido:ProductoPedidoModel):Product
     return {
         id:productoPedido.id,
         idPedido:productoPedido.idPedido,
-        detalleProducto:mapToDetailProductDto(productoPedido.detalleProducto),
-        sabor: productoPedido.sabor ? mapToCatalogTypeDto(productoPedido.sabor) : null,
-        tipoProducto: productoPedido.tipoProducto ? mapToCatalogTypeDto(productoPedido.tipoProducto) : null,
-        comentarios:productoPedido.comentarios,
+        producto:mapToProductDto(productoPedido.producto),
+        sizeProducto:  mapToCatalogTypeDto(productoPedido.sizeProducto),
+        caracteristicas: (productoPedido.caracteristicas ? productoPedido.caracteristicas.split(',') : null),
         fechaRegistro:productoPedido.fechaRegistro,
         fechaActualizacion:productoPedido.fechaActualizacion,
         cantidad: productoPedido.cantidad,
-        total: productoPedido.total,
-        descuento: productoPedido.descuento
+        precio: productoPedido.precio
     }
 }
 

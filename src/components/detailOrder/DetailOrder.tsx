@@ -7,7 +7,6 @@ import { iconStatusEnum, STATUS } from "../../general/Status";
 import { ModalConfirm } from "../modal/Modal";
 import { updateStatePedido } from "../../services/pedidos.services";
 import { useModalConfirm } from "../../hooks/useModalConfirm";
-import { FormProducts } from "../formProducts/FormProducts";
 import { formatDateTime } from "../../utils/formatDate";
 import { NewOrder } from "../new-order/NewOrder";
 import { useState } from "react";
@@ -104,7 +103,7 @@ export function DetailOrder() {
                             </div>
                             { canShowButtons() &&
                                 <div className='order-actions'>
-                                    <button type='button' className='btn btn-next btn-sm' onClick={(event) => modalUpdateOrder.handleShow(event)}>Actualizar</button>
+                                    <button type='button' className='btn btn-next btn-sm' onClick={(event) => modalUpdateOrder.handleShow(event)}>Editar</button>
                                     <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleStatusAction(event,STATUS.CANCELED)}>Cancelar</button>
                                 </div>
                             }

@@ -1,6 +1,6 @@
 import { mapToOrderDto, mapToProductOrderDto } from "../utils/mapsToDto";
 import { API_PEDIDO } from "../general/url";
-import {  OrderInfo, Pagination, ProductForm } from "../general/Interfaces";
+import {  AddNewProductForm, OrderInfo, Pagination, ProductForm } from "../general/Interfaces";
 import { mapToPedidoModel, mapToProductoRequest } from "../utils/mapsToModel";
 import { PedidoModel, ProductoPedidoModel } from "../general/Models";
 import { ProductOrderDto } from "../general/Dtos";
@@ -97,7 +97,7 @@ export const updateStatePedido = async({id, status}:{id:number, status:String}) 
     }   
 }
 
-export const addProductoToPedido = async({id, producto}:{id:number, producto:ProductForm}) => {
+export const addProductoToPedido = async({id, producto}:{id:number, producto:AddNewProductForm}) => {
     const product = mapToProductoRequest(producto);
     try{
         const res = await fetch(API_PEDIDO+`/${id}/producto`,{

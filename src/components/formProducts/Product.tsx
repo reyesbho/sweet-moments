@@ -4,16 +4,17 @@ import { deleteProducto, updateStatusProducto } from "../../services/producto.se
 import { ModalConfirm } from "../modal/Modal";
 import './Product.css';
 import { ProductDto } from "../../general/Dtos";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
-export function Product({product, handleClickSelect, showActions=false, handleReload=() => {}}:
-    {product:ProductDto,handleClickSelect:CallableFunction,showActions?:boolean,handleReload?:CallableFunction}){
+export function Product({product, handleClickSelect, showActions=false, cssClassBorder=''}:
+    {product:ProductDto,handleClickSelect:CallableFunction,showActions?:boolean,handleReload?:CallableFunction, cssClassBorder?:string}) {
 
     const modalUpdate = useModalConfirm( );
     const modalDelete = useModalConfirm();
 
     const handleUpdateModal = (event:MouseEvent) => {
         updateStatusProducto(product.id,  !product.status).then(() => {
-            handleReload();
             modalUpdate.handleClose(event);
             toast.success("Actualizado correctamente.")
         }).catch((error: Error) => toast.error(error.message));
@@ -26,21 +27,20 @@ export function Product({product, handleClickSelect, showActions=false, handleRe
                 modalDelete.handleClose(event);
                 return;
             }
-            handleReload();
             modalDelete.handleClose(event);
             toast.success("Eliminado correctamente.")
         }).catch((error: Error) => toast.error(error.message));
     }
     return (
         <>
-            <div key={product.id} className="container-product-catalog">
-                <div className="producto" key={product.id} onClick={() => handleClickSelect(product)}>
+            <div key={product.id} className={`container-product-catalog ${cssClassBorder}`}>
+                <div className="producto" key={product.id}>
                     <img className="producto-img" src={product.thumbnail}></img>
                     <span className="producto-title">{product.nameProduct}</span>
                     {showActions && 
                         <div className="container-product-catalog-actions">
-                            <button className="btn btn-sm btn-delete" onClick={modalDelete.handleShow}>Delete</button>
-                            <button className="btn btn-sm btn-next" onClick={modalUpdate.handleShow}>Editar</button>
+                            <button className="btn btn-sm btn-delete" onClick={modalDelete.handleShow}><MdDelete size='1.2rem' color="#e04141"></MdDelete></button>
+                            <button className="btn btn-sm btn-next" onClick={modalUpdate.handleShow}><FaEdit  size='1.2rem' ></FaEdit></button>
                         </div>
                     }
                 </div>

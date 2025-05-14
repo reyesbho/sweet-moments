@@ -4,7 +4,7 @@ import { addProductoToPedido } from "../services/pedidos.services";
 import { mapToProductRequestByCatalog } from "../utils/mapsToDto";
 import { toast } from "react-toastify";
 import { CatalogTypeDto, DetailProductoDto, ProductDto, ProductOrderDto } from "../general/Dtos";
-import { ProductForm } from "../general/Interfaces";
+import { AddNewProductForm } from "../general/Interfaces";
 
 export function useProducts(){
     const [products, setProducts] = useState<ProductDto[] | null>(null);
@@ -27,7 +27,7 @@ export function useProducts(){
         }).catch((error: Error) => toast.error(error.message));
     }
 
-    const addDetailProductToOrder = async(idPedido:number, detailProduct: ProductForm) => {
+    const addDetailProductToOrder = async(idPedido:number, detailProduct: AddNewProductForm) => {
         await addProductoToPedido({id:idPedido,producto:detailProduct})
         .then((pedidoProducto: ProductOrderDto)=> {
             toast.success("Registrado correctamente.");
