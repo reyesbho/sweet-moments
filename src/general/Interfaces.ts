@@ -14,17 +14,6 @@ export interface DetailProductoRequest{
 
 
 
-
-
-export interface ProductRequest{
-    clave: string;
-    descripcion: string;
-    estatus: boolean;
-    imagen: string;
-}
-
-
-
 export interface Pagination{
     pageSize: Number;
     page: number;

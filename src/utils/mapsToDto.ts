@@ -1,5 +1,4 @@
-import { CatalogTypeDto, ClientDto, DetailProductoDto, OrderDto, ProductDto, ProductOrderDto } from "../general/Dtos";
-import { ProductRequest } from "../general/Interfaces";
+import { CatalogTypeDto, ClientDto, DetailProductoDto, OrderDto, ProductOrderDto } from "../general/Dtos";
 import { CatalogTypeModel, ClienteModel, DetailProductoModel, PedidoModel, ProductModel, ProductoPedidoModel } from "../general/Models";
 
 
@@ -39,17 +38,17 @@ export function mapToCatalogTypeDto(cat: CatalogTypeModel):CatalogTypeDto{
             clave: '',
             descripcion: '',
             estatus: false,
-            image: null,
+            imagen: undefined,
             tags: '',
-            selfDelete: () => {},
-            selfUpdateEstatus: () => {}
+            selfDelete: undefined,
+            selfUpdateEstatus: undefined
         }
     return {
         id: cat.id,
         clave: cat.clave,
         descripcion: cat.descripcion,
         estatus: cat.estatus,
-        image: null,
+        imagen: undefined,
         tags: cat.tags,
         selfDelete: () => {},
         selfUpdateEstatus: () => {}
@@ -67,14 +66,16 @@ export function mapToClienteDto(cliente: ClienteModel):ClientDto{
     }
 }
 
-export function mapToProductDto(product:ProductModel):ProductDto{
+export function mapToProductDto(product:ProductModel):CatalogTypeDto{
     return {
         id: product.id, 
-        key:product.clave,
-        nameProduct: product.descripcion,
-        thumbnail: product.imagen,
-        status: product.estatus,
-        completed: product.completed
+        clave:product.clave,
+        descripcion: product.descripcion,
+        imagen: product.imagen,
+        estatus: product.estatus,
+        selfDelete: undefined,
+        selfUpdateEstatus: undefined,
+        tags:undefined
     }
 }
 
@@ -93,11 +94,15 @@ export function mapToDetailProductDto(product:DetailProductoModel):DetailProduct
     }
 }
 
-export function mapToProductRequestByCatalog(newRecord: CatalogTypeDto):ProductRequest{
+export function mapToProductRequestByCatalog(newRecord: CatalogTypeDto):CatalogTypeDto{
     return {
+        id: newRecord.id,
         clave: newRecord.clave,
         descripcion: newRecord.descripcion,
         estatus: newRecord.estatus,
-        imagen: newRecord.image ?? ''
+        imagen: newRecord.imagen ?? '',
+        selfDelete: undefined,
+        selfUpdateEstatus: undefined,
+        tags: undefined,
     }   
 }

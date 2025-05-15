@@ -1,32 +1,23 @@
 import { useEffect, useState } from "react";
-import { addProducto, deleteProducto, getDetalleProducto, getProductos } from "../services/producto.service";
-import { addProductoToPedido } from "../services/pedidos.services";
+import { addProducto, deleteProducto, getProductos, updateProducto } from "../services/producto.service";
 import { mapToProductRequestByCatalog } from "../utils/mapsToDto";
 import { toast } from "react-toastify";
-import { CatalogTypeDto, DetailProductoDto, ProductDto, ProductOrderDto } from "../general/Dtos";
-import { AddNewProductForm } from "../general/Interfaces";
+import { CatalogTypeDto, ProductOrderDto } from "../general/Dtos";
+import { addProductoToPedido } from "../services/pedidos.services";
+import { AddNewProductForm } from "../general/Constants";
 
 export function useProducts(){
-    const [products, setProducts] = useState<ProductDto[] | null>(null);
-    const [detailProducts, setDetailProducts] = useState<DetailProductoDto[] | null>(null);
+    const [products, setProducts] = useState<CatalogTypeDto[] | null>(null);
     const [realoadProducts,setRealoadProducts] = useState(false);
 
     const getProducts = async() => {
         getProductos()
-        .then((productsList:ProductDto[]) => {
+        .then((productsList:CatalogTypeDto[]) => {
             setProducts(productsList);
         })
         .catch((error: Error) => toast.error(error.message));
         
     }
-
-    const getDetailProducts = async(idProducto: number) => {
-        getDetalleProducto(idProducto)
-        .then((responseList: DetailProductoDto[]) =>{
-            setDetailProducts(responseList);
-        }).catch((error: Error) => toast.error(error.message));
-    }
-
     const addDetailProductToOrder = async(idPedido:number, detailProduct: AddNewProductForm) => {
         await addProductoToPedido({id:idPedido,producto:detailProduct})
         .then((pedidoProducto: ProductOrderDto)=> {
@@ -34,10 +25,17 @@ export function useProducts(){
         }).catch((error: Error) => toast.error(error.message));
     }
 
-    const addProduct = async(catalog:string,newRecord: CatalogTypeDto) =>{
+    const addProduct = async(newRecord: CatalogTypeDto) =>{
         await addProducto(mapToProductRequestByCatalog(newRecord)).then(()=> {
             handleReloadProducts();
             toast.success("Registrado correctamente.");
+        }).catch((error: Error) => toast.error(error.message));
+    }
+
+      const updateProduct = async(newRecord: CatalogTypeDto) =>{
+        await updateProducto(mapToProductRequestByCatalog(newRecord)).then(()=> {
+            handleReloadProducts();
+            toast.success("Actualizado correctamente.");
         }).catch((error: Error) => toast.error(error.message));
     }
 
@@ -57,5 +55,5 @@ export function useProducts(){
         getProducts();
     },[realoadProducts])
 
-    return {products,detailProducts, getDetailProducts,addDetailProductToOrder,removeProduct,addProduct,handleReloadProducts};
+    return {products,updateProduct,addDetailProductToOrder,removeProduct,addProduct,handleReloadProducts};
 }

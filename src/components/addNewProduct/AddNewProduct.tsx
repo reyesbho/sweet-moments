@@ -5,7 +5,7 @@ import { useState } from "react";
 import { MdCancel, MdClose } from "react-icons/md";
 import { useCatalogs } from "../../hooks/useCatalogs";
 import { toast } from "react-toastify";
-import { CatalogTypeDto, DetailProductoDto, ProductDto } from "../../general/Dtos";
+import { CatalogTypeDto } from "../../general/Dtos";
 import { Product } from "../formProducts/Product";
 import { FaPlusCircle } from "react-icons/fa";
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,7 +14,7 @@ import { AddNewProductForm, AddNewProductSchema } from "../../general/Constants"
 
 export function AddNewProduct({idPedido,  handleClose, reload}:{idPedido: number, handleClose:CallableFunction, reload: CallableFunction }) {
     const {products, addDetailProductToOrder} = useProducts();
-    const [productSelected, setProductSelected] = useState<ProductDto | null>(null);
+    const [productSelected, setProductSelected] = useState<CatalogTypeDto | null>(null);
     const {sizes} = useCatalogs();
     const [sizesList, setSizesList] = useState<CatalogTypeDto[]>();
     const [detailList, setDetailList] = useState<string[]>([]);
@@ -31,13 +31,13 @@ export function AddNewProduct({idPedido,  handleClose, reload}:{idPedido: number
         }
     });
 
-    const handleClickSelect = (product: ProductDto) => {
+    const handleClickSelect = (product: CatalogTypeDto) => {
         if(productSelected?.id === product.id){
             return
         }
         setProductSelected(product);
         setValue("idProducto", product.id);
-        setSizesList([...sizes].filter((size) => size.tags?.includes(product.key) || !size.tags));
+        setSizesList([...sizes].filter((size) => size.tags?.includes(product.clave) || !size.tags));
     };
 
     const handleAddDetailProduct = (productInfo: AddNewProductForm) => {
