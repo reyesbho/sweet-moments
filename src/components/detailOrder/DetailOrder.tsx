@@ -7,12 +7,12 @@ import { iconStatusEnum, STATUS } from "../../general/Status";
 import { ModalConfirm } from "../modal/Modal";
 import { updateStatePedido } from "../../services/pedidos.services";
 import { useModalConfirm } from "../../hooks/useModalConfirm";
-import { FormProducts } from "../formProducts/FormProducts";
 import { formatDateTime } from "../../utils/formatDate";
 import { NewOrder } from "../new-order/NewOrder";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { getNameClient } from "../../general/Constants";
+import { AddNewProduct } from "../addNewProduct/AddNewProduct";
 
 export function DetailOrder() {
       const {id} = useParams();
@@ -20,7 +20,7 @@ export function DetailOrder() {
       const navigate = useNavigate();
       const {show, handleShow, handleClose} = useModalConfirm();
       let modalAddProduct = useModalConfirm()
-      const iconStatus = iconStatusEnum((order?.status ? order?.status : STATUS.INCOMPLETE), '3rem');
+      const iconStatus = iconStatusEnum((order?.status ? order?.status : STATUS.INCOMPLETE), '2.5rem');
       let modalUpdateOrder = useModalConfirm();
       const [status, setStatus] = useState<String>('');
 
@@ -75,7 +75,7 @@ export function DetailOrder() {
     return (
     <div className="detailOrder">
         <div className="detail-title">
-            {{hasReturn} &&
+            {hasReturn &&
                 <button className='button-back' onClick={(e) => handleClicHome(e)}>
                         <IoIosArrowBack size="2.5rem" />
                 </button>
@@ -84,31 +84,32 @@ export function DetailOrder() {
         </div>
         {order &&
             <div className={`detailOrder-container ${(id ? cssClassName : '' )}`}>
-                { canShowButtons() &&
-                    <div className='order-actions'>
-                        <button type='button' className='btn btn-next btn-sm' onClick={(event) => modalUpdateOrder.handleShow(event)}>Actualizar</button>
-                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleStatusAction(event,STATUS.CANCELED)}>Cancelar</button>
-                    </div>
-                }
                     <div className='orderDetail'>    
                         <div className="orderDetail-iconStatus">
                             {iconStatus}
                         </div>
                         <div className="orderDetail-info">
                             <div className="orderDetail-details">
-                                <p><span>Cliente:</span> {getNameClient(order)}</p>
-                                <p ><span>Lugar de entrega: </span> {order.lugarEntrega}</p>   
+                                <p className="font-client"> {getNameClient(order)}</p>
+                                <p className="font-place"> {order.lugarEntrega}</p>   
                             </div>
                             <div className='orderDetail-details'>
-                                <p><span >Fecha de entrega:</span> {formatDateTime(order.fechaEntrega)}</p>
+                                <p> {formatDateTime(order.fechaEntrega)}</p>
                                 <p><span>Productos:</span> {order.numProducts}</p>
                             </div>    
                             <div className='orderDetail-details'>
                                 <p><span>Total:</span> ${order.total}.00</p>
-                                <p><span>Registrado por:</span> {order.register}</p>
+                                <p className="font-registered">{`Registrado por: ${order.register}`} </p>
                             </div>
+                            { canShowButtons() &&
+                                <div className='order-actions'>
+                                    <button type='button' className='btn btn-next btn-sm' onClick={(event) => modalUpdateOrder.handleShow(event)}>Editar</button>
+                                    <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleStatusAction(event,STATUS.CANCELED)}>Cancelar</button>
+                                </div>
+                            }
                         </div>
                     </div>
+                <hr></hr>
                 { canShowButtons() &&
                     <div className='order-actions'>
                         {order?.status === STATUS.BACKLOG &&
@@ -119,11 +120,10 @@ export function DetailOrder() {
                     </div>
                 }
                 <div className='content-product'>
-                    {modalAddProduct.show && <FormProducts idPedido={order.id} handleClose={() => modalAddProduct.handleClose(event)} reload={handleRealoadProducts}></FormProducts>}
+                    {modalAddProduct.show && <AddNewProduct idPedido={order.id} handleClose={() => modalAddProduct.handleClose(event)} reload={handleRealoadProducts}></AddNewProduct>}
                 </div>
                 {productos.length > 0 &&
                     <div className="detailOrder-products">
-                        <hr></hr>
                         { productos.map(product => (
                             <CardProduct key={product.id} productItem={product} reload={getProductos}></CardProduct>
                         ))}

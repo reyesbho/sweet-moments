@@ -1,10 +1,9 @@
-import { DetailProductoDto, ProductDto } from "../general/Dtos";
-import { ProductRequest } from "../general/Interfaces";
+import { CatalogTypeDto, DetailProductoDto } from "../general/Dtos";
 import { ProductModel } from "../general/Models";
 import { API_PRODUCTO } from "../general/url";
 import { mapToDetailProductDto, mapToProductDto,  } from "../utils/mapsToDto";
 
-export const getProductos = async():Promise<ProductDto[]> => {
+export const getProductos = async():Promise<CatalogTypeDto[]> => {
     try {
         const response = await fetch(API_PRODUCTO,
         {
@@ -34,9 +33,9 @@ export const deleteProducto = async(idProducto:number) => {
     }
 }
 
-export const updateStatusProducto = async(idProducto:number, estatus:boolean):Promise<ProductDto> => {
+export const updateStatusProducto = async(idProducto:number, estatus:boolean):Promise<CatalogTypeDto> => {
     try {
-        const response = await fetch(API_PRODUCTO+`/${idProducto}/${estatus}`,
+        const response = await fetch(API_PRODUCTO+`/${idProducto}/estatus/${estatus}`,
         {
             method:"PUT"
         }
@@ -49,7 +48,7 @@ export const updateStatusProducto = async(idProducto:number, estatus:boolean):Pr
     }
 }
 
-export const addProducto = async (catalog: ProductRequest):Promise<ProductDto> => {
+export const addProducto = async (catalog: CatalogTypeDto):Promise<CatalogTypeDto> => {
     try {
         const response = await fetch(API_PRODUCTO,
         {
@@ -78,5 +77,22 @@ export const getDetalleProducto = async(idProducto: number):Promise<DetailProduc
     }catch(error){
         console.log(error);
         throw new Error("Error al buscar los detalles")
-    }
+    }  
+
+}
+
+export const updateProducto = async (catalog: CatalogTypeDto):Promise<CatalogTypeDto> => {
+    try {
+        const response = await fetch(API_PRODUCTO,
+        {
+            method:"PUT",
+            body:JSON.stringify(catalog)
+        }
+        );
+        const tipo = await response.json();
+        return mapToProductDto(tipo);
+
+    } catch (error) {
+        throw new Error("Error al agregar el sabor");
+    } 
 }

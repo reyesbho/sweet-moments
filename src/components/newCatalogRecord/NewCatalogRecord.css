@@ -14,3 +14,13 @@
     flex-direction: row;
     justify-content: space-around;
 }
+
+.producto-img{
+    display: flex;
+    width: 70px;
+    border-radius: 15px;
+    object-fit: cover;
+    justify-self: start;
+    aspect-ratio: 1/1;
+    justify-self: center;
+}

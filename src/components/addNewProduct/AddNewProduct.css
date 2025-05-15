@@ -22,11 +22,11 @@
 .container-detail{
     display: flex;
     flex-direction: column;
-    width: 600px;
+    min-width: 700px;
+    width: 700px;
     background-color: var(--primary-bg);
     border-radius: 25px;
     padding: 10px;
-    
     align-items: center;
 }
 
@@ -43,11 +43,10 @@
 .productos{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 10px;
-    width: 600px;
     padding-bottom: 10px;
     justify-content: center;
-    overflow-y: auto;
 }
 
 .container-detailProduct-selected{
@@ -103,7 +102,7 @@
 
 .form-add-product{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: end;
 }
 
@@ -131,6 +130,54 @@
     padding: 0px 10px;
     text-align: end;
     font-size: 1rem;
+}
+
+.button-add-icon{
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.button-add-icon:hover{
+    scale: 1.1;
+}
+
+.form-input-add{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+.form-input-add > input{
+    width: 100%;
+}
+
+.list-details{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid var(--primary-font);
+    border-radius: 10px;
+    padding: 5px;
+    
+}
+
+.list-details > li{
+    padding: 3px;
+    list-style: none;
+    position: relative;
+    border-radius: 10px;
+}
+
+.list-details > li > span{
+    top: 1px;
+}
+
+.list-details > li:hover{
+    background-color: var(--tertiary-bg);
+}
+
+.products-selected-border{
+    border: 1px solid var(--secondary-bg);
 }
 
 
@@ -162,5 +209,11 @@
     .detailProducts-list{
         width: 350px;
     }
+
+    
+
+  .form-add-product{
+    flex-direction: column;
+  }
 
 }

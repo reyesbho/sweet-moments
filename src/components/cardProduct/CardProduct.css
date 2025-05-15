@@ -19,81 +19,55 @@
     position: relative;
     flex-wrap: wrap;
     padding: 10px;
-    width: 200px;
+    max-width: 300px;
 }
-
-.product-segment{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: start;
-}
-
 .product-img{
     position: absolute;
-    width: 100px;
-    height: 90px;
+    width: 110px;
     border-radius: 25px;
     object-fit: cover;
     justify-self: start;
     aspect-ratio: 1/1;
     z-index: 0;
-    right: 0px;
-    opacity: 0.2;
+    left: 0px;
+    opacity: 0.1;
     top: 0px;
 }
-.product-segment  h2{
-    font-size: 1.2rem;
-    margin: 0px;
-    padding: 0px;
-    color: var(--quaternary-font);
-}
-
-.product-segment  h4{
-    font-size: 1rem;
-    margin: 0px;
-    padding: 0px;
-    color: var(--tertiary-font);
-}
-
-.product-properties{
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
-}
-.product-properties > li{
-    margin: 0px;
-    padding: 0px;
-}
-
-.product-properties > li > p {
-    margin: 0px;
-    padding: 0px;
-}
-
-
-.product-totals{
+.product-segment{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: start;
     gap: 10px;
-    padding-top: 5px;
+    width: 100%;
 }
+
+.product-info{
+    display: flex;
+    flex-direction: column;
+    min-width: 100px;
+}
+
+.product-name{
+    color: var(--quaternary-font);
+    font-weight: bolder;
+    font-size: 1.5rem;
+}
+
 .product-size{
-    text-align: end;
     color: var(--tertiary-font);
     font-weight: bolder;
     font-size: 1.1rem;
 }
 
 .product-price{
-    text-align: end;
-    color: var(--quaternary-font);
     font-weight: bolder;
     font-size: 1.1rem;
+}
+
+.icon-actions{
+    position: absolute;
+    top: 5px;
+    right: 5px;
 }
 
 .icon-actions:hover{
@@ -103,8 +77,21 @@
 }
 
 
-.product-comments p{
+.product-properties{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
     margin: 0px;
-    padding: 0px 0px 0px 5px;
-    
+    padding: 0px;
+    list-style: none;
+}
+
+.product-properties > ul{
+    padding: 0px;
+    list-style: none;
+}
+
+.product-properties-title{
+    font-weight: bolder;
+    font-size: 1.1rem;
 }

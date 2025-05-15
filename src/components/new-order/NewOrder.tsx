@@ -22,16 +22,28 @@ export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFu
     const idCliente = useId();
     const idLugarEntrega = useId();
     const idFechaHora = useId();
-    let orderInfo: OrderInfo = {
+    let orderInfo: OrderInfo = (order ? 
+        {
             idOrder: order?.id,
             idCliente: order?.cliente.id,
             cliente: order?.cliente.name,
             firstName:order?.cliente.apellidoPaterno,
             lastName:order?.cliente.apellidoMaterno,
-            fechaEntrega: (order?.fechaEntrega ? dayjs(order?.fechaEntrega) : undefined),
+            fechaEntrega: (order?.fechaEntrega ? dayjs(order?.fechaEntrega) : dayjs(new Date())),
             lugarEntrega: order?.lugarEntrega,
             clienteAux: getNameClient(order),
-    };
+        } :
+        {
+                idOrder: 0,
+                idCliente: 0,
+                cliente:'',
+                firstName:'',
+                lastName:'',
+                fechaEntrega: dayjs(new Date()),
+                lugarEntrega:'',
+                clienteAux:'',
+        }
+    ) 
     const { register,handleSubmit, formState: { isDirty, isValid  }, setValue,control } = useForm<OrderInfo>({
         defaultValues:orderInfo
     });
@@ -52,7 +64,7 @@ export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFu
         setValue('cliente', client.name);
         setValue('firstName', client.apellidoPaterno);
         setValue('lastName', client.apellidoMaterno);
-        setValue('lugarEntrega', client.direccion);
+        setValue('lugarEntrega', (client.direccion ? client.direccion : ''));
         setValue('idCliente', client.id);
         setValue('clienteAux', `${client.name} ${client.apellidoPaterno} ${client.apellidoMaterno ? client.apellidoMaterno : ''}`);
     }
@@ -103,7 +115,15 @@ export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFu
                         <div className='form-input'>
                             <label htmlFor={idFechaHora} >Fecha: </label>
                             <Controller control={control} name='fechaEntrega' render={({field}) => (
-                                <MobileDateTimePicker format="DD/MM/YYYY HH:mm" timezone='default' ampm={false} minutesStep={30} onChange={(date) => field.onChange(date)}/>
+                                <MobileDateTimePicker format="DD/MM/YYYY HH:mm" 
+                                slotProps={{
+                                    textField: {
+                                    InputProps: {
+                                        style: { backgroundColor: '#fff' } // 👈 Fondo blanco
+                                    }
+                                    }
+                                }}
+                                 value={field.value} timezone='default' ampm={true} minutesStep={10} onChange={(date) => field.onChange(date)}/>
                                 )}>
                             </Controller>
                                 

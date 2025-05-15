@@ -14,29 +14,19 @@ export interface OrderDto{
 export interface ProductOrderDto{
     id:number,
     idPedido:number,
-    detalleProducto:DetailProductoDto,
-    sabor: CatalogTypeDto | null,
-    tipoProducto: CatalogTypeDto | null,
-    comentarios:String,
+    producto: CatalogTypeDto,
+    sizeProducto: CatalogTypeDto,
+    caracteristicas:string[] | null,
     fechaRegistro:Date,
     fechaActualizacion:Date,
     cantidad:number,
-    total: number,
-    descuento: number
+    precio: number,
 }
 
-export interface ProductDto{
-    id: number, 
-    key:string,
-    nameProduct: string,
-    thumbnail: string,
-    status: boolean,
-    completed: boolean;
-}
 
 export interface DetailProductoDto{
     id: number,
-    producto:ProductDto,
+    producto:CatalogTypeDto,
     size: CatalogTypeDto,
     sabor:CatalogTypeDto,
     tipoProducto:CatalogTypeDto,
@@ -53,16 +43,16 @@ export interface CatalogTypeDto{
     clave: string;
     descripcion: string;
     estatus: boolean;
-    image: string | null,
-    selfDelete: CallableFunction ;
-    selfUpdateEstatus: CallableFunction;
-    tags: string | null;
+    imagen: string | undefined,
+    selfDelete: CallableFunction | undefined ;
+    selfUpdateEstatus: CallableFunction | undefined;
+    tags: string | undefined;
 }
 
 export interface ClientDto{
     id: number,
     name: string,
     apellidoPaterno: string,
-    apellidoMaterno: string | null,
-    direccion: string
+    apellidoMaterno: string | null | undefined,
+    direccion: string | undefined
 }

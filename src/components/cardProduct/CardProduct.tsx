@@ -1,10 +1,10 @@
 import { FaTrash } from 'react-icons/fa'
-import { ProductOrderDto } from '../../general/Interfaces'
 import './CardProduct.css'
 import { useModalConfirm } from '../../hooks/useModalConfirm';
 import { ModalConfirm } from '../modal/Modal';
 import { deleteProductoPedido } from '../../services/pedidos.services';
 import { toast } from 'react-toastify';
+import { ProductOrderDto } from '../../general/Dtos';
 export function CardProduct({productItem,reload }:{productItem: ProductOrderDto, reload: CallableFunction}) {
     const {show, handleShow, handleClose} = useModalConfirm();
 
@@ -19,34 +19,32 @@ export function CardProduct({productItem,reload }:{productItem: ProductOrderDto,
     return (
         <section>
         <div key={productItem.id} className='product'>
-            <img className='product-img' src={productItem.detalleProducto.imagen 
-                ? productItem.detalleProducto.imagen : productItem.detalleProducto.producto.thumbnail} 
+            <img className='product-img' src={productItem.producto.thumbnail} 
                 loading="lazy"  
-                alt={productItem.detalleProducto.producto?.nameProduct}></img>
+                alt={productItem.producto?.nameProduct}></img>
             <div className='product-segment'>
-                <h2>{productItem.detalleProducto.producto?.nameProduct}</h2>
-                <h4 className='no-pm'>{productItem.detalleProducto.descripcion}</h4>
+                <div className='product-info'>
+                    <span className='product-name'>{productItem.producto?.nameProduct}</span>
+                    <span className='product-size'>{productItem.sizeProducto?.descripcion}</span>
+                    <span className='product-price'>{`$${productItem.precio}`} </span>
+                    <span><strong>Cantidad: </strong>{productItem.cantidad}</span>
+                </div>
                 <ul className='product-properties'>
-                    <li>{productItem.detalleProducto.tipoProducto && <p><strong>Tipo: </strong>{productItem.detalleProducto.tipoProducto?.descripcion }</p>}</li>
-                    <li>{productItem.detalleProducto.sabor.descripcion && <p><strong>Sabor: </strong>{productItem.detalleProducto.sabor?.descripcion}</p>}</li>
-                    <li>{productItem.comentarios && <p><strong>Nota: </strong>{productItem.comentarios}</p> }</li>
-                    <li>{productItem.cantidad && productItem.cantidad > 1 && <p><strong>Cantidad: </strong>{productItem.cantidad}</p>}</li>
-                    <li>{productItem.detalleProducto.precio > 0 && <p><strong>Precio: </strong>${productItem.detalleProducto.precio}</p>}</li>
-                    <li>{productItem.descuento > 0 && <p><strong>Descuento: </strong>${productItem.descuento}</p>}</li>
-                    <li>{productItem.detalleProducto.comentarios && <div className='product-comments'><strong>Detalles: </strong><p >{productItem.detalleProducto.comentarios}</p></div>}</li>                    
+                    {productItem.caracteristicas &&                         
+                        <ul>
+                            <span className='product-properties-title'>Detalles:</span>                
+                            {productItem.caracteristicas.map((item, index) => (
+                                <li key={index}>{item}</li>
+                            ))}
+                        </ul>
+                    }
                 </ul>
             </div>
-            <div  className='product-segment'>
-                <hr />
-                <div className='product-totals'>
-                    <span className='product-size'>{productItem.detalleProducto.size.descripcion} </span>
-                    <span className='product-price'>{`$${productItem.total}`} </span>
-                    <span onClick={(event) => handleShow(event)} className='icon-actions' title='Eliminar'>
-                    <FaTrash size="1rem" className='color-wrong'></FaTrash>
+            <span onClick={(event) => handleShow(event)} className='icon-actions' title='Eliminar'>
+                        <FaTrash size="1.2rem" className='color-wrong'></FaTrash>
                     </span>
-                </div>
-            </div>
         </div>
+         
         <ModalConfirm show={show} handleClose={handleClose} handleOk={handleDeleteProducPedido} ></ModalConfirm>
         </section>
     )
