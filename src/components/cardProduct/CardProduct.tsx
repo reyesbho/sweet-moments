@@ -3,17 +3,15 @@ import './CardProduct.css'
 import { useModalConfirm } from '../../hooks/useModalConfirm';
 import { ModalConfirm } from '../modal/Modal';
 import { ProductoPedido } from '../../general/interfaces/pedido.js';
-export function CardProduct({ productItem, reload }: { productItem: ProductoPedido, reload: CallableFunction }) {
+export function CardProduct({ productItem, reload, handleDeleteProducPedido = () => {} }: 
+                            { productItem: ProductoPedido, reload: CallableFunction, handleDeleteProducPedido?: CallableFunction }) {
     const { show, handleShow, handleClose } = useModalConfirm();
-
-    const handleDeleteProducPedido = () => { };
-    /*const handleDeleteProducPedido = () => {
-        deleteProductoPedido({idPedido:productItem.idPedido, idProductoPedido:productItem.id})
-        .then((res) => {
-            reload(productItem.id);
-            toast.success("Eliminado correctamente.")
-        }).catch((error: Error) => toast.error(error.message));
-    }*/
+    const handleDelete = (event: any) => {
+        event?.preventDefault();
+        event?.stopPropagation();
+        handleDeleteProducPedido(productItem);
+        handleClose(event);
+    }
 
     return (
         <div>
@@ -44,7 +42,7 @@ export function CardProduct({ productItem, reload }: { productItem: ProductoPedi
                 </span>
             </div>
 
-            <ModalConfirm show={show} handleClose={handleClose} handleOk={handleDeleteProducPedido} ></ModalConfirm>
+            <ModalConfirm show={show} handleClose={handleClose} handleOk={handleDelete} ></ModalConfirm>
         </div>
     )
 

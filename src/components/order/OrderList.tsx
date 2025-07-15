@@ -1,4 +1,3 @@
-import { OrderDto } from '../../general/Dtos';
 import { Pedido } from '../../general/interfaces/pedido';
 import { EmptyList } from '../EmptyList/EmptyList';
 import { Order } from './Order';

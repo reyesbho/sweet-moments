@@ -20,6 +20,7 @@ export interface Size {
 }
 
 export interface ProductoPedido {
+  id: string;
   size: Size;
   cantidad: number;
   producto: Producto;

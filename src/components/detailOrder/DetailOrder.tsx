@@ -5,7 +5,7 @@ import { useOrder } from "../../hooks/useOrder";
 import { IoIosArrowBack } from "react-icons/io";
 import { iconStatusEnum, STATUS } from "../../general/Status";
 import { ModalConfirm } from "../modal/Modal";
-import { updateStatePedido } from "../../services/pedidos.services";
+import { updatePedido, updateStatePedido } from "../../services/pedidos.services";
 import { useModalConfirm } from "../../hooks/useModalConfirm";
 import { formatDateTime } from "../../utils/formatDate";
 import { NewOrder } from "../new-order/NewOrder";
@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { AddNewProduct } from "../addNewProduct/AddNewProduct";
 import { FaClock, FaUser } from "react-icons/fa";
 import { MdPlace } from "react-icons/md";
+import { Pedido, ProductoPedido } from "../../general/interfaces/pedido";
 
 export function DetailOrder() {
     const { id = '' } = useParams();
@@ -65,6 +66,19 @@ export function DetailOrder() {
         getOrder();
     }
 
+    const handleDeleteProducPedido = async(productoPedido: ProductoPedido) => {
+        if(!order) return;
+        const productosStill = order?.productos?.filter((item) => item.id !== productoPedido.id) ?? [];
+        order.productos = productosStill;
+        await updatePedido(order)
+                    .then(() => {
+                        toast.success("Producto eliminado correctamente.");
+                        handleRealoadOrder();
+                        modalAddProduct.handleClose(event);
+                        
+                    })
+                    .catch((error: Error) => toast.error(error.message));
+    }
 
     return (
         <div className="detailOrder">
@@ -91,7 +105,7 @@ export function DetailOrder() {
                         {order.productos?.length > 0 &&
                             <div className="detailOrder-products">
                                 {order.productos.map((product, index) => (
-                                    <CardProduct key={index} productItem={product} reload={() => { }}></CardProduct>
+                                    <CardProduct key={index} productItem={product} reload={handleRealoadOrder} handleDeleteProducPedido={handleDeleteProducPedido}></CardProduct>
                                 ))}
                             </div>
                         }
