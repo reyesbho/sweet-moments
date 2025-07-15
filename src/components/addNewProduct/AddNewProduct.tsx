@@ -12,7 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AddNewProductForm, AddNewProductSchema } from "../../general/Constants";
 
 
-export function AddNewProduct({idPedido,  handleClose, reload}:{idPedido: number, handleClose:CallableFunction, reload: CallableFunction }) {
+export function AddNewProduct({idPedido,  handleClose, reload}:{idPedido: string, handleClose:CallableFunction, reload: CallableFunction }) {
     const {products, addDetailProductToOrder} = useProducts();
     const [productSelected, setProductSelected] = useState<CatalogTypeDto | null>(null);
     const {sizes} = useCatalogs();

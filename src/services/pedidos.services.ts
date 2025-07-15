@@ -1,46 +1,31 @@
-import { mapToOrderDto, mapToProductOrderDto } from "../utils/mapsToDto";
+import {  mapToProductOrderDto } from "../utils/mapsToDto";
 import { API_PEDIDO } from "../general/url";
-import {  AddNewProductForm, OrderInfo, Pagination, ProductForm } from "../general/Interfaces";
+import {  OrderInfo, Pagination } from "../general/Interfaces";
 import { mapToPedidoModel, mapToProductoRequest } from "../utils/mapsToModel";
-import { PedidoModel, ProductoPedidoModel } from "../general/Models";
-import { ProductOrderDto } from "../general/Dtos";
+import { AddNewProductForm } from "../general/Constants";
+import { Pedido, PedidosResponse } from "../general/interfaces/pedido";
 
 
 
 export const getPedidos = async(statusFilter:String,dateInit:String | null, dateEnd:String | null, pagination:Pagination) => {
         try{
         const res = await fetch(`${API_PEDIDO}?`+
-            `estatus=${statusFilter}&page=${pagination.page}&size=${pagination.pageSize}`+
+            `estatus=${statusFilter}&pageSize=${pagination.pageSize}`+
             (dateInit?`&dateInit=${dateInit}`:'')+
             (dateEnd?`&dateEnd=${dateEnd}`:''),
             {
                 method: 'GET'
             }
         );
-        const data = await res.json();
-        const {content, totalElements} = data;
-        return {pedidos:content?.map((pedido:PedidoModel) => mapToOrderDto(pedido)), totalItems:totalElements};
+        const data:PedidosResponse = await res.json();
+        console.log("GET PEDIDOS: ", data)
+        return data;
     } catch (error) {
         throw new Error("Error al buscar los pedidos")
     }
 }
 
-export const getProductsByPedidoId = async(orderId: number):Promise<ProductOrderDto[]> => { 
-    try{
-        const res = await fetch(API_PEDIDO+`/${orderId}/producto`,
-        {
-            method: 'GET',
-        }
-        );
-        const data = await res.json();
-        return data.map((producto:ProductoPedidoModel) => mapToProductOrderDto(producto));
-    } catch (error) {
-        throw new Error("Error al buscar los productos")
-    }
-    
-}
-
-export const getPedido = async(orderId: number) => {   
+export const getPedido = async(orderId: string) => {   
        
     try{
         const res = await fetch(API_PEDIDO+`/${orderId}`,
@@ -48,8 +33,8 @@ export const getPedido = async(orderId: number) => {
             method: 'GET',
         }
         );
-        const data = await res.json();
-        return mapToOrderDto(data);
+        const data:Pedido = await res.json();
+        return data;
     } catch (error) {
         throw new Error("Error al buscar el pedido")
     }
@@ -86,10 +71,11 @@ export const updatePedido = async(order: OrderInfo) => {
 }
 
 
-export const updateStatePedido = async({id, status}:{id:number, status:String}) => {
+export const updateStatePedido = async({id, status}:{id:string, status: string}) => {
     try{
-        const res = await fetch(API_PEDIDO+`/${id}/${status}`,{
-            method: "PUT",
+        const res = await fetch(API_PEDIDO+`/${id}`,{
+            method: "PATCH",
+            body: JSON.stringify({estatus: status})
         });
         return res;
     } catch (error) {
@@ -108,28 +94,5 @@ export const addProductoToPedido = async({id, producto}:{id:number, producto:Add
         return mapToProductOrderDto(data);
     }catch (error){
         throw new Error("Error al registrar el producto")
-    }
-}
-
-export const deleteProductoPedido = async({idPedido, idProductoPedido}:{idPedido:number, idProductoPedido:number}) => {
-    try{
-        const res = await fetch(API_PEDIDO+`/${idPedido}/producto/${idProductoPedido}`,{
-            method: "DELETE",
-        })
-        return res;
-    }catch (error){
-        throw new Error("Error al eliminar el producto")
-    }
-}
-
-
-export const deletePedido = async({idPedido}:{idPedido:number}) => {
-    try{
-        const res = await fetch(API_PEDIDO+`/${idPedido}`,{
-            method: "DELETE",
-        })
-        return res;
-    }catch (error){
-        throw new Error("Error al eliminar el pedido")
     }
 }

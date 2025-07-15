@@ -1,3 +1,5 @@
+import { FirestoreTimestamp } from "../general/interfaces/pedido";
+
 export const dateOptions:Intl.DateTimeFormatOptions = {
     month: "2-digit",
     year:"numeric",
@@ -37,9 +39,9 @@ export const dateTimeOptions:Intl.DateTimeFormatOptions = {
 }
 
 
-export const formatDateTime= (date:Date) => {
+export const formatDateTime= (date:FirestoreTimestamp) => {
     if(!date){
         return '';
     }
-    return new Date(date).toLocaleTimeString("es-MX", dateTimeOptions);
+    return new Date(date.seconds * 1000).toLocaleTimeString("es-MX", dateTimeOptions);
 }

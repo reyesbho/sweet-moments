@@ -11,11 +11,13 @@ import { ClientDto, OrderDto } from '../../general/Dtos';
 import debounce from 'just-debounce';
 import { searchClient } from '../../services/cliente.service';
 import { getNameClient } from '../../general/Constants';
+import { Pedido } from '../../general/interfaces/pedido';
+import { formatDateTime } from '../../utils/formatDate';
 
 
 
-export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFunction, orderDto: OrderDto | null, reload: CallableFunction}) {
-    const [order, setOrder] = useState<OrderDto | null>(orderDto);
+export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFunction, orderDto: Pedido | null, reload: CallableFunction}) {
+    const [order, setOrder] = useState<Pedido | null>(orderDto);
     const { registerOrder, updateOrder} = useNewOrder();
     const [clients, setClients] = useState<ClientDto[]>([]);
     
@@ -25,23 +27,15 @@ export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFu
     let orderInfo: OrderInfo = (order ? 
         {
             idOrder: order?.id,
-            idCliente: order?.cliente.id,
-            cliente: order?.cliente.name,
-            firstName:order?.cliente.apellidoPaterno,
-            lastName:order?.cliente.apellidoMaterno,
-            fechaEntrega: (order?.fechaEntrega ? dayjs(order?.fechaEntrega) : dayjs(new Date())),
+            cliente: order?.cliente,
+            fechaEntrega: (order?.fechaEntrega ? dayjs(formatDateTime(order?.fechaEntrega)) : dayjs(new Date())),
             lugarEntrega: order?.lugarEntrega,
-            clienteAux: getNameClient(order),
         } :
         {
-                idOrder: 0,
-                idCliente: 0,
+                idOrder: '',
                 cliente:'',
-                firstName:'',
-                lastName:'',
                 fechaEntrega: dayjs(new Date()),
-                lugarEntrega:'',
-                clienteAux:'',
+                lugarEntrega:''
         }
     ) 
     const { register,handleSubmit, formState: { isDirty, isValid  }, setValue,control } = useForm<OrderInfo>({
@@ -62,11 +56,7 @@ export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFu
         event.stopPropagation();
         setClients([]);
         setValue('cliente', client.name);
-        setValue('firstName', client.apellidoPaterno);
-        setValue('lastName', client.apellidoMaterno);
         setValue('lugarEntrega', (client.direccion ? client.direccion : ''));
-        setValue('idCliente', client.id);
-        setValue('clienteAux', `${client.name} ${client.apellidoPaterno} ${client.apellidoMaterno ? client.apellidoMaterno : ''}`);
     }
 
 
@@ -96,7 +86,7 @@ export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFu
                     
                         <div className='form-input'>
                             <label htmlFor={idCliente}><FaUser></FaUser  > Cliente: </label>
-                            <input id={idCliente} {...register("clienteAux",{required:true})} placeholder='Juan Perez' type='text' onChange={handleChange}  />
+                            <input id={idCliente} {...register("cliente",{required:true})} placeholder='Nombre' type='text' onChange={handleChange}  />
                             <div className='container-clients'>
                                 <div className='searchClients'>
                                     {clients  && clients.map(client => (

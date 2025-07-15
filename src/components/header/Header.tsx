@@ -3,10 +3,14 @@ import './Header.css';
 import { useAuth } from '../../config/AuthProvider';
 import logoUrl from '../../assets/sweet-moments.webp'
 import { useHeader } from '../../context/HeaderContext';
+import { logout } from '../../services/Auth.service';
 
 export function Header({ title }:{ title:string}) {
-    const {principal, logout} = useAuth()
-    const {isOpen, handleIsOpen} = useHeader()
+    const user = useAuth();
+    const {isOpen, handleIsOpen} = useHeader();
+    
+    const handleLogout = () => {logout().then(() => user.logout())};
+
 
     return (
         <div className="header">
@@ -18,7 +22,7 @@ export function Header({ title }:{ title:string}) {
             </div>
 
             <div className="header-user">
-                    <span>{principal?.user}</span>
+                    <span>{user?.principal}</span>
                 <img onClick={() => handleIsOpen()} className="header-avatar"
                     src="https://pbs.twimg.com/profile_images/730777468202688516/J34OEG_u_400x400.jpg"
                     alt="user avatar"
@@ -29,11 +33,11 @@ export function Header({ title }:{ title:string}) {
                             src="https://pbs.twimg.com/profile_images/730777468202688516/J34OEG_u_400x400.jpg"
                             alt="user avatar"
                         ></img>
-                        <span className='header-menu_greetings'>¡Hola {principal?.user}!</span>
+                        <span className='header-menu_greetings'>¡Hola {user.principal}!</span>
                         <Link className='header-menu_options' to='/' onClick={() => handleIsOpen()}>Principal</Link>
                         <Link className='header-menu_options' to='/catalogos' onClick={() => handleIsOpen()}>Catalogos</Link>
                         <Link className='header-menu_options' to='/productos' onClick={() => handleIsOpen()}>Productos</Link>
-                        <span className='header-menu_options' onClick={logout}>Cerrar sesion</span>
+                        <span className='header-menu_options' onClick={handleLogout}>Cerrar sesion</span>
                     </div>
                 }
             </div>

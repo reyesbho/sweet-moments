@@ -11,136 +11,131 @@ import { formatDateTime } from "../../utils/formatDate";
 import { NewOrder } from "../new-order/NewOrder";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { getNameClient } from "../../general/Constants";
 import { AddNewProduct } from "../addNewProduct/AddNewProduct";
+import { FaClock, FaUser } from "react-icons/fa";
+import { MdPlace } from "react-icons/md";
 
 export function DetailOrder() {
-      const {id} = useParams();
-      const {order,cssClassName, hasReturn, productos, setProductos, getOrder, getProductos} = useOrder({orderId:Number(id)});
-      const navigate = useNavigate();
-      const {show, handleShow, handleClose} = useModalConfirm();
-      let modalAddProduct = useModalConfirm()
-      const iconStatus = iconStatusEnum((order?.status ? order?.status : STATUS.INCOMPLETE), '2.5rem');
-      let modalUpdateOrder = useModalConfirm();
-      const [status, setStatus] = useState<String>('');
+    const { id = '' } = useParams();
+    const { order, cssClassName, hasReturn, getOrder } = useOrder({ orderId: id });
+    const navigate = useNavigate();
+    const { show, handleShow, handleClose } = useModalConfirm();
+    let modalAddProduct = useModalConfirm()
+    const iconStatus = iconStatusEnum((order?.estatus ? order?.estatus : STATUS.INCOMPLETE), '2.5rem');
+    let modalUpdateOrder = useModalConfirm();
+    const [status, setStatus] = useState<string>('');
 
-      const handleClicHome = (event:any) => {
+    const handleClicHome = (event: any) => {
         event?.preventDefault();
         event?.stopPropagation();
         navigate("/");
-      }
+    }
 
-    const handleStatusAction = (event:any,status: String) => {
+    const handleStatusAction = (event: any, status: string) => {
         handleShow(event);
         setStatus(status);
     }
 
     const handleUpdateState = () => {
-        updateStatePedido({id: Number(id), status:status}).then(() => {
+        updateStatePedido({ id: id, status: status }).then(() => {
             handleClicHome(event);
             toast.success("Actualizado correctamente.")
         }).catch((error: Error) => toast.error(error.message));
     }
 
     const canAddProduct = () => {
-        if(order?.status === STATUS.INCOMPLETE){
-            return true; 
+        if (order?.estatus === STATUS.INCOMPLETE) {
+            return true;
         }
         return false;
     }
 
     const canEndOrder = () => {
-        if(order?.status === STATUS.INCOMPLETE){
+        if (order?.estatus === STATUS.INCOMPLETE) {
             return true;
         }
         return false;
     }
     const canShowButtons = () => {
-        return order?.status === STATUS.BACKLOG || order?.status === STATUS.INCOMPLETE;
+        return order?.estatus === STATUS.BACKLOG || order?.estatus === STATUS.INCOMPLETE;
     }
 
 
     const handleRealoadOrder = () => {
-            getOrder();
+        getOrder();
     }
 
-    const handleRealoadProducts = () => {
-        getProductos().then(() => {
-            handleRealoadOrder();
-        }).catch((error: Error) => toast.error(error.message));
-    }
-
-   
 
     return (
-    <div className="detailOrder">
-        <div className="detail-title">
-            {hasReturn &&
-                <button className='button-back' onClick={(e) => handleClicHome(e)}>
+        <div className="detailOrder">
+            <div className="detail-title">
+                {hasReturn &&
+                    <button className='button-back' onClick={(e) => handleClicHome(e)}>
                         <IoIosArrowBack size="2.5rem" />
-                </button>
-            }
-            <h1>Detalle de pedido para {getNameClient(order)}</h1>
-        </div>
-        {order &&
-            <div className={`detailOrder-container ${(id ? cssClassName : '' )}`}>
-                    <div className='orderDetail'>    
-                        <div className="orderDetail-iconStatus">
-                            {iconStatus}
-                        </div>
-                        <div className="orderDetail-info">
-                            <div className="orderDetail-details">
-                                <p className="font-client"> {getNameClient(order)}</p>
-                                <p className="font-place"> {order.lugarEntrega}</p>   
+                    </button>
+                }
+                <h1>Detalle de pedido para {order?.cliente}</h1>
+            </div>
+            {order &&
+                <section className="detailOrder-section">
+                    <div className={`detailOrder-container`}>
+                        {canShowButtons() &&
+                                    <div className='order-actions'>
+                                        {order?.estatus === STATUS.BACKLOG &&
+                                            <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleStatusAction(event, STATUS.DONE)}>Entregado</button>}
+                                        {canAddProduct() &&
+                                            <button className='btn btn-add btn-sm' onClick={(event) => modalAddProduct.handleShow(event)} >Agregar producto</button>
+                                        }
+                                    </div>
+                                }
+                        {order.productos.length > 0 &&
+                            <div className="detailOrder-products">
+                                {order.productos.map((product, index) => (
+                                    <CardProduct key={index} productItem={product} reload={() => { }}></CardProduct>
+                                ))}
                             </div>
-                            <div className='orderDetail-details'>
-                                <p> {formatDateTime(order.fechaEntrega)}</p>
-                                <p><span>Productos:</span> {order.numProducts}</p>
-                            </div>    
-                            <div className='orderDetail-details'>
-                                <p><span>Total:</span> ${order.total}.00</p>
-                                <p className="font-registered">{`Registrado por: ${order.register}`} </p>
-                            </div>
-                            { canShowButtons() &&
-                                <div className='order-actions'>
-                                    <button type='button' className='btn btn-next btn-sm' onClick={(event) => modalUpdateOrder.handleShow(event)}>Editar</button>
-                                    <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleStatusAction(event,STATUS.CANCELED)}>Cancelar</button>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                <hr></hr>
-                { canShowButtons() &&
-                    <div className='order-actions'>
-                        {order?.status === STATUS.BACKLOG &&
-                        <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleStatusAction(event,STATUS.DONE)}>Entregado</button>}        
-                        {canAddProduct() && 
-                            <button className='btn btn-add btn-sm' onClick={(event) => modalAddProduct.handleShow(event)} >Agregar producto</button>
                         }
                     </div>
-                }
-                <div className='content-product'>
-                    {modalAddProduct.show && <AddNewProduct idPedido={order.id} handleClose={() => modalAddProduct.handleClose(event)} reload={handleRealoadProducts}></AddNewProduct>}
-                </div>
-                {productos.length > 0 &&
-                    <div className="detailOrder-products">
-                        { productos.map(product => (
-                            <CardProduct key={product.id} productItem={product} reload={getProductos}></CardProduct>
-                        ))}
+                    <div className={`detailOrder-container`}>
+                            <div className="orderDetail-info">
+                                <h1>Resumen</h1>
+                                <div className="orderDetail-details">
+                                    <p className="fs-1"><FaUser /> {order.cliente}</p>
+                                    <p className="fs-1"> <MdPlace></MdPlace> {order.lugarEntrega}</p>
+                                    <p> <FaClock /> {formatDateTime(order.fechaEntrega)}</p>
+                                    <p><span>Productos:</span> {order.productos.length}</p>
+                                    <p className="fs-2"><span>Total:</span> ${order.total}.00</p>
+                                </div>
+                                {canShowButtons() &&
+                                    <div className='order-buttons'>
+                                        <button type='button' className='btn btn-next btn-sm' onClick={(event) => modalUpdateOrder.handleShow(event)}>Editar</button>
+                                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleStatusAction(event, STATUS.CANCELED)}>Cancelar</button>
+                                    </div>
+                                }
+
+                                {
+                                    order.productos && order.productos.length > 0 && canEndOrder() &&
+                                    <button className='btn btn-success btn-sm' onClick={(event) => handleStatusAction(event, STATUS.BACKLOG)} disabled={!order.productos || order.productos?.length < 0} >Finalizar registro</button>
+                                }
+                                <div className="orderDetail-details">
+                                    <p className="fs-07">{`Registrado por: ${order.registradoPor}`} </p>
+                                </div>
+                        </div>
+
+                        <div className='content-product'>
+                            {modalAddProduct.show && <AddNewProduct idPedido={order.id} handleClose={() => modalAddProduct.handleClose(event)} reload={() => { }}></AddNewProduct>}
+                        </div>
+
+
+                        <ModalConfirm show={show} handleClose={handleClose} handleOk={handleUpdateState} ></ModalConfirm>
+                        {
+                            modalUpdateOrder.show &&
+                            <NewOrder handleClose={modalUpdateOrder.handleClose} orderDto={order} reload={handleRealoadOrder}></NewOrder>
+                        }
                     </div>
-                }
-                {
-                    productos && productos.length > 0 && canEndOrder() && 
-                    <button className='btn btn-success btn-sm'onClick={(event) => handleStatusAction(event,STATUS.BACKLOG)} disabled={!productos || productos?.length<0} >Finalizar registro</button>
-                }
-                
-                <ModalConfirm show={show} handleClose={handleClose} handleOk={handleUpdateState} ></ModalConfirm>
-                {
-                modalUpdateOrder.show && 
-                <NewOrder handleClose={modalUpdateOrder.handleClose} orderDto={order} reload={handleRealoadOrder}></NewOrder>
+                </section>
             }
-            </div>}
-    </div>
+        </div>
 
     )
 }

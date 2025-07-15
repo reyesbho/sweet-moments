@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import {  getPedido, getProductsByPedidoId } from "../services/pedidos.services";
+import {  getPedido } from "../services/pedidos.services";
 import { classStatusEnum, STATUS } from "../general/Status";
 import { toast } from "react-toastify";
 import { OrderDto, ProductOrderDto } from "../general/Dtos";
+import { Pedido } from "../general/interfaces/pedido";
 
 
-export function useOrder({ orderId }:{orderId: number}) {
-  const [orderItem, setOrderItem] = useState<OrderDto | null>();
+export function useOrder({ orderId }:{orderId: string}) {
+  const [orderItem, setOrderItem] = useState<Pedido | null>();
   const [loading, setLoading] = useState(false);
   const [cssClassName, setCssClassName] = useState("");
   const [hasReturn, setHasReturn] = useState(false);
-  const [productos, setProductos] = useState<ProductOrderDto[]>([]);
   
 
   const getOrder = async () => {
@@ -18,21 +18,13 @@ export function useOrder({ orderId }:{orderId: number}) {
     await getPedido(orderId)
       .then(async(pedido) => {
         setOrderItem(pedido);
-        let status = pedido.status as keyof typeof STATUS;
+        let status = pedido.estatus as keyof typeof STATUS;
         setCssClassName(classStatusEnum[status]);
         setHasReturn(true);
-        getProductos();
       })
       .catch((error: Error) => toast.error(error.message))
       .finally(() => setLoading(false));
   };
-
-  const getProductos = async() => { 
-    await getProductsByPedidoId(orderId).
-          then((products) => {
-              setProductos([...products]);
-          }).catch((error: Error) => toast.error(error.message));
-  }
 
   useEffect(() => {
       getOrder();
@@ -40,5 +32,5 @@ export function useOrder({ orderId }:{orderId: number}) {
 
 
 
-  return { order:orderItem, cssClassName, hasReturn, loading, productos, setProductos, getOrder, getProductos};
+  return { order:orderItem, cssClassName, hasReturn, loading, getOrder};
 }

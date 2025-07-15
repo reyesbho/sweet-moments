@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { addSabor, deleteSabor, getSabores, updateStatusSabor } from "../services/sabor.service";
 import { addSizeProduct, daleteSizeProduct, getSizeProductos, updateStatusSizeProduct } from "../services/sizeProducto.service";
-import { addTipoProducto, deleteTipoProduct, getTipoProducto, updateStatusTipoProduct } from "../services/tipoProducto.service";
 import { toast } from "react-toastify";
 import { CatalogTypeDto } from "../general/Dtos";
 import { CATALOGS } from "../general/Constants";
@@ -33,18 +31,6 @@ export function useCatalogs(){
     }
 
     const addNewRecord = (catalog:String, newRecord: CatalogTypeDto) => {
-        if(catalog === CATALOGS.flavor){
-            addSabor(newRecord).then(() => {
-                setReload(!reload);
-                toast.success("Registrado correctamente.");
-            }).catch((error: Error) => toast.error(error.message));
-        }
-        if(catalog === CATALOGS.typeProduct){
-            addTipoProducto(newRecord).then(() => {
-                setReload(!reload);
-                toast.success("Registrado correctamente.");
-            }).catch((error: Error) => toast.error(error.message));
-        }
         if(catalog === CATALOGS.sizeProduct){
             addSizeProduct(newRecord).then(() => {
                 setReload(!reload);

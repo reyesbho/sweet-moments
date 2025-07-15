@@ -3,23 +3,22 @@ import { getPedidos } from '../services/pedidos.services';
 import { paginationInit } from '../general/Constants';
 import { compareDesc } from 'date-fns';
 import { toast } from 'react-toastify';
-import { OrderDto } from '../general/Dtos';
+import { Pedido } from '../general/interfaces/pedido';
 
 export function useOrders(status: String){
-    const [orders, setOrders] = useState<OrderDto[]>([])
+    const [orders, setOrders] = useState<Pedido[]>([])
     const [statusFilter, setStatusFilter] = useState<String>(status) 
     const [dateInit, setDateInit ] = useState<String | null>(null);
     const [dateEnd, setDateEnd ] = useState<String | null>(null);
     const [loading, setLoading] = useState(false);
-    const [totalItems, setTotalItems] = useState(0)
+    
     const [pagination, setPagination] = useState(paginationInit)
 
     const getOrders = async () =>{
         setLoading(true);
         await getPedidos(statusFilter,dateInit, dateEnd, pagination)
-        .then(({pedidos, totalItems}) => {
-            setOrders([...orders,...pedidos]); 
-            setTotalItems(totalItems);
+        .then(({pedidos, total, nextCursor, hasMore}) => {
+            setOrders([...pedidos]); 
         })
         .catch((error: Error) => toast.error(error.message))
         .finally(() => setLoading(false));
@@ -60,9 +59,8 @@ export function useOrders(status: String){
     const handleRefreshOrders = async() => {
         setLoading(true);
         await getPedidos(statusFilter,dateInit, dateEnd, paginationInit)
-        .then(({pedidos, totalItems}) => {
+        .then(({pedidos, total, nextCursor, hasMore}) => {
             setOrders([...pedidos]); 
-            setTotalItems(totalItems);
             setPagination(paginationInit);
         })
         .catch((error: Error) => toast.error(error.message))
@@ -71,10 +69,10 @@ export function useOrders(status: String){
 
    const sortOrders = useMemo(() => {
         const ordersAux = orders.slice().sort((a,b) => {
-            return compareDesc(b.fechaEntrega, a.fechaEntrega);
+            return compareDesc(new Date(b.fechaEntrega.seconds * 1000), new Date(a.fechaEntrega.seconds * 1000));
         });
         return ordersAux;
     },[orders])
 
-    return {orders: sortOrders,handleRefreshOrders,incrementPagination, changeStatusFilter,handleDateFilter,totalItems, statusFilter};
+    return {orders: sortOrders,handleRefreshOrders,incrementPagination, changeStatusFilter,handleDateFilter, statusFilter};
 }

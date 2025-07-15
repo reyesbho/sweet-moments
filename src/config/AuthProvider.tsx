@@ -4,13 +4,12 @@ import {useContext, useEffect, useState } from "react";
 import { createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from "./useLocalStorage";
-import { getUser } from "../services/Auth.service";
 import { registerInterceptor } from "./Interceptor";
 import { TokenResponse, UserResponse } from "../general/Interfaces";
 
 export const AuthContext = createContext<{
     token:TokenResponse | null,
-    principal: UserResponse | null,
+    principal: string | null,
     login: any,
     logout:any,
     interceptor:any} | undefined>(undefined);
@@ -18,20 +17,18 @@ export const AuthContext = createContext<{
 
 export function AuthProvider({children}:{children:any}){
     const [token, setToken] = useLocalStorage("token", null);
-    const [principal, setPrincipal] = useLocalStorage("principal", null);
+    const [principal, setPrincipal] =  useLocalStorage("principal", null);
+
     const navigate = useNavigate();
     const interceptor = () => {
       registerInterceptor(logout);
     }
   
     // call this function when you want to authenticate the user
-    const login = (data:TokenResponse) => {
+    const login = ({data, email}:{data:TokenResponse, email:string}) => {
       setToken(data);
-       getUser().then((response: UserResponse) => {
-        setPrincipal(response);
-      }).then(() => {
-        navigate("/",{replace:true});
-      });
+      setPrincipal(email);
+      navigate("/",{replace:true});
     };
   
     // call this function to sign out logged in user

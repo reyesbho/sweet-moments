@@ -1,17 +1,19 @@
 import fetchIntercept from 'fetch-intercept';
-import { useAuth } from './AuthProvider';
 export const  registerInterceptor = async(logout:any) => {
     fetchIntercept.clear();
      fetchIntercept.register({
         request: function (url, config) {
-            const token = JSON.parse(localStorage.getItem("token") ?? '');
-            const modifiedHeaders = new Headers();
-            modifiedHeaders.append('Content-Type', 'application/json');
-            if(url.includes("/api") || url.includes("/user")){
-                modifiedHeaders.append('Authorization',  `Bearer ${token?.token}`);
-            }
-            config.headers = modifiedHeaders;
-            return [url, config];
+            const modifiedHeaders = new Headers(config.headers || {});
+            modifiedHeaders.set('Content-Type', 'application/json');
+
+            return [
+                url,
+                {
+                    ...config,
+                    headers: modifiedHeaders,
+                    credentials: 'include',
+                },
+            ];
         },
 
         requestError: function (error) {

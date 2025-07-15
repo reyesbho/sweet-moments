@@ -19,6 +19,9 @@
 h1 {
   text-align: center;
   font-weight: bold;
+  width: 100%;
+  padding: 10px;
+  margin: 0px;
 }
 
 .btn{
@@ -452,4 +455,34 @@ hr{
 .rigth{
   display: flex;
   justify-self: end;
+}
+
+.fs-07{
+  font-size: 0.7rem;
+  font-weight: normal;
+}
+
+.fs-06{
+  font-size: 0.6rem;
+  font-weight: normal;
+}
+
+.fs-0{
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.fs-1{
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.fs-2{
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+
+.fs-3{
+  font-size: 2rem;
+  font-weight: normal;
 }

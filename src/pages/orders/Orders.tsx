@@ -18,7 +18,7 @@ import endOfMonth from 'date-fns/endOfMonth';
 
 export function Orders() {
     const [status, setStatus] = useState<string>(STATUS_FILTER.ALL)
-    const { orders, handleRefreshOrders, incrementPagination,changeStatusFilter,handleDateFilter,totalItems, statusFilter} = useOrders(status)
+    const { orders, handleRefreshOrders, incrementPagination,changeStatusFilter,handleDateFilter, statusFilter} = useOrders(status)
     const {cssClassStatus, handleSetStatus} = useStatus(status);
     const {show, handleShow, handleClose} = useModalConfirm();
     const navigate = useNavigate();
@@ -96,7 +96,7 @@ export function Orders() {
                 </div>
             </div>
             <OrderList orders={orders} handleRefreshOrders={handleRefreshOrders} ></OrderList>
-            <p>{`Número de pedidos ${totalItems}`}</p>
+            <p>{`Número de pedidos ${orders.length}`}</p>
             {
                 show && 
                 <NewOrder handleClose={handleClose} orderDto={null} reload={navigateDetail}></NewOrder>

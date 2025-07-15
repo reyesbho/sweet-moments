@@ -18,7 +18,7 @@ export function Login() {
 
     const handleLogin: SubmitHandler<UserLogin> = (userLogin: UserLogin) => {
         login(userLogin).then((response) => {
-            user.login(response)
+            user.login({data: response, email:userLogin.email})
         }).catch((error)=>{
             setErrorLogin(error.message);
         })
