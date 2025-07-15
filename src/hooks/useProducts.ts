@@ -2,30 +2,22 @@ import { useEffect, useState } from "react";
 import { addProducto, deleteProducto, getProductos, updateProducto } from "../services/producto.service";
 import { mapToProductRequestByCatalog } from "../utils/mapsToDto";
 import { toast } from "react-toastify";
-import { CatalogTypeDto, ProductOrderDto } from "../general/Dtos";
-import { addProductoToPedido } from "../services/pedidos.services";
-import { AddNewProductForm } from "../general/Constants";
+import { Producto } from "../general/interfaces/pedido.js";
 
 export function useProducts(){
-    const [products, setProducts] = useState<CatalogTypeDto[] | null>(null);
+    const [products, setProducts] = useState<Producto[] | null>(null);
     const [realoadProducts,setRealoadProducts] = useState(false);
 
     const getProducts = async() => {
         getProductos()
-        .then((productsList:CatalogTypeDto[]) => {
+        .then((productsList:Producto[]) => {
             setProducts(productsList);
         })
         .catch((error: Error) => toast.error(error.message));
         
     }
-    const addDetailProductToOrder = async(idPedido:number, detailProduct: AddNewProductForm) => {
-        await addProductoToPedido({id:idPedido,producto:detailProduct})
-        .then((pedidoProducto: ProductOrderDto)=> {
-            toast.success("Registrado correctamente.");
-        }).catch((error: Error) => toast.error(error.message));
-    }
 
-    const addProduct = async(newRecord: CatalogTypeDto) =>{
+    const addProduct = async(newRecord: Producto) =>{
         await addProducto(mapToProductRequestByCatalog(newRecord)).then(()=> {
             handleReloadProducts();
             toast.success("Registrado correctamente.");
@@ -55,5 +47,5 @@ export function useProducts(){
         getProducts();
     },[realoadProducts])
 
-    return {products,updateProduct,addDetailProductToOrder,removeProduct,addProduct,handleReloadProducts};
+    return {products,updateProduct,removeProduct,addProduct,handleReloadProducts};
 }

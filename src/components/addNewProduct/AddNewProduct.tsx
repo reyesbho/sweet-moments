@@ -10,44 +10,54 @@ import { Product } from "../formProducts/Product";
 import { FaPlusCircle } from "react-icons/fa";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AddNewProductForm, AddNewProductSchema } from "../../general/Constants";
+import { Pedido, Producto, ProductoPedido } from "../../general/interfaces/pedido";
+import { updatePedido } from "../../services/pedidos.services";
 
 
-export function AddNewProduct({idPedido,  handleClose, reload}:{idPedido: string, handleClose:CallableFunction, reload: CallableFunction }) {
-    const {products, addDetailProductToOrder} = useProducts();
-    const [productSelected, setProductSelected] = useState<CatalogTypeDto | null>(null);
+export function AddNewProduct({pedido,  handleClose, reload}:{pedido: Pedido, handleClose:CallableFunction, reload: CallableFunction }) {
+    const {products} = useProducts();
     const {sizes} = useCatalogs();
     const [sizesList, setSizesList] = useState<CatalogTypeDto[]>();
+
+    const [productSelected, setProductSelected] = useState<Producto | null>(null);   
     const [detailList, setDetailList] = useState<string[]>([]);
     const [detail, setDetail] = useState<string>('');
     
-    const { register, handleSubmit,setValue, formState:{errors} } = useForm<AddNewProductForm>({
+    const { register, handleSubmit,setValue, formState:{errors, isSubmitting} } = useForm<AddNewProductForm>({
         resolver: zodResolver(AddNewProductSchema),
         defaultValues: {
             cantidad: 1,
-            idSize: 0,
             precio:0,
-            idProducto: 0,
-            caracteristicas:''
+            caracteristicas:'',
+            idSize: ''
         }
     });
 
-    const handleClickSelect = (product: CatalogTypeDto) => {
+    const handleClickSelectProduct = (product: Producto) => {
         if(productSelected?.id === product.id){
             return
         }
         setProductSelected(product);
-        setValue("idProducto", product.id);
-        setSizesList([...sizes].filter((size) => size.tags?.includes(product.clave) || !size.tags));
+        setSizesList([...sizes].filter((size) => size.tags?.some(tag => tag === product.tag)));
     };
 
-    const handleAddDetailProduct = (productInfo: AddNewProductForm) => {
-        productInfo.idProducto = productSelected?.id ?? 0;
-        productInfo.caracteristicas = detailList.join(',');
-        addDetailProductToOrder(idPedido,productInfo)
-        .then(() =>{
-            handleClose();
-            reload();
-        });
+    const handleAddDetailProduct = async (productInfo: AddNewProductForm) => {
+        const productoPedido: ProductoPedido = {
+            size: sizesList?.find(size => size.id === productInfo.idSize) || { id: '', descripcion: '', tags: [] },
+            cantidad: productInfo.cantidad,
+            producto: productSelected || { id: '', descripcion: '', imagen: undefined, tag: '' },
+            caracteristicas: detailList,
+            precio: productInfo.precio
+        };
+        pedido.productos.push(productoPedido);
+
+        await updatePedido(pedido)
+            .then(() => {
+                toast.success("Producto agregado correctamente.");
+                reload();
+                handleClose();
+            })
+            .catch((error: Error) => toast.error(error.message));
     }
 
     const handleAddDetail = (e:React.MouseEvent) =>{
@@ -77,7 +87,7 @@ export function AddNewProduct({idPedido,  handleClose, reload}:{idPedido: string
                     {
                         products && 
                         products.map((producto => (
-                            <Product key={producto.id} product={producto} handleClickSelect={handleClickSelect} ></Product>
+                            <Product key={producto.id} product={producto} handleClickSelect={handleClickSelectProduct} ></Product>
                         )))
                     }
                 </div>
@@ -129,7 +139,7 @@ export function AddNewProduct({idPedido,  handleClose, reload}:{idPedido: string
                                             </li>
                                         ))}       
                                     </ul>
-                                    <button type="submit" className="btn btn-add btn-md rigth">Agregar</button>
+                                    <button type="submit" className="btn btn-add btn-md rigth" disabled={isSubmitting}>{isSubmitting ? 'Agregando...' : 'Agregar producto'}</button>
                                 </div>
                             </form>
                         }

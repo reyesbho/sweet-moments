@@ -21,6 +21,7 @@ export function useCatalogs(){
 
     const getsizes = () => {
         getSizeProductos().then((listSize: CatalogTypeDto[])=>{
+            console.log("Sizes fetched:", listSize);
             listSize.map((size: CatalogTypeDto) => {
                 size.selfDelete = () => daleteSizeProduct(size.id).then(handleResponseDelete).catch((error: Error) => toast.error(error.message));
                 size.selfUpdateEstatus = (status: boolean) => updateStatusSizeProduct(size.id, status).then(item => toast.success("Actualizado correctamente.")).catch(error => toast.error("Error al actualizar el registro."));

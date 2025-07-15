@@ -3,14 +3,12 @@ import endOfWeek from 'date-fns/endOfWeek';
 import addDays from 'date-fns/addDays';
 import startOfMonth from 'date-fns/startOfMonth';
 import endOfMonth from 'date-fns/endOfMonth';
-import { OrderDto } from './Dtos';
 import { z } from "zod";
 
 export const AddNewProductSchema = z.object({
   cantidad: z.coerce.number().min(1, "Ingrese una cantidad válida"),
-  idSize: z.coerce.number().min(1, "Seleccione un tamaño"),
+  idSize: z.coerce.string().min(1, "Seleccione un tamaño"),
   precio: z.coerce.number().min(0.01, "Ingrese un precio válido"),
-  idProducto: z.coerce.number().min(1, "Seleccione un producto"),
   caracteristicas: z.string().optional(),
 });
 
@@ -80,8 +78,3 @@ export const CATALOGS = {
   products:'products'
 };
 
-export const getNameClient = (order: OrderDto | null | undefined) => {
-        if(order && order.cliente)
-            return `${order.cliente.name} ${order.cliente.apellidoPaterno} ${order.cliente.apellidoMaterno ? order.cliente.apellidoMaterno : ''}`;
-        return '';
-    }

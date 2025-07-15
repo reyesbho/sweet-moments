@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { useModalConfirm } from "../../hooks/useModalConfirm";
-import { deleteProducto, updateProducto, updateStatusProducto } from "../../services/producto.service";
+import { deleteProducto, updateProducto } from "../../services/producto.service";
 import { ModalConfirm } from "../modal/Modal";
 import './Product.css';
 import { CatalogTypeDto } from "../../general/Dtos";
@@ -8,9 +8,10 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { NewCatalogRecord } from "../newCatalogRecord/NewCatalogRecord";
 import { CATALOGS } from "../../general/Constants";
+import { Producto } from "../../general/interfaces/pedido";
 
 export function Product({product, handleClickSelect, showActions=false, cssClassBorder='',handleReload}:
-    {product:CatalogTypeDto,handleClickSelect?:CallableFunction,showActions?:boolean,handleReload?:CallableFunction, cssClassBorder?:string, handleUpdate?: CallableFunction}) {
+    {product:Producto,handleClickSelect?:CallableFunction,showActions?:boolean,handleReload?:CallableFunction, cssClassBorder?:string, handleUpdate?: CallableFunction}) {
 
     const modalUpdate = useModalConfirm( );
     const modalDelete = useModalConfirm();

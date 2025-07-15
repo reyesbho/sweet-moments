@@ -2,7 +2,6 @@ import { MdPlace } from 'react-icons/md';
 import './CardOrderInfo.css'
 import { formatDateTime } from '../../utils/formatDate';
 import { FaClock, FaUser } from 'react-icons/fa';
-import { getNameClient } from '../../general/Constants';
 import { Pedido } from '../../general/interfaces/pedido';
 
 export function CardOrderInfo({ order, enableIcon }: { order: Pedido, enableIcon:boolean}) {

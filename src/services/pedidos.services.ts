@@ -1,9 +1,6 @@
-import {  mapToProductOrderDto } from "../utils/mapsToDto";
 import { API_PEDIDO } from "../general/url";
-import {  OrderInfo, Pagination } from "../general/Interfaces";
-import { mapToPedidoModel, mapToProductoRequest } from "../utils/mapsToModel";
-import { AddNewProductForm } from "../general/Constants";
 import { Pedido, PedidosResponse } from "../general/interfaces/pedido";
+import { Pagination } from "../general/Interfaces";
 
 
 
@@ -42,28 +39,26 @@ export const getPedido = async(orderId: string) => {
 }
 
 
-export const addPedido = async(order: OrderInfo) => {
-    const productEntity = mapToPedidoModel(order);
+export const addPedido = async(order: Pedido) => {
     try{
         const res = await fetch(API_PEDIDO,{
             method: "POST",
-              body: JSON.stringify(productEntity)
+              body: JSON.stringify(order)
         });
-        const data = await res.json();
+        const data:Pedido = await res.json();
         return data;
     } catch (error) {
         throw new Error("Error al agregar el pedido")
     }
 }
 
-export const updatePedido = async(order: OrderInfo) => {
-    const productEntity = mapToPedidoModel(order);
+export const updatePedido = async(order: Pedido) => {
     try{
-        const res = await fetch(API_PEDIDO,{
-            method: "PUT",
-              body: JSON.stringify(productEntity)
+        const res = await fetch(`${API_PEDIDO}/${order.id}`,{
+            method: "PATCH",
+              body: JSON.stringify(order)
         });
-        const data = await res.json();
+        const data:Pedido = await res.json();
         return data;
     } catch (error) {
         throw new Error("Error al actualizar el pedido")
@@ -81,18 +76,4 @@ export const updateStatePedido = async({id, status}:{id:string, status: string})
     } catch (error) {
         throw new Error("Error al actualizar el estado del pedido")
     }   
-}
-
-export const addProductoToPedido = async({id, producto}:{id:number, producto:AddNewProductForm}) => {
-    const product = mapToProductoRequest(producto);
-    try{
-        const res = await fetch(API_PEDIDO+`/${id}/producto`,{
-            method: "POST",
-            body: JSON.stringify(product)
-        })
-        const data = await res.json();
-        return mapToProductOrderDto(data);
-    }catch (error){
-        throw new Error("Error al registrar el producto")
-    }
 }

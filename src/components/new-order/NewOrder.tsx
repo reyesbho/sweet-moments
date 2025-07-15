@@ -10,7 +10,6 @@ import dayjs from 'dayjs';
 import { ClientDto, OrderDto } from '../../general/Dtos';
 import debounce from 'just-debounce';
 import { searchClient } from '../../services/cliente.service';
-import { getNameClient } from '../../general/Constants';
 import { Pedido } from '../../general/interfaces/pedido';
 import { formatDateTime } from '../../utils/formatDate';
 

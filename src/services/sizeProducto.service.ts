@@ -11,14 +11,14 @@ export const getSizeProductos = async():Promise<CatalogTypeDto[]> => {
         }
         );
         const tipos = await response.json();
-        return tipos?.map((cat: CatalogTypeModel) => mapToCatalogTypeDto(cat));
+        return tipos;
 
     } catch (error) {
         throw new Error("Error al buscar los tamaños");
     }
 }
 
-export const daleteSizeProduct = async(idSizeProduct:number) => {
+export const daleteSizeProduct = async(idSizeProduct:string) => {
     try {
         const response = await fetch(API_SIZE+`/${idSizeProduct}`,
         {
@@ -32,7 +32,7 @@ export const daleteSizeProduct = async(idSizeProduct:number) => {
     }
 }
 
-export const updateStatusSizeProduct = async(idSizeProduct:number, estatus:boolean):Promise<CatalogTypeDto> => {
+export const updateStatusSizeProduct = async(idSizeProduct:string, estatus:boolean):Promise<CatalogTypeDto> => {
     try {
         const response = await fetch(API_SIZE+`/${idSizeProduct}/${estatus}`,
         {

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {  getPedido } from "../services/pedidos.services";
 import { classStatusEnum, STATUS } from "../general/Status";
 import { toast } from "react-toastify";
-import { OrderDto, ProductOrderDto } from "../general/Dtos";
 import { Pedido } from "../general/interfaces/pedido";
 
 

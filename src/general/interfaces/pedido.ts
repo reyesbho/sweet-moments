@@ -6,15 +6,17 @@ export interface FirestoreTimestamp {
   nanoseconds: number;
 }
 
-interface Producto {
+export interface Producto {
   imagen:string | undefined,
   descripcion: string;
   id: string;
+  tag: string;
 }
 
-interface Size {
+export interface Size {
   id: string;
   descripcion: string;
+  tags: string[];
 }
 
 export interface ProductoPedido {

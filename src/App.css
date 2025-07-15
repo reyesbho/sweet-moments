@@ -246,6 +246,7 @@ button {
 
 hr{
   min-width: 100%;
+  opacity: 0.8;
 }
 
 .btn-sm{
@@ -355,7 +356,6 @@ hr{
   }
   
   .product{
-    min-width: 300px;
     gap: 15px;
   }
 }

@@ -1,17 +1,17 @@
-import { CatalogTypeDto, DetailProductoDto } from "../general/Dtos";
-import { ProductModel } from "../general/Models";
+import { CatalogTypeDto } from "../general/Dtos";
+import { Producto } from "../general/interfaces/pedido.js";
 import { API_PRODUCTO } from "../general/url";
 import { mapToDetailProductDto, mapToProductDto,  } from "../utils/mapsToDto";
 
-export const getProductos = async():Promise<CatalogTypeDto[]> => {
+export const getProductos = async():Promise<Producto[]> => {
     try {
         const response = await fetch(API_PRODUCTO,
         {
             method:"GET",
         }
         );
-        const tipos = await response.json();
-        return tipos?.map((cat:ProductModel) => mapToProductDto(cat));
+        const tipos:Producto[] = await response.json();
+        return tipos;
 
     } catch (error) {
         throw new Error("Error al buscar los productos");
@@ -19,7 +19,7 @@ export const getProductos = async():Promise<CatalogTypeDto[]> => {
 }
 
 
-export const deleteProducto = async(idProducto:number) => {
+export const deleteProducto = async(idProducto:string) => {
     try {
         const response = await fetch(API_PRODUCTO+`/${idProducto}`,
         {
@@ -33,20 +33,6 @@ export const deleteProducto = async(idProducto:number) => {
     }
 }
 
-export const updateStatusProducto = async(idProducto:number, estatus:boolean):Promise<CatalogTypeDto> => {
-    try {
-        const response = await fetch(API_PRODUCTO+`/${idProducto}/estatus/${estatus}`,
-        {
-            method:"PUT"
-        }
-        );
-        const tipo = await response.json();
-        return mapToProductDto(tipo);
-
-    } catch (error) {
-        throw new Error("Error al actualizar el producto");
-    }
-}
 
 export const addProducto = async (catalog: CatalogTypeDto):Promise<CatalogTypeDto> => {
     try {
@@ -64,28 +50,11 @@ export const addProducto = async (catalog: CatalogTypeDto):Promise<CatalogTypeDt
     }   
 }
 
-
-export const getDetalleProducto = async(idProducto: number):Promise<DetailProductoDto[]> => {
-    try {
-        let response = await  fetch(API_PRODUCTO+`/${idProducto}/producto`, {
-            method: 'GET'
-        });
-
-        const productos = await response.json();
-        return productos?.map(mapToDetailProductDto);
-
-    }catch(error){
-        console.log(error);
-        throw new Error("Error al buscar los detalles")
-    }  
-
-}
-
 export const updateProducto = async (catalog: CatalogTypeDto):Promise<CatalogTypeDto> => {
     try {
         const response = await fetch(API_PRODUCTO,
         {
-            method:"PUT",
+            method:"PATCH",
             body:JSON.stringify(catalog)
         }
         );

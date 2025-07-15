@@ -88,7 +88,7 @@ export function DetailOrder() {
                                         }
                                     </div>
                                 }
-                        {order.productos.length > 0 &&
+                        {order.productos?.length > 0 &&
                             <div className="detailOrder-products">
                                 {order.productos.map((product, index) => (
                                     <CardProduct key={index} productItem={product} reload={() => { }}></CardProduct>
@@ -99,11 +99,12 @@ export function DetailOrder() {
                     <div className={`detailOrder-container`}>
                             <div className="orderDetail-info">
                                 <h1>Resumen</h1>
+                                <hr></hr>
                                 <div className="orderDetail-details">
                                     <p className="fs-1"><FaUser /> {order.cliente}</p>
                                     <p className="fs-1"> <MdPlace></MdPlace> {order.lugarEntrega}</p>
                                     <p> <FaClock /> {formatDateTime(order.fechaEntrega)}</p>
-                                    <p><span>Productos:</span> {order.productos.length}</p>
+                                    <p><span>Productos:</span> {order.productos?.length}</p>
                                     <p className="fs-2"><span>Total:</span> ${order.total}.00</p>
                                 </div>
                                 {canShowButtons() &&
@@ -114,7 +115,7 @@ export function DetailOrder() {
                                 }
 
                                 {
-                                    order.productos && order.productos.length > 0 && canEndOrder() &&
+                                    order.productos && order.productos?.length > 0 && canEndOrder() &&
                                     <button className='btn btn-success btn-sm' onClick={(event) => handleStatusAction(event, STATUS.BACKLOG)} disabled={!order.productos || order.productos?.length < 0} >Finalizar registro</button>
                                 }
                                 <div className="orderDetail-details">
@@ -123,7 +124,7 @@ export function DetailOrder() {
                         </div>
 
                         <div className='content-product'>
-                            {modalAddProduct.show && <AddNewProduct idPedido={order.id} handleClose={() => modalAddProduct.handleClose(event)} reload={() => { }}></AddNewProduct>}
+                            {modalAddProduct.show && <AddNewProduct pedido={order} handleClose={() => modalAddProduct.handleClose(event)} reload={handleRealoadOrder}></AddNewProduct>}
                         </div>
 
 
