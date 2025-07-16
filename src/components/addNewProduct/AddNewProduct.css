@@ -158,11 +158,12 @@
     border: 1px solid var(--primary-font);
     border-radius: 10px;
     padding: 5px;
-    
+    background-color: white;
+    color: black;
 }
 
 .list-details > li{
-    padding: 3px;
+    padding: 5px;
     list-style: none;
     position: relative;
     border-radius: 10px;
@@ -173,7 +174,7 @@
 }
 
 .list-details > li:hover{
-    background-color: var(--tertiary-bg);
+    background-color: #14395c6b;
 }
 
 .products-selected-border{

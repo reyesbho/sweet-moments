@@ -8,12 +8,11 @@ import { ModalConfirm } from '../modal/Modal';
 import { useModalConfirm } from '../../hooks/useModalConfirm';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { ProductOrderDto } from '../../general/Dtos';
-import { Pedido } from '../../general/interfaces/pedido';
+import { Pedido, ProductoPedido } from '../../general/interfaces/pedido';
 
 export function Order({ order, handleRefreshOrders}:{order: Pedido, handleRefreshOrders: Function}) {
     const [showProducts, setShowProducts] = useState(false)
-    const [products, setProducts] = useState<ProductOrderDto[]>([])
+    const [products, setProducts] = useState<ProductoPedido[]>([])
     const {show, handleClose, handleShow} = useModalConfirm();
     const [status, setStatus] = useState<string>('');
     const [cssClassStatus, setCssClassStatus] = useState(classStatusEnum[order.estatus as keyof typeof classStatusEnum]);
@@ -29,6 +28,9 @@ export function Order({ order, handleRefreshOrders}:{order: Pedido, handleRefres
     }
 
     const handleUpdateState = (event:any) => {
+        if(!order.id){
+            return
+        }
         updateStatePedido({id: order.id, status:status}).then(() => {
             handleRefreshOrders()
             handleClose(event);
@@ -37,7 +39,7 @@ export function Order({ order, handleRefreshOrders}:{order: Pedido, handleRefres
     
     }
 
-    const handleReload = (id:number) =>{
+    const handleReload = (id:string) =>{
         const newProducts = structuredClone(products);
         setProducts(newProducts.filter((product) => product.id !== id));
         //updateStatePedido({id: order.id, status:status}).then(() => handleRefreshOrders());

@@ -7,10 +7,9 @@ import { useNewOrder } from '../../hooks/useNewOrder';
 import {  MobileDateTimePicker } from '@mui/x-date-pickers';
 import { OrderInfo } from '../../general/Interfaces';
 import dayjs from 'dayjs';
-import { ClientDto, OrderDto } from '../../general/Dtos';
 import debounce from 'just-debounce';
 import { searchClient } from '../../services/cliente.service';
-import { Pedido } from '../../general/interfaces/pedido';
+import { Pedido, Producto } from '../../general/interfaces/pedido';
 import { formatDateTime } from '../../utils/formatDate';
 
 
@@ -18,20 +17,20 @@ import { formatDateTime } from '../../utils/formatDate';
 export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFunction, orderDto: Pedido | null, reload: CallableFunction}) {
     const [order, setOrder] = useState<Pedido | null>(orderDto);
     const { registerOrder, updateOrder} = useNewOrder();
-    const [clients, setClients] = useState<ClientDto[]>([]);
+    const [clients, setClients] = useState<string[]>([]);
     
     const idCliente = useId();
     const idLugarEntrega = useId();
     const idFechaHora = useId();
     let orderInfo: OrderInfo = (order ? 
         {
-            idOrder: order?.id,
+            id: order?.id,
             cliente: order?.cliente,
             fechaEntrega: (order?.fechaEntrega ? dayjs(formatDateTime(order?.fechaEntrega)) : dayjs(new Date())),
             lugarEntrega: order?.lugarEntrega,
         } :
         {
-                idOrder: '',
+                id: '',
                 cliente:'',
                 fechaEntrega: dayjs(new Date()),
                 lugarEntrega:''
@@ -45,30 +44,26 @@ export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFu
         searchClient({search}).then((result) => setClients(result));
     },300), [])
 
-    const handleChange = (event:any) => {
-        const newSearch = event.target.value;
-        debounceGetClients(newSearch);
-      }
     
-      const handleClientSelected = (event:any, client: ClientDto) => {
-        event.preventDefault();
-        event.stopPropagation();
-        setClients([]);
-        setValue('cliente', client.name);
-        setValue('lugarEntrega', (client.direccion ? client.direccion : ''));
-    }
-
 
     const handleRegisterOrder = (orderInfo:OrderInfo) => {
-        if(orderInfo.idOrder){
-            updateOrder(orderInfo).then(() => {
+        const pedido: Pedido = {
+            ...orderInfo,
+            fechaEntrega: {
+                seconds: dayjs(orderInfo.fechaEntrega).utc().unix(),
+                nanoseconds: 0
+            }
+        }
+
+        if(orderInfo.id){
+            updateOrder(pedido).then(() => {
                 handleClose();
                 reload();
             });
         }else{
-            registerOrder(orderInfo).then((order: OrderDto) => {
+            registerOrder(pedido).then((order: Pedido) => {
                 handleClose();
-                reload(order.id);
+                reload(order?.id);
             });
         }
         
@@ -85,17 +80,8 @@ export function NewOrder({handleClose, orderDto, reload}:{handleClose:CallableFu
                     
                         <div className='form-input'>
                             <label htmlFor={idCliente}><FaUser></FaUser  > Cliente: </label>
-                            <input id={idCliente} {...register("cliente",{required:true})} placeholder='Nombre' type='text' onChange={handleChange}  />
-                            <div className='container-clients'>
-                                <div className='searchClients'>
-                                    {clients  && clients.map(client => (
-                                        <div className='searchClients-option' key={client.id} onClick={(event) => handleClientSelected(event, client)}>
-                                            <span><FaUser></FaUser> {`${client.name} ${client.apellidoPaterno} ${client.apellidoMaterno ? client.apellidoMaterno : ''}`}</span>
-                                            <span><MdLocationOn></MdLocationOn> {` ${client.direccion}`}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                            <input id={idCliente} {...register("cliente",{required:true})} placeholder='Nombre' type='text'  />
+
                         </div>
                         <div className='form-input'>
                             <label htmlFor={idLugarEntrega}><MdLocationOn ></MdLocationOn> Lugar de entrega: </label>

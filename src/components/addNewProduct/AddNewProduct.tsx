@@ -49,7 +49,7 @@ export function AddNewProduct({pedido,  handleClose, reload}:{pedido: Pedido, ha
             caracteristicas: detailList,
             precio: productInfo.precio
         };
-        pedido.productos.push(productoPedido);
+        pedido.productos = (pedido.productos ? [...pedido.productos, productoPedido] : [productoPedido]);
 
         await updatePedido(pedido)
             .then(() => {

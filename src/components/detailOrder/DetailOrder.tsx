@@ -88,11 +88,11 @@ export function DetailOrder() {
                         <IoIosArrowBack size="2.5rem" />
                     </button>
                 }
-                <h1>Detalle de pedido para {order?.cliente}</h1>
+                <h1>Detalle de pedido</h1>
             </div>
             {order &&
                 <section className="detailOrder-section">
-                    <div className={`detailOrder-container`}>
+                    <div className={`detailOrder-container-produts`}>
                         {canShowButtons() &&
                                     <div className='order-actions'>
                                         {order?.estatus === STATUS.BACKLOG &&
@@ -102,15 +102,15 @@ export function DetailOrder() {
                                         }
                                     </div>
                                 }
-                        {order.productos?.length > 0 &&
+                        {(order.productos?.length ?? 0) > 0 &&
                             <div className="detailOrder-products">
-                                {order.productos.map((product, index) => (
-                                    <CardProduct key={index} productItem={product} reload={handleRealoadOrder} handleDeleteProducPedido={handleDeleteProducPedido}></CardProduct>
+                                {order.productos?.map((product, index) => (
+                                    <CardProduct key={index} productItem={product} reload={handleRealoadOrder} handleDeleteProducPedido={handleDeleteProducPedido} showDelete={true}></CardProduct>
                                 ))}
                             </div>
                         }
                     </div>
-                    <div className={`detailOrder-container`}>
+                    <div className={`detailOrder-container-resume`}>
                             <div className="orderDetail-info">
                                 <h1>Resumen</h1>
                                 <hr></hr>

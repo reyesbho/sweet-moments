@@ -16,13 +16,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Bounce, ToastContainer } from 'react-toastify';
 import { useState } from 'react';
 import { HeaderProvider, useHeader } from './context/HeaderContext';
-
+import utc from 'dayjs/plugin/utc';
+import dayjs from 'dayjs';
 
 
 function App() {
   const title = 'Dulces Momentos';
   const {handleClose} = useHeader();
-
+  dayjs.extend(utc);
    const themeDark = createTheme({
     components:{
       MuiOutlinedInput:{

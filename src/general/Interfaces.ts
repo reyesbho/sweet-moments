@@ -89,7 +89,7 @@ export interface ProductSelectDto{
 }
 
 export interface OrderInfo{
-    idOrder: string | undefined,
+    id: string | undefined,
     cliente: string,
     lugarEntrega: string,
     fechaEntrega: Dayjs,

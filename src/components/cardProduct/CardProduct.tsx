@@ -3,8 +3,8 @@ import './CardProduct.css'
 import { useModalConfirm } from '../../hooks/useModalConfirm';
 import { ModalConfirm } from '../modal/Modal';
 import { ProductoPedido } from '../../general/interfaces/pedido.js';
-export function CardProduct({ productItem, reload, handleDeleteProducPedido = () => {} }: 
-                            { productItem: ProductoPedido, reload: CallableFunction, handleDeleteProducPedido?: CallableFunction }) {
+export function CardProduct({ productItem, reload, handleDeleteProducPedido = () => {}, showDelete = false   }: 
+                            { productItem: ProductoPedido, reload: CallableFunction, handleDeleteProducPedido?: CallableFunction, showDelete?: boolean }) {
     const { show, handleShow, handleClose } = useModalConfirm();
     const handleDelete = (event: any) => {
         event?.preventDefault();
@@ -37,9 +37,10 @@ export function CardProduct({ productItem, reload, handleDeleteProducPedido = ()
                         }
                     </ul>
                 </div>
-                <span onClick={(event) => handleShow(event)} className='icon-actions' title='Eliminar'>
+                {showDelete && <span onClick={(event) => handleShow(event)} className='icon-actions' title='Eliminar'>
                     <FaTrash size="1.2rem" className='color-wrong'></FaTrash>
                 </span>
+                }
             </div>
 
             <ModalConfirm show={show} handleClose={handleClose} handleOk={handleDelete} ></ModalConfirm>

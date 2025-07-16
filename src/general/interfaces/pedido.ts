@@ -20,7 +20,7 @@ export interface Size {
 }
 
 export interface ProductoPedido {
-  id: string;
+  id?: string;
   size: Size;
   cantidad: number;
   producto: Producto;
@@ -29,15 +29,15 @@ export interface ProductoPedido {
 }
 
 export interface Pedido {
-  id: string;
-  total: number;
+  id: string | undefined;
+  total?: number;
   cliente: string;
   lugarEntrega: string;
-  fechaCreacion: FirestoreTimestamp;
-  estatusPago: 'PENDIENTE' | 'PAGADO';
-  registradoPor: string;
-  productos: ProductoPedido[];
-  estatus: STATUS.BACKLOG | STATUS.CANCELED | STATUS.DELETE | STATUS.DONE | STATUS.INCOMPLETE;
+  fechaCreacion?: FirestoreTimestamp;
+  estatusPago?: 'PENDIENTE' | 'PAGADO';
+  registradoPor?: string;
+  productos?: ProductoPedido[];
+  estatus?: STATUS.BACKLOG | STATUS.CANCELED | STATUS.DELETE | STATUS.DONE | STATUS.INCOMPLETE;
   fechaEntrega: FirestoreTimestamp;
 }
 
