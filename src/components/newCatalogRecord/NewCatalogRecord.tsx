@@ -40,19 +40,20 @@ export function NewCatalogRecord({record, handleClose, addRecordCallback, update
         setImage(record?.image);
     }, [record]);
 
-    const handleAction = (catalog: CatalogTypeDto) => {
+    const handleAction = async (catalog: CatalogTypeDto) => {
         if(selectedValues.length == 0) {
             return;
         }
         catalog.tags = selectedValues.map(v => v.tag);
+        let result;
         if(updateRecordCallback){
-            updateRecordCallback(catalog);
+            result = await updateRecordCallback(catalog);
         }
             
         if(addRecordCallback){
-            addRecordCallback(catalog);
+            result = await addRecordCallback(catalog);
         }
-        if(isSubmitSuccessful){
+        if(isSubmitSuccessful && result.success){
             handleRealod();
             reset();
             handleClose();

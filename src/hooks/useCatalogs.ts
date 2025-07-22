@@ -40,10 +40,15 @@ export function useCatalogs(){
         .finally(() => setLoading(false));
     }, []);
 
-    const addNewSize = useCallback((newRecord: CatalogTypeDto) => {
-            addSizeProduct(newRecord).then(() => {
-                toast.success("Registrado correctamente.");
-            }).catch((error: Error) => toast.error(error.message));
+    const addNewSize = useCallback(async (newRecord: CatalogTypeDto) => {
+        try {
+            await addSizeProduct(newRecord);
+            toast.success("Registrado correctamente.");
+            return { success: true };
+        } catch (error: any) {
+            toast.error(error.message);
+            return { success: false, error: error.message };
+        }
     }, []);
     
     return {sizes,addNewSize, getsizes, getsizesActives, loading};

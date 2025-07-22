@@ -15,7 +15,7 @@ export function TableCatalogType({title, catalogArray,catalogType, handleReload,
     const configTable = {
         columns:['Imagen','Descripcion','Tags','Estatus','Actions']
     }
-    const [action, setAction] = useState(false);
+    const [action, setAction] = useState(true);
     const handleTableShow = (event: React.MouseEvent<HTMLDivElement>) => {
         event.stopPropagation();
         setAction(!action);
