@@ -1,13 +1,11 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { addSizeProduct,  getSizeProductos, updateStateSizeProduct } from "../services/sizeProducto.service";
 import { toast } from "react-toastify";
 import { CatalogTypeDto } from "../general/Dtos";
-import { CATALOGS } from "../general/Constants";
-
 
 export function useCatalogs(){
     const [sizes, setSizes] = useState<CatalogTypeDto[]>([]);
-    
+    const [loading, setLoading] = useState(false);
     
     const handleResponseDelete = (response: Response) => {
         if (response.status === 200) {
@@ -18,33 +16,35 @@ export function useCatalogs(){
         }
     }
 
-    const getsizes = () => {
+    const getsizes = useCallback(() => {
+        setLoading(true);
         getSizeProductos({}).then((listSize: CatalogTypeDto[])=>{
-            listSize.map((size: CatalogTypeDto) => {
+            listSize.forEach((size: CatalogTypeDto) => {
                 size.selfUpdateEstatus = () => updateStateSizeProduct(size.id).then(handleResponseDelete).catch((error: Error) => toast.error(error.message));
             })
             setSizes(listSize);
         })
-        .catch((error: Error) => toast.error(error.message));
-    }
+        .catch((error: Error) => toast.error(error.message))
+        .finally(() => setLoading(false));
+    }, []);
 
-    const getsizesActives = ({tag}:{tag:string}) => {
+    const getsizesActives = useCallback(({tag}:{tag:string}) => {
+        setLoading(true);
         getSizeProductos({tag, estatus: 'ACTIVO'}).then((listSize: CatalogTypeDto[])=>{
-            listSize.map((size: CatalogTypeDto) => {
+            listSize.forEach((size: CatalogTypeDto) => {
                 size.selfUpdateEstatus = () => updateStateSizeProduct(size.id).then(handleResponseDelete).catch((error: Error) => toast.error(error.message));
             })
             setSizes(listSize);
         })
-        .catch((error: Error) => toast.error(error.message));
-    }
+        .catch((error: Error) => toast.error(error.message))
+        .finally(() => setLoading(false));
+    }, []);
 
-    const addNewSize = (newRecord: CatalogTypeDto) => {
+    const addNewSize = useCallback((newRecord: CatalogTypeDto) => {
             addSizeProduct(newRecord).then(() => {
                 toast.success("Registrado correctamente.");
             }).catch((error: Error) => toast.error(error.message));
-    }
+    }, []);
     
-
-    
-    return {sizes,addNewSize, getsizes, getsizesActives};
+    return {sizes,addNewSize, getsizes, getsizesActives, loading};
 }

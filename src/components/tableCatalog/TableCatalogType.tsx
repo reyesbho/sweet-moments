@@ -6,9 +6,10 @@ import { CatalogTypeRecord } from "./CatalogTypeRecord";
 import { TableComponent } from "../tableComponent/tableComponent";
 import { useState } from "react";
 import { CatalogTypeDto } from '../../general/Dtos';
+import Loading from './Loading';
 
-export function TableCatalogType({title, catalogArray,catalogType, handleReload, addNewRecord, hasImage=false}:
-    {title:string, catalogArray: CatalogTypeDto[],catalogType:string, handleReload: CallableFunction, addNewRecord: CallableFunction, hasImage?:boolean}){
+export function TableCatalogType({title, catalogArray,catalogType, handleReload, addNewRecord, hasImage=false, loading}:
+    {title:string, catalogArray: CatalogTypeDto[],catalogType:string, handleReload: CallableFunction, addNewRecord: CallableFunction, hasImage?:boolean, loading?:boolean}){
     const sortedCatalogArray = [...catalogArray].sort();
     const {show, handleClose, handleShow} = useModalConfirm();
     const configTable = {
@@ -29,6 +30,7 @@ export function TableCatalogType({title, catalogArray,catalogType, handleReload,
                 <FaPlusCircle size="2rem" className='color-success' ></FaPlusCircle>
             </button>
         </div>
+        {loading && <Loading />}
         <div className={`table-wrapper ${action ? 'show' : ''}`}>
             <TableComponent configTable={configTable} hasImage={hasImage}>
                 <tbody>
