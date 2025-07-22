@@ -1,11 +1,18 @@
 import { CatalogTypeDto } from "../general/Dtos";
-import { CatalogTypeModel } from "../general/Models";
+import { Size } from "../general/interfaces/pedido";
 import { API_SIZE } from "../general/url";
 import { mapToCatalogTypeDto } from "../utils/mapsToDto";
 
-export const getSizeProductos = async():Promise<CatalogTypeDto[]> => {
-    try {
-        const response = await fetch(API_SIZE,
+export const getSizeProductos = async({tag, estatus}:{tag?: string, estatus?:string}):Promise<CatalogTypeDto[]> => {
+        try {
+            const params = new URLSearchParams();
+
+        if (tag) params.append("tag", tag);
+        if (estatus) params.append("estatus", estatus);
+
+        const query = params.toString();
+        const url = `${API_SIZE}${query ? `?${query}` : ''}`;
+        const response = await fetch(url,
         {
             method:"GET"
         }
@@ -18,11 +25,11 @@ export const getSizeProductos = async():Promise<CatalogTypeDto[]> => {
     }
 }
 
-export const daleteSizeProduct = async(idSizeProduct:string) => {
+export const updateStateSizeProduct = async(idSizeProduct:string) => {
     try {
         const response = await fetch(API_SIZE+`/${idSizeProduct}`,
         {
-            method:"DELETE"
+            method:"PUT"
         }
         );
         return response;
@@ -32,11 +39,12 @@ export const daleteSizeProduct = async(idSizeProduct:string) => {
     }
 }
 
-export const updateStatusSizeProduct = async(idSizeProduct:string, estatus:boolean):Promise<CatalogTypeDto> => {
+export const updateSizeProduct = async(idSizeProduct:string, catalog: CatalogTypeDto):Promise<CatalogTypeDto> => {
     try {
-        const response = await fetch(API_SIZE+`/${idSizeProduct}/${estatus}`,
+        const response = await fetch(API_SIZE+`/${idSizeProduct}`,
         {
-            method:"PUT"
+            method:"PATCH",
+            body:JSON.stringify(catalog)
         }
         );
         const tipo = await response.json();
@@ -48,7 +56,7 @@ export const updateStatusSizeProduct = async(idSizeProduct:string, estatus:boole
 }
 
 
-export const addSizeProduct = async (catalog: CatalogTypeDto):Promise<CatalogTypeDto> => {
+export const addSizeProduct = async (catalog: CatalogTypeDto):Promise<Size> => {
     try {
         const response = await fetch(API_SIZE,
         {
@@ -56,8 +64,12 @@ export const addSizeProduct = async (catalog: CatalogTypeDto):Promise<CatalogTyp
             body:JSON.stringify(catalog)
         }
         );
-        const tipo = await response.json();
-        return mapToCatalogTypeDto(tipo);
+        if (!response.ok) {
+            const responseErrors = await response.json();
+            throw new Error(responseErrors.error[0].message || "Error al agregar el tamaño del producto");
+        }
+        const tipo:Size = await response.json();
+        return tipo;
 
     } catch (error) {
         throw new Error("Error al agregar el tamaño del producto");

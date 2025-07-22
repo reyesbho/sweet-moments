@@ -5,4 +5,13 @@ export interface CatalogTypeDto{
     selfDelete: CallableFunction | undefined ;
     selfUpdateEstatus: CallableFunction | undefined;
     tags: string[];
+    image?: string;
+}
+
+
+export interface NewCatalogTypeDto{
+    id: string;
+    descripcion: string;
+    estatus: boolean;
+    tags: string[];
 }

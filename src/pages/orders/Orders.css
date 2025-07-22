@@ -1,6 +1,7 @@
 .orders{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 .orders > p{
     padding: 10px 0px;

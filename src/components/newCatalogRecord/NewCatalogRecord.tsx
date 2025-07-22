@@ -3,27 +3,30 @@ import './NewCatalogRecord.css';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { CatalogTypeDto } from '../../general/Dtos';
-import { add } from 'date-fns';
+import { SelectMultiple } from '../selectMultiple/SelectMultiple';
+import { useProducts } from '../../hooks/useProducts';
+import { Producto } from '../../general/interfaces/pedido';
 
-export function NewCatalogRecord({record, handleClose, addRecordCallback, updateRecordCallback, hasImage}:
-    {record?:CatalogTypeDto ,handleClose: CallableFunction,catalogType:string, addRecordCallback?:CallableFunction,updateRecordCallback?:CallableFunction,hasImage:boolean}){
+export function NewCatalogRecord({record, handleClose, addRecordCallback, updateRecordCallback, hasImage, handleRealod}:
+    {record?:CatalogTypeDto ,handleClose: CallableFunction,catalogType:string, addRecordCallback?:CallableFunction,updateRecordCallback?:CallableFunction, handleRealod:CallableFunction, hasImage:boolean}){
     const [image, setImage] = useState<string | undefined>();
+    const [selectedValues, setSelectedValues] = useState<Producto[]>([]);
+    const {products} = useProducts();
+
     const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors},setValue } = useForm<CatalogTypeDto>({
         defaultValues: (
             record ? {
                 id: record.id,
-                clave: record.clave,
                 descripcion: record.descripcion,
-                imagen: record.imagen,
+                image: record.image,
                 estatus: record.estatus,
                 tags: record.tags,
                 selfDelete: record.selfDelete,
                 selfUpdateEstatus: record.selfUpdateEstatus
             } : {
-                id: 0,
-                clave: '',
+                id: '',
                 descripcion: '',
-                imagen: undefined,
+                image: undefined,
                 estatus: true,
                 tags: undefined,
                 selfDelete: undefined,
@@ -34,15 +37,26 @@ export function NewCatalogRecord({record, handleClose, addRecordCallback, update
 
     useEffect(() => {
         reset(record);
-        setImage(record?.imagen);
+        setImage(record?.image);
     }, [record]);
 
     const handleAction = (catalog: CatalogTypeDto) => {
-        if(updateRecordCallback)
+        if(selectedValues.length == 0) {
+            return;
+        }
+        catalog.tags = selectedValues.map(v => v.tag);
+        if(updateRecordCallback){
             updateRecordCallback(catalog);
-        if(addRecordCallback)
+        }
+            
+        if(addRecordCallback){
             addRecordCallback(catalog);
-        handleClose();
+        }
+        if(isSubmitSuccessful){
+            handleRealod();
+            reset();
+            handleClose();
+        }
     }
 
 
@@ -62,7 +76,7 @@ export function NewCatalogRecord({record, handleClose, addRecordCallback, update
                 reader.onloadend = () => {
                     if (reader.result) {
                         const base64String = reader.result.toString();
-                        setValue('imagen', base64String);
+                        setValue('image', base64String);
                         setImage(base64String);
                         }
                 };
@@ -111,6 +125,14 @@ export function NewCatalogRecord({record, handleClose, addRecordCallback, update
             reader.readAsDataURL(file);
         });
         }
+
+        const handleSelectChange = (option:Producto) => {
+            const newSelectedValues:Producto[] = 
+            selectedValues.some(reg => reg.id === option.id)
+                ? selectedValues.filter(v => v.id !== option.id)
+                : [...selectedValues, option];
+            setSelectedValues(newSelectedValues);
+        }
     return(
         <div className="main-modal ">
             <div className='modal-container catalogRecord container-detailProducto'>
@@ -135,19 +157,13 @@ export function NewCatalogRecord({record, handleClose, addRecordCallback, update
                             }
                         })}></input>
                     </div>
-                    <div className='form-input'>
-                        <label htmlFor='keyCatalog' >Clave</label>
-                        <input id='keyCatalog' type='text' {...register("clave",{
-                            required:{
-                                value: true,
-                                message:"Valor requerido"
-                            },
-                            pattern:{
-                                value:new RegExp('^([a-z])+$'),
-                                message:"Solo minusculas, sin caracteres especiales"
-                            }
-                        })}></input>
-                        {errors.clave && <p>{errors.clave?.message}</p>}
+                    <div>
+                        <label htmlFor='descriptionCatalog' >Aplica para</label>
+                        <SelectMultiple 
+                            options={products || []}
+                            selectedValues={selectedValues}
+                            onChange={handleSelectChange}
+                        />
                     </div>
                     <div className='buttons'>
                         <button className='btn btn-cancel btn-md' onClick={() => handleClose()}>Cancelar</button>

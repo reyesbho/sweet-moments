@@ -9,10 +9,10 @@ import { CatalogTypeDto } from '../../general/Dtos';
 
 export function TableCatalogType({title, catalogArray,catalogType, handleReload, addNewRecord, hasImage=false}:
     {title:string, catalogArray: CatalogTypeDto[],catalogType:string, handleReload: CallableFunction, addNewRecord: CallableFunction, hasImage?:boolean}){
-    const sortedCatalogArray = [...catalogArray].sort((a, b) => a.id - b.id);
+    const sortedCatalogArray = [...catalogArray].sort();
     const {show, handleClose, handleShow} = useModalConfirm();
     const configTable = {
-        columns:['Imagen','Descripcion','Clave','Estatus','Actions']
+        columns:['Imagen','Descripcion','Tags','Estatus','Actions']
     }
     const [action, setAction] = useState(false);
     const handleTableShow = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -41,7 +41,7 @@ export function TableCatalogType({title, catalogArray,catalogType, handleReload,
             </TableComponent>
         </div>
     </div>
-    {show && <NewCatalogRecord catalogType={catalogType} addRecordCallback={addNewRecord} handleClose={handleClose} hasImage={hasImage}></NewCatalogRecord>}
+    {show && <NewCatalogRecord catalogType={catalogType} handleRealod={handleReload} addRecordCallback={addNewRecord} handleClose={handleClose} hasImage={hasImage}></NewCatalogRecord>}
     </>   
     )
 }

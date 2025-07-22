@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { addSizeProduct, daleteSizeProduct, getSizeProductos, updateStatusSizeProduct } from "../services/sizeProducto.service";
+import { useState } from "react";
+import { addSizeProduct,  getSizeProductos, updateStateSizeProduct } from "../services/sizeProducto.service";
 import { toast } from "react-toastify";
 import { CatalogTypeDto } from "../general/Dtos";
 import { CATALOGS } from "../general/Constants";
@@ -7,7 +7,6 @@ import { CATALOGS } from "../general/Constants";
 
 export function useCatalogs(){
     const [sizes, setSizes] = useState<CatalogTypeDto[]>([]);
-    const [reload, setReload] = useState(false);
     
     
     const handleResponseDelete = (response: Response) => {
@@ -20,33 +19,32 @@ export function useCatalogs(){
     }
 
     const getsizes = () => {
-        getSizeProductos().then((listSize: CatalogTypeDto[])=>{
-            console.log("Sizes fetched:", listSize);
+        getSizeProductos({}).then((listSize: CatalogTypeDto[])=>{
             listSize.map((size: CatalogTypeDto) => {
-                size.selfDelete = () => daleteSizeProduct(size.id).then(handleResponseDelete).catch((error: Error) => toast.error(error.message));
-                size.selfUpdateEstatus = (status: boolean) => updateStatusSizeProduct(size.id, status).then(item => toast.success("Actualizado correctamente.")).catch(error => toast.error("Error al actualizar el registro."));
+                size.selfUpdateEstatus = () => updateStateSizeProduct(size.id).then(handleResponseDelete).catch((error: Error) => toast.error(error.message));
             })
             setSizes(listSize);
         })
         .catch((error: Error) => toast.error(error.message));
     }
 
-    const addNewRecord = (catalog:String, newRecord: CatalogTypeDto) => {
-        if(catalog === CATALOGS.sizeProduct){
-            addSizeProduct(newRecord).then(() => {
-                setReload(!reload);
-                toast.success("Registrado correctamente.");
-            }).catch((error: Error) => toast.error(error.message));
-        }
-    }
-    
-    const handleTogleReload = () => {
-        setReload(!reload);
+    const getsizesActives = ({tag}:{tag:string}) => {
+        getSizeProductos({tag, estatus: 'ACTIVO'}).then((listSize: CatalogTypeDto[])=>{
+            listSize.map((size: CatalogTypeDto) => {
+                size.selfUpdateEstatus = () => updateStateSizeProduct(size.id).then(handleResponseDelete).catch((error: Error) => toast.error(error.message));
+            })
+            setSizes(listSize);
+        })
+        .catch((error: Error) => toast.error(error.message));
     }
 
-    useEffect(()=>{
-        getsizes();
-    },[reload])
+    const addNewSize = (newRecord: CatalogTypeDto) => {
+            addSizeProduct(newRecord).then(() => {
+                toast.success("Registrado correctamente.");
+            }).catch((error: Error) => toast.error(error.message));
+    }
     
-    return {sizes,handleTogleReload, addNewRecord};
+
+    
+    return {sizes,addNewSize, getsizes, getsizesActives};
 }

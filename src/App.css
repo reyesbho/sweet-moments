@@ -316,11 +316,12 @@ hr{
 
 .table th{
   text-align: center;
-  padding: 5px;
+  padding: 10px;
 }
 
 .table td{
   width: auto;
+  padding: 5px 10px;
 }
 
 .table-actions{

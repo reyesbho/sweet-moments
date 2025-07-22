@@ -16,9 +16,7 @@ import { updatePedido } from "../../services/pedidos.services";
 
 export function AddNewProduct({pedido,  handleClose, reload}:{pedido: Pedido, handleClose:CallableFunction, reload: CallableFunction }) {
     const {products} = useProducts();
-    const {sizes} = useCatalogs();
-    const [sizesList, setSizesList] = useState<CatalogTypeDto[]>();
-
+    const {getsizesActives, sizes} = useCatalogs();
     const [productSelected, setProductSelected] = useState<Producto | null>(null);   
     const [detailList, setDetailList] = useState<string[]>([]);
     const [detail, setDetail] = useState<string>('');
@@ -38,12 +36,12 @@ export function AddNewProduct({pedido,  handleClose, reload}:{pedido: Pedido, ha
             return
         }
         setProductSelected(product);
-        setSizesList([...sizes].filter((size) => size.tags?.some(tag => tag === product.tag)));
+        getsizesActives({tag: product.tag});
     };
 
     const handleAddDetailProduct = async (productInfo: AddNewProductForm) => {
         const productoPedido: ProductoPedido = {
-            size: sizesList?.find(size => size.id === productInfo.idSize) || { id: '', descripcion: '', tags: [] },
+            size: sizes?.find(size => size.id === productInfo.idSize) || { id: '', descripcion: '', tags: [] },
             cantidad: productInfo.cantidad,
             producto: productSelected || { id: '', descripcion: '', imagen: undefined, tag: '' },
             caracteristicas: detailList,
@@ -107,7 +105,7 @@ export function AddNewProduct({pedido,  handleClose, reload}:{pedido: Pedido, ha
                                         <label htmlFor="comments">Tamaño:</label>
                                         <select id="size" {...register("idSize")}>
                                             <option value="">Seleccionar</option>
-                                            {sizesList && sizesList.map((size) => (
+                                            {sizes && sizes.map((size) => (
                                                 <option key={size.id} value={size.id}>{size.descripcion}</option>
                                             ))} 
                                         </select>
