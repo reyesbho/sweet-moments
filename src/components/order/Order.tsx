@@ -15,7 +15,7 @@ export function Order({ order, handleRefreshOrders}:{order: Pedido, handleRefres
     const [products, setProducts] = useState<ProductoPedido[]>([])
     const {show, handleClose, handleShow} = useModalConfirm();
     const [status, setStatus] = useState<string>('');
-    const [cssClassStatus, setCssClassStatus] = useState(classStatusEnum[order.estatus as keyof typeof classStatusEnum]);
+    
 
     const handleShowProducts = async() => {
         setShowProducts(!showProducts);
@@ -50,7 +50,7 @@ export function Order({ order, handleRefreshOrders}:{order: Pedido, handleRefres
 
     return (
         <>
-        <div className={`principal-order ${cssClassStatus}`} onClick={handleShowProducts}> 
+        <div className={`principal-order `} onClick={handleShowProducts}> 
             <CardOrderInfo order={order} enableIcon={true}></CardOrderInfo>
             <div className='order-actions'>
                 { (order?.estatus === STATUS.BACKLOG || order?.estatus === STATUS.INCOMPLETE)  && 
