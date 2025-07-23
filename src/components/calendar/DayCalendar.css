@@ -1,0 +1,31 @@
+ .dia-calendar{
+    width: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    border-radius: 5px;
+ }
+
+ .dia-calendar-dia-semana{
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    font-size: 1.1rem;
+    padding: 5px;
+    border-radius: 5px;
+ }
+ .dia-calendar-dia-semana:hover{
+    background-color: rgb(190, 186, 186);
+ }
+
+ .dia-calendar-lista{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    max-height: 300px;
+    overflow-y: auto;
+ }

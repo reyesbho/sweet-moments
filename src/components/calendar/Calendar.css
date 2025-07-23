@@ -1,0 +1,26 @@
+.calendar-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calendar-controls > button{
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.calendar-controls > input{
+  padding: 5px;
+  cursor: pointer;
+}
+.calendar-days {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.dia-calendar-outside-month {
+  opacity: 0.4;
+} 

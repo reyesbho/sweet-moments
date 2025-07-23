@@ -1,0 +1,30 @@
+.order-pill {
+  margin-bottom: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--tertiary-bg);
+  list-style: none;
+  cursor: pointer;
+  margin: 1px;
+}
+
+.order-pill:hover{
+  background: #2765a0;
+  
+}
+.order-pill-hora {
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  font-size: 1rem;
+}
+
+.order-pill-cliente {
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  font-size: 0.8;
+}
+.order-pill-lugar {
+  font-size: 11px;
+  color: #bbb9b9;
+  font-size: 0.8rem;
+} 

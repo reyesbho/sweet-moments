@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { HeaderProvider, useHeader } from './context/HeaderContext';
 import utc from 'dayjs/plugin/utc';
 import dayjs from 'dayjs';
+import Calendar from './components/calendar/Calendar';
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
               <Route path='/login' element={<Login></Login>}></Route>
               <Route path='/catalogos' element={<AdminCatalog></AdminCatalog>}></Route>
               <Route path='/productos' element={<DetailProducts></DetailProducts>}></Route>
+              <Route path='/calendario' element={<Calendar></Calendar>}></Route>
               <Route path='*' element={<ProtectedRoute><NotFound></NotFound></ProtectedRoute>}></Route>
             </Routes>
             </main>

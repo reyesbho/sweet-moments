@@ -9,8 +9,8 @@ export const getPedidos = async(statusFilter:String,dateInit:String | null, date
         try{
         const res = await fetch(`${API_PEDIDO}?`+
             `estatus=${statusFilter}&pageSize=${pagination.pageSize}`+
-            (dateInit?`&dateInit=${dateInit}`:'')+
-            (dateEnd?`&dateEnd=${dateEnd}`:''),
+            (dateInit?`&fechaInicio=${dateInit}`:'')+
+            (dateEnd?`&fechaFin=${dateEnd}`:''),
             {
                 method: 'GET'
             }

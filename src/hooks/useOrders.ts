@@ -74,5 +74,5 @@ export function useOrders(status: String){
         return ordersAux;
     },[orders])
 
-    return {orders: sortOrders,handleRefreshOrders,incrementPagination, changeStatusFilter,handleDateFilter, statusFilter};
+    return {orders: sortOrders,handleRefreshOrders,incrementPagination, changeStatusFilter,handleDateFilter, statusFilter, loading};
 }
