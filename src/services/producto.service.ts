@@ -1,7 +1,7 @@
 import { CatalogTypeDto } from "../general/Dtos";
 import { Producto } from "../general/interfaces/pedido.js";
 import { API_PRODUCTO } from "../general/url";
-import { mapToDetailProductDto, mapToProductDto,  } from "../utils/mapsToDto";
+import { mapToProductDto } from "../utils/mapsToDto";
 
 export const getProductos = async():Promise<Producto[]> => {
     try {
