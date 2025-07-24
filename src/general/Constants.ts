@@ -47,22 +47,22 @@ export const paginationInit = {
 export const predefinedRanges = [
     {
       label: 'Hoy',
-      value: [new Date(), new Date()],
+      value: [new Date(), new Date()] as [Date, Date],
       placement: 'left'
     },
     {
       label: 'Mañana',
-      value: [addDays(new Date(), +1), addDays(new Date(), +1)],
+      value: [addDays(new Date(), +1), addDays(new Date(), +1)] as [Date, Date],
       placement: 'left'
     },
     {
       label: 'Esta semana',
-      value: [startOfWeek(new Date()), endOfWeek(new Date())],
+      value: [startOfWeek(new Date()), endOfWeek(new Date())] as [Date, Date],
       placement: 'left'
     },
     {
       label: 'Este mes',
-      value: [startOfMonth(new Date()), endOfMonth(new Date())],
+      value: [startOfMonth(new Date()), endOfMonth(new Date())] as [Date, Date],
       placement: 'left'
     }
   ];

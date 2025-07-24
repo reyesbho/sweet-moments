@@ -85,7 +85,7 @@ export function AddNewProduct({pedido,  handleClose, reload}:{pedido: Pedido, ha
                     {
                         products && 
                         products.map((producto => (
-                            <Product key={producto.id} product={producto} handleClickSelect={handleClickSelectProduct} ></Product>
+                            <Product key={producto.id} isSelected={productSelected?.id == producto.id} product={producto} handleClickSelect={handleClickSelectProduct} ></Product>
                         )))
                     }
                 </div>

@@ -10,8 +10,8 @@ import { NewCatalogRecord } from "../newCatalogRecord/NewCatalogRecord";
 import { CATALOGS } from "../../general/Constants";
 import { Producto } from "../../general/interfaces/pedido";
 
-export function Product({product, handleClickSelect, showActions=false, cssClassBorder='',handleReload}:
-    {product:Producto,handleClickSelect?:CallableFunction,showActions?:boolean,handleReload?:CallableFunction, cssClassBorder?:string, handleUpdate?: CallableFunction}) {
+export function Product({product, handleClickSelect, showActions=false, cssClassBorder='',handleReload, isSelected}:
+    {product:Producto,handleClickSelect?:CallableFunction,showActions?:boolean,handleReload?:CallableFunction, cssClassBorder?:string, handleUpdate?: CallableFunction, isSelected:boolean}) {
 
     const modalUpdate = useModalConfirm( );
     const modalDelete = useModalConfirm();
@@ -42,7 +42,7 @@ export function Product({product, handleClickSelect, showActions=false, cssClass
     }
     return (
         <>
-            <div key={product.id} className={`container-product-catalog ${cssClassBorder}`}>
+            <div key={product.id} className={`container-product-catalog ${cssClassBorder} ${isSelected ? 'product-selected' : ''}`}>
                 <div className="producto" key={product.id} onClick={() => (handleClickSelect ?handleClickSelect(product) : null)}>
                     <span className="producto-title">{product.descripcion}</span>
                     <img className="producto-img" src={product.imagen}></img>

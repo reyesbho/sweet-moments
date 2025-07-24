@@ -21,10 +21,8 @@ export function CardProduct({ productItem, reload, handleDeleteProducPedido = ()
                     alt={productItem.producto?.descripcion}></img>
                 <div className='product-segment'>
                     <div className='product-info'>
-                        <span className='product-name'>{productItem.producto?.descripcion}</span>
-                        <span className='product-size'>{productItem.size.descripcion}</span>
-                        <span className='product-price'>{`$${productItem.precio}`} </span>
-                        <span><strong>Cantidad: </strong>{productItem.cantidad}</span>
+                        <span className='product-name'>{productItem.producto?.descripcion} ({productItem.size.descripcion})</span>
+                        <span className='product-price'>{`$${productItem.precio}`} x ({productItem.cantidad})</span>
                     </div>
                     <ul className='product-properties'>
                         {productItem.caracteristicas &&

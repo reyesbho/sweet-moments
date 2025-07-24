@@ -44,3 +44,7 @@
     text-shadow: 2px 1px 8px rgba(2, 2, 2, 0.81);
     color: var(--quaternary-font);
 }
+
+.product-selected{
+    background-color: var(--secondary-bg);
+}

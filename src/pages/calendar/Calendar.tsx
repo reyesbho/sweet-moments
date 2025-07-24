@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DayCalendar from './DayCalendar';
+import DayCalendar from '../../components/calendar/DayCalendar';
 import { getDaysInMonth, format, startOfMonth, endOfMonth, addMonths, subMonths, getDay, addDays, subDays } from 'date-fns';
 import './Calendar.css';
 import { Pedido } from '../../general/interfaces/pedido';
@@ -86,7 +86,7 @@ export default function Calendar() {
       ) : (
         <div className="calendar-days">
           {weeks.map((week, idx) => (
-            <div className="calendar-week" key={idx} style={{ display: 'flex', gap: 8, width: '100%' }}>
+            <div className="calendar-week" key={idx} >
               {week.map(date => {
                 // Pedidos de este día
                 const pedidosDia = pedidosMes.filter(p => {

@@ -69,10 +69,11 @@
 
 .header-menu_options{
     padding: 10px;
-    background-color: var(--primary-bg);
+    background-color: var(--quinary-bg);
     border-radius: 10px;
     text-decoration: none;
-    color: white;
+    font-weight: 400;
+    color: var(--quinary-font);
     cursor: pointer;
     opacity: 0.9;
     width: 150px;

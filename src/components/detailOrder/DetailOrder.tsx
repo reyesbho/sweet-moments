@@ -96,9 +96,9 @@ export function DetailOrder() {
                         {canShowButtons() &&
                                     <div className='order-actions'>
                                         {order?.estatus === STATUS.BACKLOG &&
-                                            <button type='button' className='btn btn-add btn-sm' onClick={(event) => handleStatusAction(event, STATUS.DONE)}>Entregado</button>}
+                                            <button type='button' className='btn btn-add btn-md' onClick={(event) => handleStatusAction(event, STATUS.DONE)}>Entregado</button>}
                                         {canAddProduct() &&
-                                            <button className='btn btn-add btn-sm' onClick={(event) => modalAddProduct.handleShow(event)} >Agregar producto</button>
+                                            <button className='btn btn-add btn-md' onClick={(event) => modalAddProduct.handleShow(event)} >Agregar producto</button>
                                         }
                                     </div>
                                 }
@@ -123,14 +123,14 @@ export function DetailOrder() {
                                 </div>
                                 {canShowButtons() &&
                                     <div className='order-buttons'>
-                                        <button type='button' className='btn btn-next btn-sm' onClick={(event) => modalUpdateOrder.handleShow(event)}>Editar</button>
-                                        <button type='button' className='btn btn-cancel btn-sm' onClick={(event) => handleStatusAction(event, STATUS.CANCELED)}>Cancelar</button>
+                                        <button type='button' className='btn btn-next btn-md' onClick={(event) => modalUpdateOrder.handleShow(event)}>Editar</button>
+                                        <button type='button' className='btn btn-cancel btn-md' onClick={(event) => handleStatusAction(event, STATUS.CANCELED)}>Cancelar</button>
                                     </div>
                                 }
 
                                 {
                                     order.productos && order.productos?.length > 0 && canEndOrder() &&
-                                    <button className='btn btn-success btn-sm' onClick={(event) => handleStatusAction(event, STATUS.BACKLOG)} disabled={!order.productos || order.productos?.length < 0} >Finalizar registro</button>
+                                    <button className='btn btn-success btn-md' onClick={(event) => handleStatusAction(event, STATUS.BACKLOG)} disabled={!order.productos || order.productos?.length < 0} >Finalizar registro</button>
                                 }
                                 <div className="orderDetail-details">
                                     <p className="fs-07">{`Registrado por: ${order.registradoPor}`} </p>

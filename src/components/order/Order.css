@@ -1,49 +1,77 @@
 .principal-order{
-    border-radius: 25px;
-    background-color: var(--tertiary-bg);
-    margin: 5px;
-    padding: 5px;
-    border: 2px solid rgb(129, 122, 122);
     display: flex;
     flex-direction: column;
-    width: 500px;
+    background-color: white;
+    border-radius: 10px;
+    color: black;
+    padding: 20px;
+    width: 95%;
+    max-width: 500px;
     height: fit-content;
 }
 
-.border-status-success{
-    border: 2px solid var(--success-status);
-}
-
-.border-status-incomplete{
-    border: 2px solid var(--incomplete-status);
-}
-
-.border-status-wrong{
-    border: 2px solid var(--wrong-status);
-}
-
-.border-status-backlog{
-    border: 2px solid var(--backlog-status);
-}
-
-.border-status-default{
-    border: 2px solid var(--default-status);
-}
-
-.order-actions{
+.principal-order-header{
     display: flex;
-    gap: 10px;
-    justify-content: end;
+    flex-direction: column;
+    align-items: start;
+    padding-bottom: 20px;
+}
+.principal-order-client{
+    font-weight: bold;
+}
+.principal-order-place{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    color: #6b7280;
+    font-size: 0.9rem;
 }
 
-.detail-order{
+.principal-order-general{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.principal-order-general-total{
+    display: flex;  
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 0px;
+     & p {
+        padding: 0px;
+        margin: 0px;
+        font-size: 1rem;
+        font-weight: bold;
+        color: rgb(82, 80, 80);
+    }
+}
+
+.principal-order-general-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.principal-order-body{
+    border-top: 1px solid #e5e7eb;
     transition: max-height 0.5s ease, opacity 0.5s ease;
     max-height: 1000px; /* debe ser mayor al alto máximo estimado de la tabla */
     opacity: 1;
 }
 
-.detail-order.inactive{
+.principal-order-body.inactive{
     overflow: hidden;
     max-height: 0;
     opacity: 0;
+}
+
+
+
+@media only screen and (max-width:820px) {
+  
+    .principal-order{
+      padding: 10px;
+      margin: 0px;
+    }
 }

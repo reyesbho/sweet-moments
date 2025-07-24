@@ -18,7 +18,7 @@ import { useState } from 'react';
 import { HeaderProvider, useHeader } from './context/HeaderContext';
 import utc from 'dayjs/plugin/utc';
 import dayjs from 'dayjs';
-import Calendar from './components/calendar/Calendar';
+import Calendar from './pages/calendar/Calendar';
 
 
 function App() {

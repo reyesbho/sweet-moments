@@ -26,11 +26,10 @@ h1 {
 
 .btn{
   border-color: rgba(214, 202, 202, 0.432);
-  opacity: 0.8;
 }
 
 .btn:hover{
-  opacity: 1;
+  transform: scale(1.05);
 }
 
 .color-success{
@@ -184,7 +183,7 @@ input[type='file']::-webkit-file-upload-button{
   border-radius: 10px;
   padding: 6px 6px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
   margin: 8px 0px;
   text-decoration: none;
 }
@@ -196,7 +195,7 @@ input[type='file']::-webkit-file-upload-button{
   border-radius: 10px;
   padding: 6px 6px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
   align-self: flex-end;
   text-decoration: none;
   margin: 8px 0px;
@@ -209,7 +208,7 @@ input[type='file']::-webkit-file-upload-button{
   border-radius: 10px;
   padding: 6px 6px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
   text-decoration: none;
   margin: 8px 0px;
 }
@@ -221,7 +220,7 @@ input[type='file']::-webkit-file-upload-button{
   border-radius: 10px;
   padding: 6px 6px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
   text-decoration: none;
   margin: 8px 0px;
 }
@@ -233,7 +232,20 @@ input[type='file']::-webkit-file-upload-button{
   border-radius: 10px;
   padding: 6px 6px;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  align-self: flex-end;
+  text-decoration: none;
+  margin: 8px 0px;
+}
+
+.btn-edit{
+  background-color: var(--tertiary-btn);
+  color: var(--primary-font);
+  border-style: none;
+  border-radius: 10px;
+  padding: 6px 6px;
+  cursor: pointer;
+  font-weight: 600;
   align-self: flex-end;
   text-decoration: none;
   margin: 8px 0px;
@@ -356,9 +368,6 @@ hr{
     padding-bottom: 0px;
   }
   
-  .product{
-    gap: 15px;
-  }
 }
 
 hr{
@@ -486,4 +495,20 @@ hr{
 .fs-3{
   font-size: 2rem;
   font-weight: normal;
+}
+
+.border-status-success{
+  border-color: var(--success-status);
+}
+.border-status-backlog{
+  border-color: var(--backlog-status);
+}
+.border-status-wrong{
+  border-color: var(--wrong-status);
+}
+.border-status-incomplete{
+  border-color: var(--incomplete-status);
+}
+.border-status-default{
+  border-color: var(--default-status);
 }
