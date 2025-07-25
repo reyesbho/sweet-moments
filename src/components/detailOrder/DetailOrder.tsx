@@ -115,9 +115,9 @@ export function DetailOrder() {
                                 <h1>Resumen</h1>
                                 <hr></hr>
                                 <div className="orderDetail-details">
-                                    <p className="fs-1"><FaUser /> {order.cliente}</p>
-                                    <p className="fs-1"> <MdPlace></MdPlace> {order.lugarEntrega}</p>
-                                    <p> <FaClock /> {formatDateTime(order.fechaEntrega)}</p>
+                                    <p className="fs-1"><FaUser color="purple"/> {order.cliente}</p>
+                                    <p className="fs-1"> <MdPlace color="red"></MdPlace> {order.lugarEntrega}</p>
+                                    <p> <FaClock color="#87e6ed" /> {formatDateTime(order.fechaEntrega)}</p>
                                     <p><span>Productos:</span> {order.productos?.length}</p>
                                     <p className="fs-2"><span>Total:</span> ${order.total}.00</p>
                                 </div>
