@@ -4,8 +4,9 @@ export interface CatalogTypeDto{
     estatus: boolean;
     selfDelete: CallableFunction | undefined ;
     selfUpdateEstatus: CallableFunction | undefined;
-    tags: string[];
-    image?: string;
+    tags?: string[];
+    imagen?: string;
+    tag?:string;
 }
 
 

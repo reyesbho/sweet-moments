@@ -11,6 +11,7 @@ export interface Producto {
   descripcion: string;
   id: string;
   tag: string;
+  estatus:boolean
 }
 
 export interface Size {

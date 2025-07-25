@@ -18,13 +18,13 @@ export function CatalogTypeRecord({catalog,hasImage=false, handleReload}:{catalo
 
     return (
             <tr key={catalog.id}>
-                {hasImage && <td><img className="table-img" src={catalog.image ? catalog.image : undefined}></img></td>}
+                {hasImage && <td><img className="table-img" src={catalog.imagen ? catalog.imagen : undefined}></img></td>}
                 <td>{catalog.descripcion}</td>
-                <td>{catalog.tags.join(',')}</td>
+                <td>{catalog.tags?.join(',')}</td>
                 <td>{catalog.estatus ? 'ACTIVO' : 'INACTIVO'}</td>
                 <td className="table-actions">        
                     <div className="checkbox-apple">
-                        <input className="yep" id={`check-apple-${catalog.id}`} type="checkbox" checked={catalog.estatus} onChange={(event:any) => modalUpdate.handleShow(event)}/>
+                        <input className="check" id={`check-apple-${catalog.id}`} type="checkbox" checked={catalog.estatus} onChange={(event:any) => modalUpdate.handleShow(event)}/>
                         <label htmlFor={`check-apple-${catalog.id}`}></label>
                     </div>
                     <ModalConfirm show={modalUpdate.show} handleClose={(event:any) => modalUpdate.handleClose(event)} handleOk={handleUpdateModal} ></ModalConfirm>

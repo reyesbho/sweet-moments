@@ -1,9 +1,10 @@
+import { CatalogTypeDto } from "../../general/Dtos";
 import { Producto } from "../../general/interfaces/pedido";
 import { Option } from "./option/Option";
 import './SelectMultiple.css';
 
 export function SelectMultiple({ options, selectedValues, onChange }:
-    { options: Producto[], selectedValues: Producto[], onChange: CallableFunction}) {
+    { options: CatalogTypeDto[], selectedValues: Producto[], onChange: CallableFunction}) {
     
     return (
         <div className="select-multiple">

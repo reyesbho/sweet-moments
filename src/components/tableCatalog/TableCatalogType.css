@@ -1,6 +1,7 @@
 .catalogType{
     border-radius: 20px;
-    background-color: var(--tertiary-bg);
+    background-color: white;
+    color: black;
     padding: 10px;
     width: auto;
     place-self: stretch;

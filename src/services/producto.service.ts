@@ -3,9 +3,9 @@ import { Producto } from "../general/interfaces/pedido.js";
 import { API_PRODUCTO } from "../general/url";
 import { mapToProductDto } from "../utils/mapsToDto";
 
-export const getProductos = async():Promise<Producto[]> => {
+export const getProductos = async(status?:string):Promise<Producto[]> => {
     try {
-        const response = await fetch(API_PRODUCTO,
+        const response = await fetch(API_PRODUCTO+(status ? `?estatus=${status}`:''),
         {
             method:"GET",
         }

@@ -65,3 +65,47 @@ export const CATALOGS = {
   products:'products'
 };
 
+
+export const convertImageToWebP = (file: File): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      const img = new Image();
+
+      reader.onload = (e) => {
+      img.src = e.target?.result as string;
+      };
+
+      img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      canvas.width = 150;
+      canvas.height = 150;
+
+      if (ctx) {
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          canvas.toBlob(
+          (blob) => {
+              if (blob) resolve(blob);
+              else reject(new Error('No se pudo convertir a WebP'));
+          },
+          'image/webp',
+          0.8
+          );
+      } else {
+          reject(new Error('Canvas context inválido'));
+      }
+      };
+
+      reader.onerror = reject;
+      img.onerror = reject;
+
+      reader.readAsDataURL(file);
+  });
+  }
+
+  export const CATALOG_ESTATUS = {
+      ACTIVO: 'ACTIVO',
+      INACTIVO: 'INACTIVO'
+  }

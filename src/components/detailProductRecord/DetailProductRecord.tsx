@@ -39,7 +39,7 @@ export function DetailProductRecord({catalog, handleReload}:{catalog: DetailProd
                 <td>{catalog.estatus ? 'ACTIVO' : 'INACTIVO'}</td>
                 <td className="table-actions">                                
                 <div className="checkbox-apple">
-                        <input className="yep" id={`check-apple-${catalog.id}`} type="checkbox" checked={inputActive} onChange={(event:any) => modalUpdate.handleShow(event)}/>
+                        <input className="check" id={`check-apple-${catalog.id}`} type="checkbox" checked={inputActive} onChange={(event:any) => modalUpdate.handleShow(event)}/>
                         <label htmlFor={`check-apple-${catalog.id}`}></label>
                     </div>
                     <span onClick={(event:any) => modalDelete.handleShow(event)}><MdDelete size='1.2rem' color="#e04141"></MdDelete></span>

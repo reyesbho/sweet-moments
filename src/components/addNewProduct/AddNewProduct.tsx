@@ -5,19 +5,19 @@ import { useState } from "react";
 import { MdCancel, MdClose } from "react-icons/md";
 import { useCatalogs } from "../../hooks/useCatalogs";
 import { toast } from "react-toastify";
-import { CatalogTypeDto } from "../../general/Dtos";
 import { Product } from "../formProducts/Product";
 import { FaPlusCircle } from "react-icons/fa";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AddNewProductForm, AddNewProductSchema } from "../../general/Constants";
-import { Pedido, Producto, ProductoPedido } from "../../general/interfaces/pedido";
+import { AddNewProductForm, AddNewProductSchema, CATALOG_ESTATUS } from "../../general/Constants";
+import { Pedido, Producto, ProductoPedido, Size } from "../../general/interfaces/pedido";
 import { updatePedido } from "../../services/pedidos.services";
+import { CatalogTypeDto } from "../../general/Dtos";
 
 
 export function AddNewProduct({pedido,  handleClose, reload}:{pedido: Pedido, handleClose:CallableFunction, reload: CallableFunction }) {
-    const {products} = useProducts();
+    const {products} = useProducts(CATALOG_ESTATUS.ACTIVO);
     const {getsizesActives, sizes} = useCatalogs();
-    const [productSelected, setProductSelected] = useState<Producto | null>(null);   
+    const [productSelected, setProductSelected] = useState<CatalogTypeDto | null>(null);   
     const [detailList, setDetailList] = useState<string[]>([]);
     const [detail, setDetail] = useState<string>('');
     
@@ -31,19 +31,53 @@ export function AddNewProduct({pedido,  handleClose, reload}:{pedido: Pedido, ha
         }
     });
 
-    const handleClickSelectProduct = (product: Producto) => {
+    const mapToProduct = (catalog?: CatalogTypeDto | null):Producto => {
+        if(!catalog){
+            return {
+                        imagen: undefined,
+                        descripcion: "",
+                        id: "",
+                        tag: "",
+                        estatus: false
+                    };
+        }
+        return{
+            imagen: catalog.imagen,
+            descripcion: catalog.descripcion,
+            id: catalog.id,
+            tag: catalog.tag || '',
+            estatus: catalog.estatus,
+        }
+    }
+
+    const mapToSize = (catalog?: CatalogTypeDto | null):Size => {
+        if(!catalog){
+            return {
+                id: "",
+                descripcion: "",
+                tags: []
+            }
+        }
+        return{
+            id: catalog.id,
+            descripcion: catalog.descripcion,
+            tags: catalog.tags || []
+        }
+    }
+
+    const handleClickSelectProduct = (product: CatalogTypeDto) => {
         if(productSelected?.id === product.id){
             return
         }
         setProductSelected(product);
-        getsizesActives({tag: product.tag});
+        getsizesActives({tag: product.tag || ''});
     };
 
     const handleAddDetailProduct = async (productInfo: AddNewProductForm) => {
         const productoPedido: ProductoPedido = {
-            size: sizes?.find(size => size.id === productInfo.idSize) || { id: '', descripcion: '', tags: [] },
+            size: mapToSize(sizes?.find(size => size.id === productInfo.idSize)),
             cantidad: productInfo.cantidad,
-            producto: productSelected || { id: '', descripcion: '', imagen: undefined, tag: '' },
+            producto: mapToProduct(productSelected),
             caracteristicas: detailList,
             precio: productInfo.precio
         };

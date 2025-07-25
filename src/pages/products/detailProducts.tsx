@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useProducts } from "../../hooks/useProducts"
 import { Product } from "../../components/formProducts/Product";
 import './detailProducts.css';
@@ -6,7 +5,6 @@ import { FaPlusCircle } from "react-icons/fa";
 import { useModalConfirm } from "../../hooks/useModalConfirm";
 import { NewCatalogRecord } from "../../components/newCatalogRecord/NewCatalogRecord";
 import { CATALOGS } from "../../general/Constants";
-import { CatalogTypeDto } from "../../general/Dtos";
 
 
 export function DetailProducts(){
@@ -32,7 +30,7 @@ export function DetailProducts(){
             </div>
         </div>
         {modalProducto.show && 
-            <NewCatalogRecord  catalogType={CATALOGS.products} addRecordCallback={addProduct} handleClose={modalProducto.handleClose} hasImage={true}></NewCatalogRecord>
+            <NewCatalogRecord  catalogType={CATALOGS.products} handleRealod={handleReloadProducts} addRecordCallback={addProduct} handleClose={modalProducto.handleClose} hasImage={true}></NewCatalogRecord>
         }
         
         </>
