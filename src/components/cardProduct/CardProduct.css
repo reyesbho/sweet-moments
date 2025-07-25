@@ -23,6 +23,7 @@
     max-width: 450px;
     border-bottom: 1px solid #e5e7eb;
     border-radius: 15px;
+    min-width: 500px;
 }
 .product-img{
     

@@ -18,6 +18,7 @@
     "@mui/x-date-pickers": "^6.20.0",
     "dayjs": "^1.11.11",
     "fetch-intercept": "^2.4.0",
+    "js-cookie": "^3.0.5",
     "just-debounce": "1.1.0",
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",

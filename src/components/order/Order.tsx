@@ -2,18 +2,15 @@ import { STATUS, classStatusEnum } from '../../general/Status';
 import './Order.css'
 import { useState } from 'react';
 import { CardProduct } from '../cardProduct/CardProduct';
-import { CardOrderInfo } from '../cardOrderInfo/CardOrderInfo';
 import { updateStatePedido } from '../../services/pedidos.services';
 import { ModalConfirm } from '../modal/Modal';
 import { useModalConfirm } from '../../hooks/useModalConfirm';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Pedido, ProductoPedido } from '../../general/interfaces/pedido';
 import { FaClock, FaUser } from 'react-icons/fa';
 import { MdPlace } from 'react-icons/md';
 import { formatDateTime } from '../../utils/formatDate';
-import { colors } from '@mui/material';
-import { Button } from 'rsuite';
 
 export function Order({ order, handleRefreshOrders}:{order: Pedido, handleRefreshOrders: Function}) {
     const [showProducts, setShowProducts] = useState(false)

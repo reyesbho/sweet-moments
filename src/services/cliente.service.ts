@@ -1,10 +1,7 @@
 
-import { ClientDto } from "../general/Dtos";
-import { ClienteModel } from "../general/Models";
 import { API_CLIENTE } from "../general/url";
-import {  mapToClienteDto } from "../utils/mapsToDto";
 
-export const searchClient = async({search}:{search:String}):Promise<ClientDto[]> => {
+export const searchClient = async({search}:{search:String}):Promise<string[]> => {
     if (search === '') return [];
 
     try {
@@ -13,8 +10,8 @@ export const searchClient = async({search}:{search:String}):Promise<ClientDto[]>
             method:"GET",
         }
         );
-        const clients = await response.json();
-        return clients?.map((cliente:ClienteModel) => mapToClienteDto(cliente))
+        const clients:string[] = await response.json();
+        return clients;
 
     } catch (error) {
         throw new Error("Error al buscar el nombre");

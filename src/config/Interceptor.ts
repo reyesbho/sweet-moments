@@ -21,7 +21,7 @@ export const  registerInterceptor = async(logout:any) => {
         },
 
         response: function (response) {
-            if(response.status == 403){
+            if(response.status == 401){
                 logout();
             }
             return response;
