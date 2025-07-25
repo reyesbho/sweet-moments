@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import "./Login.css";
-import { UserLogin } from "../../general/Interfaces";
+import { UserLogin } from "../../general/interfaces/Generals";
 import { useEffect, useState } from "react";
 import { login } from "../../services/Auth.service";
 import { useAuth } from "../../config/AuthProvider";

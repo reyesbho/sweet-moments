@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import { ClientDto } from "../general/Interfaces";
+import { ClientDto } from "../general/interfaces/Generals";
 import { searchClient } from "../services/cliente.service";
 
 export function useClients({ search }:{ search:String }) {

@@ -17,10 +17,10 @@ const convertToCatalogType = (producto: Producto):CatalogTypeDto => {
 }
 }
 
-export function useProducts(estatusFilter: string){
+export function useProducts(estatusFilter?: string){
     const [products, setProducts] = useState<CatalogTypeDto[] | null>(null);
     const [realoadProducts,setRealoadProducts] = useState(false);
-    const [estatus, setEstatus] = useState<string>(estatusFilter);
+    const [estatus, setEstatus] = useState<string | undefined>(estatusFilter);
 
 
     const getProducts = async(status?: string) => {

@@ -5,7 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { FaUser } from "react-icons/fa";
 import { useNewOrder } from '../../hooks/useNewOrder';
 import {  MobileDateTimePicker } from '@mui/x-date-pickers';
-import { OrderInfo } from '../../general/Interfaces';
+import { OrderInfo } from '../../general/interfaces/Generals';
 import dayjs from 'dayjs';
 import debounce from 'just-debounce';
 import { searchClient } from '../../services/cliente.service';

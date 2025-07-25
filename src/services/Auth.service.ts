@@ -1,5 +1,5 @@
 import { LoginError } from "../config/Errors";
-import { TokenResponse, UserLogin, UserResponse } from "../general/Interfaces";
+import { TokenResponse, UserLogin, UserResponse } from "../general/interfaces/Generals";
 import { API_AUTH } from "../general/url";
 
 export const login = async(userLogin: UserLogin):Promise<TokenResponse> => {
