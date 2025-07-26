@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
-import { classStatusEnum } from "../general/Status";
+import { classBorderStatusEnum, classColorStatusEnum, STATUS } from "../general/Status";
 
-export function useStatus (statusInit: String) {
-    const [cssClassStatus, setCssClassStatus] = useState(classStatusEnum[statusInit as keyof typeof classStatusEnum]);
-    const [status, setStatus] = useState<String>(statusInit);
+export function useStatus (estatusInit: STATUS) {
+    const [cssClassStatusBorder, setCssClassStatusBorder] = useState('');
+    const [cssClassStatusColor, setCssClassStatusColor] = useState('');
+    const [estatus, setEstatus] = useState<STATUS>(estatusInit);
 
     useEffect(() => {
-        setCssClassStatus(classStatusEnum[status as keyof typeof classStatusEnum]);
-    },[status])
+        setCssClassStatusBorder(classBorderStatusEnum[estatus]);
+        setCssClassStatusColor(classColorStatusEnum[estatus]);
+    },[estatus])
 
-    const handleSetStatus = (status: String) => {
-        setStatus(status)
+    const handleChangeEstatus = (estatus: STATUS) => {
+        setEstatus(estatus);
     }
 
-    return {cssClassStatus, handleSetStatus}
+    return {cssClassStatusBorder, cssClassStatusColor, handleChangeEstatus}
 }

@@ -4,12 +4,11 @@ import './DayCalendar.css';
 import { Pedido } from '../../general/interfaces/pedido';
 import OrderPill from './OrderPill';
 import { useNavigate } from 'react-router-dom';
+import { firestoreTimestampToDate } from '../../utils/formatDate';
 
-function firestoreTimestampToDate(ts: { seconds: number; nanoseconds: number }): Date {
-  return new Date(ts.seconds * 1000);
-}
 
 export default function DayCalendar({ date, pedidos, isOutsideMonth = false }: { date: Date, pedidos: Pedido[], isOutsideMonth?: boolean }) {
+  const navigate = useNavigate();
   // Ordenar pedidos por hora de entrega
   const pedidosOrdenados = [...pedidos].sort((a, b) => {
     const horaA = firestoreTimestampToDate(a.fechaEntrega);
@@ -18,7 +17,7 @@ export default function DayCalendar({ date, pedidos, isOutsideMonth = false }: {
   });
 
   const diaSemana = format(date, 'EEEE', { locale: es });
-  const navigate = useNavigate();
+  
   const handleClick = (event:React.MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();

@@ -4,7 +4,7 @@ import { FaPlusCircle } from 'react-icons/fa'
 import { useOrders } from '../../hooks/useOrders'
 import { useStatus } from '../../hooks/useStatus'
 import { useState, useEffect } from 'react'
-import { iconStatusEnum, STATUS_FILTER } from '../../general/Status'
+import { estatusButtonsArray, iconStatusEnum, STATUS } from '../../general/Status'
 import { DateRangePicker } from 'rsuite';
 import 'rsuite/DateRangePicker/styles/index.css';
 import format from 'date-fns/format';
@@ -17,9 +17,9 @@ import startOfMonth from 'date-fns/startOfMonth';
 import endOfMonth from 'date-fns/endOfMonth';
 
 export function Orders() {
-    const [status, setStatus] = useState<string>(STATUS_FILTER.BACKLOG)
+    const [status, setStatus] = useState<STATUS>(STATUS.BACKLOG)
     const { orders, handleRefreshOrders, incrementPagination,changeStatusFilter,handleDateFilter, statusFilter} = useOrders(status)
-    const {cssClassStatus, handleSetStatus} = useStatus(status);
+    const {cssClassStatusBorder, handleChangeEstatus} = useStatus(status);
     const {show, handleShow, handleClose} = useModalConfirm();
     const navigate = useNavigate();
     const [dateRange, setDateRange] = useState<[Date, Date] | null>(null);
@@ -39,10 +39,10 @@ export function Orders() {
       }
     }, [location.search]);
 
-    const handleChangeStatusFilter = (status: string) => {
+    const handleChangeStatusFilter = (status: STATUS) => {
         setStatus(status);
         changeStatusFilter(status);
-        handleSetStatus(status);
+        handleChangeEstatus(status);
     }
 
     const handleChangeDate = (range:any) => {
@@ -73,21 +73,13 @@ export function Orders() {
         navigate(`/order/${idOrder}`);
     }
 
-    const statusButtons = [
-        { label: 'Todos', value: STATUS_FILTER.ALL },
-        { label: 'Incompleto', value: STATUS_FILTER.INCOMPLETE },
-        { label: 'Por hacer', value: STATUS_FILTER.BACKLOG },
-        { label: 'Entregados', value: STATUS_FILTER.DONE },
-        { label: 'Cancelados', value: STATUS_FILTER.CANCELED }
-      ];
-
-    const renderStatusButtons = () => statusButtons.map(({ label, value }) => (
+    const renderStatusButtons = () => estatusButtonsArray.map(({ label, value }) => (
         <button
           key={value}
-          className={`btn btn-pill ${statusFilter === value ? cssClassStatus : ''}`}
+          className={`btn btn-pill ${statusFilter === value ? cssClassStatusBorder : ''}`}
           onClick={() => handleChangeStatusFilter(value)}
         >
-          {value !== STATUS_FILTER.ALL && <span>{iconStatusEnum(value, '1rem')}</span>}
+          {value !== STATUS.ALL && <span>{iconStatusEnum(value, '1rem')}</span>}
           {label}
         </button>
       ));

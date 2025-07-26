@@ -1,4 +1,4 @@
-import { STATUS, classStatusEnum } from '../../general/Status';
+import { STATUS, classColorStatusEnum, estatusButtonsArray } from '../../general/Status';
 import './Order.css'
 import { useState } from 'react';
 import { CardProduct } from '../cardProduct/CardProduct';
@@ -11,12 +11,14 @@ import { Pedido, ProductoPedido } from '../../general/interfaces/pedido';
 import { FaClock, FaUser } from 'react-icons/fa';
 import { MdPlace } from 'react-icons/md';
 import { formatDateTime } from '../../utils/formatDate';
+import { useStatus } from '../../hooks/useStatus';
 
 export function Order({ order, handleRefreshOrders}:{order: Pedido, handleRefreshOrders: Function}) {
     const [showProducts, setShowProducts] = useState(false)
     const [products, setProducts] = useState<ProductoPedido[]>([])
     const {show, handleClose, handleShow} = useModalConfirm();
-    const [status, setStatus] = useState<string>('');
+    const [newStatus, setNewStatus] = useState<string>('');
+    const {cssClassStatusColor} = useStatus(order.estatus as STATUS);
     const navigate = useNavigate();
     
 
@@ -24,18 +26,18 @@ export function Order({ order, handleRefreshOrders}:{order: Pedido, handleRefres
         setShowProducts(!showProducts);
     }
 
-    const handleSelectStatus = (event:any, newStatus: string) => {
+    const handleChangeStatus = (event:any, newStatus: string) => {
         event.stopPropagation();
         event.preventDefault();
         handleShow(event);
-        setStatus(newStatus);
+        setNewStatus(newStatus);
     }
 
     const handleUpdateState = (event:any) => {
         if(!order.id){
             return
         }
-        updateStatePedido({id: order.id, status:status}).then(() => {
+        updateStatePedido({id: order.id, status:newStatus}).then(() => {
             handleRefreshOrders()
             handleClose(event);
             toast.success("Actualizado correctamente.")
@@ -67,6 +69,7 @@ export function Order({ order, handleRefreshOrders}:{order: Pedido, handleRefres
                     <span><MdPlace color='red'/> {order.lugarEntrega}</span>
                     <span><FaClock color='#87e6ed'/> {formatDateTime(order.fechaEntrega)}</span>
                 </div>
+                <span className={`principal-order-status ${cssClassStatusColor}`}>{estatusButtonsArray.find((estatus) => estatus.value == order.estatus)?.label}</span>
             </div>
             <div className={`principal-order-body ${(showProducts ? '' : 'inactive')}`}>
                 {order.productos && <hr></hr> && order.productos?.map((productoPedido, index) => (
@@ -80,12 +83,12 @@ export function Order({ order, handleRefreshOrders}:{order: Pedido, handleRefres
                 </div>
                 <div className='principal-order-general-buttons'>
                     { (order?.estatus === STATUS.BACKLOG || order?.estatus === STATUS.INCOMPLETE)  && 
-                    <button type='button' className='btn btn-cancel btn-md' onClick={(event) => handleSelectStatus(event, STATUS.CANCELED)}>Cancelar</button>}
+                    <button type='button' className='btn btn-cancel btn-md' onClick={(event) => handleChangeStatus(event, STATUS.CANCELED)}>Cancelar</button>}
                     {order.estatus === STATUS.INCOMPLETE && 
                     <button className='btn btn-edit btn-md' onClick={handleNavigate}>Completar</button>}
                     {order?.estatus === STATUS.BACKLOG &&
-                    <button type='button' className='btn btn-add btn-md' onClick={(event) => handleSelectStatus(event, STATUS.DONE)}>Entregado</button>}
-                    <button type='button' className='btn btn-delete btn-md' onClick={(event) => handleSelectStatus(event, STATUS.DELETE)}>Eliminar</button>
+                    <button type='button' className='btn btn-add btn-md' onClick={(event) => handleChangeStatus(event, STATUS.DONE)}>Entregado</button>}
+                    <button type='button' className='btn btn-delete btn-md' onClick={(event) => handleChangeStatus(event, STATUS.DELETE)}>Eliminar</button>
                 </div>
             </div>
         </div>

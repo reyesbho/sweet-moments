@@ -33,19 +33,19 @@ h1 {
 }
 
 .color-success{
-  color: var(--success-status);
+  color: var(--success-status) !important;
 }
 
 .color-wrong{
-  color: var(--wrong-status);
+  color: var(--wrong-status) !important;
 }
 
 .color-backlog{
-  color: var(--backlog-status);
+  color: var(--backlog-status) !important;
 }
 
 .color-incomplete{
-  color: var(--incomplete-status);
+  color: var(--incomplete-status) !important;
 }
 
 .form-input{
@@ -499,17 +499,17 @@ hr{
 }
 
 .border-status-success{
-  border-color: var(--success-status);
+  border-color: var(--success-status) !important;
 }
 .border-status-backlog{
-  border-color: var(--backlog-status);
+  border-color: var(--backlog-status) !important;
 }
 .border-status-wrong{
-  border-color: var(--wrong-status);
+  border-color: var(--wrong-status) !important;
 }
 .border-status-incomplete{
-  border-color: var(--incomplete-status);
+  border-color: var(--incomplete-status) !important;
 }
 .border-status-default{
-  border-color: var(--default-status);
+  border-color: var(--default-status) !important;
 }

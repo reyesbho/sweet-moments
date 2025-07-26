@@ -28,3 +28,7 @@
   color: #bbb9b9;
   font-size: 0.8rem;
 } 
+
+.order-pill-status{
+  border: 2px solid; 
+}

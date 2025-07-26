@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {  getPedido } from "../services/pedidos.services";
-import { classStatusEnum, STATUS } from "../general/Status";
+import { classBorderStatusEnum, STATUS } from "../general/Status";
 import { toast } from "react-toastify";
 import { Pedido } from "../general/interfaces/pedido";
 
@@ -18,7 +18,7 @@ export function useOrder({ orderId }:{orderId: string}) {
       .then(async(pedido) => {
         setOrderItem(pedido);
         let status = pedido.estatus as keyof typeof STATUS;
-        setCssClassName(classStatusEnum[status]);
+        setCssClassName(classBorderStatusEnum[status]);
         setHasReturn(true);
       })
       .catch((error: Error) => toast.error(error.message))

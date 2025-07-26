@@ -41,3 +41,8 @@ export const formatDateTime= (date:FirestoreTimestamp) => {
     }
     return new Date(date.seconds * 1000).toLocaleTimeString("es-MX", dateTimeOptions);
 }
+
+
+export function firestoreTimestampToDate(ts: { seconds: number; nanoseconds: number }): Date {
+    return new Date(ts.seconds * 1000);
+  }

@@ -4,7 +4,7 @@ import { getDaysInMonth, format, startOfMonth, endOfMonth, addMonths, subMonths,
 import './Calendar.css';
 import { Pedido } from '../../general/interfaces/pedido';
 import { useOrders } from '../../hooks/useOrders';
-import { STATUS_FILTER } from '../../general/Status';
+import { STATUS } from '../../general/Status';
 
 function getWeeksOfMonth(date: Date) {
   const daysInMonth = getDaysInMonth(date);
@@ -53,7 +53,7 @@ function formatDDMMYYYY(date: Date): string {
 
 export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const { orders, loading, handleDateFilter } = useOrders(STATUS_FILTER.ALL);
+  const { orders, loading, handleDateFilter } = useOrders(STATUS.ALL);
 
   const weeks = getWeeksOfMonth(currentDate);
 
