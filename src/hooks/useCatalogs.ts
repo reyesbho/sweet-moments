@@ -7,12 +7,12 @@ export function useCatalogs(){
     const [sizes, setSizes] = useState<CatalogTypeDto[]>([]);
     const [loading, setLoading] = useState(false);
     
-    const handleResponseDelete = (response: Response) => {
+    const handleResponseUpdate = (response: Response) => {
         if (response.status === 200) {
-            toast.success("Eliminado correctamente.");
+            toast.success("Actualizado correctamente.");
         }
         else if (response.status === 304) {
-            toast.error("No se puede eliminar el registro.");
+            toast.error("No se puede actualizar el registro.");
         }
     }
 
@@ -20,7 +20,7 @@ export function useCatalogs(){
         setLoading(true);
         getSizeProductos({}).then((listSize: CatalogTypeDto[])=>{
             listSize.forEach((size: CatalogTypeDto) => {
-                size.selfUpdateEstatus = () => updateStateSizeProduct(size.id).then(handleResponseDelete).catch((error: Error) => toast.error(error.message));
+                size.selfUpdateEstatus = () => updateStateSizeProduct(size.id).then(handleResponseUpdate).catch((error: Error) => toast.error(error.message));
             })
             setSizes(listSize);
         })
@@ -32,7 +32,7 @@ export function useCatalogs(){
         setLoading(true);
         getSizeProductos({tag, estatus: 'ACTIVO'}).then((listSize: CatalogTypeDto[])=>{
             listSize.forEach((size: CatalogTypeDto) => {
-                size.selfUpdateEstatus = () => updateStateSizeProduct(size.id).then(handleResponseDelete).catch((error: Error) => toast.error(error.message));
+                size.selfUpdateEstatus = () => updateStateSizeProduct(size.id).then(handleResponseUpdate).catch((error: Error) => toast.error(error.message));
             })
             setSizes(listSize);
         })
@@ -41,12 +41,15 @@ export function useCatalogs(){
     }, []);
 
     const addNewSize = useCallback(async (newRecord: CatalogTypeDto) => {
+        setLoading(true);
         try {
             await addSizeProduct(newRecord);
             toast.success("Registrado correctamente.");
+            setLoading(false);
             return { success: true };
         } catch (error: any) {
             toast.error(error.message);
+            setLoading(false);
             return { success: false, error: error.message };
         }
     }, []);

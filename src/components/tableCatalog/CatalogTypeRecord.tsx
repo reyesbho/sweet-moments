@@ -20,7 +20,7 @@ export function CatalogTypeRecord({catalog,hasImage=false, handleReload}:{catalo
             <tr key={catalog.id}>
                 {hasImage && <td><img className="table-img" src={catalog.imagen ? catalog.imagen : undefined}></img></td>}
                 <td>{catalog.descripcion}</td>
-                <td>{catalog.tags?.join(',')}</td>
+                <td>{catalog.tag ? catalog.tag : catalog.tags?.join(', ')  }</td>
                 <td>{catalog.estatus ? 'ACTIVO' : 'INACTIVO'}</td>
                 <td className="table-actions">        
                     <div className="checkbox-apple">

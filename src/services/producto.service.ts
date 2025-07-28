@@ -1,7 +1,6 @@
 import { CatalogTypeDto } from "../general/Dtos";
 import { Producto } from "../general/interfaces/pedido.js";
 import { API_PRODUCTO } from "../general/url";
-import { mapToProductDto } from "../utils/mapsToDto";
 
 export const getProductos = async(status?:string):Promise<Producto[]> => {
     try {
@@ -33,8 +32,21 @@ export const deleteProducto = async(idProducto:string) => {
     }
 }
 
+export const updateStateProduct = async(id:string) => {
+    try {
+        const response = await fetch(API_PRODUCTO+`/${id}`,
+        {
+            method:"PUT"
+        }
+        );
+        return response;
 
-export const addProducto = async (catalog: CatalogTypeDto):Promise<CatalogTypeDto> => {
+    } catch (error) {
+        throw new Error("Error al eliminar el tamaño producto");
+    }
+}
+
+export const addProducto = async (catalog: CatalogTypeDto):Promise<Producto> => {
     try {
         const response = await fetch(API_PRODUCTO,
         {
@@ -42,15 +54,19 @@ export const addProducto = async (catalog: CatalogTypeDto):Promise<CatalogTypeDt
             body:JSON.stringify(catalog)
         }
         );
-        const tipo = await response.json();
-        return mapToProductDto(tipo);
+        if (!response.ok) {
+            const responseErrors = await response.json();
+            throw new Error(responseErrors.error[0].message || "Error al agregar el producto");
+        }
+        const producto:Producto = await response.json();
+        return producto;
 
     } catch (error) {
-        throw new Error("Error al agregar el sabor");
+        throw new Error("Error al agregar el producto");
     }   
 }
 
-export const updateProducto = async (catalog: CatalogTypeDto):Promise<CatalogTypeDto> => {
+export const updateProducto = async (catalog: CatalogTypeDto):Promise<Producto> => {
     try {
         const response = await fetch(API_PRODUCTO,
         {
@@ -58,8 +74,8 @@ export const updateProducto = async (catalog: CatalogTypeDto):Promise<CatalogTyp
             body:JSON.stringify(catalog)
         }
         );
-        const tipo = await response.json();
-        return mapToProductDto(tipo);
+        const tipo:Producto = await response.json();
+        return tipo;
 
     } catch (error) {
         throw new Error("Error al agregar el sabor");

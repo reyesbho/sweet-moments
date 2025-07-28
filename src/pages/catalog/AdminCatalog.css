@@ -1,3 +1,11 @@
+.container-catalogs{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .title-catalogos{
     text-align: center;
 }

@@ -139,7 +139,7 @@ h1 {
 .form-input > p{
   margin: 0px;
   padding: 0px 2px;
-  color: red;
+  color: #ffa5a5;
   font-size: 0.9rem;
   align-self: flex-end;
   font-weight: normal;
@@ -350,6 +350,8 @@ hr{
   width: 30px;
   height: 30px;
   border-radius: 5px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
 }
 
 

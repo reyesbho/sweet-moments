@@ -50,16 +50,21 @@ export function NewCatalogRecord({record, handleClose,catalogType, addRecordCall
             }
             catalog.tags = selectedValues.map(v => v.tag);
         }
+        if(image){
+            catalog.imagen = image;
+        }
         
         let result;
         if(updateRecordCallback){
+            console.log("update");
             result = await updateRecordCallback(catalog);
         }
             
         if(addRecordCallback){
+            console.log("add");
             result = await addRecordCallback(catalog);
         }
-        if(isSubmitSuccessful && result.success){
+        if(result.success){
             if(handleRealod)
                 handleRealod();
             reset();
@@ -102,6 +107,7 @@ export function NewCatalogRecord({record, handleClose,catalogType, addRecordCall
             selectedValues.some(reg => reg.id === option.id)
                 ? selectedValues.filter(v => v.id !== option.id)
                 : [...selectedValues, option];
+                console.log(newSelectedValues)
             setSelectedValues(newSelectedValues);
     }
     return(
@@ -127,6 +133,11 @@ export function NewCatalogRecord({record, handleClose,catalogType, addRecordCall
                                 value: 50,
                                 message:"Maximo 50 caracteres"
                             }
+                            ,
+                            minLength:{
+                                value: 3,
+                                message:"Min 3 caracteres"
+                            }
                         })}></input>
                         {errors.descripcion && <p>{errors.descripcion?.message}</p>}
                     </div>
@@ -141,16 +152,20 @@ export function NewCatalogRecord({record, handleClose,catalogType, addRecordCall
                                     value: 50,
                                     message:"Maximo 10 caracteres"
                                 },
+                                minLength:{
+                                    value: 3,
+                                    message:"Maximo 10 caracteres"
+                                },
                                 pattern:{
-                                    value: /^[a-z\s]{0,10}$/,
-                                    message: "Solo letras minusculas y máximo 10 caracteres"
+                                    value: /^[a-z_\s]{0,20}$/,
+                                    message: "Solo letras minusculas y máximo 20 caracteres"
                                 }
                             })}></input>
                             {errors.tag && <p>{errors.tag?.message}</p>}
                         </div>
                         }
                     {catalogType != CATALOGS.products &&
-                        <div>
+                        <div className='form-input'>
                             <label htmlFor='descriptionCatalog' >Aplica para</label>
                             <SelectMultiple 
                                 options={products || []}

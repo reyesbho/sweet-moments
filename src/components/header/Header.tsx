@@ -37,7 +37,6 @@ export function Header({ title }:{ title:string}) {
                         <Link className='header-menu_options' to='/' onClick={() => handleIsOpen()}>Principal</Link>
                         <Link className='header-menu_options' to='/calendario' onClick={() => handleIsOpen()}>Calendario</Link>
                         <Link className='header-menu_options' to='/catalogos' onClick={() => handleIsOpen()}>Catalogos</Link>
-                        <Link className='header-menu_options' to='/productos' onClick={() => handleIsOpen()}>Productos</Link>
                         <span className='header-menu_options' onClick={handleLogout}>Cerrar sesion</span>
                     </div>
                 }

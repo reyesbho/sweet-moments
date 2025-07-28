@@ -1,7 +1,6 @@
 import { CatalogTypeDto } from "../general/Dtos";
-import { Size } from "../general/interfaces/pedido";
+import { Producto, Size } from "../general/interfaces/pedido";
 import { API_SIZE } from "../general/url";
-import { mapToCatalogTypeDto } from "../utils/mapsToDto";
 
 export const getSizeProductos = async({tag, estatus}:{tag?: string, estatus?:string}):Promise<CatalogTypeDto[]> => {
         try {
@@ -39,7 +38,7 @@ export const updateStateSizeProduct = async(idSizeProduct:string) => {
     }
 }
 
-export const updateSizeProduct = async(idSizeProduct:string, catalog: CatalogTypeDto):Promise<CatalogTypeDto> => {
+export const updateSizeProduct = async(idSizeProduct:string, catalog: CatalogTypeDto):Promise<Producto> => {
     try {
         const response = await fetch(API_SIZE+`/${idSizeProduct}`,
         {
@@ -47,8 +46,8 @@ export const updateSizeProduct = async(idSizeProduct:string, catalog: CatalogTyp
             body:JSON.stringify(catalog)
         }
         );
-        const tipo = await response.json();
-        return mapToCatalogTypeDto(tipo);
+        const tipo:Producto = await response.json();
+        return tipo;
 
     } catch (error) {
         throw new Error("Error al actualizar el tamaño producto");

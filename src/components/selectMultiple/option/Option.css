@@ -5,24 +5,25 @@
     justify-content: center;
     background-color: white;
     border-radius: 15px;
-    padding: 10px;
-    width: 60px;
+    padding: 5px;
+    width: 100px;
     cursor: pointer;
 }
 .option-image {
-    width: 50px;
+    width: 70px;
     border-radius: 25px;
     object-fit: cover;
     aspect-ratio: 1/1;
 }
 .option-label {
     font-size: 1rem;
-    color: black
+    color: black;
+    font-weight: 500;
+    text-align: center;
 }
 
 .option.selected {
     background-color: var(--secondary-bg);
-    border: 2px solid var(--tertiary-bg);
 }
 
 .option:hover {
