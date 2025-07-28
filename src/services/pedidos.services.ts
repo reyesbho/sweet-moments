@@ -1,7 +1,6 @@
 import { API_PEDIDO } from "../general/url";
 import { Pedido, PedidosResponse } from "../general/interfaces/pedido";
 import { OrderInfo, Pagination } from "../general/interfaces/Generals";
-import { getFormattedDateForEntrega } from "../utils/formatDate";
 
 
 

@@ -26,21 +26,28 @@ export function DetailOrder() {
     let modalUpdateOrder = useModalConfirm();
     const [status, setStatus] = useState<string>('');
 
-    const handleClicHome = (event: any) => {
-        event?.preventDefault();
-        event?.stopPropagation();
+    const handleClicHome = () => {
         navigate("/");
     }
 
-    const handleStatusAction = (event: any, status: string) => {
+    const handleStatusAction = (event: any, newStatus: string) => {
+        event.stopPropagation();
+        event.preventDefault();
         handleShow(event);
-        setStatus(status);
+        setStatus(newStatus);
     }
 
-    const handleUpdateState = () => {
-        updateStatePedido({ id: id, status: status }).then(() => {
-            handleClicHome(event);
-            toast.success("Actualizado correctamente.")
+    const handleUpdateState = (event: React.MouseEvent) => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!order || !order.id || !status) {
+            toast.error("Faltan datos para actualizar el estado del pedido.");
+            return;
+        }
+        updateStatePedido({ id: order.id, status}).then(() => {
+            toast.success("Actualizado correctamente.");
+            handleClicHome();
+            handleClose(event);
         }).catch((error: Error) => toast.error(error.message));
     }
 
@@ -84,7 +91,7 @@ export function DetailOrder() {
         <div className="detailOrder">
             <div className="detail-title">
                 {hasReturn &&
-                    <button className='button-back' onClick={(e) => handleClicHome(e)}>
+                    <button className='button-back' onClick={handleClicHome}>
                         <IoIosArrowBack size="2.5rem" />
                     </button>
                 }
