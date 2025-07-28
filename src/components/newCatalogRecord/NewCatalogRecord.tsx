@@ -56,12 +56,10 @@ export function NewCatalogRecord({record, handleClose,catalogType, addRecordCall
         
         let result;
         if(updateRecordCallback){
-            console.log("update");
             result = await updateRecordCallback(catalog);
         }
             
         if(addRecordCallback){
-            console.log("add");
             result = await addRecordCallback(catalog);
         }
         if(result.success){
@@ -107,7 +105,6 @@ export function NewCatalogRecord({record, handleClose,catalogType, addRecordCall
             selectedValues.some(reg => reg.id === option.id)
                 ? selectedValues.filter(v => v.id !== option.id)
                 : [...selectedValues, option];
-                console.log(newSelectedValues)
             setSelectedValues(newSelectedValues);
     }
     return(

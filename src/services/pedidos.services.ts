@@ -16,7 +16,6 @@ export const getPedidos = async(statusFilter:String,dateInit:String | null, date
             }
         );
         const data:PedidosResponse = await res.json();
-        console.log("GET PEDIDOS: ", data)
         return data;
     } catch (error) {
         throw new Error("Error al buscar los pedidos")

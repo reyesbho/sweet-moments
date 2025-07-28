@@ -19,7 +19,6 @@ export const login = async(userLogin: UserLogin):Promise<TokenResponse> => {
         if(error instanceof LoginError){
             throw error;
         }
-        console.log(error)
         throw new Error("Error al intentar logearse")
     }
 }
