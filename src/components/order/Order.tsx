@@ -1,6 +1,6 @@
 import { STATUS, classColorStatusEnum, estatusButtonsArray } from '../../general/Status';
 import './Order.css'
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { CardProduct } from '../cardProduct/CardProduct';
 import { updateStatePedido } from '../../services/pedidos.services';
 import { ModalConfirm } from '../modal/Modal';
@@ -33,7 +33,9 @@ export function Order({ order, handleRefreshOrders}:{order: Pedido, handleRefres
         setNewStatus(newStatus);
     }
 
-    const handleUpdateState = (event:any) => {
+    const handleUpdateState = (event:React.MouseEvent) => {
+        event.preventDefault();
+        event.stopPropagation();
         if(!order.id){
             return
         }

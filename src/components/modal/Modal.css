@@ -48,5 +48,6 @@
 @media only screen and (max-width:820px) {
     .modal-container{
         width: 350px;
+        padding: 20px;
     }
 }
