@@ -88,5 +88,5 @@ export function useProducts(estatusFilter?: string){
         getProducts(estatus);
     },[realoadProducts])
 
-    return {products,updateProduct,removeProduct,addProduct,handleReloadProducts, setEstatus, loading};
+    return {products,updateProduct,removeProduct,addProduct,handleReloadProducts, setEstatus, loading, setProducts};
 }

@@ -21,10 +21,12 @@ export function DetailOrder() {
     const { order, cssClassName, hasReturn, getOrder } = useOrder({ orderId: id });
     const navigate = useNavigate();
     const { show, handleShow, handleClose } = useModalConfirm();
-    let modalAddProduct = useModalConfirm()
+    let modalAddProduct = useModalConfirm();
+    let modalEditProduct = useModalConfirm();
     const iconStatus = iconStatusEnum((order?.estatus ? order?.estatus : STATUS.INCOMPLETE), '2.5rem');
     let modalUpdateOrder = useModalConfirm();
     const [status, setStatus] = useState<string>('');
+    const [productUpdate, setProductUpdate] = useState<ProductoPedido | undefined>();
 
     const handleClicHome = () => {
         navigate("/");
@@ -73,7 +75,7 @@ export function DetailOrder() {
         getOrder();
     }
 
-    const handleDeleteProducPedido = async(productoPedido: ProductoPedido) => {
+    const handleDeleteProductPedido = async(productoPedido: ProductoPedido) => {
         if(!order) return;
         const productosStill = order?.productos?.filter((item) => item.id !== productoPedido.id) ?? [];
         order.productos = productosStill;
@@ -85,6 +87,11 @@ export function DetailOrder() {
                         
                     })
                     .catch((error: Error) => toast.error(error.message));
+    }
+
+    const handleEditProductPedido = async(productoPedido: ProductoPedido) => {
+        modalEditProduct.handleShow(event);
+        setProductUpdate(productoPedido);
     }
 
     return (
@@ -112,7 +119,15 @@ export function DetailOrder() {
                         {(order.productos?.length ?? 0) > 0 &&
                             <div className="detailOrder-products">
                                 {order.productos?.map((product, index) => (
-                                    <CardProduct key={index} productItem={product} reload={handleRealoadOrder} handleDeleteProducPedido={handleDeleteProducPedido} showDelete={true}></CardProduct>
+                                    <CardProduct 
+                                        key={index} 
+                                        productItem={product} 
+                                        reload={handleRealoadOrder} 
+                                        handleDeleteProductPedido={handleDeleteProductPedido}
+                                        handleEditProductPedido={handleEditProductPedido} 
+                                        showEdit={true}
+                                        showDelete={true}>
+                                    </CardProduct>
                                 ))}
                             </div>
                         }
@@ -146,6 +161,7 @@ export function DetailOrder() {
 
                         <div className='content-product'>
                             {modalAddProduct.show && <AddNewProduct pedido={order} handleClose={() => modalAddProduct.handleClose(event)} reload={handleRealoadOrder}></AddNewProduct>}
+                            {modalEditProduct.show && <AddNewProduct pedido={order} productOrder={productUpdate} handleClose={() => modalEditProduct.handleClose(event)} reload={handleRealoadOrder}></AddNewProduct>}
                         </div>
 
 

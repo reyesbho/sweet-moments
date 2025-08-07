@@ -64,12 +64,12 @@
 }
 
 .icon-actions{
-    position: absolute;
-    top: 7px;
-    right: 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
-.icon-actions:hover{
+.icon-action:hover{
     cursor: pointer;
     opacity: 0.9;
     transform: scale(1.1);

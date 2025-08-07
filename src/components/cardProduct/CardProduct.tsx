@@ -1,15 +1,22 @@
-import { FaTrash } from 'react-icons/fa'
+import { FaEdit, FaTrash } from 'react-icons/fa'
 import './CardProduct.css'
 import { useModalConfirm } from '../../hooks/useModalConfirm';
 import { ModalConfirm } from '../modal/Modal';
 import { ProductoPedido } from '../../general/interfaces/pedido.js';
-export function CardProduct({ productItem, reload, handleDeleteProducPedido = () => {}, showDelete = false   }: 
-                            { productItem: ProductoPedido, reload: CallableFunction, handleDeleteProducPedido?: CallableFunction, showDelete?: boolean }) {
+export function CardProduct({ productItem, reload, handleDeleteProductPedido ,handleEditProductPedido , showDelete = false, showEdit}: 
+                            { productItem: ProductoPedido, reload: CallableFunction, handleDeleteProductPedido: CallableFunction, handleEditProductPedido: CallableFunction, showDelete?: boolean, showEdit?:boolean }) {
     const { show, handleShow, handleClose } = useModalConfirm();
     const handleDelete = (event: any) => {
         event?.preventDefault();
         event?.stopPropagation();
-        handleDeleteProducPedido(productItem);
+        handleDeleteProductPedido(productItem);
+        handleClose(event);
+    }
+
+    const handleEdit = (event: any) => {
+        event?.preventDefault();
+        event?.stopPropagation();
+        handleEditProductPedido(productItem);
         handleClose(event);
     }
 
@@ -35,10 +42,17 @@ export function CardProduct({ productItem, reload, handleDeleteProducPedido = ()
                         }
                     </ul>
                 </div>
-                {showDelete && <span onClick={(event) => handleShow(event)} className='icon-actions' title='Eliminar'>
-                    <FaTrash size="1.2rem" className='color-wrong'></FaTrash>
-                </span>
-                }
+                <div className='icon-actions'>
+                    {showDelete && <span onClick={handleDelete} className='icon-action' title='Eliminar'>
+                        <FaTrash size="1.2rem" className='color-wrong'></FaTrash>
+                    </span>
+                    }
+                    {showEdit && <span onClick={handleEdit} className='icon-action' title='Editar'>
+                        <FaEdit size="1.2rem" className='color-backlog'></FaEdit>
+                    </span>
+                    }
+                </div>
+                
             </div>
 
             <ModalConfirm show={show} handleClose={handleClose} handleOk={handleDelete} ></ModalConfirm>

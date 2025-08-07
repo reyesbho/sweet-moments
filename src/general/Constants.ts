@@ -4,11 +4,13 @@ import addDays from 'date-fns/addDays';
 import startOfMonth from 'date-fns/startOfMonth';
 import endOfMonth from 'date-fns/endOfMonth';
 import { z } from "zod";
+import { CatalogTypeDto } from './Dtos';
+import { Producto, ProductoPedido, Size } from './interfaces/pedido';
 
 export const AddNewProductSchema = z.object({
   cantidad: z.coerce.number().min(1, "Ingrese una cantidad válida"),
   idSize: z.coerce.string().min(1, "Seleccione un tamaño"),
-  precio: z.coerce.number().min(0.01, "Ingrese un precio válido"),
+  precio: z.coerce.number().min(0, "Ingrese un precio válido"),
   caracteristicas: z.string().optional(),
 });
 
@@ -109,3 +111,50 @@ export const convertImageToWebP = (file: File): Promise<Blob> => {
       ACTIVO: 'ACTIVO',
       INACTIVO: 'INACTIVO'
   }
+
+  
+  export const mapToProduct = (catalog?: CatalogTypeDto | null):Producto => {
+    if(!catalog){
+        return {
+                    imagen: undefined,
+                    descripcion: "",
+                    id: "",
+                    tag: "",
+                    estatus: false
+                };
+    }
+    return{
+        imagen: catalog.imagen,
+        descripcion: catalog.descripcion,
+        id: catalog.id,
+        tag: catalog.tag || '',
+        estatus: catalog.estatus,
+    }
+}
+
+export const mapToSize = (catalog?: CatalogTypeDto | null):Size => {
+    if(!catalog){
+        return {
+            id: "",
+            descripcion: "",
+            tags: []
+        }
+    }
+    return{
+        id: catalog.id,
+        descripcion: catalog.descripcion,
+        tags: catalog.tags || []
+    }
+}
+
+
+export const productOrderMapToCatalogTypeProduct = (productOrder: ProductoPedido):CatalogTypeDto => {
+  return {
+      id: productOrder.producto.id,
+      descripcion: productOrder.producto.descripcion,
+      estatus: productOrder.producto.estatus,
+      selfDelete: undefined,
+      selfUpdateEstatus: undefined,
+      tag: productOrder.producto.tag
+    }
+}

@@ -1,77 +1,55 @@
 import { useForm } from "react-hook-form";
 import { useProducts } from "../../hooks/useProducts";
 import './AddNewProduct.css';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdCancel, MdClose } from "react-icons/md";
 import { useCatalogs } from "../../hooks/useCatalogs";
 import { toast } from "react-toastify";
 import { Product } from "../formProducts/Product";
 import { FaPlusCircle } from "react-icons/fa";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AddNewProductForm, AddNewProductSchema, CATALOG_ESTATUS } from "../../general/Constants";
+import { AddNewProductForm, AddNewProductSchema, CATALOG_ESTATUS, mapToProduct, mapToSize, productOrderMapToCatalogTypeProduct } from "../../general/Constants";
 import { Pedido, Producto, ProductoPedido, Size } from "../../general/interfaces/pedido";
 import { updatePedido } from "../../services/pedidos.services";
 import { CatalogTypeDto } from "../../general/Dtos";
 
 
-export function AddNewProduct({pedido,  handleClose, reload}:{pedido: Pedido, handleClose:CallableFunction, reload: CallableFunction }) {
-    const {products} = useProducts(CATALOG_ESTATUS.ACTIVO);
-    const {getsizesActives, sizes} = useCatalogs();
-    const [productSelected, setProductSelected] = useState<CatalogTypeDto | null>(null);   
+export function AddNewProduct({pedido, productOrder,  handleClose, reload}:
+    {pedido: Pedido,productOrder?:ProductoPedido, handleClose:CallableFunction, reload: CallableFunction }) {
+    const {products, setProducts} = useProducts(CATALOG_ESTATUS.ACTIVO);
+    const {getsizesActives, sizes, loading: sizesLoading} = useCatalogs();
+    const [productSelected, setProductSelected] = useState<CatalogTypeDto | null>(productOrder ? productOrderMapToCatalogTypeProduct(productOrder):null);   
     const [detailList, setDetailList] = useState<string[]>([]);
     const [detail, setDetail] = useState<string>('');
+    const [isInitialized, setIsInitialized] = useState(false);
     
-    const { register, handleSubmit,setValue, formState:{errors, isSubmitting} } = useForm<AddNewProductForm>({
-        resolver: zodResolver(AddNewProductSchema),
-        defaultValues: {
+    let productOrderForm: AddNewProductForm = (productOrder
+        ? {
+            cantidad: productOrder.cantidad,
+            precio: productOrder.precio,
+            caracteristicas: '',
+            idSize: productOrder.size.id
+        } :
+        {
             cantidad: 1,
-            precio:0,
+            precio: 0,
             caracteristicas:'',
             idSize: ''
         }
+    )
+    
+    useEffect(() => {
+        if(productSelected && productOrder){     
+            getsizesActives({tag: productSelected.tag || ''});
+            setDetailList(productOrder?.caracteristicas);
+        }
+    }, []);  
+
+    const { register, handleSubmit,setValue, formState:{errors, isSubmitting} } = useForm<AddNewProductForm>({
+        resolver: zodResolver(AddNewProductSchema),
+        defaultValues: productOrderForm
     });
-
-    const mapToProduct = (catalog?: CatalogTypeDto | null):Producto => {
-        if(!catalog){
-            return {
-                        imagen: undefined,
-                        descripcion: "",
-                        id: "",
-                        tag: "",
-                        estatus: false
-                    };
-        }
-        return{
-            imagen: catalog.imagen,
-            descripcion: catalog.descripcion,
-            id: catalog.id,
-            tag: catalog.tag || '',
-            estatus: catalog.estatus,
-        }
-    }
-
-    const mapToSize = (catalog?: CatalogTypeDto | null):Size => {
-        if(!catalog){
-            return {
-                id: "",
-                descripcion: "",
-                tags: []
-            }
-        }
-        return{
-            id: catalog.id,
-            descripcion: catalog.descripcion,
-            tags: catalog.tags || []
-        }
-    }
-
-    const handleClickSelectProduct = (product: CatalogTypeDto) => {
-        if(productSelected?.id === product.id){
-            return
-        }
-        setProductSelected(product);
-        getsizesActives({tag: product.tag || ''});
-    };
+    
 
     const handleAddDetailProduct = async (productInfo: AddNewProductForm) => {
         const productoPedido: ProductoPedido = {
@@ -110,6 +88,15 @@ export function AddNewProduct({pedido,  handleClose, reload}:{pedido: Pedido, ha
         setDetailList(newList);
     }
 
+    const handleClickSelectProduct = (product: CatalogTypeDto) => {
+        if(productSelected?.id === product.id){
+            return
+        }
+        setProductSelected(product);
+        getsizesActives({tag: product.tag || ''});
+    };
+
+
     return ( 
         <div className="modal"> 
             <div className="container-detail">
@@ -119,7 +106,12 @@ export function AddNewProduct({pedido,  handleClose, reload}:{pedido: Pedido, ha
                     {
                         products && 
                         products.map((producto => (
-                            <Product key={producto.id} isSelected={productSelected?.id == producto.id} product={producto} handleClickSelect={handleClickSelectProduct} ></Product>
+                            <Product 
+                                key={producto.id} 
+                                isSelected={productSelected?.id == producto.id} 
+                                product={producto} 
+                                handleClickSelect={handleClickSelectProduct} >
+                            </Product>
                         )))
                     }
                 </div>
@@ -165,7 +157,7 @@ export function AddNewProduct({pedido,  handleClose, reload}:{pedido: Pedido, ha
                                         {detailList && detailList.map((detail, index) => (
                                             <li key={index}>
                                                 <span >{detail}</span>
-                                                <span  className='icon-actions' title='Eliminar' onClick={(event) => handleRemoveDetail(event,index)}>
+                                                <span  className='icon-delete' title='Eliminar' onClick={(event) => handleRemoveDetail(event,index)}>
                                                                         <MdCancel size="1.4rem" className='color-wrong'></MdCancel>
                                                                     </span>
                                             </li>

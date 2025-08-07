@@ -218,3 +218,9 @@
   }
 
 }
+
+.icon-delete{
+    position: absolute;
+    right: 3px;
+    cursor: pointer;
+}
